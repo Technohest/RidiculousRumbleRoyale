@@ -1,0 +1,50 @@
+        MÖTE 1
+        Allmänt
+Ordförande(Projektledare):    Tobias Alldén
+Fikaansvarig: rullande; Alldén -> Boking -> Schtek -> Vilddjur
+    Fikabudget: 30kr max (endast fast föda, inte samma två ggr i rad)
+Sekreterare: rullande; Vilddjur -> Schtek -> Boking
+
+Generell Mall
+Alldén löser
+
+Möte nr 1    2015 - 03 - 23
+    Sekreterare:         Oskar Jedvert
+Mötets öppnande
+Mötet öppnat
+Projektöversikt
+    > Utvecklingsmiljö
+        > IntelliJ
+        > beslutet var enhälligt
+    > Koncept
+        > Arena PvP online.
+        > beslutet var enhälligt.
+    > Språk
+        > Java
+-beslutet var tvunget
+    > Grafik
+        > 2D. Så bra grafik vi klarar, ska funka framförallt.
+        > beslutet var enhälligt
+    -Motor
+libgdx? Skjuts upp till nästa möte
+Iterationer
+    Tidig planering
+    1
+        > En generell värld.
+        > En styrbar karaktär.
+    2
+        > En multipel spelare, simpla attacker, man kan vinna spelet.
+    3
+        > Flera olika karaktärer, tuffa attacker
+    4
+        > Grafik
+    5
+        > Level chooser, Enviromental dangers?, ????
+
+Tills nästa möte
+    > Läs på lite libgdx, kika på box2d, setta up IntelliJ, skapa git-repository, lägga till saker på Trello.
+Nästa möte
+    > Utse ansvarsområden(Schtek Trello-ansvarig?), bestäm motor, diskutera ingående om spelets implementation, Fika.
+
+Mötets stängs.
+
