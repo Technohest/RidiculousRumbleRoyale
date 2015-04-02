@@ -5,5 +5,6 @@ package com.technohest.core;
  */
 public class RRRController {
     public RRRController(RRRModel model) {
+
     }
 }
