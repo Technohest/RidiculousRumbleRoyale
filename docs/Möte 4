@@ -1,0 +1,42 @@
+        Projektmöte 2
+    Return of the jedi
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      David Ström, Tobias Allden, Oscar Boking, Oskar Jedvert
+    Datum:          2 april 2015
+
+
+
+§1 Mötets öppnande. 
+    -Bestämmelse av sekreterare , fyll på under.
+        > Oskar Jedvert har tagit på sig att vara projektets sekreterare
+§2 Uppkomna problem som hindrar oss att fortsätta
+        > Bristande kunskap om libdgx
+            > Alla ska läsa/titta igenom någon tutorial för libgdx
+§3 Punkter från förra mötet. 
+        > Övat på libgdx
+            > Behövs mer träning
+        > Skrivit RAD
+            > Preliminära RADen är klar
+§4 Projektets status
+    > Vecka 1+2 Lära sig om:
+        > libdgx
+        > Networking (kryonet)
+    > Påsklov:
+        > Skapa spelfönster + börja skriva spelet + klasser, kolla tTrello
+    > Vecka 3:
+        > Fungerande basspel(röra sig + multiplayer)
+§5 Bestämmelser
+    > Att göra under påsklovet
+        > Hålla koll på Trello, kommunikation genom Slack
+§6 Genomgång av info från möte med handledare
+    > Analysmodellen ska göra om
+        > Allden och David tar på sig det
+§7 Inför kommande möte + fikaansvarig
+    > Tisdag skype-möte, tids bestäms senare
+    > Fikaansvarig, individuellt
+    > Skriva speloutline, + startklasser och interface
+§8 Övriga frågor/ Synpunkter
+
+§9 Mötet avslutas
+    > "Time is precious, waste it wisely"
