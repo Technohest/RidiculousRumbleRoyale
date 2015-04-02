@@ -17,17 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class RRRGUI implements ApplicationListener {
     private Stage           stage;
-    private Table           table;
 
     private boolean         inMenu=true;
-    private TextButton      exitButton;
-    private TextButton      playButton;
 
-    //TextButtonStyle is a style for the buttons which have a font and a skin
-    private TextButtonStyle style;
-        private Skin            skin;
-            private TextureAtlas    buttonAtlas;
-        private BitmapFont      font;
+    private Skin            skin;
+    private TextureAtlas    buttonAtlas;
+    private BitmapFont      font;
 
     @Override
     public void create() {
@@ -49,25 +44,31 @@ public class RRRGUI implements ApplicationListener {
         /**
          * We want both buttons to have a texture for when they have been pressed and when they are "idle"
          */
-        style = new TextButtonStyle();
+        TextButtonStyle style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
 
-        exitButton = new TextButton("Exit", style);
-        playButton = new TextButton("Play", style);
+        TextButton exitButton = new TextButton("Exit", style);
+        TextButton playButton = new TextButton("Play", style);
 
         playButton.addListener(new MenuInputListener());
         exitButton.addListener(new MenuInputListener());
 
-        table = new Table();
+        Table table = new Table();
         /**
          * Adding buttons to a Table to align easier
          */
         table.add(playButton);
         table.row();
         table.add(exitButton);
-        table.setPosition(320,300);
+        /**
+         * Making sure the table is centered
+         */
+        float x = (Gdx.graphics.getWidth())/2.0f;
+        float y = (Gdx.graphics.getHeight())/2.0f;
+
+        table.setPosition(x,y);
 
         stage.addActor(table);
 
