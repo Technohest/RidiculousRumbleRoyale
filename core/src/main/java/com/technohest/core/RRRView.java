@@ -1,6 +1,5 @@
 package com.technohest.core;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
@@ -8,11 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class RRRView implements Screen {
 	private final RRRController controller;
-	private final Game			game;
+	private final RRRMain		game;
 
 	private Stage 				stage;
 
-	public RRRView (RRRController controller, Game game) {
+	/**
+	 * Initialize the Game, calling controller.getStage which calls model.getStage
+	 * @param controller
+	 * @param game
+	 */
+	public RRRView (RRRController controller, RRRMain game) {
 		this.game = game;
 		this.controller = controller;
 		this.stage = controller.getStage();
@@ -27,7 +31,8 @@ public class RRRView implements Screen {
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		stage.act();
-		stage.draw();	}
+		stage.draw();
+	}
 
 	@Override
 	public void resize (int width, int height) {

@@ -17,7 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
  */
 public class RRRGUI implements Screen {
     private Stage           stage;
-
+    /**
+     * The GUI needs to know the game in order to be able to call switchTo,
+     * ----- is there a better way?
+     */
     private final RRRMain      game;
 
     private Skin            skin;
@@ -52,8 +55,14 @@ public class RRRGUI implements Screen {
 
         TextButton exitButton = new TextButton("Exit", style);
         TextButton playButton = new TextButton("Play", style);
-
+        /**
+         * See @class{MenuInputListener}
+         */
         playButton.addListener(new MenuInputListener(this.game, "game"));
+        /**
+         * override touchUp since we dont want to switch screens just exit,
+         * ----- maybe add "exit" case in switchTo?
+         */
         exitButton.addListener(new MenuInputListener(this.game, "exit"){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
