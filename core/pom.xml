@@ -19,6 +19,12 @@
 			<artifactId>kryonet</artifactId>
 			<version>2.22.0-RC1</version>
 		</dependency>
+		<!-- overlap2d -->
+		<dependency>
+			<groupId>com.underwaterapps.overlap2druntime</groupId>
+			<artifactId>overlap2d-runtime-libgdx</artifactId>
+			<version>0.0.8</version>
+		</dependency>
 		<!-- GDX -->
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
