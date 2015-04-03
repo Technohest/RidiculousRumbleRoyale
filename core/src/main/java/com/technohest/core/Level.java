@@ -9,13 +9,13 @@ import com.uwsoft.editor.renderer.SceneLoader;
 public class Level extends Stage{
     /**
      * SceneLoader, as I understand it, simply loads all the relevant resources in assets
-     * whene we call loadScene we can pass different strings as a argument so if you want to
+     * when we call loadScene we can pass different strings as a argument so if you want to
      * load a new scene we simply need to name it like: "IceLevel", "ForestLevel", "Fuck Boking" and so on.
      *
      * Since this is a stage we can simply fetch level later and use it as a screen, sl.getRoot() gives us all the
      * actors and their state (background, foreground, particles, animations, etc)
      *
-     * Later we should probaly refactor this class as a LevelHandler which has a private Stage stage
+     * Later we should probably refactor this class as a LevelHandler which has a private Stage stage
      * through this we can easily call levelHandler.setStage("LevelAlldensMamma") and that method simply
      * reloads the scene, clears the Stage and loads the Actors.
      */

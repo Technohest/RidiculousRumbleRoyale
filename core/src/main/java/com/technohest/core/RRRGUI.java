@@ -82,11 +82,9 @@ public class RRRGUI implements Screen {
          */
         float x = (Gdx.graphics.getWidth())/2.0f;
         float y = (Gdx.graphics.getHeight())/2.0f;
-
         table.setPosition(x,y);
 
         stage.addActor(table);
-
     }
 
     @Override

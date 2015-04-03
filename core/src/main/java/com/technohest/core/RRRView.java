@@ -14,7 +14,9 @@ public class RRRView implements Screen {
 	/**
 	 * Initialize the Game, calling controller.getStage which calls model.getStage
 	 * @param controller
+	 * The controller which will be used to check the validity of requests and relaying the requests to the model
 	 * @param game
+	 * game is used to call switchTo when we want to go to menu
 	 */
 	public RRRView (RRRController controller, RRRMain game) {
 		this.game = game;

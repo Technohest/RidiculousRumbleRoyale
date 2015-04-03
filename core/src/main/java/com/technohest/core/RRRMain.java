@@ -25,12 +25,13 @@ public class RRRMain extends Game {
 
     /**
      * The screen param is a string which will be called through, switchTo("game")
-     * @param screen
+     * @param target
+     * The target screen
      */
-    public void switchTo(String screen){
-        if(screen.equals("game")){
+    public void switchTo(String target){
+        if(target.equals("game")){
             setScreen(gameScreen);
-        }else if(screen.equals("menu")){
+        }else if(target.equals("menu")){
             setScreen(menuScreen);
         }
     }

@@ -16,7 +16,9 @@ public class MenuInputListener extends InputListener {
      * target is what we want to switch to on a click event, this is good cause if we want to add options
      * we only need to pass the target as "options" and add such a screen to @class{RRRMain}
      * @param game
+     * Is used to switch screens
      * @param target
+     * The target switch screen
      */
     public MenuInputListener(RRRMain game, String target){
         this.game = game;
