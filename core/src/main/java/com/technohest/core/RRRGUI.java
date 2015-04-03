@@ -1,7 +1,9 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,17 +15,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 /**
  * Created by vilddjur on 2015-04-02.
  */
-public class RRRGUI implements ApplicationListener {
+public class RRRGUI implements Screen {
     private Stage           stage;
 
-    private boolean         inMenu=true;
+    private final RRRMain      game;
 
     private Skin            skin;
     private TextureAtlas    buttonAtlas;
     private BitmapFont      font;
 
-    @Override
-    public void create() {
+    public RRRGUI(RRRMain game) {
+        this.game = game;
+
         //Initialize
         stage = new Stage();
         /**
@@ -50,8 +53,8 @@ public class RRRGUI implements ApplicationListener {
         TextButton exitButton = new TextButton("Exit", style);
         TextButton playButton = new TextButton("Play", style);
 
-        playButton.addListener(new MenuInputListener());
-        exitButton.addListener(new MenuInputListener(){
+        playButton.addListener(new MenuInputListener(this.game, "game"));
+        exitButton.addListener(new MenuInputListener(this.game, "exit"){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
@@ -83,23 +86,26 @@ public class RRRGUI implements ApplicationListener {
     }
 
     @Override
-    public void render() {
-        if(inMenu) {
-            float r = (float) (9 / 255.0);
-            float g = (float) (205 / 255.0);
-            float b = (float) (218 / 255.0);
+    public void show() {
 
-            Gdx.gl.glClearColor(r, g, b, 1);
-            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-            stage.draw();
-        }
     }
-    private void startGame(){
-        inMenu=false;
-        RRRModel model = new RRRModel();
-        RRRController controller = new RRRController(model);
-        RRRView view = new RRRView(controller);
+
+    @Override
+    public void hide() {
+
     }
+
+    @Override
+    public void render(float delta) {
+        float r = (float) (9 / 255.0);
+        float g = (float) (205 / 255.0);
+        float b = (float) (218 / 255.0);
+
+        Gdx.gl.glClearColor(r, g, b, 1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        stage.draw();
+    }
+
     @Override
     public void pause() {
 
