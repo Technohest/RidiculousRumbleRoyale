@@ -6,7 +6,7 @@ import com.uwsoft.editor.renderer.SceneLoader;
 /**
  * Created by vilddjur on 2015-04-02.
  */
-public class Level extends Stage{
+public class LevelHandler extends Stage{
     /**
      * SceneLoader, as I understand it, simply loads all the relevant resources in assets
      * when we call loadScene we can pass different strings as a argument so if you want to
@@ -19,7 +19,7 @@ public class Level extends Stage{
      * through this we can easily call levelHandler.setStage("LevelAlldensMamma") and that method simply
      * reloads the scene, clears the Stage and loads the Actors.
      */
-    public Level(){
+    public LevelHandler(){
         SceneLoader sl = new SceneLoader();
 
         sl.loadScene("MainScene");

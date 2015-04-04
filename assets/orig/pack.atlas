@@ -20,14 +20,14 @@ cabinNight
   index: -1
 car
   rotate: false
-  xy: 1796, 665
+  xy: 1805, 780
   size: 158, 116
   orig: 158, 116
   offset: 0, 0
   index: -1
 cloud1Night
   rotate: false
-  xy: 1805, 783
+  xy: 1796, 665
   size: 177, 113
   orig: 177, 113
   offset: 0, 0
@@ -48,14 +48,14 @@ fire
   index: -1
 glow
   rotate: false
-  xy: 97, 19
+  xy: 674, 427
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
   index: -1
 goldenSheep
   rotate: false
-  xy: 674, 403
+  xy: 1965, 861
   size: 81, 66
   orig: 81, 66
   offset: 0, 0
@@ -125,7 +125,7 @@ lamp1
   index: -1
 miniPond
   rotate: false
-  xy: 1959, 898
+  xy: 303, 585
   size: 74, 29
   orig: 74, 29
   offset: 0, 0
@@ -139,7 +139,7 @@ ninja
   index: -1
 rainDrop
   rotate: false
-  xy: 303, 586
+  xy: 1617, 614
   size: 13, 28
   orig: 13, 28
   offset: 0, 0

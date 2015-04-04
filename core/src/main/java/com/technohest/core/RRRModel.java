@@ -6,11 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  * Created by Oskar on 2015-03-24.
  */
 public class RRRModel {
-    private Level level;
+    private LevelHandler levelHandler;
     public RRRModel(){
-        this.level = new Level();
+        this.levelHandler = new LevelHandler();
     }
     public Stage getStage() {
-        return level;
+        return levelHandler;
     }
 }
