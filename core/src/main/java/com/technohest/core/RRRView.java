@@ -1,6 +1,7 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,10 +27,11 @@ public class RRRView implements Screen {
 
 	@Override
 	public void render(float v) {
-		float r = (float) (9 / 255.0);
-		float g = (float) (205 / 255.0);
-		float b = (float) (218 / 255.0);
+		getInput();
 
+		float r = 9 / 255.0f;
+		float g = 205 / 255.0f;
+		float b = 218 / 255.0f;
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		stage.act();
@@ -60,5 +62,10 @@ public class RRRView implements Screen {
 
 	@Override
 	public void dispose () {
+	}
+	private void getInput(){
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+			game.switchTo("menu");
+		}
 	}
 }

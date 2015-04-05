@@ -59,16 +59,8 @@ public class RRRGUI implements Screen {
          * See @class{MenuInputListener}
          */
         playButton.addListener(new MenuInputListener(this.game, "game"));
-        /**
-         * override touchUp since we dont want to switch screens just exit,
-         * ----- maybe add "exit" case in switchTo?
-         */
-        exitButton.addListener(new MenuInputListener(this.game, "exit"){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
-            }
-        });
+
+        exitButton.addListener(new MenuInputListener(this.game, "exit"));
 
         Table table = new Table();
         /**
