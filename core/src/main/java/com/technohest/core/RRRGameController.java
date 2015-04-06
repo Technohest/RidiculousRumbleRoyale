@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 /**
  * Created by Oskar on 2015-03-24.
  */
-public class RRRController {
-    private final RRRModel model;
-    public RRRController(RRRModel model) {
+public class RRRGameController {
+    private final RRRGameModel model;
+    public RRRGameController(RRRGameModel model) {
         this.model = model;
     }
 

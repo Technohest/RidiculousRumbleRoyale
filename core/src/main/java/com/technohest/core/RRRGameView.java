@@ -6,8 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class RRRView implements Screen {
-	private final RRRController controller;
+public class RRRGameView implements Screen {
+	private final RRRGameController controller;
 	private final RRRMain		game;
 
 	private Stage 				stage;
@@ -19,7 +19,7 @@ public class RRRView implements Screen {
 	 * @param game
 	 * game is used to call switchTo when we want to go to menu
 	 */
-	public RRRView (RRRController controller, RRRMain game) {
+	public RRRGameView(RRRGameController controller, RRRMain game) {
 		this.game = game;
 		this.controller = controller;
 		this.stage = controller.getStage();

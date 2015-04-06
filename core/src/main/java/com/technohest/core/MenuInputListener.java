@@ -11,7 +11,7 @@ public class MenuInputListener extends InputListener {
     public final String     target;
 
     /**
-     * Ok here we might not need the param game, since we might be able to override it from RRRGUI
+     * Ok here we might not need the param game, since we might be able to override it from RRRMenuView
      * target is what we want to switch to on a click event, this is good cause if we want to add options
      * we only need to pass the target as "options" and add such a state to @class{RRRMain}
      * @param game

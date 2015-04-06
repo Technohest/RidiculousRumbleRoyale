@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 /**
  * Created by vilddjur on 2015-04-02.
  */
-public class RRRGUI implements Screen {
+public class RRRMenuView implements Screen {
     private Stage           stage;
     /**
      * The GUI needs to know the game in order to be able to call switchTo,
@@ -27,7 +27,7 @@ public class RRRGUI implements Screen {
     private TextureAtlas    buttonAtlas;
     private BitmapFont      font;
 
-    public RRRGUI(RRRMain game) {
+    public RRRMenuView(RRRMain game) {
         this.game = game;
 
         //Initialize
