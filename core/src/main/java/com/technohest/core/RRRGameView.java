@@ -5,12 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.uwsoft.editor.renderer.Overlap2DStage;
 
 public class RRRGameView implements Screen {
 	private final RRRGameController controller;
 	private final RRRMain		game;
 
-	private Stage 				stage;
+	private Overlap2DStage stage;
 
 	/**
 	 * Initialize the Game, calling controller.getStage which calls model.getStage

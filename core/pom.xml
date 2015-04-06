@@ -11,7 +11,6 @@
 	<artifactId>RidiculousRumbleRoyale-core</artifactId>
 	<packaging>jar</packaging>
 	<name>Main Core</name>
-
 	<dependencies>
 		<!-- kryonet -->
 		<dependency>
@@ -23,12 +22,30 @@
 		<dependency>
 			<groupId>com.underwaterapps.overlap2druntime</groupId>
 			<artifactId>overlap2d-runtime-libgdx</artifactId>
-			<version>0.0.8</version>
+			<version>0.0.9</version>
 		</dependency>
 		<!-- GDX -->
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<!-- GDX-Box2d -->
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-jnigen</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-box2d</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<!-- Box2d -->
+		<dependency>
+			<groupId>org.jbox2d</groupId>
+			<artifactId>jbox2d-library</artifactId>
+			<version>2.2.1.1</version>
 		</dependency>
 	</dependencies>
 
@@ -37,6 +54,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>

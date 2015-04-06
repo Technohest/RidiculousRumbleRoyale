@@ -1,12 +1,13 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.uwsoft.editor.renderer.Overlap2DStage;
 import com.uwsoft.editor.renderer.SceneLoader;
 
 /**
  * Created by vilddjur on 2015-04-02.
  */
-public class LevelHandler extends Stage{
+public class LevelHandler extends Overlap2DStage{
     /**
      * SceneLoader, as I understand it, simply loads all the relevant resources in assets
      * when we call loadScene we can pass different strings as a argument so if you want to
@@ -20,10 +21,10 @@ public class LevelHandler extends Stage{
      * reloads the scene, clears the Stage and loads the Actors.
      */
     public LevelHandler(){
-        SceneLoader sl = new SceneLoader();
+        initSceneLoader();
 
-        sl.loadScene("MainScene");
+        sceneLoader.loadScene("MainScene");
 
-        this.addActor(sl.getRoot());
+        this.addActor(sceneLoader.getRoot());
     }
 }
