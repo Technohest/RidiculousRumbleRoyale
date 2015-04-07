@@ -41,12 +41,6 @@
 			<artifactId>gdx-box2d</artifactId>
 			<version>1.5.5</version>
 		</dependency>
-		<!-- Box2d -->
-		<dependency>
-			<groupId>org.jbox2d</groupId>
-			<artifactId>jbox2d-library</artifactId>
-			<version>2.2.1.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>
