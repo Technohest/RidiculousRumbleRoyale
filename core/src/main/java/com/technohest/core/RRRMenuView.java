@@ -55,6 +55,7 @@ public class RRRMenuView implements Screen {
 
         TextButton exitButton = new TextButton("Exit", style);
         TextButton playButton = new TextButton("Play", style);
+        TextButton optionsButton = new TextButton("Options", style);
         /**
          * See @class{MenuInputListener}
          */
@@ -62,11 +63,15 @@ public class RRRMenuView implements Screen {
 
         exitButton.addListener(new MenuInputListener(this.game, "exit"));
 
+        optionsButton.addListener(new MenuInputListener(this.game, "options"));
+
         Table table = new Table();
         /**
          * Adding buttons to a Table to align easier
          */
         table.add(playButton);
+        table.row();
+        table.add(optionsButton);
         table.row();
         table.add(exitButton);
         /**

@@ -12,6 +12,7 @@ public class RRRMain extends Game {
      */
     private RRRMenuView menuScreen;
     private RRRGameView gameScreen;
+    private OptionsMenuView optionsScreen;
 
     @Override
     public void create() {
@@ -39,6 +40,11 @@ public class RRRMain extends Game {
             setScreen(menuScreen);
         }else if(target.equals("exit")){
             Gdx.app.exit();
+        }else if (target.equals("options")){
+            optionsScreen = new OptionsMenuView(this);
+            setScreen(optionsScreen);
+        }else if (target.equals("backFromOptions")) {
+            setScreen(menuScreen);
         }
     }
 }
