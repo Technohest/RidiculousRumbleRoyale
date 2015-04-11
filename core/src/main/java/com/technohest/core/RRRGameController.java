@@ -1,7 +1,6 @@
 package com.technohest.core;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.uwsoft.editor.renderer.Overlap2DStage;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 /**
  * Created by Oskar on 2015-03-24.
@@ -12,7 +11,7 @@ public class RRRGameController {
         this.model = model;
     }
 
-    public Overlap2DStage getStage() {
-        return model.getStage();
+    public TiledMap getLevel() {
+        return model.getLevel();
     }
 }

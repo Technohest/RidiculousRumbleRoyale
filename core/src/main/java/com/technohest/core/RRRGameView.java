@@ -4,17 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.uwsoft.editor.renderer.Overlap2DStage;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class RRRGameView implements Screen {
 	private final RRRGameController controller;
 	private final RRRMain		game;
 
-	private Overlap2DStage stage;
+	private TiledMap 			levelMap;
+	private TiledMapRenderer 	mapRenderer;
 
+	private OrthographicCamera 	camera;
 	/**
-	 * Initialize the Game, calling controller.getStage which calls model.getStage
+	 * Initialize the Game, calling controller.getLevel which calls model.getLevel
 	 * @param controller
 	 * The controller which will be used to check the validity of requests and relaying the requests to the model
 	 * @param game
@@ -23,7 +27,11 @@ public class RRRGameView implements Screen {
 	public RRRGameView(RRRGameController controller, RRRMain game) {
 		this.game = game;
 		this.controller = controller;
-		this.stage = controller.getStage();
+		this.levelMap = controller.getLevel();
+		mapRenderer = new OrthogonalTiledMapRenderer(levelMap);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false,1280,720);
+		camera.update();
 	}
 
 	@Override
@@ -35,8 +43,9 @@ public class RRRGameView implements Screen {
 		float b = 218 / 255.0f;
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-		stage.act();
-		stage.draw();
+		camera.update();
+		mapRenderer.setView(camera);
+		mapRenderer.render();
 	}
 
 	@Override
