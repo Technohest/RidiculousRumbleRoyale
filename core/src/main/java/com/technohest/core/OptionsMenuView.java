@@ -28,7 +28,6 @@ public class OptionsMenuView implements Screen{
     public OptionsMenuView(RRRMain game){
         this.game = game;
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
 
         font = new BitmapFont();
         font.scale(1.3f);
@@ -77,7 +76,7 @@ public class OptionsMenuView implements Screen{
     }
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

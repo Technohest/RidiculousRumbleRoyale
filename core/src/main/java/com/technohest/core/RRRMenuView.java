@@ -35,7 +35,6 @@ public class RRRMenuView implements Screen {
         /**
          * This sets the stage to be able to take in input (?)
          */
-        Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
         font.scale(2);
         /**
@@ -91,7 +90,7 @@ public class RRRMenuView implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
