@@ -21,14 +21,12 @@ public class RRRMenuView implements Screen {
      * The GUI needs to know the game in order to be able to call switchTo,
      * ----- is there a better way?
      */
-    private final RRRMain      game;
 
     private Skin            skin;
     private TextureAtlas    buttonAtlas;
     private BitmapFont      font;
 
-    public RRRMenuView(RRRMain game) {
-        this.game = game;
+    public RRRMenuView() {
 
         //Initialize
         stage = new Stage();
@@ -58,9 +56,9 @@ public class RRRMenuView implements Screen {
         /**
          * See @class{MenuInputListener}
          */
-        playButton.addListener(new MenuInputListener(this.game, "game"));
+        playButton.addListener(new MenuInputListener("game"));
 
-        exitButton.addListener(new MenuInputListener(this.game, "exit"));
+        exitButton.addListener(new MenuInputListener("exit"));
 
         Table table = new Table();
         /**

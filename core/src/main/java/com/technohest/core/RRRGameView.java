@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class RRRGameView implements Screen {
 	private final RRRGameController controller;
-	private final RRRMain		game;
 
 	private TiledMap 			levelMap;
 	private TiledMapRenderer 	mapRenderer;
@@ -21,11 +20,8 @@ public class RRRGameView implements Screen {
 	 * Initialize the Game, calling controller.getLevel which calls model.getLevel
 	 * @param controller
 	 * The controller which will be used to check the validity of requests and relaying the requests to the model
-	 * @param game
-	 * game is used to call switchTo when we want to go to menu
 	 */
-	public RRRGameView(RRRGameController controller, RRRMain game) {
-		this.game = game;
+	public RRRGameView(RRRGameController controller) {
 		this.controller = controller;
 		this.levelMap = controller.getLevel();
 		mapRenderer = new OrthogonalTiledMapRenderer(levelMap);
@@ -75,7 +71,7 @@ public class RRRGameView implements Screen {
 	}
 	private void getInput(){
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-			game.switchTo("menu");
+			ScreenHandler.getInstance().setScreen("menu");
 		}
 	}
 }
