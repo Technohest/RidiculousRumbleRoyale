@@ -4,7 +4,7 @@
   <image source="Tileset.png" width="65" height="65"/>
  </tileset>
  <tileset firstgid="5" name="Tileset" tilewidth="32" tileheight="32" spacing="1">
-  <image source="C:/Users/oskar/Desktop/Tileset.png" width="65" height="65"/>
+  <image source="Tileset.png" width="65" height="65"/>
  </tileset>
  <layer name="Background" width="40" height="23">
   <data encoding="base64" compression="zlib">
