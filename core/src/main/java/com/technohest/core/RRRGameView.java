@@ -24,6 +24,8 @@ public class RRRGameView implements Screen {
 
 	private OrthographicCamera 	camera;
 	private OrthographicCamera 	box2dcam;
+    private InputHandler inputHandler;
+
 
 	private Box2DDebugRenderer b2dr;
 	/**
@@ -33,7 +35,7 @@ public class RRRGameView implements Screen {
 	 */
 	public RRRGameView(RRRGameController controller) {
 		b2dr  = new Box2DDebugRenderer();
-
+        inputHandler = new InputHandler();
 		this.controller = controller;
 		this.levelMap = controller.getLevel();
 		mapRenderer = new OrthogonalTiledMapRenderer(levelMap);
@@ -133,7 +135,7 @@ public class RRRGameView implements Screen {
 
 	private void update(float v) {
 		getInput();
-		world.step(v,6,2);
+		world.step(v, 6, 2);
 	}
 
 	@Override
@@ -142,12 +144,12 @@ public class RRRGameView implements Screen {
 
 	@Override
 	public void show() {
-
-	}
+        Gdx.input.setInputProcessor(inputHandler);
+    }
 
 	@Override
 	public void hide() {
-
+        Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -161,9 +163,9 @@ public class RRRGameView implements Screen {
 	@Override
 	public void dispose () {
 	}
-	private void getInput(){
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-			ScreenHandler.getInstance().setScreen("menu");
-		}
-	}
+	private void getInput() {
+        if (inputHandler.hasInput()) {
+            System.out.println("has inpput");
+        }
+    }
 }
