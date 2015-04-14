@@ -1,13 +1,14 @@
 package com.technohest.characters;
 import com.badlogic.gdx.math.Vector2;
 import com.technohest.attacks.Attack;
+import com.technohest.core.Constants.*;
 
 /**
  * A template for characters.
  * @author Tobias Alldén
  * @version 1.0
  */
-public abstract class Character {
+public  class Character {
 
     //Constants, can be changed to feel.
     public static final float MAX_VELOCITY = 5f;
@@ -26,7 +27,7 @@ public abstract class Character {
     //Variables
     private Vector2 position,velocity,acceleration;
     private State state;
-     private Attack baseAttack,specialAttack;
+    private Attack baseAttack,specialAttack;
     private boolean isFacingRight;
     private boolean grounded;
     private float height;
@@ -38,10 +39,11 @@ public abstract class Character {
     private int kills;
     private int deaths;
 
-    public Character() {
-        this.position = new Vector2();
-        this.position = new Vector2();
+    public Character(Vector2 position) {
+        this.position = position;
         this.healthPoints = 100;
+        this.velocity = new Vector2(0,GRAVITY);
+        acceleration = new Vector2(2,0);
         this.kills = 0;
         this.deaths = 0;
     }
@@ -51,7 +53,7 @@ public abstract class Character {
      */
     public void update(float delta) {
         stateTime += delta;
-        position.add(velocity.cpy().scl(delta));
+        velocity.sub(acceleration.scl(delta));
     }
 
     /**
@@ -75,7 +77,10 @@ public abstract class Character {
     public Vector2 getPosition() {
         return position;
     }
-
+    public float getX() {return position.x;}
+    public float getY() {return position.y;}
+    public void setX(float x) {position.x = x;}
+    public void setY(float y) {position.y = y;}
     public void setPosition(Vector2 position) {
         this.position = position;
     }
