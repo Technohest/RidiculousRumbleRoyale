@@ -64,37 +64,40 @@ public class RRRGameView implements Screen {
 	 * The level where we get the tiles from
 	 */
 	private void createTiles(World world, TiledMap levelMap) {
-        TiledMapTileLayer layer = (TiledMapTileLayer) levelMap.getLayers().get("Foreground");
-        /**
-         * BodyDef and FixtureDef is used as temporary models which can later be added to a body
-         */
-        tileSize = layer.getTileWidth();
-        BodyDef bdef = new BodyDef();
-        FixtureDef fdef = new FixtureDef();
-        /**
-         * Create a box2d body for each tile
-         */
-        for (int r = 0; r < layer.getHeight(); r++) {
-            for (int c = 0; c < layer.getWidth(); c++) {
-                Cell cell = layer.getCell(c, r);
-                /**
-                 * If there is a tile on (r,w)
-                 */
-                if (cell != null && cell.getTile() != null) {
-                    bdef.type = BodyType.StaticBody;
-                    bdef.position.set(
-                            (c + 0.5f) * tileSize / PPM,
-                            (r + 0.5f) * tileSize / PPM
-                    );
-                    /**
-                     * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
-                     * this can be changed easily by adding more items to the vector, e.g a bottom.
-                     */
-                    ChainShape cs = new ChainShape();
-                    Vector2[] v = new Vector2[3];
-                    v[0] = new Vector2(-tileSize / 2 / PPM, -tileSize / 2 / PPM);
-                    v[1] = new Vector2(-tileSize / 2 / PPM, tileSize / 2 / PPM);
-                    v[2] = new Vector2(tileSize / 2 / PPM, tileSize / 2 / PPM);
+		TiledMapTileLayer layer = (TiledMapTileLayer) levelMap.getLayers().get("Foreground");
+		/**
+		 * BodyDef and FixtureDef is used as temporary models which can later be added to a body
+		 */
+		tileSize = layer.getTileWidth();
+		BodyDef bdef = new BodyDef();
+		FixtureDef fdef = new FixtureDef();
+		/**
+		 * Create a box2d body for each tile
+		 */
+		for(int r = 0; r < layer.getHeight(); r++){
+			for(int c = 0; c < layer.getWidth(); c++){
+				Cell cell = layer.getCell(c,r);
+				/**
+				 * If there is a tile on (r,w)
+				 */
+				if(cell != null && cell.getTile() != null){
+					bdef.type = BodyType.StaticBody;
+					bdef.position.set(
+							(c + 0.5f) * tileSize / PPM,
+							(r + 0.5f) * tileSize / PPM
+					);
+					/**
+					 * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
+					 * this can be changed easily by adding more items to the vector, e.g a bottom.
+					 */
+					ChainShape cs = new ChainShape();
+					Vector2[] v = new Vector2[5];
+					v[0] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
+					v[1] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
+					v[2] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
+					v[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
+					v[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
+
 
                     cs.createChain(v);
                     fdef.friction = 0;
