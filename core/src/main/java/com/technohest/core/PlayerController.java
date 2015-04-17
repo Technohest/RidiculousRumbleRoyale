@@ -1,14 +1,15 @@
 package com.technohest.core;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.technohest.characters.Character;
-import com.technohest.characters.CharacterView;
-import com.technohest.core.Constants.*;
+import com.technohest.assets.characters.Character;
+import com.technohest.assets.characters.CharacterView;
+import com.technohest.constants.Constants;
+import com.technohest.core.handlers.InputHandler;
 
 /**
  * A controller for the player.
  * @author Tobias Alldén
- * @version 1.0
+ * @version 1.1
  */
 public class PlayerController implements ContactListener {
     private Character player;
@@ -23,7 +24,7 @@ public class PlayerController implements ContactListener {
     }
     public void handleInput(InputHandler handler) {
         if (handler.isPressed(InputHandler.RIGHT)) {
-            view.getBody().setLinearVelocity(new Vector2(10,Constants.GRAVITY));
+            view.getBody().setLinearVelocity(new Vector2(10, Constants.GRAVITY));
         } if(handler.isPressed(InputHandler.LEFT)) {
             view.getBody().setLinearVelocity(new Vector2(-10, Constants.GRAVITY));
         }

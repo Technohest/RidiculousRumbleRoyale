@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.constants;
 
 /**
  * Created by oskar on 2015-04-13.

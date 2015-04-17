@@ -1,6 +1,6 @@
 package com.technohest.core;
 
-import static com.technohest.core.Constants.PPM;
+import static com.technohest.constants.Constants.PPM;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.technohest.constants.Constants;
+import com.technohest.core.handlers.InputHandler;
 
 public class RRRGameView implements Screen {
 	private final RRRGameController controller;
@@ -41,7 +43,7 @@ public class RRRGameView implements Screen {
 		/**
 		 * Initialize the box2d world with -9,82 gravity
 		 */
-		world = new World(new Vector2(0,Constants.GRAVITY), true);
+		world = new World(new Vector2(0, Constants.GRAVITY), true);
 
 		createTiles(world, levelMap);
 		/**

@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.handlers;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;

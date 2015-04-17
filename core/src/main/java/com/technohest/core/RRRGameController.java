@@ -2,9 +2,11 @@ package com.technohest.core;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.technohest.characters.*;
-import com.technohest.characters.Character;
-import static com.technohest.core.Constants.PPM;
+import com.technohest.assets.characters.Character;
+import com.technohest.core.handlers.InputHandler;
+import com.technohest.core.handlers.ScreenHandler;
+
+import static com.technohest.constants.Constants.PPM;
 
 /**
  * Created by Oskar on 2015-03-24.

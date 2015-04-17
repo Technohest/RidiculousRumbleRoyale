@@ -1,8 +1,7 @@
-package com.technohest.characters;
+package com.technohest.assets.characters;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 
-import static com.technohest.core.Constants.PPM;
+import static com.technohest.constants.Constants.PPM;
 
 /**
  * The view for the character.

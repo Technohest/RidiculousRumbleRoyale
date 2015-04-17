@@ -1,6 +1,7 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.technohest.core.handlers.LevelHandler;
 
 /**
  * Created by Oskar on 2015-03-24.

@@ -1,7 +1,6 @@
-package com.technohest.characters;
+package com.technohest.assets.characters;
 import com.badlogic.gdx.math.Vector2;
-import com.technohest.attacks.Attack;
-import com.technohest.core.Constants.*;
+import com.technohest.assets.attacks.Attack;
 
 /**
  * A template for characters.

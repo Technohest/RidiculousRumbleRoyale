@@ -2,6 +2,7 @@ package com.technohest.core;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.technohest.core.handlers.ScreenHandler;
 
 /**
  * Created by vilddjur on 2015-04-02.

@@ -1,4 +1,4 @@
-package com.technohest.attacks;
+package com.technohest.assets.attacks;
 
 /**
  * Created by allden on 2015-04-07.

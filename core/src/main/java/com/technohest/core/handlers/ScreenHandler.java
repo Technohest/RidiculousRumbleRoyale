@@ -1,7 +1,11 @@
-package com.technohest.core;
+package com.technohest.core.handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.technohest.core.RRRGameController;
+import com.technohest.core.RRRGameModel;
+import com.technohest.core.RRRGameView;
+import com.technohest.core.RRRMenuView;
 
 import java.util.Observable;
 

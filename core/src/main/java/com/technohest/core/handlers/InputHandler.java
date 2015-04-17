@@ -1,17 +1,17 @@
-package com.technohest.core;
+package com.technohest.core.handlers;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.technohest.constants.Controls;
 
 /**
  * A class for handling input.
  * @author Tobias Alldén
- * @version 1.0
+ * @version 1.1
  */
 public class InputHandler implements InputProcessor {
 
-    //Constants for keys, could be implemented better-
-
+    //Bits (numbers for the different actions)
     public static final int UP = 0;
     public static final int DOWN = 1;
     public static final int LEFT = 2;
@@ -21,6 +21,7 @@ public class InputHandler implements InputProcessor {
     public static final int BASE_ATTACK = 5;
 
     public static final int ESCAPE = 10;
+
 
 
     //Status for key, for example, buttons[3] = true, would mean that left(A) is being pressed
@@ -47,13 +48,13 @@ public class InputHandler implements InputProcessor {
         int button = -1;
 
 
-        if(key == Keys.W) button = JUMP;
-        if(key == Keys.S) button = DOWN;
-        if(key == Keys.A) button = LEFT;
-        if(key == Keys.D) button = RIGHT;
+        if(key == Controls.UP) button = JUMP;
+        if(key == Controls.DOWN) button = DOWN;
+        if(key == Controls.LEFT) button = LEFT;
+        if(key == Controls.RIGHT) button = RIGHT;
 
         if(key == Keys.SPACE) button = JUMP;
-        if(key == Keys.J) button = BASE_ATTACK;
+        if(key == Controls.BASE_ATTACK) button = BASE_ATTACK;
 
         if(key == Keys.ESCAPE ||key == Keys.MENU) button = ESCAPE;
 
@@ -93,14 +94,12 @@ public class InputHandler implements InputProcessor {
      */
     public void releaseAllKeys() {
         for (int i = 0; i < buttons.length; i++) {
-            if (i == UP || i == DOWN) {
+            if (i == Controls.UP || i == Controls.DOWN) {
                 continue;
             }
         buttons[i] = false;
     }
     }
-
-
 
 
 
