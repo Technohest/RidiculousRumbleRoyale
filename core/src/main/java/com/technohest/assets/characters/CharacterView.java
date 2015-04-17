@@ -30,10 +30,14 @@ public class CharacterView {
             bdef.type = BodyDef.BodyType.DynamicBody;
             body = world.createBody(bdef);
             body.setMassData(playerMass);
+            body.setLinearVelocity(0,0);
+            body.setLinearDamping(5);
+            body.setGravityScale(10);
+
 
         } else {
             player.setPosition(body.getPosition());
-            body.setLinearVelocity(player.getVelocity());
+
         }
 
         if(shape == null) {

@@ -24,16 +24,14 @@ public class PlayerController implements ContactListener {
     }
     public void handleInput(InputHandler handler) {
         if (handler.isPressed(InputHandler.RIGHT)) {
-            view.getBody().setLinearVelocity(new Vector2(10, Constants.GRAVITY));
+            view.getBody().setLinearVelocity(10,view.getBody().getLinearVelocity().y);
         } if(handler.isPressed(InputHandler.LEFT)) {
-            view.getBody().setLinearVelocity(new Vector2(-10, Constants.GRAVITY));
+            view.getBody().setLinearVelocity(-10,view.getBody().getLinearVelocity().y);
         }
         if(handler.isPressed(InputHandler.JUMP)) {
             if(player.isGrounded()) {
-                view.getBody().setLinearVelocity(new Vector2(0,100));
-            } else {
-
-            }
+                view.getBody().applyForceToCenter(0,view.getBody().getMass()*1000,true);
+                }
         }
     }
 
