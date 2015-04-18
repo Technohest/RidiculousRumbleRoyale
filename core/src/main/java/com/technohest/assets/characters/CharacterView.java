@@ -1,4 +1,5 @@
 package com.technohest.assets.characters;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -16,14 +17,13 @@ public class CharacterView {
     Body body;
     PolygonShape shape;
     MassData playerMass;
-
     public CharacterView(Character player) {
         bdef = new BodyDef();
         fdef = new FixtureDef();
         this.player = player;
     }
 
-    public void render(World world) {
+    public void render(World world, SpriteBatch batch) {
         if(body == null) {
             bdef.position.set(player.getPosition());
             playerMass = new MassData();
@@ -41,7 +41,7 @@ public class CharacterView {
 
         } else {
             player.setPosition(body.getPosition());
-
+            player.getSprite(body.getLinearVelocity().x > 0).draw(batch);
         }
 
         if(shape == null) {

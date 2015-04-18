@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -22,6 +24,8 @@ public class RRRGameView implements Screen {
 
 	private World				world;
 	private	float				tileSize;
+
+	private SpriteBatch			batch;
 
 	private OrthographicCamera 	camera;
 	private OrthographicCamera 	box2dcam;
@@ -56,6 +60,8 @@ public class RRRGameView implements Screen {
 		box2dcam = new OrthographicCamera();
 		box2dcam.setToOrtho(false, 1280 / PPM, 720 / PPM);
         world.setContactListener(controller.getPlayerController());
+
+		batch = new SpriteBatch();
 	}
 
 	/**
@@ -131,7 +137,9 @@ public class RRRGameView implements Screen {
         mapRenderer.setView(camera);
 		mapRenderer.render();
 		b2dr.render(world, box2dcam.combined);
-        controller.getPlayerController().drawPlayer(world);
+		batch.begin();
+		controller.getPlayerController().drawPlayer(world, batch);
+		batch.end();
 	}
 
 	private void update(float v) {

@@ -1,4 +1,5 @@
 package com.technohest.core;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.assets.characters.Character;
@@ -19,8 +20,8 @@ public class PlayerController implements ContactListener {
         this.player = player;
         this.view =  new CharacterView(player);
     }
-    public void drawPlayer(World world) {
-        view.render(world);
+    public void drawPlayer(World world, SpriteBatch batch) {
+        view.render(world, batch);
     }
     public void handleInput(InputHandler handler) {
         if (handler.isPressed(InputHandler.RIGHT)) {

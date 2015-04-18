@@ -1,4 +1,8 @@
 package com.technohest.assets.characters;
+import static com.technohest.constants.Constants.PPM;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.technohest.assets.attacks.Attack;
 
@@ -19,9 +23,10 @@ public  class Character {
 
     //State of character,may be reimplemented in future versions.
     public enum State {
-        Satnding,Running,Jumping,Falling
+        Standing,Running,Jumping,Falling
     }
 
+    private TextureAtlas atlas;
 
     //Variables
     private Vector2 position,velocity,acceleration;
@@ -45,6 +50,7 @@ public  class Character {
         acceleration = new Vector2(2,0);
         this.kills = 0;
         this.deaths = 0;
+        atlas = new TextureAtlas(Gdx.files.internal("assets/playersprite.pack"));
     }
 
     /**
@@ -186,5 +192,16 @@ public  class Character {
 
     public void setDeaths(int deaths) {
         this.deaths = deaths;
+    }
+
+    public Sprite getSprite(boolean right) {
+        Sprite sprite;
+        if(right){
+            sprite = atlas.createSprite("playerspriteRight");
+        }else{
+            sprite = atlas.createSprite("playerspriteLeft");
+        }
+        sprite.setPosition(getX()*PPM - sprite.getWidth()/2, getY()*PPM - sprite.getHeight()/2);
+        return sprite;
     }
 }
