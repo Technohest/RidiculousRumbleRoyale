@@ -36,6 +36,7 @@ public class RRRGameController {
     public void handleInput(InputHandler handler) {
         if(handler.isPressed(InputHandler.ESCAPE)) {
             ScreenHandler.getInstance().setScreen("menu");
+            handler.releaseAllKeys();
         } else {
             playerController.handleInput(handler);
         }
