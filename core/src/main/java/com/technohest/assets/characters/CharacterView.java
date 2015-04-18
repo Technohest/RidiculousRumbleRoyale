@@ -1,4 +1,5 @@
 package com.technohest.assets.characters;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static com.technohest.constants.Constants.PPM;
@@ -31,8 +32,11 @@ public class CharacterView {
             body = world.createBody(bdef);
             body.setMassData(playerMass);
             body.setLinearVelocity(0,0);
-            body.setLinearDamping(5);
+            body.setLinearDamping(10);
             body.setGravityScale(10);
+
+
+
 
 
         } else {
@@ -45,6 +49,19 @@ public class CharacterView {
             shape.setAsBox(20 / PPM, 30 / PPM);
             fdef.shape = shape;
             body.createFixture(fdef).setUserData("Player");
+
+            //Foot sensors
+            //right
+            shape.setAsBox(5 / PPM, 5/ PPM, new Vector2( 10/PPM, -30/PPM),0);
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            body.createFixture(fdef).setUserData("foot");
+
+            //left
+            shape.setAsBox(5 / PPM, 5/ PPM, new Vector2( -10/PPM, -30/PPM),0);
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            body.createFixture(fdef).setUserData("foot");
         }
 
     }
