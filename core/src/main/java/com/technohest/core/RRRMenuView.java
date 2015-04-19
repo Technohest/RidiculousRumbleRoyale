@@ -23,13 +23,42 @@ public class RRRMenuView implements Screen {
     private TextureAtlas    buttonAtlas;
     private BitmapFont      font;
 
-    public RRRMenuView() {
+    private TextButton exitButton;
+    private TextButton playButton;
 
-        //Initialize
+    public RRRMenuView() {
+        initVars();
+    }
+
+    /**
+     * Initializes variables
+     */
+    private void initVars() {
         stage = new Stage();
+
+        initButtons();
+
+        Table table = new Table();
         /**
-         * This sets the stage to be able to take in input (?)
+         * Adding buttons to a Table to align easier
          */
+        table.add(playButton);
+        table.row();
+        table.add(exitButton);
+        /**
+         * Making sure the table is centered
+         */
+        float x = (Gdx.graphics.getWidth())/2.0f;
+        float y = (Gdx.graphics.getHeight())/2.0f;
+        table.setPosition(x,y);
+
+        stage.addActor(table);
+    }
+
+    /**
+     * Initializes buttons and sets them to the same skin
+     */
+    private void initButtons() {
         font = new BitmapFont();
         font.scale(2);
         /**
@@ -47,30 +76,13 @@ public class RRRMenuView implements Screen {
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
 
-        TextButton exitButton = new TextButton("Exit", style);
-        TextButton playButton = new TextButton("Play", style);
+        exitButton = new TextButton("Exit", style);
+        playButton = new TextButton("Play", style);
         /**
          * See @class{MenuInputListener}
          */
         playButton.addListener(new MenuInputListener("game"));
-
         exitButton.addListener(new MenuInputListener("exit"));
-
-        Table table = new Table();
-        /**
-         * Adding buttons to a Table to align easier
-         */
-        table.add(playButton);
-        table.row();
-        table.add(exitButton);
-        /**
-         * Making sure the table is centered
-         */
-        float x = (Gdx.graphics.getWidth())/2.0f;
-        float y = (Gdx.graphics.getHeight())/2.0f;
-        table.setPosition(x,y);
-
-        stage.addActor(table);
     }
 
     @Override
