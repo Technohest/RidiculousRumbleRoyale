@@ -14,10 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
  */
 public class RRRMenuView implements Screen {
     private Stage           stage;
-    /**
-     * The GUI needs to know the game in order to be able to call switchTo,
-     * ----- is there a better way?
-     */
 
     private Skin            skin;
     private TextureAtlas    buttonAtlas;
@@ -71,7 +67,7 @@ public class RRRMenuView implements Screen {
         /**
          * We want both buttons to have a texture for when they have been pressed and when they are "idle"
          */
-        TextButtonStyle style = new TextButtonStyle();
+        TextButtonStyle style = new TextButtonStyle(); //ITS THE NEW STYLE
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
