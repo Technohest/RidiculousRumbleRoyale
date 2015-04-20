@@ -5,8 +5,8 @@ package com.technohest.constants;
  */
 public class Constants {
     public static final float PPM = 32;
-    public static final float WIDTH = 1280;
-    public static final float HEIGHT = 720;
+    public static final float DEF_WIDTH = 1280;
+    public static final float DEF_HEIGHT = 720;
     public static final float GRAVITY = -9.82f;
 
 

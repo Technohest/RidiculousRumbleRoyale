@@ -22,6 +22,8 @@ public class RRRMenuView implements Screen {
     private TextButton exitButton;
     private TextButton playButton;
 
+    private Table buttonTable;
+
     public RRRMenuView() {
         initVars();
     }
@@ -34,21 +36,21 @@ public class RRRMenuView implements Screen {
 
         initButtons();
 
-        Table table = new Table();
+        buttonTable = new Table();
         /**
          * Adding buttons to a Table to align easier
          */
-        table.add(playButton);
-        table.row();
-        table.add(exitButton);
+        buttonTable.add(playButton);
+        buttonTable.row();
+        buttonTable.add(exitButton);
         /**
          * Making sure the table is centered
          */
         float x = (Gdx.graphics.getWidth())/2.0f;
         float y = (Gdx.graphics.getHeight())/2.0f;
-        table.setPosition(x,y);
+        buttonTable.setPosition(x,y);
 
-        stage.addActor(table);
+        stage.addActor(buttonTable);
     }
 
     /**
@@ -83,7 +85,7 @@ public class RRRMenuView implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
+        stage.getViewport().update(i,i1,true);
     }
 
     @Override
