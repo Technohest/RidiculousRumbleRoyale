@@ -11,6 +11,6 @@ public class Constants {
 
 
     public static final int MOVEMENT_SPEED = 10;
-    public static  final int JUMP_FORCE_MULTIPLIER = 1500;
+    public static final int JUMP_FORCE_MULTIPLIER = 1500;
 
 }

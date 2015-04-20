@@ -41,7 +41,7 @@ public class CharacterView {
 
         } else {
             player.setPosition(body.getPosition());
-            player.getSprite(body.getLinearVelocity().x > 0).draw(batch);
+            player.getSprite().draw(batch);
         }
 
         if(shape == null) {

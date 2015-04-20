@@ -26,12 +26,14 @@ public class PlayerController implements ContactListener {
     public void handleInput(InputHandler handler) {
         if (handler.isPressed(InputHandler.RIGHT)) {
             view.getBody().setLinearVelocity(Constants.MOVEMENT_SPEED,view.getBody().getLinearVelocity().y);
+            player.setIsFacingRight(true);
         } if(handler.isPressed(InputHandler.LEFT)) {
             view.getBody().setLinearVelocity(-Constants.MOVEMENT_SPEED,view.getBody().getLinearVelocity().y);
+            player.setIsFacingRight(false);
         }
         if(handler.isPressed(InputHandler.JUMP)) {
             if(player.isGrounded()) {
-                view.getBody().applyForceToCenter(0,view.getBody().getMass()*Constants.JUMP_FORCE_MULTIPLIER,true);
+                   view.getBody().applyForceToCenter(0,view.getBody().getMass()*Constants.JUMP_FORCE_MULTIPLIER,true);
                 }
         }
     }
@@ -43,7 +45,8 @@ public class PlayerController implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        if(contact.getFixtureA().getUserData() == "foot" ||contact.getFixtureB().getUserData() == "foot") {
+        if(contact.getFixtureA().getUserData() == "foot"
+                || contact.getFixtureB().getUserData() == "foot") {
             player.setGrounded(true);
         }
 
@@ -52,7 +55,8 @@ public class PlayerController implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        if(contact.getFixtureA().getUserData() == "foot" ||contact.getFixtureB().getUserData() == "foot") {
+        if(contact.getFixtureA().getUserData() == "foot"
+                || contact.getFixtureB().getUserData() == "foot") {
             player.setGrounded(false);
         }
     }

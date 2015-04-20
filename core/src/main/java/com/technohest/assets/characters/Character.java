@@ -194,9 +194,9 @@ public  class Character {
         this.deaths = deaths;
     }
 
-    public Sprite getSprite(boolean right) {
+    public Sprite getSprite() {
         Sprite sprite;
-        if(right){
+        if(isFacingRight){
             sprite = atlas.createSprite("playerspriteRight");
         }else{
             sprite = atlas.createSprite("playerspriteLeft");
