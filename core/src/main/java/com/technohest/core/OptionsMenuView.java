@@ -24,55 +24,66 @@ public class OptionsMenuView implements Screen{
     private Stage stage;
     private final RRRMain game;
     private Skin labelSkin;
+    private Table graphicsTable;
+    private Table soundTable;
+    private Table gameplayTable;
+    private TextButton graphicsButton;
+    private TextButton soundButton;
+    private TextButton gameplayButton;
+    private TextButton backButton;
+    private Table buttonsTable;
+
 
     public OptionsMenuView(RRRMain game){
         this.game = game;
         stage = new Stage();
-
         font = new BitmapFont();
         font.scale(1.3f);
         buttonAtlas = new TextureAtlas("assets/menuButtons.pack");
-
         skin = new Skin();
         skin.addRegions(buttonAtlas);
-
         labelSkin = new Skin();
         labelSkin.add("default", new BitmapFont());
-
         TextButtonStyle style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
 
-        TextButton graphicsButton = new TextButton("Graphics", style);
-        TextButton soundButton = new TextButton("Sound", style);
-        TextButton gamePlayButton = new TextButton("Gameplay", style);
-        TextButton textButton = new TextButton("Here there will be information corresponding to each button.", style);
-        TextButton backButton = new TextButton("Back", style);
+        graphicsTable = new Table();
+        soundTable = new Table();
+        gameplayTable = new Table();
+        buttonsTable = new Table();
 
-        graphicsButton.addListener(new MenuInputListener(this.game, "graphics"));
-        soundButton.addListener(new MenuInputListener(this.game, "sound"));
-        gamePlayButton.addListener(new MenuInputListener(this.game, "gamePlay"));
-        textButton.addListener(new MenuInputListener(this.game, "swag"));
+
+        graphicsButton = new TextButton("Graphics", style);
+        soundButton = new TextButton("Sound", style);
+        gameplayButton = new TextButton("Gameplay", style);
+        backButton = new TextButton("Back", style);
+
+        graphicsButton.addListener(new OptionsInputListener(this, graphicsTable, "graphics"));
+        soundButton.addListener(new OptionsInputListener(this, soundTable, "sound"));
+        gameplayButton.addListener(new OptionsInputListener(this, gameplayTable, "gameplay"));
         backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
-
-        Table buttonsTable = new Table();
-        Table optionsTable = new Table();
-
-        buttonsTable.add(graphicsButton);
-        buttonsTable.add(soundButton);
-        buttonsTable.add(gamePlayButton);
-        buttonsTable.add(backButton);
-        optionsTable.add(textButton);
 
         float x = (Gdx.graphics.getWidth())/2.0f;
         float y = (Gdx.graphics.getHeight())/2.0f;
 
         buttonsTable.setPosition(x, y+300);
-        stage.addActor(buttonsTable);
-        optionsTable.setPosition(x,y);
-        stage.addActor(optionsTable);
+        graphicsTable.setPosition(x, y);
+        soundTable.setPosition(x,y);
+        gameplayTable.setPosition(x,y);
 
+        graphicsTable.add(new TextButton("inside graphics", style));
+        soundTable.add(new TextButton("inside sound", style));
+        gameplayTable.add(new TextButton("inside gameplay",style));
+
+        buttonsTable.add(graphicsButton);
+        buttonsTable.add(soundButton);
+        buttonsTable.add(gameplayButton);
+        buttonsTable.add(backButton);
+
+        stage.addActor(buttonsTable);
+        stage.addActor(graphicsTable);
     }
     @Override
     public void show() {
@@ -116,5 +127,18 @@ public class OptionsMenuView implements Screen{
         skin.dispose();
         font.dispose();
         stage.dispose();
+    }
+
+    public void switchTo(String target){
+        stage.clear();
+        stage.addActor(buttonsTable);
+        if(target=="graphics"){
+            stage.addActor(graphicsTable);
+        }else if (target=="sound"){
+            stage.addActor(soundTable);
+        }else if (target=="gameplay"){
+            stage.addActor(gameplayTable);
+        }
+
     }
 }
