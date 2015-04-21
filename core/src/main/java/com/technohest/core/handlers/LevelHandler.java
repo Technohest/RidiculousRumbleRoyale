@@ -11,7 +11,7 @@ public class LevelHandler{
     private TmxMapLoader loader;
     public LevelHandler(){
         loader = new TmxMapLoader();
-        tiledMap = loader.load("testlevel.tmx");
+        setLevel("testlevel");
     }
 
     /**
