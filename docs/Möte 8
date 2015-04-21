@@ -1,0 +1,42 @@
+        Projektmöte 8
+            "The Return of The King"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Oskar, Tobias, David, Oscar
+    Datum:          2015-04-21
+
+
+
+§1 Mötets öppnande.
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Grundstrukturern behövs refaktoreras
+
+§3 Punkter från förra mötet.
+    - Förbättra rörelsen
+        Har gjorts men behövs mer.
+        Vi ska även refaktorera player så det kan göras medans förbättring av rörelsen sker.
+    - Börja jobba med iteration 2 (Nätverk + Attacker)
+§4 Projektets status
+    - Iteration 1 är klar, jobb på nätverk och attacker fortsätter.
+
+§5 Bestämmelser
+    - Denna veckan ska vi framförallt refaktorera MVC-mönstret
+        Alla:   På fredag sätter vi oss tillsammans och refaktorerar
+        David:  Ska arbeta med nätverk dessutom
+        Oskar:  Snyggare level, refaktorera level så vi får en levelhandler
+        Oscar:  Options (möjlighet att spara). Strukturerar rapporten.
+        Tobias: Karaktärsklassen ska refaktoreras och avslutas
+    - Varje vecka framöver på torsdag kollar vi RADen och Veckomålen.
+§6 Genomgång av info från möte med handledare
+    - MVC stukruren är ej klar
+    - Jobba på analysmodellen, förbättra
+
+§7 Inför kommande möte + fikaansvarig
+    - Fikaansvarig: Oskar
+    - Jobba med det nämnda under bestämmelser.
+
+§8 Övriga frågor/ Synpunkter
+
+§9 Mötet avslutas
+    "Practice does not make perfect. Only perfect practice makes perfect"
