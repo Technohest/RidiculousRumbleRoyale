@@ -12,6 +12,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.technohest.assets.attacks.Projectile;
+import com.technohest.assets.characters.*;
+import com.technohest.assets.characters.Character;
 import com.technohest.constants.Constants;
 import com.technohest.core.handlers.InputHandler;
 
@@ -58,9 +61,8 @@ public class RRRGameView implements Screen {
 
 		box2dcam = new OrthographicCamera();
 		box2dcam.setToOrtho(false, 1280 / PPM, 720 / PPM);
-        world.setContactListener(controller.getPlayerController());
-
 		batch = new SpriteBatch();
+
 	}
 
 	/**
@@ -126,7 +128,6 @@ public class RRRGameView implements Screen {
 	@Override
 	public void render(float v) {
 		update(v);
-        controller.update(v);
 
 		float r = 9 / 255.0f;
 		float g = 205 / 255.0f;
@@ -137,14 +138,19 @@ public class RRRGameView implements Screen {
 		mapRenderer.render();
 		b2dr.render(world, box2dcam.combined);
 		batch.begin();
-		controller.getPlayerController().drawPlayer(world, batch);
 		batch.end();
 	}
 
 	private void update(float v) {
-		getInput();
+        if(inputHandler.hasInput()) {
+            controller.handleInput(inputHandler);
+        }
+
 		world.step(v, 6, 2);
 	}
+    public World getWorld() {
+        return this.world;
+    }
 
 	@Override
 	public void resize (int width, int height) {
@@ -171,7 +177,4 @@ public class RRRGameView implements Screen {
 	@Override
 	public void dispose () {
 	}
-	private void getInput() {
-        controller.handleInput(inputHandler);
-    }
 }
