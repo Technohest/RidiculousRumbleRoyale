@@ -1,14 +1,11 @@
 package com.technohest.core;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -24,36 +21,54 @@ public class OptionsMenuView implements Screen{
     private Stage stage;
     private final RRRMain game;
     private Skin labelSkin;
-    private Table graphicsTable;
-    private Table soundTable;
-    private Table gameplayTable;
     private TextButton graphicsButton;
     private TextButton soundButton;
     private TextButton gameplayButton;
     private TextButton backButton;
-    private Table buttonsTable;
+    private TextButtonStyle style;
+    private float x,y;
+    private Label.LabelStyle labelStyle;
+    private BitmapFont font2;
+    private Label label2;
 
+    //new variables
+    private Table mainTable;
+    private Table navigationTable;
+    private Table graphicsTable;
+    private Table soundTable;
+    private Table gameplayTable;
+    private Table currentTable;
 
     public OptionsMenuView(RRRMain game){
         this.game = game;
         stage = new Stage();
         font = new BitmapFont();
         font.scale(1.3f);
+
+        //ButtonSkin
         buttonAtlas = new TextureAtlas("assets/menuButtons.pack");
         skin = new Skin();
         skin.addRegions(buttonAtlas);
         labelSkin = new Skin();
         labelSkin.add("default", new BitmapFont());
-        TextButtonStyle style = new TextButtonStyle();
+
+        style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
+        x = (Gdx.graphics.getWidth())/2.0f;
+        y = (Gdx.graphics.getHeight())/2.0f;
 
-        graphicsTable = new Table();
-        soundTable = new Table();
-        gameplayTable = new Table();
-        buttonsTable = new Table();
+        //Table
+        createGraphicsTable();
+        createSoundTable();
+        createGameplayTable();
 
+        labelStyle = new Label.LabelStyle(font,Color.WHITE);
+
+        navigationTable = new Table();
+        mainTable = new Table();
+        currentTable = graphicsTable;
 
         graphicsButton = new TextButton("Graphics", style);
         soundButton = new TextButton("Sound", style);
@@ -65,25 +80,39 @@ public class OptionsMenuView implements Screen{
         gameplayButton.addListener(new OptionsInputListener(this, gameplayTable, "gameplay"));
         backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
 
-        float x = (Gdx.graphics.getWidth())/2.0f;
-        float y = (Gdx.graphics.getHeight())/2.0f;
+        mainTable.setPosition(x,y);
+        navigationTable.add(graphicsButton);
+        navigationTable.add(soundButton);
+        navigationTable.add(gameplayButton);
+        navigationTable.add(backButton);
 
-        buttonsTable.setPosition(x, y+300);
-        graphicsTable.setPosition(x, y);
-        soundTable.setPosition(x,y);
-        gameplayTable.setPosition(x,y);
+        updateStage();
 
-        graphicsTable.add(new TextButton("inside graphics", style));
+        stage.addActor(mainTable);
+    }
+    public void createGraphicsTable(){
+        graphicsTable = new Table();
+
+        //Design the table here
+        font2 = new BitmapFont(false);
+        font2.scale(1.5f);
+        labelStyle = new Label.LabelStyle(font2,Color.WHITE);
+        label2 = new Label("Resoulution:", labelStyle);
+        graphicsTable.add(label2);
+    }
+    public void createSoundTable(){
+        soundTable = new Table();
+
+        //Design the table here
         soundTable.add(new TextButton("inside sound", style));
+
+    }
+    public void createGameplayTable(){
+        gameplayTable = new Table();
+
+        //Design the table here
         gameplayTable.add(new TextButton("inside gameplay",style));
 
-        buttonsTable.add(graphicsButton);
-        buttonsTable.add(soundButton);
-        buttonsTable.add(gameplayButton);
-        buttonsTable.add(backButton);
-
-        stage.addActor(buttonsTable);
-        stage.addActor(graphicsTable);
     }
     @Override
     public void show() {
@@ -130,15 +159,19 @@ public class OptionsMenuView implements Screen{
     }
 
     public void switchTo(String target){
-        stage.clear();
-        stage.addActor(buttonsTable);
         if(target=="graphics"){
-            stage.addActor(graphicsTable);
+            currentTable = graphicsTable;
         }else if (target=="sound"){
-            stage.addActor(soundTable);
+            currentTable = soundTable;
         }else if (target=="gameplay"){
-            stage.addActor(gameplayTable);
+            currentTable = gameplayTable;
         }
-
+        updateStage();
+    }
+    private void updateStage(){
+        mainTable.clear();
+        mainTable.add(navigationTable);
+        mainTable.row();
+        mainTable.add(currentTable);
     }
 }
