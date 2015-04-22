@@ -21,6 +21,8 @@ public class RRRMenuView implements Screen {
 
     private TextButton exitButton;
     private TextButton playButton;
+    private TextButton joinButton;
+    private TextButton hostButton;
 
     private Table buttonTable;
 
@@ -40,6 +42,10 @@ public class RRRMenuView implements Screen {
         /**
          * Adding buttons to a Table to align easier
          */
+        buttonTable.add(joinButton);
+        buttonTable.row();
+        buttonTable.add(hostButton);
+        buttonTable.row();
         buttonTable.add(playButton);
         buttonTable.row();
         buttonTable.add(exitButton);
@@ -76,11 +82,15 @@ public class RRRMenuView implements Screen {
 
         exitButton = new TextButton("Exit", style);
         playButton = new TextButton("Play", style);
+        joinButton = new TextButton("Join", style);
+        hostButton = new TextButton("Host", style);
         /**
          * See @class{MenuInputListener}
          */
         playButton.addListener(new MenuInputListener("game"));
         exitButton.addListener(new MenuInputListener("exit"));
+        joinButton.addListener(new MenuInputListener("join"));
+        hostButton.addListener(new MenuInputListener("host"));
     }
 
     @Override
