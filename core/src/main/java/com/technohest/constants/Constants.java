@@ -10,7 +10,9 @@ public class Constants {
     public static final float GRAVITY = -9.82f;
 
 
+    //Character specific variables
     public static final int MOVEMENT_SPEED = 10;
     public static final int JUMP_FORCE_MULTIPLIER = 1500;
+    public static final int GRAVITY_SCALE = 8;
 
 }
