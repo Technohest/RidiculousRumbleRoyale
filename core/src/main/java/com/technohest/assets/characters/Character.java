@@ -50,18 +50,14 @@ public  class Character {
      * @param height - height of the character.
      * @param width - Width of the character.
      * @param mass - Character mass
-     * @param baseAttack - base attack
-     * @param specialAttack - special attack
      */
-    public Character(World world, Vector2 position, float width,float height,int mass,Attack baseAttack,Attack specialAttack) {
+    public Character(World world, Vector2 position, float width,float height,int mass) {
         this.position = position;
         this.healthPoints = 100;
         this.kills = 0;
         this.deaths = 0;
         this.playerMass = new MassData();
         playerMass.mass = mass;
-        this.baseAttack = baseAttack;
-        this.specialAttack = specialAttack;
 
         atlas = new TextureAtlas(Gdx.files.internal("assets/playersprite.pack"));
         BodyDef bdef = new BodyDef();
@@ -88,12 +84,27 @@ public  class Character {
 
     }
 
+    public void move(Vector2 direction) {
+        this.body.setLinearVelocity(direction);
+    }
+    public void jump() {
+        body.applyForceToCenter(0,getPlayerMass()*Constants.JUMP_FORCE_MULTIPLIER,true);
+        this.state = State.Jumping;
+    }
+
     /**
      * Updates the character.
      */
     public void update(float delta) {
         stateTime += delta;
         velocity.sub(acceleration.scl(delta));
+        if(!isGrounded()) {
+            this.state = State.Falling;
+        } else if(velocity.x > 0) {
+             this.state = State.Running;
+        } else {
+            state = State.Standing;
+        }
     }
 
     /**
@@ -241,8 +252,8 @@ public  class Character {
         return shape;
     }
 
-    public MassData getPlayerMass() {
-        return playerMass;
+    public float getPlayerMass() {
+        return playerMass.mass;
     }
 
     public Sprite getSprite() {
