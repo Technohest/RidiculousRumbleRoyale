@@ -4,22 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.assets.attacks.Attack;
+import com.technohest.constants.Constants;
+
+import java.io.Console;
 
 /**
  * A template for characters.
  * @author Tobias Alldén
- * @version 1.0
+ * @version 1.1
  */
 public  class Character {
 
-    //Constants, can be changed to feel.
-    public static final float MAX_VELOCITY = 5f;
-    public static final float JUMP_VELOCITY = 2f;
-    public static final float DAMPING = 0.87f;
-    public static final float GRAVITY = -22.0f;
-    public static final float MAX_JUMP_SPEED = 9f;
-    public static final  long LONG_JUMP_PRESS = 1501;
 
     //State of character,may be reimplemented in future versions.
     public enum State {
@@ -37,20 +34,58 @@ public  class Character {
     private float height;
     private float width;
     private float stateTime;
+    private Body body;
+    private PolygonShape shape;
+    private MassData playerMass;
 
     //Game specific variables;
     private int healthPoints;
     private int kills;
     private int deaths;
 
-    public Character(Vector2 position) {
+    /**
+     * Creates a character.
+     * @param world - The world in wich the character will exist.
+     * @param position - Starting position for character.
+     * @param height - height of the character.
+     * @param width - Width of the character.
+     * @param mass - Character mass
+     * @param baseAttack - base attack
+     * @param specialAttack - special attack
+     */
+    public Character(World world, Vector2 position, float width,float height,int mass,Attack baseAttack,Attack specialAttack) {
         this.position = position;
         this.healthPoints = 100;
-        this.velocity = new Vector2(0,GRAVITY);
-        acceleration = new Vector2(2,0);
         this.kills = 0;
         this.deaths = 0;
+        this.playerMass = new MassData();
+        playerMass.mass = mass;
+        this.baseAttack = baseAttack;
+        this.specialAttack = specialAttack;
+
         atlas = new TextureAtlas(Gdx.files.internal("assets/playersprite.pack"));
+        BodyDef bdef = new BodyDef();
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.gravityScale = Constants.GRAVITY_SCALE;
+        bdef.linearDamping = 10;
+        body = world.createBody(bdef);
+        body.setMassData(playerMass);
+        body.setLinearVelocity(0,0);
+
+
+        shape = new PolygonShape();
+        shape.setAsBox(height / Constants.PPM, width / Constants.PPM);
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        body.createFixture(fdef).setUserData("Player");
+
+        //Foot sensors
+        shape.setAsBox((width/4)/Constants.PPM,(width/4)/Constants.PPM, new Vector2((width/2)/PPM,height/PPM),0);
+        fdef.shape = shape;
+        body.createFixture(fdef).setUserData("PlayerFoot");
+
+
+
     }
 
     /**
@@ -192,6 +227,22 @@ public  class Character {
 
     public void setDeaths(int deaths) {
         this.deaths = deaths;
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public PolygonShape getShape() {
+        return shape;
+    }
+
+    public MassData getPlayerMass() {
+        return playerMass;
     }
 
     public Sprite getSprite() {
