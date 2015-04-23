@@ -1,0 +1,53 @@
+        Projektmöte 9
+            "Attack of the clones"
+
+    Sekreterare: Oskar Jedvert
+    Deltagare: Samtliga
+    Datum: 2015-04-23
+
+
+
+§1 Mötets öppnande.
+    - Oskar sekreterare
+    - Oskar fikaansvarig
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Bristande MVC-struktur
+        Vi sätter oss imorrn och reder ut detta
+
+§3 Punkter från förra mötet.
+    - Jobba med:
+        - Character(Allden)
+            Snart(^tm)
+        - Ny Level/LevelHandler(Oskar)
+            Inte ny level men levelhandlern är implementerad
+        - Nätverk(Schtek)
+            Går att kommunicera över localhost, borde funka för nätverk.
+        - Options(Boking)
+            Ändrad table-struktur,fixa options , fixa sparfil.
+
+§4 Projektets status
+    - Refaktorera MVC
+        - Sätter oss på fredag och bankar ut det.
+    - Ligger bra till i tidsplanen
+
+§5 Bestämmelser
+    - NULL
+
+§6 Genomgång av info från möte med handledare
+    - NULL
+
+§7 Inför kommande möte + fikaansvarig
+    - Refaktorera till komplett MVC
+        - Aktiv vs Passiv
+            - Vi kommer ändå rendera 60 ggr i sekunden
+            - Aktiv passar bättre till turnbased spel eller gränsnitt
+            - "Det kommer hända någonting hela tiden"
+    - Character återigen i spelet
+        - Refaktoreringen är inte klar
+
+§8 Övriga frågor/ Synpunkter
+    - NULL
+
+§9 Mötet avslutas
+
