@@ -1,8 +1,7 @@
-package com.technohest.core.view;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.technohest.core.handlers.ScreenHandler;
 
 import java.util.Observable;
 import java.util.Observer;

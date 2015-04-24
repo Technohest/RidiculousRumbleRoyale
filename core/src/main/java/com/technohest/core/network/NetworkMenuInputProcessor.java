@@ -2,8 +2,8 @@ package com.technohest.core.network;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.technohest.core.handlers.SCREEN;
-import com.technohest.core.handlers.ScreenHandler;
+import com.technohest.core.menu.SCREEN;
+import com.technohest.core.menu.ScreenHandler;
 
 /**
  * Manages the input done in the IPPortInputScreen, only allows numbers 0-9 and '.' as input which it saves to a

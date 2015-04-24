@@ -1,4 +1,4 @@
-package com.technohest.core.view;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

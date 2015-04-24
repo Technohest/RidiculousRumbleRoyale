@@ -5,7 +5,7 @@ import com.technohest.constants.Controls;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
-import com.technohest.core.handlers.ScreenHandler;
+import com.technohest.core.menu.ScreenHandler;
 
 /**
  * Created by Oskar on 2015-03-24.
