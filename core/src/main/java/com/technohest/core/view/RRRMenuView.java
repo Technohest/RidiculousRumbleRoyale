@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.technohest.core.controller.MenuInputListener;
 
 /**
  * Created by vilddjur on 2015-04-02.

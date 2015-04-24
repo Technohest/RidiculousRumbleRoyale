@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.network;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.technohest.core.handlers.SCREEN;
 import com.technohest.core.handlers.ScreenHandler;
+import com.technohest.core.network.NetworkMenuInputProcessor;
 
 /**
  * Queries the user to enter an ip or port depending on if the current session is creating a server or not.

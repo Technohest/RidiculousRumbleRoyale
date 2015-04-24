@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
-import com.technohest.core.NetworkMenuUtility;
+import com.technohest.core.network.NetworkMenuUtility;
 
 /**
  * Created by time on 2015-04-21.

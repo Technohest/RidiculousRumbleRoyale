@@ -2,7 +2,7 @@ package com.technohest.java;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.technohest.core.RRRMain;
+import com.technohest.core.view.RRRMain;
 
 public class MainDesktop {
 	public static void main (String[] args) {

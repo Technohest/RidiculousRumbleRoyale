@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.network;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;

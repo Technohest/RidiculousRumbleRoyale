@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.technohest.core.handlers.LevelHandler;

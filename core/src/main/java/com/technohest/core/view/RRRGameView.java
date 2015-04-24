@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.view;
 
 import static com.technohest.constants.Constants.PPM;
 import com.badlogic.gdx.Gdx;
@@ -12,10 +12,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.technohest.assets.attacks.Projectile;
-import com.technohest.assets.characters.*;
-import com.technohest.assets.characters.Character;
 import com.technohest.constants.Constants;
+import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.handlers.InputHandler;
 
 public class RRRGameView implements Screen {
