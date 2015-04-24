@@ -47,6 +47,13 @@ public class RRRGameModel {
         /**
          * Create a box2d body for each tile
          */
+        Vector2[] boxVector = new Vector2[5];
+        boxVector[0] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
+        boxVector[1] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
+        boxVector[2] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
+        boxVector[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
+        boxVector[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
+
         for(int r = 0; r < layer.getHeight(); r++){
             for(int c = 0; c < layer.getWidth(); c++){
                 TiledMapTileLayer.Cell cell = layer.getCell(c,r);
@@ -64,13 +71,7 @@ public class RRRGameModel {
                      * this can be changed easily by adding more items to the vector, e.g a bottom.
                      */
                     ChainShape cs = new ChainShape();
-                    Vector2[] v = new Vector2[5];
-                    v[0] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
-                    v[1] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
-                    v[2] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
-                    v[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
-                    v[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
-
+                    Vector2[] v = boxVector;
 
                     cs.createChain(v);
                     fdef.friction = 0;

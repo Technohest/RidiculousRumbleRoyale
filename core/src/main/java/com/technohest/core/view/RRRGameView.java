@@ -43,7 +43,6 @@ public class RRRGameView implements Screen {
 		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel());
 		batch = new SpriteBatch();
 
-		model.generateWorld();
 		/**
 		 * camera is used to draw the tiles
 		 * box2dcam is used to "draw" all bodies
