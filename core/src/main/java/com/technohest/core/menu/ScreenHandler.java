@@ -28,7 +28,9 @@ public class ScreenHandler extends Observable {
     //-------------THE SCREENHANDLER----------------\\
     protected ScreenHandler() {
         RRRGameModel model = new RRRGameModel();
-        gameScreen = new RRRGameView(new RRRGameController(model, gameScreen), model);
+        gameScreen = new RRRGameView(
+                new RRRGameController(model, gameScreen)
+                , model);
     }
 
     public static ScreenHandler getInstance() {
