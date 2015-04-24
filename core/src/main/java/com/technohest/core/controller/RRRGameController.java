@@ -10,26 +10,26 @@ import com.technohest.core.menu.ScreenHandler;
 /**
  * Created by Oskar on 2015-03-24.
  */
-public class RRRGameController {
-    private final RRRGameModel model;
-    private RRRGameView view;
-    private InputHandler inputHandler;
-    public RRRGameController(RRRGameModel model) {
+public class RRRGameController extends InputHandler{
+    private final RRRGameModel  model;
+    private final RRRGameView   view;
+
+    public RRRGameController(RRRGameModel model, RRRGameView view) {
+        super();
         this.model = model;
+        this.view = view;
     }
 
     public TiledMap getLevel() {
         return model.getLevel();
     }
 
-
-
-    public void handleInput(InputHandler handler) {
-        if(handler.isPressed(InputHandler.ESCAPE)) {
+    public void handleInput() {
+        if(this.isPressed(InputHandler.ESCAPE)) {
             ScreenHandler.getInstance().setScreen("menu");
-            handler.releaseAllKeys();
+            this.releaseAllKeys();
         }
-        if (handler.isPressed(InputHandler.RIGHT)) {
+       /*if (handler.isPressed(InputHandler.RIGHT)) {
             model.movePlayer(Controls.RIGHT);
 
         } if(handler.isPressed(InputHandler.LEFT)) {
@@ -42,8 +42,14 @@ public class RRRGameController {
         }
         if(handler.isPressed(InputHandler.BASE_ATTACK)) {
             model.movePlayer(Controls.BASE_ATTACK);
-        }
+        }*/
     }
 
 
+    public void updateGame(float v) {
+        if(this.hasInput()) {
+            this.handleInput();
+        }
+        model.step(v);
+    }
 }

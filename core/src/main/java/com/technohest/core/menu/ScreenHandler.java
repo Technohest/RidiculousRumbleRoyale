@@ -16,7 +16,7 @@ import java.util.Observable;
 public class ScreenHandler extends Observable {
     // All the different possible screens
     private Screen menuScreen = new RRRMenuView();
-    private Screen gameScreen = new RRRGameView(new RRRGameController(new RRRGameModel()));
+    private RRRGameView gameScreen;
     private Screen ipPortInputScreen = new IPPortInputScreen();
     private Screen lobbyScreen = new LobbyScreen();
 
@@ -26,7 +26,10 @@ public class ScreenHandler extends Observable {
     private static ScreenHandler instance = null;
 
     //-------------THE SCREENHANDLER----------------\\
-    protected ScreenHandler() {}
+    protected ScreenHandler() {
+        RRRGameModel model = new RRRGameModel();
+        gameScreen = new RRRGameView(new RRRGameController(model, gameScreen), model);
+    }
 
     public static ScreenHandler getInstance() {
         if (instance == null) {
