@@ -38,22 +38,30 @@ public class RRRGameModel {
     public void generateWorld() {
         TiledMap levelMap = levelHandler.getLevel();
         TiledMapTileLayer layer = (TiledMapTileLayer) levelMap.getLayers().get("Foreground");
+
         /**
          * BodyDef and FixtureDef is used as temporary models which can later be added to a body
          */
         float tileSize = layer.getTileWidth();
+
         BodyDef bdef = new BodyDef();
+        bdef.type = BodyDef.BodyType.StaticBody;
+
         FixtureDef fdef = new FixtureDef();
-        /**
-         * Create a box2d body for each tile
-         */
+        fdef.friction = 0;
+        fdef.filter.categoryBits = 1;
+        fdef.filter.maskBits = -1;
+        fdef.isSensor = false;
+
         Vector2[] boxVector = new Vector2[5];
         boxVector[0] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
         boxVector[1] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
         boxVector[2] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
         boxVector[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
         boxVector[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
-
+        /**
+         * Create a box2d body for each tile
+         */
         for(int r = 0; r < layer.getHeight(); r++){
             for(int c = 0; c < layer.getWidth(); c++){
                 TiledMapTileLayer.Cell cell = layer.getCell(c,r);
@@ -61,7 +69,6 @@ public class RRRGameModel {
                  * If there is a tile on (r,w)
                  */
                 if(cell != null && cell.getTile() != null){
-                    bdef.type = BodyDef.BodyType.StaticBody;
                     bdef.position.set(
                             (c + 0.5f) * tileSize / PPM,
                             (r + 0.5f) * tileSize / PPM
@@ -74,11 +81,7 @@ public class RRRGameModel {
                     Vector2[] v = boxVector;
 
                     cs.createChain(v);
-                    fdef.friction = 0;
                     fdef.shape = cs;
-                    fdef.filter.categoryBits = 1;
-                    fdef.filter.maskBits = -1;
-                    fdef.isSensor = false;
                     world.createBody(bdef).createFixture(fdef);
                 }
             }
