@@ -25,24 +25,27 @@ public class OptionsField extends Table{
     private float x;
     private float y;
     private int numberOfOptions;
-    public OptionsField(String[] optionsList) {
+    private Label textLabel;
+
+    public OptionsField(String text,String[] optionsList) {
+        currentIndex = 0;
         this.optionsList = optionsList;
         this.numberOfOptions = optionsList.length;
-        currentIndex = 0;
-        labelStyle = new Label.LabelStyle(font, Color.WHITE);
         skin = new Skin();
-        font = new BitmapFont();
-        font.scale(1f);
         buttonAtlas = new TextureAtlas("assets/optionArrows.pack");
         skin.addRegions(buttonAtlas);
+        font = new BitmapFont();
+        font.scale(1f);
+        font2 = new BitmapFont(false);
+        font2.scale(1.5f);
         style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font = font;
 
-        font2 = new BitmapFont(false);
-        font2.scale(1.5f);
         labelStyle = new Label.LabelStyle(font2,Color.WHITE);
+        //labelStyle = new Label.LabelStyle(font, Color.WHITE);
+        textLabel = new Label(text,labelStyle);
 
         backButton = new TextButton("<", style);
         forwardButton = new TextButton(">", style);
@@ -51,6 +54,7 @@ public class OptionsField extends Table{
         backButton.addListener(new OptionsFieldListener(this, "back"));
         forwardButton.addListener(new OptionsFieldListener(this, "forward"));
         currentOptionLabel = new Label(optionsList[currentIndex], labelStyle);
+        this.add(textLabel);
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);
@@ -74,6 +78,7 @@ public class OptionsField extends Table{
     }
     public void update(){
         this.clear();
+        this.add(textLabel);
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);

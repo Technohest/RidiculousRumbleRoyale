@@ -42,7 +42,6 @@ public class OptionsMenuView implements Screen{
     //Settings
     private OptionsField resolution;
     private OptionsField vilddjur;
-    private Label fuckVilddjur;
 
     public OptionsMenuView(RRRMain game){
         this.game = game;
@@ -64,8 +63,8 @@ public class OptionsMenuView implements Screen{
         x = (Gdx.graphics.getWidth())/2.0f;
         y = (Gdx.graphics.getHeight())/2.0f;
 
-        resolution = new OptionsField(new String[]{"1920x1080", "1337x1337"});
-        vilddjur = new OptionsField(new String[]{"ja", "nej"});
+        resolution = new OptionsField("Resolution: ",new String[]{"1920x1080", "1337x1337"});
+        vilddjur = new OptionsField("Fuck Vilddjur?: ",new String[]{"ja", "nej"});
 
         //Table
         createGraphicsTable();
@@ -101,16 +100,8 @@ public class OptionsMenuView implements Screen{
     public void createGraphicsTable(){
         graphicsTable = new Table();
 
-        //Design the table here
-        font2 = new BitmapFont(false);
-        font2.scale(1.5f);
-        labelStyle = new Label.LabelStyle(font2,Color.WHITE);
-        label2 = new Label("Resoulution:", labelStyle);
-        fuckVilddjur = new Label("Fuck Vilddjur?: ", labelStyle);
-        graphicsTable.add(label2);
         graphicsTable.add(resolution);
         graphicsTable.row();
-        graphicsTable.add(fuckVilddjur);
         graphicsTable.add(vilddjur);
 
     }
