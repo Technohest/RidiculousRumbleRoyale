@@ -2,6 +2,7 @@ package com.technohest.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -53,6 +54,9 @@ public class OptionsMenuView implements Screen{
     private OptionsField music;
     private OptionsField damageDone;
 
+    //Filehandler
+    private FileHandle optionsFile;
+
     public OptionsMenuView(RRRMain game){
 
         //Game and stage
@@ -60,6 +64,9 @@ public class OptionsMenuView implements Screen{
         stage = new Stage();
         navigationTable = new Table();
         mainTable = new Table();
+
+        //FileHandle
+        optionsFile = Gdx.files.local("assets/options.txt");
 
         //Fontsize
         font = new BitmapFont();
@@ -109,10 +116,11 @@ public class OptionsMenuView implements Screen{
         saveButton = new TextButton("Save", smallStyle);
 
         //Adding listeners to navigationsview buttons.
-        graphicsButton.addListener(new OptionsInputListener(this, graphicsTable, "graphics"));
-        soundButton.addListener(new OptionsInputListener(this, soundTable, "sound"));
-        gameplayButton.addListener(new OptionsInputListener(this, gameplayTable, "gameplay"));
+        graphicsButton.addListener(new OptionsInputListener(this, "graphics"));
+        soundButton.addListener(new OptionsInputListener(this, "sound"));
+        gameplayButton.addListener(new OptionsInputListener(this, "gameplay"));
         backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
+        saveButton.addListener(new OptionsInputListener(this, "save"));
 
         //Setting the stage
         mainTable.setPosition(x, y+(y/2f));
@@ -217,5 +225,6 @@ public class OptionsMenuView implements Screen{
 
     public void saveOptions(){
         //Write to optionsfile
+        System.out.println(optionsFile.read());
     }
 }

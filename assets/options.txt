@@ -1,5 +1,10 @@
 displayMode:
+windowed
 resolution:
+960x720
 music:
+enabled
 soundEffects:
+enabled
 displayDamage:
+disabled

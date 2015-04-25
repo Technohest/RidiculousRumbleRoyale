@@ -8,12 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
  * Created by Oscar on 2015-04-20.
  */
 public class OptionsInputListener extends InputListener {
-    public final Table optionsTable;
     public final OptionsMenuView view;
     public final String target;
 
-    public OptionsInputListener(OptionsMenuView view, Table optionsTable, String target){
-        this.optionsTable = optionsTable;
+    public OptionsInputListener(OptionsMenuView view, String target){
         this.view = view;
         this.target = target;
     }
