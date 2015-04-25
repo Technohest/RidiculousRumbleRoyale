@@ -1,0 +1,5 @@
+displayMode:
+resolution:
+music:
+soundEffects:
+displayDamage:
