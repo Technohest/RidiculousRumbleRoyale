@@ -10,28 +10,35 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
+import javax.xml.soap.Text;
+
 /**
  * Created by Oscar on 2015-04-11.
  */
 public class OptionsMenuView implements Screen{
 
+    //Screen
+    private Stage stage;
+    private final RRRMain game;
+    private float x,y;
+
+    //Text
+    private TextureAtlas buttonAtlas2;
+    private Skin smallSkin;
+    private TextButtonStyle smallStyle;
+    private TextButtonStyle style;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private BitmapFont font;
-    private Stage stage;
-    private final RRRMain game;
-    private Skin labelSkin;
+
+    //Buttons
     private TextButton graphicsButton;
     private TextButton soundButton;
     private TextButton gameplayButton;
     private TextButton backButton;
-    private TextButtonStyle style;
-    private float x,y;
-    private Label.LabelStyle labelStyle;
-    private BitmapFont font2;
-    private Label label2;
+    private TextButton saveButton;
 
-    //new variables
+    //Tables
     private Table mainTable;
     private Table navigationTable;
     private Table graphicsTable;
@@ -41,53 +48,74 @@ public class OptionsMenuView implements Screen{
 
     //Settings
     private OptionsField resolution;
-    private OptionsField vilddjur;
+    private OptionsField displayMode;
+    private OptionsField soundEffects;
+    private OptionsField music;
+    private OptionsField damageDone;
 
     public OptionsMenuView(RRRMain game){
+
+        //Game and stage
         this.game = game;
         stage = new Stage();
+        navigationTable = new Table();
+        mainTable = new Table();
+
+        //Fontsize
         font = new BitmapFont();
         font.scale(1.3f);
 
-        //ButtonSkin
+        //ButtonStyle for big buttons
         buttonAtlas = new TextureAtlas("assets/menuButtons.pack");
         skin = new Skin();
         skin.addRegions(buttonAtlas);
-        labelSkin = new Skin();
-        labelSkin.add("default", new BitmapFont());
-
         style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
+
+        //ButtonStyle for smaller buttons
+        buttonAtlas2 = new TextureAtlas("assets/optionArrows.pack");
+        smallSkin = new Skin();
+        smallSkin.addRegions(buttonAtlas2);
+        smallStyle = new TextButtonStyle();
+        smallStyle.up =smallSkin.getDrawable("menuButton");
+        smallStyle.down = smallSkin.getDrawable("pressedMenuButton");
+        smallStyle.font=font;
+
+        //Screen x,y
         x = (Gdx.graphics.getWidth())/2.0f;
         y = (Gdx.graphics.getHeight())/2.0f;
 
-        resolution = new OptionsField("Resolution: ",new String[]{"1920x1080", "1337x1337"});
-        vilddjur = new OptionsField("Fuck Vilddjur?: ",new String[]{"ja", "nej"});
+        //Settings
+        resolution = new OptionsField("RESOLUTION: ",new String[]{"960x720", "1024x768","1280x720", "1152x864", "1280x960", "1280x1024", "1440x1050","1600x900", "1600x1200", "1920x1080"});
+        displayMode = new OptionsField("DISPLAY MODE:", new String[]{"FULLSCREEN", "WINDOWED FULLSCREEN", "WINDOWED"});
+        soundEffects = new OptionsField("Sound Effects: ", new String[]{"Enabled", "Disabled"});
+        music = new OptionsField("Music: ", new String[]{"Enabled", "Disabled"});
+        damageDone = new OptionsField("Display Damage: ", new String[]{"Enabled", "Disabled"});
 
-        //Table
+        //Tables
         createGraphicsTable();
         createSoundTable();
         createGameplayTable();
 
-        labelStyle = new Label.LabelStyle(font,Color.WHITE);
-
-        navigationTable = new Table();
-        mainTable = new Table();
         currentTable = graphicsTable;
 
+        //Initialize buttons in navigationview
         graphicsButton = new TextButton("Graphics", style);
         soundButton = new TextButton("Sound", style);
         gameplayButton = new TextButton("Gameplay", style);
-        backButton = new TextButton("Back", style);
+        backButton = new TextButton("Back", smallStyle);
+        saveButton = new TextButton("Save", smallStyle);
 
+        //Adding listeners to navigationsview buttons.
         graphicsButton.addListener(new OptionsInputListener(this, graphicsTable, "graphics"));
         soundButton.addListener(new OptionsInputListener(this, soundTable, "sound"));
         gameplayButton.addListener(new OptionsInputListener(this, gameplayTable, "gameplay"));
         backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
 
-        mainTable.setPosition(x, y);
+        //Setting the stage
+        mainTable.setPosition(x, y+(y/2f));
         navigationTable.add(graphicsButton);
         navigationTable.add(soundButton);
         navigationTable.add(gameplayButton);
@@ -100,23 +128,28 @@ public class OptionsMenuView implements Screen{
     public void createGraphicsTable(){
         graphicsTable = new Table();
 
+        //Design the table here
+        graphicsTable.add(displayMode);
+        graphicsTable.row();
         graphicsTable.add(resolution);
         graphicsTable.row();
-        graphicsTable.add(vilddjur);
 
     }
     public void createSoundTable(){
         soundTable = new Table();
 
         //Design the table here
-        soundTable.add(new TextButton("inside sound", style));
+        soundTable.add(music);
+        soundTable.row();
+        soundTable.add(soundEffects);
+        soundTable.row();
     }
     public void createGameplayTable(){
         gameplayTable = new Table();
 
         //Design the table here
-        gameplayTable.add(new TextButton("inside gameplay",style));
-
+        gameplayTable.add(damageDone);
+        gameplayTable.row();
     }
     @Override
     public void show() {
@@ -177,5 +210,12 @@ public class OptionsMenuView implements Screen{
         mainTable.add(navigationTable);
         mainTable.row();
         mainTable.add(currentTable);
+        mainTable.row();
+        mainTable.add(backButton);
+        mainTable.add(saveButton);
+    }
+
+    public void saveOptions(){
+        //Write to optionsfile
     }
 }

@@ -37,7 +37,7 @@ public class OptionsField extends Table{
         font = new BitmapFont();
         font.scale(1f);
         font2 = new BitmapFont(false);
-        font2.scale(1.5f);
+        font2.scale(0.7f);
         style = new TextButtonStyle();
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
@@ -54,7 +54,10 @@ public class OptionsField extends Table{
         backButton.addListener(new OptionsFieldListener(this, "back"));
         forwardButton.addListener(new OptionsFieldListener(this, "forward"));
         currentOptionLabel = new Label(optionsList[currentIndex], labelStyle);
+
         this.add(textLabel);
+        this.add(textLabel);
+
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);

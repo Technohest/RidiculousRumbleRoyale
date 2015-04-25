@@ -25,6 +25,10 @@ public class OptionsInputListener extends InputListener {
 
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-        view.switchTo(target);
+        if(target == "save") {
+            view.saveOptions();
+        }else{
+            view.switchTo(target);
+        }
     }
 }
