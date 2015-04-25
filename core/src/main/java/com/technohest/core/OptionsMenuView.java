@@ -39,6 +39,11 @@ public class OptionsMenuView implements Screen{
     private Table gameplayTable;
     private Table currentTable;
 
+    //Settings
+    private OptionsField resolution;
+    private OptionsField vilddjur;
+    private Label fuckVilddjur;
+
     public OptionsMenuView(RRRMain game){
         this.game = game;
         stage = new Stage();
@@ -58,6 +63,9 @@ public class OptionsMenuView implements Screen{
         style.font=font;
         x = (Gdx.graphics.getWidth())/2.0f;
         y = (Gdx.graphics.getHeight())/2.0f;
+
+        resolution = new OptionsField(new String[]{"1920x1080", "1337x1337"});
+        vilddjur = new OptionsField(new String[]{"ja", "nej"});
 
         //Table
         createGraphicsTable();
@@ -80,7 +88,7 @@ public class OptionsMenuView implements Screen{
         gameplayButton.addListener(new OptionsInputListener(this, gameplayTable, "gameplay"));
         backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
 
-        mainTable.setPosition(x,y);
+        mainTable.setPosition(x, y);
         navigationTable.add(graphicsButton);
         navigationTable.add(soundButton);
         navigationTable.add(gameplayButton);
@@ -98,14 +106,19 @@ public class OptionsMenuView implements Screen{
         font2.scale(1.5f);
         labelStyle = new Label.LabelStyle(font2,Color.WHITE);
         label2 = new Label("Resoulution:", labelStyle);
+        fuckVilddjur = new Label("Fuck Vilddjur?: ", labelStyle);
         graphicsTable.add(label2);
+        graphicsTable.add(resolution);
+        graphicsTable.row();
+        graphicsTable.add(fuckVilddjur);
+        graphicsTable.add(vilddjur);
+
     }
     public void createSoundTable(){
         soundTable = new Table();
 
         //Design the table here
         soundTable.add(new TextButton("inside sound", style));
-
     }
     public void createGameplayTable(){
         gameplayTable = new Table();
