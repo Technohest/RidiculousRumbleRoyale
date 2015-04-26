@@ -1,6 +1,7 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -26,9 +27,12 @@ public class OptionsField extends Table{
     private float y;
     private int numberOfOptions;
     private Label textLabel;
+    private String[] parts;
+    private FileHandle optionsFile;
+    private String text;
 
     public OptionsField(String text,String[] optionsList) {
-        currentIndex = 0;
+        this.text = text;
         this.optionsList = optionsList;
         this.numberOfOptions = optionsList.length;
         skin = new Skin();
@@ -43,17 +47,18 @@ public class OptionsField extends Table{
         style.down = skin.getDrawable("pressedMenuButton");
         style.font = font;
 
+        optionsFile = Gdx.files.local("assets/options.txt");
+        parts = optionsFile.readString().split(":");
+        optionsFile = Gdx.files.local("assets/options.txt");
         labelStyle = new Label.LabelStyle(font2,Color.WHITE);
-        //labelStyle = new Label.LabelStyle(font, Color.WHITE);
         textLabel = new Label(text,labelStyle);
 
         backButton = new TextButton("<", style);
         forwardButton = new TextButton(">", style);
 
-
         backButton.addListener(new OptionsFieldListener(this, "back"));
         forwardButton.addListener(new OptionsFieldListener(this, "forward"));
-        currentOptionLabel = new Label(optionsList[currentIndex], labelStyle);
+        currentOptionLabel = new Label(getLabelText(), labelStyle);
 
         this.add(textLabel);
         this.add(textLabel);
@@ -88,5 +93,21 @@ public class OptionsField extends Table{
     }
     public String getCurrent(){
         return optionsList[currentIndex];
+    }
+
+    private String getLabelText(){
+        String firstText = "";
+        if(text == "Display Mode:"){
+            firstText = parts[1];
+        }else if(text == "Resolution:"){
+            firstText = parts[3];
+        }else if(text == "Music:"){
+            firstText = parts[5];
+        }else if(text == "Sound Effects:"){
+            firstText = parts[7];
+        }else if(text == "Display Damage:"){
+            firstText = parts[9];
+        }
+        return firstText;
     }
 }

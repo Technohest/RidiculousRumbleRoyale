@@ -96,11 +96,11 @@ public class OptionsMenuView implements Screen{
         y = (Gdx.graphics.getHeight())/2.0f;
 
         //Settings
-        resolution = new OptionsField("RESOLUTION: ",new String[]{"960x720", "1024x768","1280x720", "1152x864", "1280x960", "1280x1024", "1440x1050","1600x900", "1600x1200", "1920x1080"});
-        displayMode = new OptionsField("DISPLAY MODE:", new String[]{"fullscreen", "windowed fullscreen", "windowed"});
-        soundEffects = new OptionsField("Sound Effects: ", new String[]{"enabled", "disabled"});
-        music = new OptionsField("Music: ", new String[]{"enabled", "disabled"});
-        damageDone = new OptionsField("Display Damage: ", new String[]{"enabled", "disabled"});
+        resolution = new OptionsField("Resolution:",new String[]{"960x720", "1024x768","1280x720", "1152x864", "1280x960", "1280x1024", "1440x1050","1600x900", "1600x1200", "1920x1080"});
+        displayMode = new OptionsField("Display Mode:", new String[]{"fullscreen", "windowed fullscreen", "windowed"});
+        soundEffects = new OptionsField("Sound Effects:", new String[]{"enabled", "disabled"});
+        music = new OptionsField("Music:", new String[]{"enabled", "disabled"});
+        damageDone = new OptionsField("Display Damage:", new String[]{"enabled", "disabled"});
 
         //Tables
         createGraphicsTable();
