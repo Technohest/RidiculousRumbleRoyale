@@ -56,6 +56,7 @@ public class OptionsMenuView implements Screen{
 
     //Filehandler
     private FileHandle optionsFile;
+    private String[] parts;
 
     public OptionsMenuView(RRRMain game){
 
@@ -96,10 +97,10 @@ public class OptionsMenuView implements Screen{
 
         //Settings
         resolution = new OptionsField("RESOLUTION: ",new String[]{"960x720", "1024x768","1280x720", "1152x864", "1280x960", "1280x1024", "1440x1050","1600x900", "1600x1200", "1920x1080"});
-        displayMode = new OptionsField("DISPLAY MODE:", new String[]{"FULLSCREEN", "WINDOWED FULLSCREEN", "WINDOWED"});
-        soundEffects = new OptionsField("Sound Effects: ", new String[]{"Enabled", "Disabled"});
-        music = new OptionsField("Music: ", new String[]{"Enabled", "Disabled"});
-        damageDone = new OptionsField("Display Damage: ", new String[]{"Enabled", "Disabled"});
+        displayMode = new OptionsField("DISPLAY MODE:", new String[]{"fullscreen", "windowed fullscreen", "windowed"});
+        soundEffects = new OptionsField("Sound Effects: ", new String[]{"enabled", "disabled"});
+        music = new OptionsField("Music: ", new String[]{"enabled", "disabled"});
+        damageDone = new OptionsField("Display Damage: ", new String[]{"enabled", "disabled"});
 
         //Tables
         createGraphicsTable();
@@ -225,6 +226,13 @@ public class OptionsMenuView implements Screen{
 
     public void saveOptions(){
         //Write to optionsfile
-        System.out.println(optionsFile.read());
+        //[1] = Displaymode
+        //[3] = Resolution
+        //[5] = Music
+        //[7] = Soundeffects
+        //[9] = Display Damage
+
+        parts = optionsFile.readString().split(":");
+        optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent() ,false);
     }
 }

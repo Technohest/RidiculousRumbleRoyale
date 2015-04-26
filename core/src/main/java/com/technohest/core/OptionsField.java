@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
+import com.badlogic.gdx.utils.StringBuilder;
 /**
  * Created by Oscar on 2015-04-24.
  */
@@ -85,5 +85,8 @@ public class OptionsField extends Table{
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);
+    }
+    public String getCurrent(){
+        return optionsList[currentIndex];
     }
 }
