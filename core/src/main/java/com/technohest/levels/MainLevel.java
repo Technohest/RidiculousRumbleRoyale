@@ -1,22 +1,32 @@
 package com.technohest.levels;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.technohest.core.abstracts.Level;
+import com.technohest.core.interfaces.Level;
 
 import static com.technohest.constants.Constants.PPM;
 
 /**
  * Created by vilddjur on 2015-04-27.
  */
-public class MainLevel extends Level {
+public class MainLevel implements Level {
+    private final TiledMap map;
+
     public MainLevel(){
-        super("mainlevel.tmx");
+        TmxMapLoader l = new TmxMapLoader();
+        map = l.load("mainlevel.tmx");
     }
+    @Override
+    public TiledMap getMap() {
+        return map;
+    }
+
     @Override
     public void generate(World world) {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Foreground");

@@ -1,8 +1,6 @@
 package com.technohest.core.handlers;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.technohest.core.abstracts.Level;
+import com.technohest.core.interfaces.Level;
 import com.technohest.levels.MainLevel;
 
 /**

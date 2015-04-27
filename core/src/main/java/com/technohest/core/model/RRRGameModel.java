@@ -1,17 +1,10 @@
 package com.technohest.core.model;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.constants.Constants;
-import com.technohest.core.abstracts.Level;
+import com.technohest.core.interfaces.Level;
 import com.technohest.core.handlers.LevelHandler;
-
-import static com.technohest.constants.Constants.PPM;
 
 /**
  * Created by Oskar on 2015-03-24.
