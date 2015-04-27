@@ -30,7 +30,7 @@ public class RRRGameModel {
      * Initiatlizes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        getLevel().generate(world);
+        levelHandler.generateLevel(world);
     }
 
     public void step(float v) {

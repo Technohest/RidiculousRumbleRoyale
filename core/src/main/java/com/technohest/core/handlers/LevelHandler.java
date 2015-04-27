@@ -1,5 +1,6 @@
 package com.technohest.core.handlers;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.core.interfaces.Level;
 import com.technohest.levels.MainLevel;
 
@@ -31,5 +32,9 @@ public class LevelHandler{
         if (name.equals("mainlevel")) {
             level = new MainLevel();
         }
+    }
+
+    public void generateLevel(World world) {
+        level.generate(world);
     }
 }
