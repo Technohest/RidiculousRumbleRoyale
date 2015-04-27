@@ -1,38 +1,69 @@
-package com.technohest.core;
+package com.technohest.core.menu;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.technohest.core.controller.MenuInputListener;
 
 /**
  * Created by vilddjur on 2015-04-02.
  */
 public class RRRMenuView implements Screen {
     private Stage           stage;
-    /**
-     * The GUI needs to know the game in order to be able to call switchTo,
-     * ----- is there a better way?
-     */
 
     private Skin            skin;
     private TextureAtlas    buttonAtlas;
     private BitmapFont      font;
 
-    public RRRMenuView() {
+    private TextButton exitButton;
+    private TextButton playButton;
+    private TextButton joinButton;
+    private TextButton hostButton;
 
-        //Initialize
+    private Table buttonTable;
+
+    public RRRMenuView() {
+        initVars();
+    }
+
+    /**
+     * Initializes variables
+     */
+    private void initVars() {
         stage = new Stage();
+
+        initButtons();
+
+        buttonTable = new Table();
         /**
-         * This sets the stage to be able to take in input (?)
+         * Adding buttons to a Table to align easier
          */
+        buttonTable.add(joinButton);
+        buttonTable.row();
+        buttonTable.add(hostButton);
+        buttonTable.row();
+        buttonTable.add(playButton);
+        buttonTable.row();
+        buttonTable.add(exitButton);
+        /**
+         * Making sure the table is centered
+         */
+        float x = (Gdx.graphics.getWidth())/2.0f;
+        float y = (Gdx.graphics.getHeight())/2.0f;
+        buttonTable.setPosition(x,y);
+
+        stage.addActor(buttonTable);
+    }
+
+    /**
+     * Initializes buttons and sets them to the same skin
+     */
+    private void initButtons() {
         font = new BitmapFont();
         font.scale(2);
         /**
@@ -45,40 +76,27 @@ public class RRRMenuView implements Screen {
         /**
          * We want both buttons to have a texture for when they have been pressed and when they are "idle"
          */
-        TextButtonStyle style = new TextButtonStyle();
+        TextButtonStyle style = new TextButtonStyle(); //ITS THE NEW STYLE
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
 
-        TextButton exitButton = new TextButton("Exit", style);
-        TextButton playButton = new TextButton("Play", style);
+        exitButton = new TextButton("Exit", style);
+        playButton = new TextButton("Play", style);
+        joinButton = new TextButton("Join", style);
+        hostButton = new TextButton("Host", style);
         /**
          * See @class{MenuInputListener}
          */
         playButton.addListener(new MenuInputListener("game"));
-
         exitButton.addListener(new MenuInputListener("exit"));
-
-        Table table = new Table();
-        /**
-         * Adding buttons to a Table to align easier
-         */
-        table.add(playButton);
-        table.row();
-        table.add(exitButton);
-        /**
-         * Making sure the table is centered
-         */
-        float x = (Gdx.graphics.getWidth())/2.0f;
-        float y = (Gdx.graphics.getHeight())/2.0f;
-        table.setPosition(x,y);
-
-        stage.addActor(table);
+        joinButton.addListener(new MenuInputListener("join"));
+        hostButton.addListener(new MenuInputListener("host"));
     }
 
     @Override
     public void resize(int i, int i1) {
-
+        stage.getViewport().update(i,i1,true);
     }
 
     @Override
