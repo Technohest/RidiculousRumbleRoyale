@@ -16,15 +16,16 @@ import java.io.Console;
  */
 public class RRRGameController extends InputHandler{
     private final RRRGameModel  model;
-    private final RRRGameView   view;
+    private RRRGameView   view;
 
-    public RRRGameController(RRRGameModel model, RRRGameView view) {
+    public RRRGameController(RRRGameModel model) {
         super();
         this.model = model;
-        this.view = view;
         model.generateWorld();
     }
-
+    public void setView(RRRGameView view){
+        this.view = view;
+    }
     public TiledMap getLevel() {
         return model.getLevel();
     }
@@ -34,7 +35,7 @@ public class RRRGameController extends InputHandler{
             ScreenHandler.getInstance().setScreen("menu");
             this.releaseAllKeys();
         }
-       if (this.isPressed(InputHandler.RIGHT)) {
+       /*if (this.isPressed(InputHandler.RIGHT)) {
             model.getPlayers().move(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,0));
 
         } if(this.isPressed(InputHandler.LEFT)) {
@@ -45,16 +46,18 @@ public class RRRGameController extends InputHandler{
         if(this.isPressed(InputHandler.JUMP)) {
             model.getPlayers().jump();
 
-        }
+        }*/
         if(this.isPressed(InputHandler.BASE_ATTACK)) {
         }
     }
 
 
-    public void updateGame(float v) {
+    public void update(float v) {
         if(this.hasInput()) {
             this.handleInput();
         }
         model.step(v);
+
+        view.update(v);
     }
 }

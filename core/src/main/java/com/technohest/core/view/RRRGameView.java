@@ -39,7 +39,7 @@ public class RRRGameView implements Screen {
 
 		this.model = model;
 		this.controller = controller;
-
+		controller.setView(this);
 		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel());
 		batch = new SpriteBatch();
 
@@ -54,19 +54,20 @@ public class RRRGameView implements Screen {
 
 	@Override
 	public void render(float v) {
-		controller.updateGame(v);
+		controller.update(v);
+	}
 
+	public void update(float v){
 		float r = 9 / 255.0f;
 		float g = 205 / 255.0f;
 		float b = 218 / 255.0f;
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        mapRenderer.setView(camera);
+		mapRenderer.setView(camera);
 		mapRenderer.render();
 		batch.begin();
 		batch.end();
 	}
-
 	@Override
 	public void resize (int width, int height) {
 	}
