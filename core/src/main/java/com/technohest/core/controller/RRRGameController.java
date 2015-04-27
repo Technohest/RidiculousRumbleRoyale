@@ -22,6 +22,7 @@ public class RRRGameController extends InputHandler{
         super();
         this.model = model;
         this.view = view;
+        model.generateWorld();
     }
 
     public TiledMap getLevel() {
