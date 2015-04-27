@@ -40,7 +40,7 @@ public class RRRGameView implements Screen {
 		this.model = model;
 		this.controller = controller;
 		controller.setView(this);
-		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel());
+		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel().getMap());
 		batch = new SpriteBatch();
 
 		/**

@@ -2,7 +2,6 @@ package com.technohest.core.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.technohest.assets.characters.Character;
 import com.technohest.assets.characters.CharacterView;
 import com.technohest.constants.Constants;
 import com.technohest.core.handlers.InputHandler;
@@ -24,7 +23,7 @@ public class PlayerController implements ContactListener {
         view.render(world, batch);
     }
     public void handleInput(InputHandler handler) {
-        if (handler.isPressed(InputHandler.RIGHT)) {
+       /* if (handler.isPressed(InputHandler.RIGHT)) {
             view.getBody().setLinearVelocity(Constants.MOVEMENT_SPEED,view.getBody().getLinearVelocity().y);
             player.setIsFacingRight(true);
         } if(handler.isPressed(InputHandler.LEFT)) {
@@ -35,11 +34,11 @@ public class PlayerController implements ContactListener {
             if(player.isGrounded()) {
                    view.getBody().applyForceToCenter(0,view.getBody().getMass()*Constants.JUMP_FORCE_MULTIPLIER,true);
                 }
-        }
+        }*/
     }
 
     public void update(float delta) {
-        player.update(delta);
+       // player.update(delta);
     }
 
 
@@ -47,7 +46,7 @@ public class PlayerController implements ContactListener {
     public void beginContact(Contact contact) {
         if(contact.getFixtureA().getUserData() == "foot"
                 || contact.getFixtureB().getUserData() == "foot") {
-            player.setGrounded(true);
+         //   player.setGrounded(true);
         }
 
 
@@ -57,7 +56,7 @@ public class PlayerController implements ContactListener {
     public void endContact(Contact contact) {
         if(contact.getFixtureA().getUserData() == "foot"
                 || contact.getFixtureB().getUserData() == "foot") {
-            player.setGrounded(false);
+         //   player.setGrounded(false);
         }
     }
 

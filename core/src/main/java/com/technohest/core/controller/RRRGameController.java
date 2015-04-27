@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.technohest.constants.Constants;
 import com.technohest.constants.Controls;
+import com.technohest.core.abstracts.Level;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
@@ -26,7 +27,7 @@ public class RRRGameController extends InputHandler{
     public void setView(RRRGameView view){
         this.view = view;
     }
-    public TiledMap getLevel() {
+    public Level getLevel() {
         return model.getLevel();
     }
 

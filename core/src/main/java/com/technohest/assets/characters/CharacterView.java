@@ -25,7 +25,7 @@ public class CharacterView {
 
     public void render(World world, SpriteBatch batch) {
         if(body == null) {
-            bdef.position.set(player.getPosition());
+          //  bdef.position.set(player.getPosition());
             playerMass = new MassData();
             playerMass.mass = 50;
             bdef.type = BodyDef.BodyType.DynamicBody;
@@ -40,8 +40,8 @@ public class CharacterView {
 
 
         } else {
-            player.setPosition(body.getPosition());
-            player.getSprite().draw(batch);
+   //         player.setPosition(body.getPosition());
+      //      player.getSprite().draw(batch);
         }
 
         if(shape == null) {

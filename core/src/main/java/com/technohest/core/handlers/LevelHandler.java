@@ -2,16 +2,16 @@ package com.technohest.core.handlers;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.technohest.core.abstracts.Level;
+import com.technohest.levels.MainLevel;
 
 /**
  * Created by vilddjur on 2015-04-02.
  */
 public class LevelHandler{
-    private TiledMap    tiledMap;
-    private TmxMapLoader loader;
+    private Level           level;
     public LevelHandler(){
-        loader = new TmxMapLoader();
-        setLevel("testlevel");
+        setLevel("mainlevel");
     }
 
     /**
@@ -19,17 +19,19 @@ public class LevelHandler{
      * @return
      * The current level
      */
-    public TiledMap getLevel(){
-        return tiledMap;
+    public Level getLevel(){
+        return level;
     }
 
     /**
      * Sets the current level
      * @param name
-     * the name of the level which, name is truncated "As df" = "asdf.tmx"
+     * the name of the level which, name is truncated "As df" = "asdf"
      */
     public void setLevel(String name){
         name = name.toLowerCase().trim();
-        tiledMap = loader.load(name + ".tmx");
+        if (name.equals("mainlevel")) {
+            level = new MainLevel();
+        }
     }
 }
