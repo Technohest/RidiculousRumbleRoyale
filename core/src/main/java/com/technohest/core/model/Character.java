@@ -1,8 +1,5 @@
-package com.technohest.assets.characters;
+package com.technohest.core.model;
 import static com.technohest.constants.Constants.PPM;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.core.model.Attack;
@@ -21,8 +18,6 @@ public  class Character {
         Standing,Running,Jumping,Falling
     }
 
-    private TextureAtlas atlas;
-
     //Variables
     private Vector2 position,velocity,acceleration;
     private State state;
@@ -35,6 +30,7 @@ public  class Character {
     private Body body;
     private PolygonShape shape;
     private MassData playerMass;
+    private World world;
 
     //Game specific variables;
     private int healthPoints;
@@ -50,17 +46,20 @@ public  class Character {
      * @param mass - Character mass
      */
     public Character(World world, Vector2 position, float width,float height,int mass) {
+        this.world= world;
         this.position = position;
         this.healthPoints = 100;
         this.kills = 0;
         this.deaths = 0;
+        this.width = width;
+        this.height = height;
         this.playerMass = new MassData();
+        acceleration = new Vector2(460,0);
         playerMass.mass = mass;
-
-        atlas = new TextureAtlas(Gdx.files.internal("assets/playersprite.pack"));
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.gravityScale = Constants.GRAVITY_SCALE;
+        bdef.position.set(position);
         bdef.linearDamping = 10;
         body = world.createBody(bdef);
         body.setMassData(playerMass);
@@ -68,26 +67,26 @@ public  class Character {
 
 
         shape = new PolygonShape();
-        shape.setAsBox(height / Constants.PPM, width / Constants.PPM);
+        shape.setAsBox(width / Constants.PPM, height/ Constants.PPM);
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         body.createFixture(fdef).setUserData("Player");
 
         //Foot sensors
-        shape.setAsBox((width/4)/Constants.PPM,(width/4)/Constants.PPM, new Vector2((width/2)/PPM,height/PPM),0);
+        shape.setAsBox((width/4)/Constants.PPM,(width/4)/Constants.PPM, new Vector2(((width/2)-(width/8))/PPM,-(height-width/4)/PPM),0);
         fdef.shape = shape;
+        fdef.isSensor = true;
         body.createFixture(fdef).setUserData("PlayerFoot");
-
-
-
     }
 
     public void move(Vector2 direction) {
         this.body.setLinearVelocity(direction);
     }
     public void jump() {
-        body.applyForceToCenter(0,getPlayerMass()*Constants.JUMP_FORCE_MULTIPLIER,true);
-        this.state = State.Jumping;
+        if(isGrounded()) {
+            body.applyForceToCenter(0, getPlayerMass() * Constants.JUMP_FORCE_MULTIPLIER, true);
+            this.state = State.Jumping;
+        }
     }
 
     /**
@@ -95,10 +94,12 @@ public  class Character {
      */
     public void update(float delta) {
         stateTime += delta;
-        velocity.sub(acceleration.scl(delta));
         if(!isGrounded()) {
             this.state = State.Falling;
         } else if(velocity.x > 0) {
+            if(velocity.x < Constants.MAX_SPEED) {
+                velocity.add(acceleration.cpy().scl(delta));
+            }
              this.state = State.Running;
         } else {
             state = State.Standing;
@@ -238,10 +239,6 @@ public  class Character {
         this.deaths = deaths;
     }
 
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
-
     public Body getBody() {
         return body;
     }
@@ -254,14 +251,4 @@ public  class Character {
         return playerMass.mass;
     }
 
-    public Sprite getSprite() {
-        Sprite sprite;
-        if(isFacingRight){
-            sprite = atlas.createSprite("playerspriteRight");
-        }else{
-            sprite = atlas.createSprite("playerspriteLeft");
-        }
-        sprite.setPosition(getX()*PPM - sprite.getWidth()/2, getY()*PPM - sprite.getHeight()/2);
-        return sprite;
-    }
 }

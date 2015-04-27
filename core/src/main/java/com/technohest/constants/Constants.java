@@ -11,8 +11,10 @@ public class Constants {
 
 
     //Character specific variables
-    public static final int MOVEMENT_SPEED = 10;
     public static final int JUMP_FORCE_MULTIPLIER = 1500;
     public static final int GRAVITY_SCALE = 8;
+    public static final int INITIAL_MOVEMENT_SPEED =5;
+    public static final int MAX_SPEED = 15;
+
 
 }
