@@ -1,0 +1,53 @@
+        Projektmöte 10
+    "The Revenge of the sith"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-04-28
+
+
+
+§1 Mötets öppnande.
+     - Mötet öppnas
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+     - Ramverk i modellen, lösning?
+        - Vi skickar in föreslag till läraren
+
+§3 Punkter från förra mötet.
+     - Refaktorerat till komplett MVC
+        - Klart, behövs eventuellt mer i Modellen enligt §2
+
+     - Character återigen i spelet
+        - Klart, ingen collision detection än.
+
+§4 Projektets status
+    - Förra veckans mål är uppnådda
+    - Denna veckans mål:
+        - Implementing more UC's.
+        - Implementing services/GUI,
+        Skriva usecases, implementera services.
+
+        - Review RAD,
+        - Start with SDD.
+        Glöm ej lägga RAD o SDD på git.
+
+§5 Bestämmelser
+    - Vi bestämmer att Schtek ska maila läraren och se hur vi ska göra med ramverkskod i modellen
+
+§6 Genomgång av info från möte med handledare
+    - NULL
+
+§7 Inför kommande möte + fikaansvarig
+    - Skype möte på fredag, eller träffas hos någon.
+    - Jobba på SDD, RAD, UC
+    - Schtek mailar läraren frågor om modellen.
+    - Ny Trello board för veckouppgifter.
+    - Schtek ska arbeta med SDD.
+    - Övriga med Webbanalysen.
+    (- Fixa character rörelse, osv.)
+
+§8 Övriga frågor/ Synpunkter
+
+§9 Mötet avslutas
+"Measuring programming progress by lines of code is like measuring aircraft building progress by weight" - Bill Gates
