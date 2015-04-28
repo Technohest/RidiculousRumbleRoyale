@@ -2,7 +2,6 @@ package com.technohest.core.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.technohest.assets.characters.Character;
 import com.technohest.assets.characters.CharacterView;
 import com.technohest.constants.Constants;
 import com.technohest.core.handlers.InputHandler;
@@ -12,7 +11,8 @@ import com.technohest.core.handlers.InputHandler;
  * @author Tobias Alldén
  * @version 1.1
  */
-public class PlayerController implements ContactListener {
+public class PlayerController {
+    /*
     private Character player;
     private CharacterView view;
 
@@ -70,4 +70,5 @@ public class PlayerController implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
 
     }
+    */
 }

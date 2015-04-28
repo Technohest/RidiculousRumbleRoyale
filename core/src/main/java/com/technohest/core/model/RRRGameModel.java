@@ -18,11 +18,13 @@ import static com.technohest.constants.Constants.PPM;
 public class RRRGameModel {
     private LevelHandler    levelHandler;
     private World           world;
+    private Character player;
 
 
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
         world = new World(new Vector2(0, Constants.GRAVITY), true);
+        this.player = new Character(world,new Vector2(165/PPM,80/PPM),20f,30f,50);
     }
     public TiledMap getLevel() {
         return levelHandler.getLevel();
@@ -86,6 +88,9 @@ public class RRRGameModel {
                 }
             }
         }
+    }
+    public Character getPlayer() {
+        return this.player;
     }
 
     public void step(float v) {

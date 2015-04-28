@@ -11,6 +11,7 @@ import static com.technohest.constants.Constants.PPM;
  * @version 1.0
  */
 public class CharacterView {
+    /*
     BodyDef bdef;
     FixtureDef fdef;
     Character player;
@@ -69,6 +70,6 @@ public class CharacterView {
         return this.body;
     }
 
-
+*/
 
 }

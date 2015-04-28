@@ -54,7 +54,7 @@ public  class Character {
         this.width = width;
         this.height = height;
         this.playerMass = new MassData();
-        acceleration = new Vector2(460,0);
+        acceleration = new Vector2(460,40);
         playerMass.mass = mass;
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;

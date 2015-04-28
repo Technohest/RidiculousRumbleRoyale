@@ -35,15 +35,15 @@ public class RRRGameController extends InputHandler{
             this.releaseAllKeys();
         }
        if (this.isPressed(InputHandler.RIGHT)) {
-            model.getPlayers().move(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,0));
+            model.getPlayer().move(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,0));
 
         } if(this.isPressed(InputHandler.LEFT)) {
-            model.getPlayers().move(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, 0));
+            model.getPlayer().move(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, 0));
 
 
         }
         if(this.isPressed(InputHandler.JUMP)) {
-            model.getPlayers().jump();
+            model.getPlayer().jump();
 
         }
         if(this.isPressed(InputHandler.BASE_ATTACK)) {
@@ -56,5 +56,6 @@ public class RRRGameController extends InputHandler{
             this.handleInput();
         }
         model.step(v);
+        model.getPlayer().update(v);
     }
 }
