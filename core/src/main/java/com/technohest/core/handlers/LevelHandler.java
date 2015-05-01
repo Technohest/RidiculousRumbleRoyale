@@ -33,8 +33,4 @@ public class LevelHandler{
             level = new MainLevel();
         }
     }
-
-    public void generateLevel(World world) {
-        level.generate(world);
-    }
 }

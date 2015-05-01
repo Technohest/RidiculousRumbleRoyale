@@ -1,8 +1,6 @@
 package com.technohest.core.model;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.technohest.constants.Constants;
+import com.technohest.core.interfaces.IGameLogic;
 import com.technohest.core.interfaces.Level;
 import com.technohest.core.handlers.LevelHandler;
 
@@ -11,29 +9,26 @@ import com.technohest.core.handlers.LevelHandler;
  */
 public class RRRGameModel {
     private LevelHandler    levelHandler;
-    private World           world;
-
+    private IGameLogic      gameLogic;
 
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
-        world = new World(new Vector2(0, Constants.GRAVITY), true);
+        setGameLogic(new GameLogicGDX());
     }
     public Level getLevel() {
         return levelHandler.getLevel();
     }
-
-    public World getWorld() {
-        return world;
+    public void setGameLogic(IGameLogic gl){
+        gameLogic = gl;
     }
-
     /**
-     * Initiatlizes all tiles with their corresponding box2d bodies
+     * Initializes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        levelHandler.generateLevel(world);
+        gameLogic.generate(levelHandler.getLevel());
     }
 
     public void step(float v) {
-        world.step(v, 6, 2);
+        gameLogic.update(v);
     }
 }
