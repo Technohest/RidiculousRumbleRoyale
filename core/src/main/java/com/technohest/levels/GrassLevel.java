@@ -103,7 +103,7 @@ public class GrassLevel implements ILevel{
                      * this can be changed easily by adding more items to the vector, e.g a bottom.
                      */
                     ChainShape cs = new ChainShape();
-                    Vector2[] v = boxVector;
+                    Vector2[] v = lineVector;
 
                     cs.createChain(v);
                     fdef.shape = cs;
