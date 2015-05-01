@@ -1,0 +1,53 @@
+        Projektmöte 11
+     "Royale with cheese"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-01
+
+
+
+§1 Mötets öppnande.
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Ramverk ska vara disjunkt från modellen
+        - En lösning finns och den ska implementeras, (services)(Schtek)
+
+§3 Punkter från förra mötet.
+    - Höra med handledare om ramverk.
+        - Vi fick en lösning som nämnt i §2
+    - Implementera mer UC’s
+        - Inte gjort men ska göras
+    - Implementera Services
+        - Inte gjort men ska göras
+    - Review RAD
+        - Inte gjort men ska göras
+    - Start with SDD
+        - Inte gjort men ska göras
+
+§4 Projektets status
+    - Stillastående pga problem med ramverk.
+        - Kommer skaka igång över helgen eftersom vi har fått en lösning
+    - Player behövs för implementering av network
+
+§5 Bestämmelser
+    - Hur gör vi med ramverket?
+        - Services ska användas för att dra ut ramverks kod ur modellen.
+
+§6 Genomgång av info från möte med handledare
+    - UML att visa nästa handledar möte
+    - Börjat skriva tester, 80-90% av programmet ska ha testats
+    - SDD ska börja skrivas
+
+§7 Inför kommande möte + fikaansvarig
+    - Refaktorerat ramverk.
+    - Skriva collisionhandler, så att karaktären kan hoppa.
+    - Skriva tester
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+” Programming today is a race between software engineers striving to build bigger and better idiot-proof programs
+, and the Universe trying to produce bigger and better idiots. So far, the Universe is winning.“!
+-Rich Cook
