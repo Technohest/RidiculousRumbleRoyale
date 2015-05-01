@@ -5,5 +5,5 @@ package com.technohest.core.interfaces;
  */
 public interface IGameLogic {
     void update(float v);
-    void generate(Level level);
+    void generate(ILevel level);
 }

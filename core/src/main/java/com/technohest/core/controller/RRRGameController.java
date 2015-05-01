@@ -1,6 +1,6 @@
 package com.technohest.core.controller;
 
-import com.technohest.core.interfaces.Level;
+import com.technohest.core.interfaces.ILevel;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
@@ -21,7 +21,7 @@ public class RRRGameController extends InputHandler{
     public void setView(RRRGameView view){
         this.view = view;
     }
-    public Level getLevel() {
+    public ILevel getLevel() {
         return model.getLevel();
     }
 

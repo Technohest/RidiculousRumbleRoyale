@@ -1,7 +1,7 @@
 package com.technohest.core.model;
 
 import com.technohest.core.interfaces.IGameLogic;
-import com.technohest.core.interfaces.Level;
+import com.technohest.core.interfaces.ILevel;
 import com.technohest.core.handlers.LevelHandler;
 
 /**
@@ -15,7 +15,7 @@ public class RRRGameModel {
         this.levelHandler = new LevelHandler();
         setGameLogic(new GameLogicGDX());
     }
-    public Level getLevel() {
+    public ILevel getLevel() {
         return levelHandler.getLevel();
     }
     public void setGameLogic(IGameLogic gl){

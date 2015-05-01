@@ -1,14 +1,13 @@
 package com.technohest.core.handlers;
 
-import com.badlogic.gdx.physics.box2d.World;
-import com.technohest.core.interfaces.Level;
+import com.technohest.core.interfaces.ILevel;
 import com.technohest.levels.MainLevel;
 
 /**
  * Created by vilddjur on 2015-04-02.
  */
 public class LevelHandler{
-    private Level           level;
+    private ILevel level;
     public LevelHandler(){
         setLevel("mainlevel");
     }
@@ -18,7 +17,7 @@ public class LevelHandler{
      * @return
      * The current level
      */
-    public Level getLevel(){
+    public ILevel getLevel(){
         return level;
     }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.constants.Constants;
 import com.technohest.core.interfaces.IGameLogic;
-import com.technohest.core.interfaces.Level;
+import com.technohest.core.interfaces.ILevel;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -25,7 +25,7 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public void generate(Level level) {
+    public void generate(ILevel level) {
         level.generate(world);
     }
 }

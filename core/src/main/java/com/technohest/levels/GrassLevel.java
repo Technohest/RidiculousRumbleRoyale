@@ -13,14 +13,14 @@ import com.technohest.core.interfaces.ILevel;
 import static com.technohest.constants.Constants.PPM;
 
 /**
- * Created by vilddjur on 2015-04-27.
+ * Created by oskar on 2015-05-01.
  */
-public class MainLevel implements ILevel {
+public class GrassLevel implements ILevel{
     private final TiledMap map;
 
-    public MainLevel(){
+    public GrassLevel(){
         TmxMapLoader l = new TmxMapLoader();
-        map = l.load("mainlevel.tmx");
+        map = l.load("grasslevel.tmx");
     }
     @Override
     public TiledMap getMap() {
@@ -78,10 +78,43 @@ public class MainLevel implements ILevel {
                 }
             }
         }
+        layer = (TiledMapTileLayer) map.getLayers().get("Platforms");
+
+        Vector2[] lineVector = new Vector2[1];
+        lineVector[0] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
+        lineVector[1] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
+
+        /**
+         * Create a box2d body for each tile
+         */
+        for(int r = 0; r < layer.getHeight(); r++){
+            for(int c = 0; c < layer.getWidth(); c++){
+                TiledMapTileLayer.Cell cell = layer.getCell(c,r);
+                /**
+                 * If there is a tile on (r,w)
+                 */
+                if(cell != null && cell.getTile() != null){
+                    bdef.position.set(
+                            (c + 0.5f) * tileSize / PPM,
+                            (r + 0.5f) * tileSize / PPM
+                    );
+                    /**
+                     * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
+                     * this can be changed easily by adding more items to the vector, e.g a bottom.
+                     */
+                    ChainShape cs = new ChainShape();
+                    Vector2[] v = boxVector;
+
+                    cs.createChain(v);
+                    fdef.shape = cs;
+                    world.createBody(bdef).createFixture(fdef);
+                }
+            }
+        }
     }
 
     @Override
     public String getName() {
-        return "mainlevel";
+        return "grasslevel";
     }
 }
