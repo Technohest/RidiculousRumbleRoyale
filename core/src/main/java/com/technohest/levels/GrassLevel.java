@@ -80,7 +80,7 @@ public class GrassLevel implements ILevel{
         }
         layer = (TiledMapTileLayer) map.getLayers().get("Platforms");
 
-        Vector2[] lineVector = new Vector2[1];
+        Vector2[] lineVector = new Vector2[2];
         lineVector[0] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
         lineVector[1] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
 

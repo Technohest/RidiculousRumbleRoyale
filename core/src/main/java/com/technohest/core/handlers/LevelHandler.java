@@ -1,6 +1,7 @@
 package com.technohest.core.handlers;
 
 import com.technohest.core.interfaces.ILevel;
+import com.technohest.levels.GrassLevel;
 import com.technohest.levels.MainLevel;
 
 /**
@@ -9,7 +10,7 @@ import com.technohest.levels.MainLevel;
 public class LevelHandler{
     private ILevel level;
     public LevelHandler(){
-        setLevel("mainlevel");
+        setLevel("grasslevel");
     }
 
     /**
@@ -30,6 +31,8 @@ public class LevelHandler{
         name = name.toLowerCase().trim();
         if (name.equals("mainlevel")) {
             level = new MainLevel();
+        }else if(name.equals("grasslevel")){
+            level =  new GrassLevel();
         }
     }
 }
