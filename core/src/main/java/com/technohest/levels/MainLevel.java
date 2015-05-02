@@ -82,6 +82,6 @@ public class MainLevel implements ILevel {
 
     @Override
     public String getName() {
-        return "mainlevel";
+        return "Main Level";
     }
 }

@@ -1,20 +1,13 @@
 package com.technohest.core.view;
 
-import static com.technohest.constants.Constants.PPM;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
-import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.RRRGameModel;
 
 public class RRRGameView implements Screen {

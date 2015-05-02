@@ -115,6 +115,6 @@ public class GrassLevel implements ILevel{
 
     @Override
     public String getName() {
-        return "grasslevel";
+        return "Grass Level";
     }
 }
