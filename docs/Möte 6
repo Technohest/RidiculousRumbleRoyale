@@ -1,0 +1,27 @@
+        Projektmöte 6
+            "The Phantom Menace"
+
+    Sekreterare:    Oskar "Vilddjur" Jedvert
+    Deltagare: David Ström, Oscar Boking, Tobias Allden, Oskar Jedvert
+    Datum: 2015-04-11
+
+
+
+§1 Mötets öppnande.
+    -   Sekreterare: Oskar Jedvert
+§2 Uppkomna problem som hindrar oss att fortsätta
+    -   Overlap2d bråkar med Allden, förhindrar implementation av Player.
+§3 Punkter från förra mötet.
+    -   Inga relevanta
+§4 Projektets status
+    -   Refaktorering av level ramverket.
+        Vi står rätt stilla, behöver ett bra level ramverk innan I1.
+§5 Bestämmelser
+    -   Oskar refaktorerar projektet så det använder Tiled istället för Overlap2d.
+§6 Genomgång av info från möte med handledare
+
+§7 Inför kommande möte + fikaansvarig
+
+§8 Övriga frågor/ Synpunkter
+
+§9 Mötet avslutas

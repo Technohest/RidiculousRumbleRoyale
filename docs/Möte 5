@@ -1,0 +1,26 @@
+Allmänt
+Ordförande(Projektledare):    Tobias Alldén
+Fikaansvarig: rullande; Alldén -> Boking -> Schtek -> Vilddjur
+    Fikabudget: 30kr max (endast fast föda, inte samma två ggr i rad)
+Sekreterare: rullande; Vilddjur
+
+Möte nr 5    2015 - 03 - 23
+    Sekreterare:         Oskar Jedvert
+§1 Mötets öppnande
+Mötet öppnat
+§2 Problem som hindrar oss att fortsätta
+    Problem som hindrar oss att fortsätta:
+Vi vet ej hur man ska synka spring-animationen av spelaren med hur snabbt spelaren rör sig.
+§3 Från förra mötet
+    Skriva speloutline + startklasser och interface. Har gjorts i uml:en som finns på slack.
+§4 Status
+    - Basklasser har börjat skrivas och sättas ihop. Vi börjar närma oss interation 1.
+§5 Beslut
+    Vi följer den uml som vi utvecklat under denna veckan.
+§6 Info från handledare
+    - Inget möte denna veckan
+§7 Inför kommande möte (9 april)
+    Skriva klart karaktärsklassen för iteration 1.
+§8 Övriga frågor/Synpunkter
+    -
+§9 Mötet avslutas

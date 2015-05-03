@@ -29,7 +29,7 @@ public class ScreenHandler extends Observable {
     protected ScreenHandler() {
         RRRGameModel model = new RRRGameModel();
         gameScreen = new RRRGameView(
-                new RRRGameController(model, gameScreen)
+                new RRRGameController(model)
                 , model);
     }
 
