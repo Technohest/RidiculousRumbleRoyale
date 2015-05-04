@@ -55,7 +55,6 @@ public class RRRGameController extends InputHandler {
             this.handleInput();
         }
         model.step(v);
-        model.getPlayer().update(v);
 
 
         view.update(v);

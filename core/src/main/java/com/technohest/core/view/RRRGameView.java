@@ -14,14 +14,12 @@ public class RRRGameView implements Screen {
 
 	private final RRRGameController controller;
 	private final RRRGameModel		model;
-    private Box2DDebugRenderer debugRenderer;
 
 	private TiledMapRenderer 	mapRenderer;
 
 	private SpriteBatch			batch;
 
 	private OrthographicCamera 	camera;
-	private OrthographicCamera 	box2dcam;
 
 
 	/**
@@ -43,9 +41,6 @@ public class RRRGameView implements Screen {
 		 */
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
-        box2dcam = new OrthographicCamera();
-        box2dcam.setToOrtho(false,1280/PPM,720/PPM);
-        this.debugRenderer = new Box2DDebugRenderer();
 
 
 	}
@@ -65,7 +60,6 @@ public class RRRGameView implements Screen {
 		mapRenderer.render();
 		batch.begin();
 		batch.end();
-        this.debugRenderer.render(model.getWorld(),box2dcam.combined);
 	}
 	@Override
 	public void resize (int width, int height) {
