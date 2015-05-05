@@ -52,38 +52,13 @@ public class GrassLevel implements ILevel{
         boxVector[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
         boxVector[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
         /**
-         * Create a box2d body for each tile
+         * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
+         * this can be changed easily by adding more items to the vector, e.g a bottom.
          */
-        for(int r = 0; r < layer.getHeight(); r++){
-            for(int c = 0; c < layer.getWidth(); c++){
-                TiledMapTileLayer.Cell cell = layer.getCell(c,r);
-                /**
-                 * If there is a tile on (r,w)
-                 */
-                if(cell != null && cell.getTile() != null){
-                    bdef.position.set(
-                            (c + 0.5f) * tileSize / PPM,
-                            (r + 0.5f) * tileSize / PPM
-                    );
-                    /**
-                     * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
-                     * this can be changed easily by adding more items to the vector, e.g a bottom.
-                     */
-                    ChainShape cs = new ChainShape();
-                    Vector2[] v = boxVector;
+        ChainShape cs = new ChainShape();
 
-                    cs.createChain(v);
-                    fdef.shape = cs;
-                    world.createBody(bdef).createFixture(fdef);
-                }
-            }
-        }
-        layer = (TiledMapTileLayer) map.getLayers().get("Platforms");
-
-        Vector2[] lineVector = new Vector2[2];
-        lineVector[0] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
-        lineVector[1] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
-
+        cs.createChain(boxVector);
+        fdef.shape = cs;
         /**
          * Create a box2d body for each tile
          */
@@ -98,15 +73,38 @@ public class GrassLevel implements ILevel{
                             (c + 0.5f) * tileSize / PPM,
                             (r + 0.5f) * tileSize / PPM
                     );
-                    /**
-                     * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
-                     * this can be changed easily by adding more items to the vector, e.g a bottom.
-                     */
-                    ChainShape cs = new ChainShape();
-                    Vector2[] v = lineVector;
 
-                    cs.createChain(v);
-                    fdef.shape = cs;
+                    world.createBody(bdef).createFixture(fdef);
+                }
+            }
+        }
+        layer = (TiledMapTileLayer) map.getLayers().get("Platforms");
+
+        Vector2[] lineVector = new Vector2[2];
+        lineVector[0] = new Vector2(-tileSize/2/PPM, tileSize/2/PPM);
+        lineVector[1] = new Vector2(tileSize/2/PPM, tileSize/2/PPM);
+        /**
+         * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
+         * this can be changed easily by adding more items to the vector, e.g a bottom.
+         */
+        cs = new ChainShape();
+        cs.createChain(lineVector);
+        fdef.shape = cs;
+        /**
+         * Create a box2d body for each tile
+         */
+        for(int r = 0; r < layer.getHeight(); r++){
+            for(int c = 0; c < layer.getWidth(); c++){
+                TiledMapTileLayer.Cell cell = layer.getCell(c,r);
+                /**
+                 * If there is a tile on (r,w)
+                 */
+                if(cell != null && cell.getTile() != null){
+                    bdef.position.set(
+                            (c + 0.5f) * tileSize / PPM,
+                            (r + 0.5f) * tileSize / PPM
+                    );
+
                     world.createBody(bdef).createFixture(fdef);
                 }
             }

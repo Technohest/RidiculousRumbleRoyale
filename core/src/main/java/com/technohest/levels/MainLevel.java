@@ -52,6 +52,13 @@ public class MainLevel implements ILevel {
         boxVector[3] = new Vector2(tileSize/2/PPM, -tileSize/2/PPM);
         boxVector[4] = new Vector2(-tileSize/2/PPM, -tileSize/2/PPM);
         /**
+         * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
+         * this can be changed easily by adding more items to the vector, e.g a bottom.
+         */
+        ChainShape cs = new ChainShape();
+        cs.createChain(boxVector);
+        fdef.shape = cs;
+        /**
          * Create a box2d body for each tile
          */
         for(int r = 0; r < layer.getHeight(); r++){
@@ -65,15 +72,7 @@ public class MainLevel implements ILevel {
                             (c + 0.5f) * tileSize / PPM,
                             (r + 0.5f) * tileSize / PPM
                     );
-                    /**
-                     * Create a "Chain Linked" polygon of corners which will check for collision later. Using this chainlink will allow our players to jump up into the box
-                     * this can be changed easily by adding more items to the vector, e.g a bottom.
-                     */
-                    ChainShape cs = new ChainShape();
-                    Vector2[] v = boxVector;
 
-                    cs.createChain(v);
-                    fdef.shape = cs;
                     world.createBody(bdef).createFixture(fdef);
                 }
             }
