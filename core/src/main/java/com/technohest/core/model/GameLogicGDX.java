@@ -7,6 +7,8 @@ import com.technohest.core.interfaces.IGameLogic;
 import com.technohest.core.interfaces.ILevel;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -32,16 +34,18 @@ public class GameLogicGDX implements IGameLogic{
     @Override
     public void generate(ILevel level,Character[] players) {
         level.generate(world);
+        Random random = new Random();
         for (int i = 0;i<players.length;i++) {
             BodyDef bdef = new BodyDef();
-            bdef.gravityScale = 4;
-            bdef.position.set(145/Constants.PPM,80/Constants.PPM);
+            bdef.gravityScale = 10;
+            bdef.position.set(100 + (22*i),100);
             bdef.linearDamping = 10;
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(20/Constants.PPM,30/Constants.PPM);
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
             Body b = world.createBody(bdef);
+            b.setType(BodyDef.BodyType.DynamicBody);
             b.createFixture(fdef);
             bodyCharacterMap.put(b,players[i]);
         }
@@ -55,6 +59,14 @@ public class GameLogicGDX implements IGameLogic{
      */
     public Character getCharacterfromBody(Body body) {
         return bodyCharacterMap.get(body);
+    }
+    public Body getBodyFromCharacter(Character character) {
+        for(Map.Entry<Body,Character> e: bodyCharacterMap.entrySet()) {
+            if(e.getValue() == character) {
+                return e.getKey();
+            }
+        }
+        return null;
     }
 
 }

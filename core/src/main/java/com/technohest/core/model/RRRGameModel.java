@@ -47,6 +47,10 @@ public class RRRGameModel {
         return null;
     }
 
+    public IGameLogic getGameLogic() {
+        return gameLogic;
+    }
+
     public void step(float v) {
         gameLogic.update(v);
     }
