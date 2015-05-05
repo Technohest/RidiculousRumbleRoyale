@@ -2,6 +2,7 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.technohest.core.OptionsMenuView;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.NetworkMenuUtility;
@@ -19,6 +20,7 @@ public class ScreenHandler extends Observable {
     private RRRGameView gameScreen;
     private Screen ipPortInputScreen = new IPPortInputScreen();
     private Screen lobbyScreen = new LobbyScreen();
+    private Screen optionsScreen = new OptionsMenuView();
 
     private SCREEN currentScreen;
 
@@ -62,6 +64,10 @@ public class ScreenHandler extends Observable {
             currentScreen = SCREEN.JOIN;
             setChanged();
             notifyObservers(ipPortInputScreen);
+        } else if(target.equals("options")) {
+            currentScreen = SCREEN.OPTIONS;
+            setChanged();
+            notifyObservers(optionsScreen);
         } else if(target.equals("host")) {
             if (currentScreen == SCREEN.MAIN) {
                 NetworkMenuUtility.getInstance().setIsServer(true);

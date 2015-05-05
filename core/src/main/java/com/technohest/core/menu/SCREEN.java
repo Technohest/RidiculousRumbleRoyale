@@ -5,5 +5,5 @@ package com.technohest.core.menu;
  * Created by time on 2015-04-21.
  */
 public enum SCREEN {
-    MAIN, GAME, LOBBY, JOIN, HOST
+    MAIN, GAME, LOBBY, JOIN, HOST, OPTIONS
 }

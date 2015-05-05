@@ -1,6 +1,7 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -10,17 +11,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.technohest.core.controller.MenuInputListener;
+import com.technohest.core.menu.ScreenHandler;
 
 import javax.xml.soap.Text;
 
 /**
+ * The options menu, able to change the options of the game and save them.
  * Created by Oscar on 2015-04-11.
  */
 public class OptionsMenuView implements Screen{
 
     //Screen
     private Stage stage;
-    private final RRRMain game;
     private float x,y;
 
     //Text
@@ -58,10 +61,9 @@ public class OptionsMenuView implements Screen{
     private FileHandle optionsFile;
     private String[] parts;
 
-    public OptionsMenuView(RRRMain game){
+    public OptionsMenuView(){
 
         //Game and stage
-        this.game = game;
         stage = new Stage();
         navigationTable = new Table();
         mainTable = new Table();
@@ -120,7 +122,7 @@ public class OptionsMenuView implements Screen{
         graphicsButton.addListener(new OptionsInputListener(this, "graphics"));
         soundButton.addListener(new OptionsInputListener(this, "sound"));
         gameplayButton.addListener(new OptionsInputListener(this, "gameplay"));
-        backButton.addListener(new MenuInputListener(this.game, "backFromOptions"));
+        backButton.addListener(new MenuInputListener("backFromOptions"));
         saveButton.addListener(new OptionsInputListener(this, "save"));
 
         //Setting the stage
@@ -174,6 +176,10 @@ public class OptionsMenuView implements Screen{
         Gdx.gl.glClearColor(r, g, b, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         stage.draw();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            ScreenHandler.getInstance().setScreen("menu");
+        }
     }
 
     @Override
@@ -205,11 +211,11 @@ public class OptionsMenuView implements Screen{
     }
 
     public void switchTo(String target){
-        if(target=="graphics"){
+        if(target.equals("graphics")) {
             currentTable = graphicsTable;
-        }else if (target=="sound"){
+        }else if (target.equals("sound")){
             currentTable = soundTable;
-        }else if (target=="gameplay"){
+        }else if (target.equals("gameplay")){
             currentTable = gameplayTable;
         }
         updateStage();
