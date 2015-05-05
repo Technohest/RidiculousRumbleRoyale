@@ -9,7 +9,7 @@ import com.technohest.core.handlers.LevelHandler;
  */
 public class RRRGameModel {
     private LevelHandler    levelHandler;
-    private Character player;
+    private Character[] players;
 
 
     private IGameLogic      gameLogic;
@@ -28,10 +28,18 @@ public class RRRGameModel {
      * Initializes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        gameLogic.generate(levelHandler.getLevel());
+        gameLogic.generate(levelHandler.getLevel(),players);
     }
-    public Character getPlayer() {
-        return this.player;
+    public Character[] getPlayers() {
+        return this.players;
+    }
+    public Character getPlayer(String name) {
+        for(int i = 0; i<players.length;i++) {
+            if(players[i].getName().equals(name)) {
+                return players[i];
+            }
+        }
+        return null;
     }
 
     public void step(float v) {
