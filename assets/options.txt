@@ -1,0 +1,1 @@
+displayMode:windowed fullscreen:resolution:1920x1080:music:enabled:soundEffects:enabled:displayDamage:enabled
