@@ -5,15 +5,25 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.technohest.core.network.NetworkMenuUtility;
+import com.technohest.core.network.RServer;
 
 /**
+ * A lobby where all clients connect before a game and can set the game options before starting.
  * Created by time on 2015-04-21.
  */
 public class LobbyScreen implements Screen {
+    private NetworkMenuUtility nmu = NetworkMenuUtility.getInstance();
     @Override
     public void show() {
         System.out.println("IP: " + NetworkMenuUtility.getInstance().getIp());
         System.out.println("PORT: " + NetworkMenuUtility.getInstance().getPort());
+
+        if (nmu.isServer()) {
+            new RServer(nmu.getPort());
+            new RClient(nmu.getPort());
+        } else {
+            new RClient(nmu.getIp(), nmu.getPort());
+        }
     }
 
     @Override

@@ -13,6 +13,8 @@ public  class Character {
         Standing,Running,Jumping,Falling
     }
 
+
+
     //Variables
     private String name;
     private State state;
