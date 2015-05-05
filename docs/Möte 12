@@ -1,0 +1,76 @@
+        Projektmöte 12
+   "The Curse of the Black Pearl"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-05
+
+
+
+§1 Mötets öppnande.
+    - Oskar Jedvert sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Ramverk inte riktigt service än
+        Flytta till eget paket
+        Refaktorera view (mindre imports)
+    - Inga fixtures i level?
+        Ska kontrolleras efter mötet
+            kan bero på ny level
+
+§3 Punkter från förra mötet.
+    - Jobba på SDD, RAD, UC
+        SDD: har arbetats på
+        UC: har lagts till, behövs fler
+        RAD: inget att uppdatera
+
+    - Fixa character Rörelse osv
+        Behövs pillas på
+
+    - Lösning av ramverk
+
+
+§4 Projektets status
+    - Förra veckan:
+        Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+            Allt gjort.
+    - Denna veckan:
+        - Skriva UC's, Göra komplett ramverk service
+            Det mesta UC's klart, kanske någonting mer i LObby
+        - Kolla över och putsa på RAD, Skriva på SDD
+            SDD skrivet utkast till en del
+            Oskar skickar in frågor om RAD till lärare
+        - Skriva version 1 på rapporten
+            Inledning gjort
+        - KODA - Player movement. Nätverk, Level. Snygga till allt.
+            Snygga till inte prio
+        - Skriv testklasser
+            Alla ansvarar för att skriva testklasser till de klasser de själva gjort.
+
+§5 Bestämmelser
+    - Spawnpoints i level
+        Oskar Jedvert fixar detta
+    - Character chooser
+        Oscar Boking tar på sig att lösa det när Allden har fixat färdigt character
+    - Resource Handler
+        Inget bestämt ligger lite på is
+
+§6 Genomgång av info från möte med handledare
+    - INGET
+
+§7 Inför kommande möte + fikaansvarig
+    (- Fila på RAD)
+    - Skriva på SDD
+        Ganska klar
+    - Skriva på rapport, skall ha utkast på fredag
+        Teori kan skrivas mest på, kommer inte ändras
+    (- Skriva UC's)
+    - Kollision i värld ska finnas
+    - Skall kunna röra character
+    - Fixa Nätverk med Character
+
+§8 Övriga frågor/ Synpunkter
+    - INGET
+
+§9 Mötet avslutas
+    För lång quote
