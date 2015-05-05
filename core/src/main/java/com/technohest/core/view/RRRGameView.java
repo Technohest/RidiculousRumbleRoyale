@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.RRRGameModel;
 
@@ -40,7 +42,7 @@ public class RRRGameView implements Screen {
 		 * box2dcam is used to "draw" all bodies
 		 */
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
+		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
 
 
 	}
