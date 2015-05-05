@@ -16,6 +16,11 @@ public class RRRGameModel {
 
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
+        //Temp code for player creation
+        this.players = new Character[4];
+        for (int i = 0;i<4;i++) {
+            players[i] = new Character(Integer.toString(i),new Projectile("attack",100,10f,10f),new Projectile("attack",100,10f,10f));
+        }
         setGameLogic(new GameLogicGDX());
     }
     public ILevel getLevel() {

@@ -1,9 +1,7 @@
 package com.technohest.core.model;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
 import com.technohest.core.interfaces.IGameLogic;
 import com.technohest.core.interfaces.ILevel;
@@ -39,10 +37,24 @@ public class GameLogicGDX implements IGameLogic{
             bdef.gravityScale = 4;
             bdef.position.set(145/Constants.PPM,80/Constants.PPM);
             bdef.linearDamping = 10;
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(20/Constants.PPM,30/Constants.PPM);
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
             Body b = world.createBody(bdef);
+            b.createFixture(fdef);
             bodyCharacterMap.put(b,players[i]);
         }
 
+    }
+
+    /**
+     * Returns the associated character to the specified body.
+     * @param body
+     * @return
+     */
+    public Character getCharacterfromBody(Body body) {
+        return bodyCharacterMap.get(body);
     }
 
 }
