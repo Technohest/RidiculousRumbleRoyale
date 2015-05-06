@@ -4,7 +4,10 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.model.Character;
 import com.technohest.core.network.Packet;
+
+import java.util.HashMap;
 
 /**
  * Manages how the client responds to input from the server.
@@ -12,15 +15,19 @@ import com.technohest.core.network.Packet;
  */
 public class ClientNetworkListener extends Listener {
     private Client client;
+    private RClient rclient;
+    private Connection server;
 
-    public void init(Client client) {
+
+    public void init(RClient rclient, Client client) {
         this.client = client;
+        this.rclient = rclient;
     }
 
     @Override
     public void connected(Connection connection) {
         Log.info("Client: Trying to connect.");
-        client.sendTCP(new Packet.Packet0PlayerID());
+        server = connection;
     }
 
     @Override
@@ -31,8 +38,12 @@ public class ClientNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet0PlayerID) {
-            Log.info("ELO");
-            connection.sendTCP(new Packet.Packet0PlayerID());
+            Integer id = ((Packet.Packet0PlayerID)object).id;
+            rclient.setPlayerId(id);
+        } else if (object instanceof Packet.Packet1PlayerIdMap) {
+            HashMap<Integer, Integer> map = ((Packet.Packet1PlayerIdMap)object).playerMapping;
+            rclient.setPlayerIdMap(map);
+            Log.info("Client " + map.toString());
         }
     }
 }

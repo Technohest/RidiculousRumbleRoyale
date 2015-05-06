@@ -2,12 +2,12 @@ package com.technohest.core.menu;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.model.Character;
 import com.technohest.core.network.Packet;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.util.HashMap;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -15,13 +15,15 @@ import java.net.InetAddress;
  */
 public class RClient {
     private Client client;
+    private Integer id = null;
+    private HashMap<Integer, Integer> playerIdMap = new HashMap<Integer, Integer>();
 
     public RClient(String ip, String port) {
         client = new Client();
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(client);
+        clientNetworkListener.init(this, client);
 
         client.addListener(clientNetworkListener);
         client.start();
@@ -41,7 +43,7 @@ public class RClient {
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(client);
+        clientNetworkListener.init(this, client);
 
         client.addListener(clientNetworkListener);
         client.start();
@@ -59,5 +61,15 @@ public class RClient {
     private void registerPackets() {
         Kryo kryo = client.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
+        kryo.register(Packet.Packet1PlayerIdMap.class);
+        kryo.register(HashMap.class);
+    }
+
+    public void setPlayerId(Integer id) {
+        this.id = id;
+    }
+
+    public void setPlayerIdMap(HashMap<Integer, Integer> map) {
+        this.playerIdMap = map;
     }
 }
