@@ -1,6 +1,6 @@
 package com.technohest.core.controller;
 
-import com.technohest.core.interfaces.ILevel;
+import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;

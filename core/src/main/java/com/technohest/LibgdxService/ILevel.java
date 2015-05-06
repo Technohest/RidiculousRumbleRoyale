@@ -1,4 +1,4 @@
-package com.technohest.core.interfaces;
+package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;

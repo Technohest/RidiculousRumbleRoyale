@@ -1,7 +1,8 @@
 package com.technohest.core.model;
 
-import com.technohest.core.interfaces.IGameLogic;
-import com.technohest.core.interfaces.ILevel;
+import com.technohest.LibgdxService.GameLogicGDX;
+import com.technohest.LibgdxService.IGameLogic;
+import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
 
 /**

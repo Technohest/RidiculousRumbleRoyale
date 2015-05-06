@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.*;

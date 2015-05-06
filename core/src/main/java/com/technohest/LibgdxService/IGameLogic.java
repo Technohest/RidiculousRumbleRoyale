@@ -1,6 +1,4 @@
-package com.technohest.core.interfaces;
-
-import com.technohest.core.model.*;
+package com.technohest.LibgdxService;
 
 /**
  * Created by oskar on 2015-05-01.

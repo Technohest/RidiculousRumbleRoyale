@@ -1,10 +1,12 @@
-package com.technohest.core.model;
+package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
-import com.technohest.core.interfaces.IGameLogic;
-import com.technohest.core.interfaces.ILevel;
+import com.technohest.LibgdxService.IGameLogic;
+import com.technohest.LibgdxService.ILevel;
+import com.technohest.core.model.*;
+import com.technohest.core.model.Character;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.Random;
 public class GameLogicGDX implements IGameLogic{
     private final World world;
     //A map for bundling bodies with player objects
-    private HashMap<Body,Character> bodyCharacterMap;
+    private HashMap<Body, com.technohest.core.model.Character> bodyCharacterMap;
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
