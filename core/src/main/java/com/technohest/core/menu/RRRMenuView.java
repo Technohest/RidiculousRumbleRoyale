@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.technohest.core.controller.MenuInputListener;
 
 /**
+ * The Default menu displaying buttons for joining/hosting a game, changing options, and exiting the program.
  * Created by vilddjur on 2015-04-02.
  */
 public class RRRMenuView implements Screen {
@@ -24,6 +25,7 @@ public class RRRMenuView implements Screen {
     private TextButton playButton;
     private TextButton joinButton;
     private TextButton hostButton;
+    private TextButton optionsButton;
 
     private Table buttonTable;
 
@@ -48,6 +50,8 @@ public class RRRMenuView implements Screen {
         buttonTable.add(hostButton);
         buttonTable.row();
         buttonTable.add(playButton);
+        buttonTable.row();
+        buttonTable.add(optionsButton);
         buttonTable.row();
         buttonTable.add(exitButton);
         /**
@@ -85,6 +89,7 @@ public class RRRMenuView implements Screen {
         playButton = new TextButton("Play", style);
         joinButton = new TextButton("Join", style);
         hostButton = new TextButton("Host", style);
+        optionsButton = new TextButton("Options", style);
         /**
          * See @class{MenuInputListener}
          */
@@ -92,6 +97,7 @@ public class RRRMenuView implements Screen {
         exitButton.addListener(new MenuInputListener("exit"));
         joinButton.addListener(new MenuInputListener("join"));
         hostButton.addListener(new MenuInputListener("host"));
+        optionsButton.addListener(new MenuInputListener("options"));
     }
 
     @Override

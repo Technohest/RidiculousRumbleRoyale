@@ -5,10 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.technohest.LibgdxService.GameLogicGDX;
+import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
-import com.technohest.core.model.RRRGameModel;
+import com.technohest.core.model.*;
+import com.technohest.core.model.Character;
+
+import java.util.ArrayList;
 
 public class RRRGameView implements Screen {
 
@@ -20,6 +27,7 @@ public class RRRGameView implements Screen {
 	private SpriteBatch			batch;
 
 	private OrthographicCamera 	camera;
+    ShapeRenderer sRenderer;
 
 
 	/**
@@ -41,13 +49,25 @@ public class RRRGameView implements Screen {
 		 */
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
+        sRenderer  = new ShapeRenderer();
+		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
 
 
 	}
 
 	@Override
 	public void render(float v) {
+
 		controller.update(v);
+        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        //Draws players ---  TEMP!
+        ArrayList<Character> players = model.getPlayers();
+		for (Character c: players) {
+            Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromCharacter(c);
+            sRenderer.rect(b.getPosition().x, b.getPosition().y, 20, 30);
+
+        }
+        sRenderer.end();
 	}
 
 	public void update(float v){

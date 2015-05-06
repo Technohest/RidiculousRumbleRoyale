@@ -1,4 +1,9 @@
-package com.technohest.core.interfaces;
+package com.technohest.LibgdxService;
+
+import com.technohest.core.model.*;
+import com.technohest.core.model.Character;
+
+import java.util.ArrayList;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -15,6 +20,7 @@ public interface IGameLogic {
      * Generate bodies
      * @param level
      * Target level
+     * @param players
      */
-    void generate(ILevel level);
+    void generate(ILevel level, ArrayList<Character> players);
 }

@@ -1,4 +1,4 @@
-package com.technohest.core.interfaces;
+package com.technohest.LibgdxService;
 
 /**
  * An interface for the PlayerController
