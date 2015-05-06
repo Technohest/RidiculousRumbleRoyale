@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.technohest.core.interfaces.ILevel;
+import com.technohest.LibgdxService.ILevel;
 
 import static com.technohest.constants.Constants.PPM;
 

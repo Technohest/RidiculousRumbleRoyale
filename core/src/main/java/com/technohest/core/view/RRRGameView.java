@@ -5,12 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
-import com.technohest.core.model.RRRGameModel;
+import com.technohest.core.model.*;
 
 public class RRRGameView implements Screen {
 
@@ -22,6 +24,7 @@ public class RRRGameView implements Screen {
 	private SpriteBatch			batch;
 
 	private OrthographicCamera 	camera;
+    ShapeRenderer sRenderer;
 
 
 	/**
@@ -42,6 +45,8 @@ public class RRRGameView implements Screen {
 		 * box2dcam is used to "draw" all bodies
 		 */
 		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+        sRenderer  = new ShapeRenderer();
 		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
 
 
@@ -49,7 +54,17 @@ public class RRRGameView implements Screen {
 
 	@Override
 	public void render(float v) {
+
 		controller.update(v);
+        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        //Draws players ---  TEMP!
+        com.technohest.core.model.Character[] players = model.getPlayers();
+        for(int i=0;i<players.length;i++) {
+            Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromCharacter(players[i]);
+            sRenderer.rect(b.getPosition().x,b.getPosition().y,20,30);
+
+        }
+        sRenderer.end();
 	}
 
 	public void update(float v){

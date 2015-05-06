@@ -1,4 +1,4 @@
-package com.technohest.core.interfaces;
+package com.technohest.LibgdxService;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -16,5 +16,5 @@ public interface IGameLogic {
      * @param level
      * Target level
      */
-    void generate(ILevel level);
+    void generate(ILevel level, com.technohest.core.model.Character[] players);
 }

@@ -1,8 +1,4 @@
 package com.technohest.core.model;
-
-
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.technohest.constants.Constants;
 
 /**
@@ -12,8 +8,7 @@ import com.technohest.constants.Constants;
  */
 public abstract class Attack  {
     private int damage;
-    private Vector2 postition;
-    private Shape shape;
+    private String name;
 
 
 
@@ -21,21 +16,16 @@ public abstract class Attack  {
 
     }
 
-    public Attack(int damage, Shape shape, Vector2 position) {
+    public Attack(String name,int damage) {
         this.damage = damage;
-        this.shape = shape;
-        position = (new Vector2(position.x + 10/Constants.PPM,position.y));
+        this.name = name;
         }
 
     public int getDamage() {
         return damage;
     }
 
-    public Vector2 getPostition() {
-        return postition;
-    }
-
-    public Shape getShape() {
-        return shape;
+    public String getName() {
+        return name;
     }
 }

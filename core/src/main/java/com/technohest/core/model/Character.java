@@ -113,5 +113,8 @@ public  class Character {
     public int getDeaths() {
         return deaths;
     }
+    public String getName() {
+        return name;
+    }
 
 }
