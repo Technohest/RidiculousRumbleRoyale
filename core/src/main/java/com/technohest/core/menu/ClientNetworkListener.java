@@ -7,6 +7,7 @@ import com.esotericsoftware.minlog.Log;
 import com.technohest.core.model.Character;
 import com.technohest.core.network.Packet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -41,9 +42,9 @@ public class ClientNetworkListener extends Listener {
             Integer id = ((Packet.Packet0PlayerID)object).id;
             rclient.setPlayerId(id);
         } else if (object instanceof Packet.Packet1PlayerIdMap) {
-            HashMap<Integer, Integer> map = ((Packet.Packet1PlayerIdMap)object).playerMapping;
-            rclient.setPlayerIdMap(map);
-            Log.info("Client " + map.toString());
+            ArrayList<Integer> list = ((Packet.Packet1PlayerIdMap)object).playerList;
+            rclient.setPlayerIdList(list);
+            Log.info("Client " + list.toString());
         }
     }
 }

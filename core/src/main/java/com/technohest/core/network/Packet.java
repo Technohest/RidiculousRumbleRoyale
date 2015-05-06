@@ -17,7 +17,7 @@ public class Packet {
 
     public static class Packet1PlayerIdMap {
         //Will maybe be Integer, Character or possibly only Integer ID contained in this later.
-        public HashMap<Integer, Integer> playerMapping = new HashMap<Integer, Integer>();
+        public ArrayList<Integer> playerList = new ArrayList<Integer>();
     }
 
     public static class Packet2Start {}

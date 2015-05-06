@@ -7,6 +7,7 @@ import com.technohest.core.model.Character;
 import com.technohest.core.network.Packet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -16,7 +17,7 @@ import java.util.HashMap;
 public class RClient {
     private Client client;
     private Integer id = null;
-    private HashMap<Integer, Integer> playerIdMap = new HashMap<Integer, Integer>();
+    private ArrayList<Integer> playerIdList= new ArrayList<Integer>();
 
     public RClient(String ip, String port) {
         client = new Client();
@@ -62,14 +63,14 @@ public class RClient {
         Kryo kryo = client.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
         kryo.register(Packet.Packet1PlayerIdMap.class);
-        kryo.register(HashMap.class);
+        kryo.register(ArrayList.class);
     }
 
     public void setPlayerId(Integer id) {
         this.id = id;
     }
 
-    public void setPlayerIdMap(HashMap<Integer, Integer> map) {
-        this.playerIdMap = map;
+    public void setPlayerIdList(ArrayList<Integer> list) {
+        this.playerIdList = list;
     }
 }

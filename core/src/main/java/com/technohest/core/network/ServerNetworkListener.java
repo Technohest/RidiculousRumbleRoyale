@@ -28,7 +28,7 @@ public class ServerNetworkListener extends Listener {
 
         //Creates a new packet with the id of the client's player and the mapping player and playerId.
         p1.id = clients.size();
-        p2.playerMapping = server.getPlayerIdMap();
+        p2.playerList = server.getPlayerIdList();
 
         //Send the id to the newly connected client and sent the updated id/player-map to all the clients.
         for (Connection c: clients) {
