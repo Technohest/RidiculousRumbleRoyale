@@ -18,14 +18,17 @@ import static com.technohest.constants.Constants.PPM;
  * Created by vilddjur on 2015-04-27.
  */
 public class MainLevel implements ILevel {
-    private final TiledMap map;
+    private final TiledMap          map;
 
-    private Vector<Vector2>       spawnPoints;
+    private Vector<Vector2>         spawnPoints;
+
+    private int                     spawnIndex;
 
     public MainLevel(){
         TmxMapLoader l = new TmxMapLoader();
         map = l.load("mainlevel.tmx");
         spawnPoints = new Vector<Vector2>();
+        spawnIndex=-1;
     }
     @Override
     public TiledMap getMap() {
@@ -109,6 +112,10 @@ public class MainLevel implements ILevel {
 
     @Override
     public Vector2 getSpawnPoint() {
-        return null;
+        spawnIndex++;
+        if(spawnIndex>=spawnPoints.size()){
+            spawnIndex=0;
+        }
+        return spawnPoints.get(spawnIndex);
     }
 }

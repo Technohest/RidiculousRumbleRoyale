@@ -21,11 +21,14 @@ public class GrassLevel implements ILevel{
     private final TiledMap  map;
 
     private Vector<Vector2>       spawnPoints;
-    
+
+    private int                     spawnIndex;
+
     public GrassLevel(){
         TmxMapLoader l = new TmxMapLoader();
         map = l.load("grasslevel.tmx");
         spawnPoints = new Vector<Vector2>();
+        spawnIndex=-1;
     }
     @Override
     public TiledMap getMap() {
@@ -141,6 +144,10 @@ public class GrassLevel implements ILevel{
 
     @Override
     public Vector2 getSpawnPoint() {
-        return null;
+        spawnIndex++;
+        if(spawnIndex>=spawnPoints.size()){
+            spawnIndex=0;
+        }
+        return spawnPoints.get(spawnIndex);
     }
 }
