@@ -1,14 +1,13 @@
-package com.technohest.core.menu;
+package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.core.model.Character;
 import com.technohest.core.network.Packet;
+import com.technohest.core.network.RClient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Manages how the client responds to input from the server.

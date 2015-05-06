@@ -1,14 +1,11 @@
-package com.technohest.core.menu;
+package com.technohest.core.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.core.model.Character;
-import com.technohest.core.network.Packet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.

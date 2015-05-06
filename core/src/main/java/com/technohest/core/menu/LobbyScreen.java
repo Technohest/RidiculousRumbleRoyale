@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.technohest.core.network.NetworkMenuUtility;
+import com.technohest.core.network.RClient;
 import com.technohest.core.network.RServer;
 
 /**
