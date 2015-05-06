@@ -10,17 +10,25 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.LibgdxService.ILevel;
 
+import java.util.Vector;
+
 import static com.technohest.constants.Constants.PPM;
 
 /**
  * Created by vilddjur on 2015-04-27.
  */
 public class MainLevel implements ILevel {
-    private final TiledMap map;
+    private final TiledMap          map;
+
+    private Vector<Vector2>         spawnPoints;
+
+    private int                     spawnIndex;
 
     public MainLevel(){
         TmxMapLoader l = new TmxMapLoader();
         map = l.load("mainlevel.tmx");
+        spawnPoints = new Vector<Vector2>();
+        spawnIndex=-1;
     }
     @Override
     public TiledMap getMap() {
@@ -77,10 +85,37 @@ public class MainLevel implements ILevel {
                 }
             }
         }
+        layer = (TiledMapTileLayer) map.getLayers().get("Spawnpoints");
+        /**
+         * Create spawnpoints
+         */
+        int index = 0;
+        for(int r = 0; r < layer.getHeight(); r++){
+            for(int c = 0; c < layer.getWidth(); c++){
+                TiledMapTileLayer.Cell cell = layer.getCell(c,r);
+                /**
+                 * If there is a spawnpoint on (r,w) add spawnpoint
+                 */
+                if(cell != null && cell.getTile() != null){
+                    Vector2 point = new Vector2((c + 0.5f) * tileSize / PPM, (r + 0.5f) * tileSize / PPM);
+                    spawnPoints.add(index, point);
+                    index++;
+                }
+            }
+        }
     }
 
     @Override
     public String getName() {
         return "Main Level";
+    }
+
+    @Override
+    public Vector2 getSpawnPoint() {
+        spawnIndex++;
+        if(spawnIndex>=spawnPoints.size()){
+            spawnIndex=0;
+        }
+        return spawnPoints.get(spawnIndex);
     }
 }
