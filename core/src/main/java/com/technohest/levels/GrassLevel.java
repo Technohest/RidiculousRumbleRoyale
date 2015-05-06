@@ -10,17 +10,22 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.core.interfaces.ILevel;
 
+import java.util.Vector;
+
 import static com.technohest.constants.Constants.PPM;
 
 /**
  * Created by oskar on 2015-05-01.
  */
 public class GrassLevel implements ILevel{
-    private final TiledMap map;
+    private final TiledMap  map;
 
+    private Vector<Vector2>       spawnPoints;
+    
     public GrassLevel(){
         TmxMapLoader l = new TmxMapLoader();
         map = l.load("grasslevel.tmx");
+        spawnPoints = new Vector<Vector2>();
     }
     @Override
     public TiledMap getMap() {
@@ -109,10 +114,33 @@ public class GrassLevel implements ILevel{
                 }
             }
         }
+        layer = (TiledMapTileLayer) map.getLayers().get("Spawnpoints");
+        /**
+         * Create spawnpoints
+         */
+        int index = 0;
+        for(int r = 0; r < layer.getHeight(); r++){
+            for(int c = 0; c < layer.getWidth(); c++){
+                TiledMapTileLayer.Cell cell = layer.getCell(c,r);
+                /**
+                 * If there is a spawnpoint on (r,w) add spawnpoint
+                 */
+                if(cell != null && cell.getTile() != null){
+                    Vector2 point = new Vector2((c + 0.5f) * tileSize / PPM, (r + 0.5f) * tileSize / PPM);
+                    spawnPoints.add(index, point);
+                    index++;
+                }
+            }
+        }
     }
 
     @Override
     public String getName() {
         return "Grass Level";
+    }
+
+    @Override
+    public Vector2 getSpawnPoint() {
+        return null;
     }
 }

@@ -6,6 +6,11 @@
  <tileset firstgid="5" name="Tileset" tilewidth="32" tileheight="32" spacing="1">
   <image source="Tileset.png" width="65" height="65"/>
  </tileset>
+ <layer name="Spawnpoints" width="40" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFgxmwDQJ76OWGwQxGwwABqBEWo+FJfTCUw5Rabh/KYTAK6AeGUzoZLY9pDwZDO4zW5lJqNyn6R9PbyAAA6S4AbQ==
+  </data>
+ </layer>
  <layer name="Background" width="40" height="23">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAMBKGb3r/kiugKCaumqqqqzwc9lRWR
