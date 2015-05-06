@@ -3,11 +3,9 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
-import com.technohest.LibgdxService.IGameLogic;
-import com.technohest.LibgdxService.ILevel;
-import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -34,10 +32,14 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public void generate(ILevel level,Character[] players) {
+    public void generate(ILevel level,ArrayList<Character> players) {
         level.generate(world);
         Random random = new Random();
-        for (int i = 0;i<players.length;i++) {
+
+        int i=0;
+
+        for (Character c: players) {
+            i++;
             BodyDef bdef = new BodyDef();
             bdef.gravityScale = 10;
             bdef.position.set(100 + (22*i),100);
@@ -49,9 +51,8 @@ public class GameLogicGDX implements IGameLogic{
             Body b = world.createBody(bdef);
             b.setType(BodyDef.BodyType.DynamicBody);
             b.createFixture(fdef);
-            bodyCharacterMap.put(b,players[i]);
+            bodyCharacterMap.put(b,c);
         }
-
     }
 
     /**
