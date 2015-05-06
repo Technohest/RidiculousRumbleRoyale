@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.technohest.constants.Constants;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.*;
 
@@ -45,6 +46,7 @@ public class RRRGameView implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
         sRenderer  = new ShapeRenderer();
+		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
 
 
 	}
