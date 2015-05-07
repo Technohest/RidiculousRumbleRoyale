@@ -3,6 +3,9 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+
 import java.util.HashMap;
 
 /**
@@ -11,7 +14,8 @@ import java.util.HashMap;
  */
 public class ServerNetworkListener extends Listener {
     private RServer server;
-    private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
+    //private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
+    private BidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
     //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private int id = 0;
@@ -49,6 +53,13 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
+        clients.getKey(connection);
+        clients.remove(clients.getKey(connection));
+        for (Connection c: clients.values()) {
+            Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
+            m.map = playerIdTypeMap;
+            c.sendTCP(m);
+        }
     }
 
     @Override
