@@ -53,8 +53,9 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
-        clients.getKey(connection);
         clients.remove(clients.getKey(connection));
+        playerIdTypeMap.remove(clients.getKey(connection));
+
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
             m.map = playerIdTypeMap;
