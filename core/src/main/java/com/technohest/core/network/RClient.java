@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -13,8 +14,6 @@ import java.util.ArrayList;
  */
 public class RClient {
     private Client client;
-    private Integer id = null;
-    private ArrayList<Integer> playerIdList= new ArrayList<Integer>();
 
     public RClient(String ip, String port) {
         client = new Client();
@@ -59,15 +58,11 @@ public class RClient {
     private void registerPackets() {
         Kryo kryo = client.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
-        kryo.register(Packet.Packet1PlayerIdMap.class);
-        kryo.register(ArrayList.class);
+        kryo.register(Packet.Packet0PlayerIdJoined.class);
     }
 
-    public void setPlayerId(Integer id) {
-        this.id = id;
-    }
-
-    public void setPlayerIdList(ArrayList<Integer> list) {
-        this.playerIdList = list;
+    public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
+        //model.startGame(playerIdTypeMap, id);
+        Log.info("STARTING GAME ON CLIENT.");
     }
 }

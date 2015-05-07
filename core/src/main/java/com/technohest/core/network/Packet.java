@@ -1,5 +1,6 @@
 package com.technohest.core.network;
 
+import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 
@@ -15,10 +16,14 @@ public class Packet {
         public Integer id = null;
     }
 
-    public static class Packet1PlayerIdMap {
-        //Will maybe be Integer, Character or possibly only Integer ID contained in this later.
-        public ArrayList<Integer> playerList = new ArrayList<Integer>();
+    public static class Packet0PlayerIdJoined {
+        public Integer id = null;
+    }
+
+    public class Packet0PlayerSetCharacter {
+        //CharType type;
     }
 
     public static class Packet2Start {}
+
 }
