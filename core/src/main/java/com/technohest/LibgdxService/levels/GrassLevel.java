@@ -1,4 +1,4 @@
-package com.technohest.levels;
+package com.technohest.LibgdxService.levels;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
