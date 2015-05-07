@@ -1,0 +1,53 @@
+        Projektmöte 13
+    "Dead man's chest"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-07
+
+
+
+§1 Mötets öppnande.
+    - Oskar Jedvert sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Nätverk med character
+        David och Tobias behöver samarbeta
+        Tanken är att lösa det över helgen
+        Största problemet är att få Box2D deterministiskt
+
+§3 Punkter från förra mötet.
+        - Fila på RAD                                   GJORT
+        - Skriva på SDD                                 GJORT
+        - Skriva på rapport, skall ha utkast på fredag  GJORT
+        - Skriva UC's                                   GJORT
+        - Kollision i värld ska finnas                  INTE
+        - Skall kunna röra character                    INTE
+        - Fixa Nätverk med Character                    INTE
+
+§4 Projektets status
+    - Förra veckan:
+        Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+    - Denna veckan:
+        Skriva UC, Göra komplett Ramverk services       NÄSTAN
+        Kolla över och putsa på RAD, Skriva på SDD.     GJORT
+        Skriva Tester                                   SKA GÖRAS
+        Skriva version 1 på rapporten                   KLART
+        KODA - Player movement. Nätverk, Level. Snygga till allt. SKA GÖRAS
+
+§5 Bestämmelser
+    - INGET
+
+§6 Genomgång av info från möte med handledare
+    - Skriva tester
+    - Code review nästa gång
+    - STAN
+
+§7 Inför kommande möte + fikaansvarig
+    - Skall kunna röra character i nätverk, dvs ett godtyckligt antal spelare skall kunna gå
+
+§8 Övriga frågor/ Synpunkter
+    "Always cde as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live"
+        - John Woods
+
+§9 Mötet avslutas
