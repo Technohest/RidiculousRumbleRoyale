@@ -12,6 +12,7 @@ import java.util.HashMap;
  * @author Tobias Alldén
  */
 public class RRRGameModel {
+    private Integer myID;
     private LevelHandler levelHandler;
     private HashMap<Integer,Character> idCharacterMap;
     private IGameLogic gameLogic;
@@ -56,39 +57,42 @@ public class RRRGameModel {
     public void step(float v) {
         gameLogic.update(v);
     }
+    public Integer getmyID() {
+        return myID;
+    }
 
     /**
      * Moves the player(Body with fixtures) left in the and plays the run animation.
      */
-    public void moveLeft(){
-        
+    public void moveLeft(Integer playerID){
+
     }
 
     /**
      * Moves the player(Body with fixtures) left in the game,and plays the run animation.
      */
-    public void moveRight(){
+    public void moveRight(Integer playerID){
 
     }
 
     /**
      * Makes the player(Body with fixtures) jump in the game, and plays the jump animation.
      */
-    public void jump() {
+    public void jump(Integer playerID) {
 
     }
 
     /**
      * Makes the character perform a base attack
      */
-    public void attack_base() {
+    public void attack_base(Integer playerID) {
 
     }
 
     /**
      * Makes the character perform a special attack
      */
-    public void attack_special() {
+    public void attack_special(Integer playerID) {
 
     }
 
