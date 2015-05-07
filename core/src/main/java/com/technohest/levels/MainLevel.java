@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.LibgdxService.ILevel;
 
+import java.util.Collections;
 import java.util.Vector;
 
 import static com.technohest.constants.Constants.PPM;
@@ -89,7 +90,6 @@ public class MainLevel implements ILevel {
         /**
          * Create spawnpoints
          */
-        int index = 0;
         for(int r = 0; r < layer.getHeight(); r++){
             for(int c = 0; c < layer.getWidth(); c++){
                 TiledMapTileLayer.Cell cell = layer.getCell(c,r);
@@ -98,11 +98,11 @@ public class MainLevel implements ILevel {
                  */
                 if(cell != null && cell.getTile() != null){
                     Vector2 point = new Vector2((c + 0.5f) * tileSize / PPM, (r + 0.5f) * tileSize / PPM);
-                    spawnPoints.add(index, point);
-                    index++;
+                    spawnPoints.add(point);
                 }
             }
         }
+        Collections.shuffle(spawnPoints);
     }
 
     @Override
