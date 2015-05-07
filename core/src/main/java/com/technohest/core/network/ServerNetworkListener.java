@@ -3,7 +3,6 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,8 +11,9 @@ import java.util.HashMap;
  */
 public class ServerNetworkListener extends Listener {
     private RServer server;
-    //private ArrayList<Connection> clients = new ArrayList<Connection>();
     private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
+    //Will later be <Integer, CharType>
+    private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private int id = 0;
 
     public void init(RServer server) {
@@ -23,15 +23,17 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void connected(Connection connection) {
         Packet.Packet0PlayerID p1 = new Packet.Packet0PlayerID();
-        Packet.Packet0PlayerIdJoined p2 = new Packet.Packet0PlayerIdJoined();
+        Packet.Packet0PlayerTypeIdMap p2 = new Packet.Packet0PlayerTypeIdMap();
 
         //Increments the id and sets the player id and connection map.
         id++;
         clients.put(id, connection);
+        //-1 is a placeholder and will be changed to be a CharType
+        playerIdTypeMap.put(id, -1);
 
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
-        p2.id = id;
+        p2.map = playerIdTypeMap;
 
         //Send the id to the newly connected client and send the added id to all the clients.
         for (Connection c: clients.values()) {

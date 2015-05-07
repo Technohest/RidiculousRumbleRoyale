@@ -58,7 +58,9 @@ public class RClient {
     private void registerPackets() {
         Kryo kryo = client.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
-        kryo.register(Packet.Packet0PlayerIdJoined.class);
+        kryo.register(Packet.Packet0PlayerTypeIdMap.class);
+        kryo.register(HashMap.class);
+        kryo.register(Integer.class);
     }
 
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {

@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Creates a server with specified port and registers packets the server will be listening to.
@@ -36,6 +37,8 @@ public class RServer {
     private void registerPackets() {
         Kryo kryo = server.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
-        kryo.register(Packet.Packet0PlayerIdJoined.class);
+        kryo.register(Packet.Packet0PlayerTypeIdMap.class);
+        kryo.register(HashMap.class);
+        kryo.register(Integer.class);
     }
 }

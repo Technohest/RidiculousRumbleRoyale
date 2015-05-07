@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.*;
 import com.technohest.core.network.Packet;
 import com.technohest.core.network.RClient;
@@ -43,11 +44,9 @@ public class ClientNetworkListener extends Listener {
         if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
             rclient.startGame(playerIdTypeMap, id);
-        } else if (object instanceof Packet.Packet0PlayerIdJoined) {
-            Integer newId = ((Packet.Packet0PlayerIdJoined)object).id;
-
-            //-1 is a placeholder and should probably be an entry in CharType like NONE.
-            playerIdTypeMap.put(newId, -1);
+        } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
+            //Update the idPlayerMap Because someone set their CharType or someone new Connected.
+            playerIdTypeMap = ((Packet.Packet0PlayerTypeIdMap)object).map;
             Log.info("[Client]--" + playerIdTypeMap.toString());
         }
     }

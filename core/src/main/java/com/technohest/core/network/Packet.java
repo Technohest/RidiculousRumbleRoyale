@@ -16,8 +16,8 @@ public class Packet {
         public Integer id = null;
     }
 
-    public static class Packet0PlayerIdJoined {
-        public Integer id = null;
+    public static class Packet0PlayerTypeIdMap {
+        public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     }
 
     public class Packet0PlayerSetCharacter {
