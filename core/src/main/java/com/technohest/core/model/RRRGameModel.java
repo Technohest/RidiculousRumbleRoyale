@@ -4,25 +4,20 @@ import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * Created by Oskar on 2015-03-24.
+ * The main model for Ridiculous Rumble Royale.
+ * @author Oskar Jedvert
+ * @author Tobias Alldén
  */
 public class RRRGameModel {
-    private LevelHandler    levelHandler;
-    private ArrayList<Character> players = new ArrayList<Character>();
-
-
-    private IGameLogic      gameLogic;
+    private LevelHandler levelHandler;
+    private HashMap<Integer,Character> idCharacterMap;
+    private IGameLogic gameLogic;
 
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
-        //Temp code for player creation
-        for (int i = 0;i<4;i++) {
-            players.add(new Character(Integer.toString(i),new Projectile("attack",100,10f,10f),new Projectile("attack",100,10f,10f)));
-        }
         setGameLogic(new GameLogicGDX());
     }
     public ILevel getLevel() {
@@ -35,15 +30,20 @@ public class RRRGameModel {
      * Initializes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        gameLogic.generate(levelHandler.getLevel(),players);
+        gameLogic.generate(levelHandler.getLevel(),idCharacterMap);
     }
-    public ArrayList<Character> getPlayers() {
-        return this.players;
+
+    /**
+     * Initializes the model with a id/player List
+     * @param idChararcerList
+     */
+    public void init(HashMap<Integer,Character> idChararcerList) {
+        this.idCharacterMap = idChararcerList;
     }
     public Character getPlayer(String name) {
-        for (Character c: players) {
-            if (c.getName().equals(name)) {
-                return c;
+        for(Integer i: idCharacterMap.keySet()) {
+            if(idCharacterMap.get(i).getName() == name) {
+                return idCharacterMap.get(i);
             }
         }
         return null;
@@ -56,4 +56,42 @@ public class RRRGameModel {
     public void step(float v) {
         gameLogic.update(v);
     }
+
+    /**
+     * Moves the player(Body with fixtures) left in the and plays the run animation.
+     */
+    public void moveLeft(){
+        
+    }
+
+    /**
+     * Moves the player(Body with fixtures) left in the game,and plays the run animation.
+     */
+    public void moveRight(){
+
+    }
+
+    /**
+     * Makes the player(Body with fixtures) jump in the game, and plays the jump animation.
+     */
+    public void jump() {
+
+    }
+
+    /**
+     * Makes the character perform a base attack
+     */
+    public void attack_base() {
+
+    }
+
+    /**
+     * Makes the character perform a special attack
+     */
+    public void attack_special() {
+
+    }
+
+
+
 }
