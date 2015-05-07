@@ -4,6 +4,7 @@ import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -20,7 +21,7 @@ public interface IGameLogic {
      * Generate bodies
      * @param level
      * Target level
-     * @param players
+     * @param idCharacterMap
      */
-    void generate(ILevel level, ArrayList<Character> players);
+    void generate(ILevel level, HashMap<Integer,Character> idCharacterMap);
 }

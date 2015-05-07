@@ -16,7 +16,8 @@ import java.util.Random;
 public class GameLogicGDX implements IGameLogic{
     private final World world;
     //A map for bundling bodies with player objects
-    private HashMap<Body, com.technohest.core.model.Character> bodyCharacterMap;
+    private HashMap<Body, Character> bodyCharacterMap;
+    private HashMap<Integer,Character> idCharacterMap;
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
@@ -32,25 +33,23 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public void generate(ILevel level,ArrayList<Character> players) {
+    public void generate(ILevel level,HashMap<Integer,Character> idCharacterMap) {
+        this.idCharacterMap = idCharacterMap;
         level.generate(world);
-        Random random = new Random();
 
         int i=0;
 
-        for (Character c: players) {
+        for (Character c: idCharacterMap.values()) {
             i++;
             BodyDef bdef = new BodyDef();
             bdef.gravityScale = 10;
-            bdef.position.set(100 + (22*i),100);
-            bdef.linearDamping = 10;
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(20/Constants.PPM,30/Constants.PPM);
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
             Body b = world.createBody(bdef);
-            b.setType(BodyDef.BodyType.DynamicBody);
             b.createFixture(fdef);
+            b.setType(BodyDef.BodyType.DynamicBody);
             bodyCharacterMap.put(b,c);
         }
     }
