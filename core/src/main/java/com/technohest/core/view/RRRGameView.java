@@ -16,6 +16,7 @@ import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class RRRGameView implements Screen {
 
@@ -61,9 +62,9 @@ public class RRRGameView implements Screen {
 		controller.update(v);
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
         //Draws players ---  TEMP!
-        ArrayList<Character> players = model.getPlayers();
+        Collection<Character> players = model.getPlayers();
 		for (Character c: players) {
-            Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromCharacter(c);
+            Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromCharacter(c);
             sRenderer.rect(b.getPosition().x, b.getPosition().y, 20, 30);
 
         }
