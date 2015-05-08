@@ -38,22 +38,24 @@ public class GameLogicGDX implements IGameLogic{
     public void generate(ILevel level,HashMap<Integer,Character> idCharacterMap) {
         this.idCharacterMap = idCharacterMap;
         level.generate(world);
+        int i = 10;
+        for(Character c: idCharacterMap.values()) {
+            i++;
+            BodyDef bdef1 = new BodyDef();
+            bdef1.type = BodyDef.BodyType.DynamicBody;
+            bdef1.gravityScale = 5;
+            bdef1.position.set((100f + 15*i) / 32f, 140f / 32f);
+            FixtureDef fdef1 = new FixtureDef();
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(10.0f / 32.0f, 16.0f / 32.0f);
+            fdef1.shape = shape;
 
-        Character c = idCharacterMap.get(1);
-        BodyDef bdef1 = new BodyDef();
-        bdef1.type = BodyDef.BodyType.DynamicBody;
-        bdef1.gravityScale = 5;
-        bdef1.position.set(100f/32f,140f/32f);
-        FixtureDef fdef1 = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10.0f/32.0f,16.0f/32.0f);
-        fdef1.shape = shape;
+            Body b = world.createBody(bdef1);
+            b.setLinearDamping(10);
+            b.createFixture(fdef1);
 
-        Body b = world.createBody(bdef1);
-        b.setLinearDamping(10);
-        b.createFixture(fdef1);
-
-        bodyCharacterMap.put(b,c);
+            bodyCharacterMap.put(b, c);
+        }
 
 
     }
