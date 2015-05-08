@@ -3,6 +3,8 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,7 +40,8 @@ public class RServer {
         Kryo kryo = server.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
         kryo.register(Packet.Packet0PlayerTypeIdMap.class);
-        kryo.register(HashMap.class);
+        kryo.register(Packet.Packet2Start.class);
+        kryo.register(DualHashBidiMap.class);
         kryo.register(Integer.class);
     }
 }

@@ -3,6 +3,8 @@ package com.technohest.core.network;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +19,7 @@ public class Packet {
     }
 
     public static class Packet0PlayerTypeIdMap {
-        public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        public DualHashBidiMap<Integer, Integer> map = new DualHashBidiMap<Integer, Integer>();
     }
 
     public class Packet0PlayerSetCharacter {

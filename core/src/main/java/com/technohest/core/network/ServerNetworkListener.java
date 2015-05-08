@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
+import java.text.Bidi;
 import java.util.HashMap;
 
 /**
@@ -15,9 +16,9 @@ import java.util.HashMap;
 public class ServerNetworkListener extends Listener {
     private RServer server;
     //private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
-    private BidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
+    private DualHashBidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
     //Will later be <Integer, CharType>
-    private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
+    private DualHashBidiMap<Integer, Integer> playerIdTypeMap = new DualHashBidiMap<Integer, Integer>();
     private int id = 0;
 
     public void init(RServer server) {
@@ -45,6 +46,9 @@ public class ServerNetworkListener extends Listener {
                 c.sendTCP(p1);
             }
             c.sendTCP(p2);
+            if (playerIdTypeMap.keySet().size() > 0) {
+                c.sendTCP(new Packet.Packet2Start());
+            }
         }
 
         Log.info("Server: Someone is connecting.");
@@ -53,11 +57,10 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
-        //clients.remove(clients.getKey(connection));
+
         //-1 is placeholder even if it dont need to.
         playerIdTypeMap.remove(clients.getKey(connection), -1);
         clients.remove(clients.getKey(connection), connection);
-        //playerIdTypeMap.remove(clients.getKey(connection));
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
