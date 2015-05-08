@@ -41,7 +41,7 @@ public class RServer {
         kryo.register(Packet.Packet0PlayerID.class);
         kryo.register(Packet.Packet0PlayerTypeIdMap.class);
         kryo.register(Packet.Packet2Start.class);
-        kryo.register(DualHashBidiMap.class);
+        kryo.register(HashMap.class);
         kryo.register(Integer.class);
     }
 }

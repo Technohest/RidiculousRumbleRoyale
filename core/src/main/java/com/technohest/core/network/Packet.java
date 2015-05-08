@@ -19,7 +19,7 @@ public class Packet {
     }
 
     public static class Packet0PlayerTypeIdMap {
-        public DualHashBidiMap<Integer, Integer> map = new DualHashBidiMap<Integer, Integer>();
+        public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     }
 
     public class Packet0PlayerSetCharacter {

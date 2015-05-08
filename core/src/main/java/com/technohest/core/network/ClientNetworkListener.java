@@ -23,7 +23,7 @@ public class ClientNetworkListener extends Listener {
     private RClient rclient;
     //Ska vara <Integer, CharType>
     //private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
-    private DualHashBidiMap<Integer, Integer> playerIdTypeMap = new DualHashBidiMap<Integer, Integer>();
+    private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private Integer id = null;
 
 

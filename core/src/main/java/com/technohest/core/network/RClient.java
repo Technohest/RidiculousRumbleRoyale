@@ -70,11 +70,11 @@ public class RClient {
         kryo.register(Packet.Packet0PlayerID.class);
         kryo.register(Packet.Packet0PlayerTypeIdMap.class);
         kryo.register(Packet.Packet2Start.class);
-        kryo.register(DualHashBidiMap.class);
+        kryo.register(HashMap.class);
         kryo.register(Integer.class);
     }
 
-    public void startGame(DualHashBidiMap<Integer, Integer> playerIdTypeMap, Integer id) {
+    public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         /*ScreenHandler.getInstance().setGameScreen(view);

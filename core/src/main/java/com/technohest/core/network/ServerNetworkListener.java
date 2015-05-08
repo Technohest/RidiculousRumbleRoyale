@@ -18,7 +18,7 @@ public class ServerNetworkListener extends Listener {
     //private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
     private DualHashBidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
     //Will later be <Integer, CharType>
-    private DualHashBidiMap<Integer, Integer> playerIdTypeMap = new DualHashBidiMap<Integer, Integer>();
+    private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private int id = 0;
 
     public void init(RServer server) {
@@ -36,7 +36,7 @@ public class ServerNetworkListener extends Listener {
         //-1 is a placeholder and will be changed to be a CharType
         playerIdTypeMap.put(id, -1);
 
-        System.out.println("PLAYERIDTYPEMAP----" + playerIdTypeMap.values().toString());
+        System.out.println(playerIdTypeMap);
 
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
@@ -50,13 +50,11 @@ public class ServerNetworkListener extends Listener {
             c.sendTCP(p2);
         }
 
-        System.out.println("Connections----" + clients.values().toString());
-
-        /*for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > 0) {
+        for (Connection c: clients.values()) {
+            if (playerIdTypeMap.keySet().size() > 1) {
                 c.sendTCP(new Packet.Packet2Start());
             }
-        }*/
+        }
 
         Log.info("Server: Someone is connecting.");
     }
@@ -66,7 +64,7 @@ public class ServerNetworkListener extends Listener {
         Log.info("Server: Someone is disconnecting.");
 
         //-1 is placeholder even if it dont need to.
-        playerIdTypeMap.remove(clients.getKey(connection), -1);
+        playerIdTypeMap.remove(clients.getKey(connection));
         clients.remove(clients.getKey(connection), connection);
 
         for (Connection c: clients.values()) {

@@ -46,13 +46,13 @@ public class RRRGameModel {
      * Initializes the model with a id/player List
      * @param idChararcerMap the new idCharacterMap
      */
-    public void init(BidiMap<Integer,Integer> idChararcerMap) {
+    public void init(HashMap<Integer,Integer> idChararcerMap) {
         //The characters will be created at the game start and since the network only knows the type
         //I needed to change input to be <Integer, Integer>. It will be changed to CharType in the future.
         this.idCharacterMap = new HashMap<Integer, Character>();
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
-            this.idCharacterMap.put(i,new Character("Allden " + i,new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+            this.idCharacterMap.put(i,new Character("Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
             System.out.println(this.idCharacterMap.toString());
         }
 
