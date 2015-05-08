@@ -97,7 +97,6 @@ public class RRRGameModel {
      */
     public void moveRight(Integer playerID){
         gameLogic.moveRight(getPlayerFromID(playerID));
-
     }
 
     /**

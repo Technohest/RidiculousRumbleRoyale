@@ -36,6 +36,8 @@ public class ServerNetworkListener extends Listener {
         //-1 is a placeholder and will be changed to be a CharType
         playerIdTypeMap.put(id, -1);
 
+        System.out.println("PLAYERIDTYPEMAP----" + playerIdTypeMap.values().toString());
+
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
         p2.map = playerIdTypeMap;
@@ -46,10 +48,15 @@ public class ServerNetworkListener extends Listener {
                 c.sendTCP(p1);
             }
             c.sendTCP(p2);
+        }
+
+        System.out.println("Connections----" + clients.values().toString());
+
+        /*for (Connection c: clients.values()) {
             if (playerIdTypeMap.keySet().size() > 0) {
                 c.sendTCP(new Packet.Packet2Start());
             }
-        }
+        }*/
 
         Log.info("Server: Someone is connecting.");
     }

@@ -46,7 +46,6 @@ public class ClientNetworkListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
-            Log.info("CLIENT ID: " + id);
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
             //Update the idPlayerMap Because someone set their CharType or someone new Connected.
             playerIdTypeMap = ((Packet.Packet0PlayerTypeIdMap)object).map;
