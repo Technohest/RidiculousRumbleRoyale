@@ -1,8 +1,8 @@
 package com.technohest.core.handlers;
 
 import com.technohest.LibgdxService.ILevel;
-import com.technohest.levels.GrassLevel;
-import com.technohest.levels.MainLevel;
+import com.technohest.LibgdxService.levels.GrassLevel;
+import com.technohest.LibgdxService.levels.MainLevel;
 
 /**
  * Created by vilddjur on 2015-04-02.

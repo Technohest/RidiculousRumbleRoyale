@@ -16,6 +16,7 @@ public class Controls {
     public static final int LEFT = Input.Keys.A;
     public static final int RIGHT = Input.Keys.D;
     public static final int BASE_ATTACK = Input.Keys.J;
+    public static final int SPECIAL_ATTACK = Input.Keys.K;
 
 
 

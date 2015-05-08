@@ -32,20 +32,20 @@ public class RRRGameController extends InputHandler {
             ScreenHandler.getInstance().setScreen("menu");
             this.releaseAllKeys();
         }
-        if (this.isPressed(InputHandler.RIGHT)) {
-            // model.getPlayer().move(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,0));
-       /*if (this.isPressed(InputHandler.RIGHT)) {
-            model.getPlayers().move(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,0));
+       if (this.isPressed(InputHandler.RIGHT)) {
+            model.moveRight(model.getmyID());
 
         } if(this.isPressed(InputHandler.LEFT)) {
-            model.getPlayer().move(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, 0));
-
-
+            model.moveLeft(model.getmyID());
         }
         if(this.isPressed(InputHandler.JUMP)) {
-            model.getPlayer().jump();
-
-        }*/
+            model.jump(model.getmyID());
+        }
+        if(this.isPressed(InputHandler.BASE_ATTACK)) {
+            model.attack_base(model.getmyID());
+        }
+        if(this.isPressed(InputHandler.SPECIAL_ATTACK)) {
+            model.attack_special(model.getmyID());
         }
     }
 

@@ -19,6 +19,7 @@ public class InputHandler implements InputProcessor {
 
     public static final int JUMP = 4;
     public static final int BASE_ATTACK = 5;
+    public static final int SPECIAL_ATTACK = 6;
 
     public static final int ESCAPE = 10;
 
@@ -55,6 +56,7 @@ public class InputHandler implements InputProcessor {
 
         if(key == Keys.SPACE) button = JUMP;
         if(key == Controls.BASE_ATTACK) button = BASE_ATTACK;
+        if(key == Controls.SPECIAL_ATTACK) button = SPECIAL_ATTACK;
 
         if(key == Keys.ESCAPE ||key == Keys.MENU) button = ESCAPE;
 

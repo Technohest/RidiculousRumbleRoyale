@@ -1,5 +1,6 @@
 package com.technohest.LibgdxService;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
@@ -16,7 +17,8 @@ import java.util.Random;
 public class GameLogicGDX implements IGameLogic{
     private final World world;
     //A map for bundling bodies with player objects
-    private HashMap<Body, com.technohest.core.model.Character> bodyCharacterMap;
+    private HashMap<Body, Character> bodyCharacterMap;
+    private HashMap<Integer,Character> idCharacterMap;
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
@@ -29,30 +31,31 @@ public class GameLogicGDX implements IGameLogic{
     @Override
     public void update(float v){
         world.step(v, 6, 2);
+        updatePlayers(v);
     }
 
     @Override
-    public void generate(ILevel level,ArrayList<Character> players) {
+    public void generate(ILevel level,HashMap<Integer,Character> idCharacterMap) {
+        this.idCharacterMap = idCharacterMap;
         level.generate(world);
-        Random random = new Random();
 
-        int i=0;
+        Character c = idCharacterMap.get(1);
+        BodyDef bdef1 = new BodyDef();
+        bdef1.type = BodyDef.BodyType.DynamicBody;
+        bdef1.gravityScale = 5;
+        bdef1.position.set(100f/32f,140f/32f);
+        FixtureDef fdef1 = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(10.0f/32.0f,16.0f/32.0f);
+        fdef1.shape = shape;
 
-        for (Character c: players) {
-            i++;
-            BodyDef bdef = new BodyDef();
-            bdef.gravityScale = 10;
-            bdef.position.set(100 + (22*i),100);
-            bdef.linearDamping = 10;
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(20/Constants.PPM,30/Constants.PPM);
-            FixtureDef fdef = new FixtureDef();
-            fdef.shape = shape;
-            Body b = world.createBody(bdef);
-            b.setType(BodyDef.BodyType.DynamicBody);
-            b.createFixture(fdef);
-            bodyCharacterMap.put(b,c);
-        }
+        Body b = world.createBody(bdef1);
+        b.setLinearDamping(10);
+        b.createFixture(fdef1);
+
+        bodyCharacterMap.put(b,c);
+
+
     }
 
     /**
@@ -65,11 +68,82 @@ public class GameLogicGDX implements IGameLogic{
     }
     public Body getBodyFromCharacter(Character character) {
         for(Map.Entry<Body,Character> e: bodyCharacterMap.entrySet()) {
-            if(e.getValue() == character) {
+            if(e.getValue().equals(character))  {
                 return e.getKey();
             }
         }
         return null;
     }
 
+    /**
+     * Updates the player state and player variables.
+     * @param v
+     */
+    public void updatePlayers(float v) {
+        for (Body b: bodyCharacterMap.keySet()) {
+            if(b.getLinearVelocity().y != 0) {
+                if (b.getLinearVelocity().y < 0) {
+                    Character c = getCharacterfromBody(b);
+                    c.setGrounded(false);
+                    c.setState(Character.State.Falling);
+                } else if(b.getLinearVelocity().y < 0 ) {
+                    Character c = getCharacterfromBody(b);
+                    c.setGrounded(false);
+                    c.setState(Character.State.Jumping);
+                }
+            } else if(b.getLinearVelocity().x != 0) {
+                if(b.getLinearVelocity().x < 0) {
+                    Character c = getCharacterfromBody(b);
+                    c.setGrounded(true);
+                    c.setState(Character.State.Running);
+                    c.setIsFacingRight(false);
+                } else {
+                    Character c = getCharacterfromBody(b);
+                    c.setGrounded(true);
+                    c.setState(Character.State.Running);
+                    c.setIsFacingRight(true);
+                }
+            } else {
+                Character c = getCharacterfromBody(b);
+                c.setGrounded(true);
+                c.setState(Character.State.Standing);
+            }
+        }
+
+    }
+
+    @Override
+    public void moveLeft(Character player){
+        Body playerBody = getBodyFromCharacter(player);
+        playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
+    }
+
+    @Override
+    public void moveRight(Character player){
+        Body playerBody = getBodyFromCharacter(player);
+        playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
+
+    }
+
+    @Override
+    public void jump(Character player) {
+        if(player.isGrounded()) {
+            Body playerBody = getBodyFromCharacter(player);
+            playerBody.applyForceToCenter(0, Constants.JUMP_FORCE_MULTIPLIER, true);
+            player.setGrounded(false);
+        }
+
+    }
+
+    @Override
+    public void attack_base(Character player) {
+        Body playerBody = getBodyFromCharacter(player);
+
+    }
+
+    @Override
+    public void attack_special(Character player) {
+        Body playerBody = getBodyFromCharacter(player);
+
+    }
 }
