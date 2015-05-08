@@ -77,8 +77,9 @@ public class RClient {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
         model.setMyID(id);
         model.init(playerIdTypeMap);
-        /*ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen("game");*/
+        model.generateWorld();
+        ScreenHandler.getInstance().setGameScreen(view);
+        ScreenHandler.getInstance().setScreen("game");
         Log.info("STARTING GAME ON CLIENT.");
     }
 }

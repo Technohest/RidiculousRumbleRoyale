@@ -21,8 +21,7 @@ import java.util.HashMap;
 public class ClientNetworkListener extends Listener {
     private Client client;
     private RClient rclient;
-    //Ska vara <Integer, CharType>
-    //private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
+    //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private Integer id = null;
 
@@ -47,7 +46,7 @@ public class ClientNetworkListener extends Listener {
         if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
-            //Update the idPlayerMap Because someone set their CharType or someone new Connected.
+            //Update the idPlayerMap
             playerIdTypeMap = ((Packet.Packet0PlayerTypeIdMap)object).map;
             Log.info("[Client]--" + playerIdTypeMap.toString());
         } else if (object instanceof Packet.Packet2Start) {

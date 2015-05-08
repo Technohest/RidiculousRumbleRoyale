@@ -27,6 +27,8 @@ public class ServerNetworkListener extends Listener {
 
     @Override
     public void connected(Connection connection) {
+        Log.info("Server: Someone is connecting.");
+
         Packet.Packet0PlayerID p1 = new Packet.Packet0PlayerID();
         Packet.Packet0PlayerTypeIdMap p2 = new Packet.Packet0PlayerTypeIdMap();
 
@@ -35,8 +37,6 @@ public class ServerNetworkListener extends Listener {
         clients.put(id, connection);
         //-1 is a placeholder and will be changed to be a CharType
         playerIdTypeMap.put(id, -1);
-
-        System.out.println(playerIdTypeMap);
 
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
@@ -56,7 +56,7 @@ public class ServerNetworkListener extends Listener {
             }
         }
 
-        Log.info("Server: Someone is connecting.");
+        Log.info(playerIdTypeMap.toString());
     }
 
     @Override

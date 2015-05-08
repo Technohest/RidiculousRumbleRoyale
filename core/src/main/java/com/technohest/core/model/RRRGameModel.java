@@ -26,8 +26,8 @@ public class RRRGameModel {
         setGameLogic(new GameLogicGDX());
         this.idCharacterMap = new HashMap<Integer, Character>();
         //Temp character for testing
-        /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-        myID =1;*/
+        idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+        myID =1;
     }
     public ILevel getLevel() {
         return levelHandler.getLevel();
@@ -53,7 +53,6 @@ public class RRRGameModel {
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
             this.idCharacterMap.put(i,new Character("Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-            System.out.println(this.idCharacterMap.toString());
         }
 
         //this.idCharacterMap = idChararcerList;
