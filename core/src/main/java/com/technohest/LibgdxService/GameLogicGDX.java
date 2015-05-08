@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
+import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class GameLogicGDX implements IGameLogic{
         int i=0;
         for (Character c: idCharacterMap.values()) {
             i++;
+            System.out.println("I HAVE NOW MADE " + i);
             BodyDef bdef1 = new BodyDef();
             bdef1.type = BodyDef.BodyType.DynamicBody;
             bdef1.gravityScale = 5;
