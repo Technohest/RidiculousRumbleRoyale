@@ -23,11 +23,17 @@ public interface IGameLogic {
      * Target level
      * @param idCharacterMap
      */
+
     void generate(ILevel level, HashMap<Integer,Character> idCharacterMap);
-    public void moveLeft(Character player);
+
 
     /**
      * Moves the player(Body with fixtures) left in the game,and plays the run animation.
+     */
+    public void moveLeft(Character player);
+
+    /**
+     * Moves the player(Body with fixtures) right in the game,and plays the run animation.
      */
     public void moveRight(Character player);
 
