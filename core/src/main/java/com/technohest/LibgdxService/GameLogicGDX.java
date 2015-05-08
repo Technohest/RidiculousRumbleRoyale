@@ -39,23 +39,23 @@ public class GameLogicGDX implements IGameLogic{
         this.idCharacterMap = idCharacterMap;
         level.generate(world);
 
-        int i=0;
+        Character c = idCharacterMap.get(1);
+        BodyDef bdef1 = new BodyDef();
+        bdef1.type = BodyDef.BodyType.DynamicBody;
+        bdef1.gravityScale = 5;
+        bdef1.position.set(100f/32f,140f/32f);
+        FixtureDef fdef1 = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(10.0f/32.0f,16.0f/32.0f);
+        fdef1.shape = shape;
 
-        for (Character c: idCharacterMap.values()) {
-            i++;
-            BodyDef bdef = new BodyDef();
-            bdef.gravityScale = 10;
-            bdef.position.set(140,100);
-            bdef.linearVelocity.set(0,0);
-            bdef.type = BodyDef.BodyType.DynamicBody;
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(20/Constants.PPM,30/Constants.PPM);
-            FixtureDef fdef = new FixtureDef();
-            fdef.shape = shape;
-            Body b = world.createBody(bdef);
-            b.createFixture(fdef);
-            bodyCharacterMap.put(b,c);
-        }
+        Body b = world.createBody(bdef1);
+        b.setLinearDamping(10);
+        b.createFixture(fdef1);
+
+        bodyCharacterMap.put(b,c);
+
+
     }
 
     /**
@@ -115,20 +115,23 @@ public class GameLogicGDX implements IGameLogic{
     @Override
     public void moveLeft(Character player){
         Body playerBody = getBodyFromCharacter(player);
-        playerBody.setLinearVelocity(new Vector2((playerBody.getLinearVelocity().x - Constants.INITIAL_MOVEMENT_SPEED),playerBody.getLinearVelocity().y));
+        playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
     }
 
     @Override
     public void moveRight(Character player){
         Body playerBody = getBodyFromCharacter(player);
-        playerBody.setLinearVelocity(new Vector2(playerBody.getLinearVelocity().x + Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
+        playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
 
     }
 
     @Override
     public void jump(Character player) {
-        Body playerBody = getBodyFromCharacter(player);
-        playerBody.applyForceToCenter(0,Constants.JUMP_FORCE_MULTIPLIER,true);
+        if(player.isGrounded()) {
+            Body playerBody = getBodyFromCharacter(player);
+            playerBody.applyForceToCenter(0, Constants.JUMP_FORCE_MULTIPLIER, true);
+            player.setGrounded(false);
+        }
 
     }
 
