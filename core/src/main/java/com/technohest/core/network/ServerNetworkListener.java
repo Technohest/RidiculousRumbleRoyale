@@ -51,7 +51,7 @@ public class ServerNetworkListener extends Listener {
         }
 
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > 1) {
+            if (playerIdTypeMap.keySet().size() > 2) {
                 c.sendTCP(new Packet.Packet2Start());
             }
         }
@@ -65,7 +65,7 @@ public class ServerNetworkListener extends Listener {
 
         //-1 is placeholder even if it dont need to.
         playerIdTypeMap.remove(clients.getKey(connection));
-        clients.remove(clients.getKey(connection), connection);
+        clients.remove(connection);
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
