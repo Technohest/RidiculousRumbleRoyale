@@ -79,8 +79,11 @@ public class RRRGameView implements Screen {
         Collection<Character> players = model.getPlayers();
 		for (Character c: players) {
             Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromCharacter(c);
-            sRenderer.rect(((b.getPosition().x-(0.35f))*32), ((b.getPosition().y-(0.5f))*32), 20, 32);
-
+			if (b != null) {
+				sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
+			} else {
+				System.out.println("DAYUM SON");
+			}
         }
         //Activate for debugrenderer
        // drenderer.render(((GameLogicGDX)model.getGameLogic()).getWorld(),dmatrix);

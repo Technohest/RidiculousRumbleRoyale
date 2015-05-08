@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
+ * The service managing the game physics.
  * Created by oskar on 2015-05-01.
  */
 public class GameLogicGDX implements IGameLogic{
@@ -38,32 +39,31 @@ public class GameLogicGDX implements IGameLogic{
     public void generate(ILevel level,HashMap<Integer,Character> idCharacterMap) {
         this.idCharacterMap = idCharacterMap;
         level.generate(world);
-        int i = 10;
-        for(Character c: idCharacterMap.values()) {
+
+        int i=0;
+        for (Character c: idCharacterMap.values()) {
             i++;
             BodyDef bdef1 = new BodyDef();
             bdef1.type = BodyDef.BodyType.DynamicBody;
             bdef1.gravityScale = 5;
-            bdef1.position.set((100f + 15*i) / 32f, 140f / 32f);
+            bdef1.position.set((100f+22f*i)/32f,140f/32f);
             FixtureDef fdef1 = new FixtureDef();
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(10.0f / 32.0f, 16.0f / 32.0f);
+            shape.setAsBox(10.0f/32.0f,16.0f/32.0f);
             fdef1.shape = shape;
 
             Body b = world.createBody(bdef1);
             b.setLinearDamping(10);
             b.createFixture(fdef1);
 
-            bodyCharacterMap.put(b, c);
+            bodyCharacterMap.put(b,c);
         }
-
-
     }
 
     /**
      * Returns the associated character to the specified body.
-     * @param body
-     * @return
+     * @param body the body which will be used to search for the character.
+     * @return the corresponding character to a body or null if the character was not found.
      */
     public Character getCharacterfromBody(Body body) {
         return bodyCharacterMap.get(body);
@@ -79,7 +79,7 @@ public class GameLogicGDX implements IGameLogic{
 
     /**
      * Updates the player state and player variables.
-     * @param v
+     * @param v the timestep
      */
     public void updatePlayers(float v) {
         for (Body b: bodyCharacterMap.keySet()) {
