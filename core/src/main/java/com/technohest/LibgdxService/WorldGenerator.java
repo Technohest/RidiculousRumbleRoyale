@@ -66,7 +66,7 @@ public class WorldGenerator {
                             (r + 0.5f) * tileSize / PPM
                     );
 
-                    world.createBody(bdef).createFixture(fdef);
+                    world.createBody(bdef).createFixture(fdef).setUserData("Level");
                 }
             }
         }
@@ -119,7 +119,7 @@ public class WorldGenerator {
                             (r + 0.5f) * tileSize / PPM
                     );
 
-                    world.createBody(bdef).createFixture(fdef);
+                    world.createBody(bdef).createFixture(fdef).setUserData("Level");
                 }
             }
         }
