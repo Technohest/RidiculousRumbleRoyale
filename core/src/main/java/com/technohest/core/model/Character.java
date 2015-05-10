@@ -13,6 +13,8 @@ public  class Character {
         Standing,Running,Jumping,Falling
     }
 
+
+
     //Variables
     private String name;
     private State state;
@@ -37,6 +39,10 @@ public  class Character {
         this.kills = 0;
         this.deaths = 0;
 
+
+    }
+
+    public Character() {
 
     }
 

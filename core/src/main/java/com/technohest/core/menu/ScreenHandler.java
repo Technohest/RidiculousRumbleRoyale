@@ -43,6 +43,10 @@ public class ScreenHandler extends Observable {
         return instance;
     }
 
+    public void setGameScreen(RRRGameView view) {
+        this.gameScreen = view;
+    }
+
     /**
      * Sets the current displaying screen.
      * @param target The type of screen to be set as.
