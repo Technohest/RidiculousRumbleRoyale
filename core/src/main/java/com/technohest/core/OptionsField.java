@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.StringBuilder;
+
+import java.util.HashMap;
+
 /**
  * Created by Oscar on 2015-04-24.
  */
@@ -15,7 +18,6 @@ public class OptionsField extends Table{
     private TextButton backButton;
     private TextButton forwardButton;
     private Label currentOptionLabel;
-    private String[] optionsList;
     private int currentIndex;
     private TextButtonStyle style;
     private Skin skin;
@@ -30,11 +32,12 @@ public class OptionsField extends Table{
     private String[] parts;
     private FileHandle optionsFile;
     private String text;
+    private HashMap<Integer, String> map;
 
-    public OptionsField(String text,String[] optionsList) {
+    public OptionsField(String text, HashMap<Integer,String> map) {
         this.text = text;
-        this.optionsList = optionsList;
-        this.numberOfOptions = optionsList.length;
+        this.map = map;
+        this.numberOfOptions = map.size();
         skin = new Skin();
         buttonAtlas = new TextureAtlas("assets/optionArrows.pack");
         skin.addRegions(buttonAtlas);
@@ -69,19 +72,21 @@ public class OptionsField extends Table{
     }
 
     public void switchTo(String target){
+        System.out.print("before: " + currentIndex);
         if(target == "back"){
-            currentIndex -=1;
-            if(currentIndex == -1){
-                currentIndex =numberOfOptions-1;
-            }
+                currentIndex -=1;
+                if(currentIndex == -1){
+                    currentIndex =numberOfOptions-1;
+                }
 
-        }else {
-            currentIndex +=1;
-            if( numberOfOptions==currentIndex){
-                currentIndex=0;
-            }
+            }else {
+                currentIndex +=1;
+                if( numberOfOptions==currentIndex){
+                    currentIndex=0;
+                }
         }
-        currentOptionLabel.setText(optionsList[currentIndex]);
+        System.out.print("after: " + currentIndex);
+        currentOptionLabel.setText(map.get(currentIndex+1));
         update();
     }
     public void update(){
@@ -92,9 +97,10 @@ public class OptionsField extends Table{
         this.add(forwardButton);
     }
     public String getCurrent(){
-        return optionsList[currentIndex];
+        return map.get(currentIndex);
     }
 
+    //Gets the value that is currently in the file
     private String getLabelText(){
         String firstText = "";
         if(text == "Display Mode:"){

@@ -15,6 +15,7 @@ import com.technohest.core.controller.MenuInputListener;
 import com.technohest.core.menu.ScreenHandler;
 
 import javax.xml.soap.Text;
+import java.util.HashMap;
 
 /**
  * The options menu, able to change the options of the game and save them.
@@ -61,6 +62,13 @@ public class OptionsMenuView implements Screen{
     private FileHandle optionsFile;
     private String[] parts;
 
+    //HashMaps
+    private HashMap<Integer, String> musicMap;
+    private HashMap<Integer, String> soundMap;
+    private HashMap<Integer, String> displayDamageMap;
+    private HashMap<Integer, String> displayModeMap;
+    private HashMap<Integer, String> resolutionMap;
+    
     public OptionsMenuView(){
 
         //Game and stage
@@ -98,11 +106,12 @@ public class OptionsMenuView implements Screen{
         y = (Gdx.graphics.getHeight())/2.0f;
 
         //Settings
-        resolution = new OptionsField("Resolution:",new String[]{"960x720", "1024x768","1280x720", "1152x864", "1280x960", "1280x1024", "1440x1050","1600x900", "1600x1200", "1920x1080"});
-        displayMode = new OptionsField("Display Mode:", new String[]{"fullscreen", "windowed fullscreen", "windowed"});
-        soundEffects = new OptionsField("Sound Effects:", new String[]{"enabled", "disabled"});
-        music = new OptionsField("Music:", new String[]{"enabled", "disabled"});
-        damageDone = new OptionsField("Display Damage:", new String[]{"enabled", "disabled"});
+        setHashMaps();
+        resolution = new OptionsField("Resolution:", resolutionMap);
+        displayMode = new OptionsField("Display Mode:", displayModeMap);
+        soundEffects = new OptionsField("Sound Effects:", soundMap);
+        music = new OptionsField("Music:", musicMap);
+        damageDone = new OptionsField("Display Damage:", displayDamageMap);
 
         //Tables
         createGraphicsTable();
@@ -239,6 +248,34 @@ public class OptionsMenuView implements Screen{
         //[9] = Display Damage
 
         parts = optionsFile.readString().split(":");
-        optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent() ,false);
+        optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent(), false);
+    }
+
+    public void setHashMaps(){
+        //Music
+        musicMap = new HashMap<Integer, String>(2);
+        musicMap.put(1,"enabled");
+        musicMap.put(2, "disabled");
+
+        //Resolution
+        resolutionMap = new HashMap<Integer, String>(3);
+        resolutionMap.put(1, "960x720");
+        resolutionMap.put(2, "1280x720");
+        resolutionMap.put(3, "1920x1080");
+
+        //Sound
+        soundMap = new HashMap<Integer, String>(2);
+        soundMap.put(1,"enabled");
+        soundMap.put(2,"disabled");
+
+        //DisplayMode
+        displayModeMap = new HashMap<Integer, String>(2);
+        displayModeMap.put(1, "windowed");
+        displayModeMap.put(2, "fullscreen");
+
+        //DisplayDamageDone
+        displayDamageMap = new HashMap<Integer, String>(2);
+        displayDamageMap.put(1,"enabled");
+        displayDamageMap.put(2,"disabled");
     }
 }
