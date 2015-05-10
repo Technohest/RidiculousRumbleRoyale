@@ -35,12 +35,8 @@ public class OptionsField extends Table{
     private BitmapFont font;
     private Label.LabelStyle labelStyle;
     private BitmapFont font2;
-    private float x;
-    private float y;
     private int numberOfOptions;
     private Label textLabel;
-    private String[] parts;
-    private FileHandle optionsFile;
     private String text;
     private BidiMap<Integer, String> map;
 
@@ -74,7 +70,6 @@ public class OptionsField extends Table{
         style.font = font;
 
         //File initialization
-
         try {
             file = new File("assets/config.xml");
             dbFactory = DocumentBuilderFactory.newInstance();
@@ -93,9 +88,6 @@ public class OptionsField extends Table{
         }
         element1 = (Element) node;
 
-        optionsFile = Gdx.files.local("assets/options.txt");
-        parts = optionsFile.readString().split(":");
-        optionsFile = Gdx.files.local("assets/options.txt");
         labelStyle = new Label.LabelStyle(font2,Color.WHITE);
         textLabel = new Label(text,labelStyle);
 
@@ -115,7 +107,6 @@ public class OptionsField extends Table{
     }
 
     public void switchTo(String target){
-        System.out.print("before: " + currentIndex);
         if(target == "back"){
                 currentIndex -=1;
                 if(currentIndex == -1){
@@ -128,7 +119,6 @@ public class OptionsField extends Table{
                     currentIndex=0;
                 }
         }
-        System.out.println("after: " + currentIndex);
         currentOptionLabel.setText(map.get(currentIndex+1));
         update();
     }
@@ -147,10 +137,7 @@ public class OptionsField extends Table{
     private String getLabelText(){
         String firstText = "";
         if(text == "Display Mode:"){
-
             list1 = element2.getElementsByTagName("displaymode");
-
-
         }else if(text == "Width:"){
             list1 = element2.getElementsByTagName("width");
 
