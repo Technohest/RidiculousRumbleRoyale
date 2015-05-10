@@ -15,8 +15,18 @@ import com.technohest.core.controller.MenuInputListener;
 import com.technohest.core.menu.ScreenHandler;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.Text;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -62,8 +72,16 @@ public class OptionsMenuView implements Screen{
     private OptionsField damageDone;
 
     //Filehandler
-    private FileHandle optionsFile;
-    private String[] parts;
+    private File file;
+    private DocumentBuilderFactory dbFactory;
+    private DocumentBuilder dBuilder;
+    private Document doc;
+    private NodeList list;
+    private NodeList list1;
+    private NodeList list2;
+    private org.w3c.dom.Element element1;
+    private Node node;
+    private org.w3c.dom.Element element2;
 
     //HashMaps
     private BidiMap<Integer, String> musicMap;
@@ -80,7 +98,7 @@ public class OptionsMenuView implements Screen{
         mainTable = new Table();
 
         //FileHandle
-        optionsFile = Gdx.files.local("assets/options.txt");
+
 
         //Fontsize
         font = new BitmapFont();
@@ -107,6 +125,25 @@ public class OptionsMenuView implements Screen{
         //Screen x,y
         x = (Gdx.graphics.getWidth())/2.0f;
         y = (Gdx.graphics.getHeight())/2.0f;
+
+        //File initialization
+        try {
+            file = new File("assets/config.xml");
+            dbFactory = DocumentBuilderFactory.newInstance();
+            dBuilder = dbFactory.newDocumentBuilder();
+            doc = dBuilder.parse(file);
+            doc.getDocumentElement().normalize();
+            list = doc.getElementsByTagName("options");
+            element2 = (Element) list.item(0);
+            node = list.item(0);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        element1 = (Element) node;
 
         //Settings
         setHashMaps();
@@ -245,15 +282,11 @@ public class OptionsMenuView implements Screen{
     }
 
     public void saveOptions(){
-        //Write to optionsfile
-        //[1] = Displaymode
-        //[3] = Resolution
-        //[5] = Music
-        //[7] = Soundeffects
-        //[9] = Display Damage
-
-        parts = optionsFile.readString().split(":");
-        //optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent(), false);
+        //Does not work for some reason
+        list1 = element2.getElementsByTagName("displaymode");
+        element1 = (Element) list1.item(0);
+        list2 = element1.getChildNodes();
+        list2.item(0).setNodeValue(displayMode.getCurrent());
     }
 
     public void setHashMaps(){
