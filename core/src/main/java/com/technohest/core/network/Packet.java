@@ -22,6 +22,10 @@ public class Packet {
         public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     }
 
+    public static class PacketAction {
+        public Action action;
+    }
+
     public class Packet0PlayerSetCharacter {
         //CharType type;
     }
