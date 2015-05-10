@@ -100,7 +100,6 @@ public class OptionsField extends Table{
 
         this.add(textLabel);
         this.add(textLabel);
-
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);
@@ -128,9 +127,10 @@ public class OptionsField extends Table{
         this.add(backButton);
         this.add(currentOptionLabel);
         this.add(forwardButton);
+        System.out.println(this.getCurrent());
     }
     public String getCurrent(){
-        return map.get(currentIndex);
+        return map.get(currentIndex+1);
     }
 
     //Gets the value that is currently in the file
