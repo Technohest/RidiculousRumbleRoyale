@@ -52,7 +52,15 @@ public class GameLogicGDX implements IGameLogic{
 
             Body b = world.createBody(bdef1);
             b.setLinearDamping(10);
-            b.createFixture(fdef1);
+            b.createFixture(fdef1).setUserData(c);
+
+            // Feet
+            shape.setAsBox(2f/32.f,2f/32f);
+            bdef1.position.set((100f + 15*i) / 32f, 126f / 32f);
+            fdef1.shape = shape;
+            fdef1.isSensor = true;
+            world.createBody(bdef1).createFixture(fdef1).setUserData(b);
+
 
             bodyCharacterMap.put(b, c);
         }
