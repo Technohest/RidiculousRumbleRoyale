@@ -7,9 +7,19 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.utils.StringBuilder;
 
-import java.util.HashMap;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.commons.collections4.BidiMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Oscar on 2015-04-24.
@@ -32,9 +42,22 @@ public class OptionsField extends Table{
     private String[] parts;
     private FileHandle optionsFile;
     private String text;
-    private HashMap<Integer, String> map;
+    private BidiMap<Integer, String> map;
 
-    public OptionsField(String text, HashMap<Integer,String> map) {
+    //FileReader
+    private File file;
+    private DocumentBuilderFactory dbFactory;
+    private DocumentBuilder dBuilder;
+    private Document doc;
+    private NodeList list;
+    private NodeList list1;
+    private NodeList list2;
+    private org.w3c.dom.Element element1;
+    private Node node;
+    private org.w3c.dom.Element element2;
+
+
+    public OptionsField(String text, BidiMap<Integer,String> map) {
         this.text = text;
         this.map = map;
         this.numberOfOptions = map.size();
@@ -49,6 +72,26 @@ public class OptionsField extends Table{
         style.up = skin.getDrawable("menuButton");
         style.down = skin.getDrawable("pressedMenuButton");
         style.font = font;
+
+        //File initialization
+
+        try {
+            file = new File("assets/config.xml");
+            dbFactory = DocumentBuilderFactory.newInstance();
+            dBuilder = dbFactory.newDocumentBuilder();
+            doc = dBuilder.parse(file);
+            doc.getDocumentElement().normalize();
+            list = doc.getElementsByTagName("options");
+            element2 = (Element) list.item(0);
+            node = list.item(0);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        element1 = (Element) node;
 
         optionsFile = Gdx.files.local("assets/options.txt");
         parts = optionsFile.readString().split(":");
@@ -85,7 +128,7 @@ public class OptionsField extends Table{
                     currentIndex=0;
                 }
         }
-        System.out.print("after: " + currentIndex);
+        System.out.println("after: " + currentIndex);
         currentOptionLabel.setText(map.get(currentIndex+1));
         update();
     }
@@ -104,16 +147,30 @@ public class OptionsField extends Table{
     private String getLabelText(){
         String firstText = "";
         if(text == "Display Mode:"){
-            firstText = parts[1];
-        }else if(text == "Resolution:"){
-            firstText = parts[3];
+
+            list1 = element2.getElementsByTagName("displaymode");
+
+
+        }else if(text == "Width:"){
+            list1 = element2.getElementsByTagName("width");
+
+        }else if(text == "Height:"){
+            list1 = element2.getElementsByTagName("height");
+
         }else if(text == "Music:"){
-            firstText = parts[5];
+            list1 = element2.getElementsByTagName("music");
+
         }else if(text == "Sound Effects:"){
-            firstText = parts[7];
+            list1 = element2.getElementsByTagName("sound");
+
         }else if(text == "Display Damage:"){
-            firstText = parts[9];
+            list1 = element2.getElementsByTagName("sound");
+
         }
+        element1 = (Element) list1.item(0);
+        list2 = element1.getChildNodes();
+        firstText = list2.item(0).getNodeValue();
+        currentIndex = map.getKey(firstText) -1;
         return firstText;
     }
 }

@@ -1,8 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<options>
-		<displaymode>windowed</displaymode>
+		<displaymode>fullscreen</displaymode>
 		<width>960</width>
 		<height>720</height>
+		<music>enabled</music>
+		<sound>enabled</sound>
+		<displaydamage>enabled</displaydamage>
 	</options>
 </config>

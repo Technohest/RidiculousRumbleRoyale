@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.technohest.core.controller.MenuInputListener;
 import com.technohest.core.menu.ScreenHandler;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import javax.xml.soap.Text;
 import java.util.HashMap;
@@ -52,7 +54,8 @@ public class OptionsMenuView implements Screen{
     private Table currentTable;
 
     //Settings
-    private OptionsField resolution;
+    private OptionsField width;
+    private OptionsField height;
     private OptionsField displayMode;
     private OptionsField soundEffects;
     private OptionsField music;
@@ -63,12 +66,12 @@ public class OptionsMenuView implements Screen{
     private String[] parts;
 
     //HashMaps
-    private HashMap<Integer, String> musicMap;
-    private HashMap<Integer, String> soundMap;
-    private HashMap<Integer, String> displayDamageMap;
-    private HashMap<Integer, String> displayModeMap;
-    private HashMap<Integer, String> resolutionMap;
-    
+    private BidiMap<Integer, String> musicMap;
+    private BidiMap<Integer, String> soundMap;
+    private BidiMap<Integer, String> displayDamageMap;
+    private BidiMap<Integer, String> displayModeMap;
+    private BidiMap<Integer, String> widthMap;
+    private BidiMap<Integer, String> heightMap;
     public OptionsMenuView(){
 
         //Game and stage
@@ -107,7 +110,8 @@ public class OptionsMenuView implements Screen{
 
         //Settings
         setHashMaps();
-        resolution = new OptionsField("Resolution:", resolutionMap);
+        width = new OptionsField("Width:", widthMap);
+        height = new OptionsField("Height:", heightMap);
         displayMode = new OptionsField("Display Mode:", displayModeMap);
         soundEffects = new OptionsField("Sound Effects:", soundMap);
         music = new OptionsField("Music:", musicMap);
@@ -151,8 +155,9 @@ public class OptionsMenuView implements Screen{
         //Design the table here
         graphicsTable.add(displayMode);
         graphicsTable.row();
-        graphicsTable.add(resolution);
+        graphicsTable.add(width);
         graphicsTable.row();
+        graphicsTable.add(height);
 
     }
     public void createSoundTable(){
@@ -248,33 +253,36 @@ public class OptionsMenuView implements Screen{
         //[9] = Display Damage
 
         parts = optionsFile.readString().split(":");
-        optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent(), false);
+        //optionsFile.writeString("displayMode:" + displayMode.getCurrent() + ":resolution:" + resolution.getCurrent() + ":music:" + music.getCurrent() + ":soundEffects:" + soundEffects.getCurrent() + ":displayDamage:" + damageDone.getCurrent(), false);
     }
 
     public void setHashMaps(){
         //Music
-        musicMap = new HashMap<Integer, String>(2);
+        musicMap = new DualHashBidiMap<Integer, String>();
         musicMap.put(1,"enabled");
-        musicMap.put(2, "disabled");
+        musicMap.put(2,"disabled");
 
         //Resolution
-        resolutionMap = new HashMap<Integer, String>(3);
-        resolutionMap.put(1, "960x720");
-        resolutionMap.put(2, "1280x720");
-        resolutionMap.put(3, "1920x1080");
+        widthMap= new DualHashBidiMap<Integer, String>();
+        widthMap.put(1, "960");
+        widthMap.put(2, "1280");
+
+        heightMap = new DualHashBidiMap<Integer, String>();
+        heightMap.put(1,"720");
+        heightMap.put(2, "1080");
 
         //Sound
-        soundMap = new HashMap<Integer, String>(2);
+        soundMap = new DualHashBidiMap<Integer, String>();
         soundMap.put(1,"enabled");
         soundMap.put(2,"disabled");
 
         //DisplayMode
-        displayModeMap = new HashMap<Integer, String>(2);
+        displayModeMap = new DualHashBidiMap<Integer, String>();
         displayModeMap.put(1, "windowed");
         displayModeMap.put(2, "fullscreen");
 
         //DisplayDamageDone
-        displayDamageMap = new HashMap<Integer, String>(2);
+        displayDamageMap = new DualHashBidiMap<Integer, String>();
         displayDamageMap.put(1,"enabled");
         displayDamageMap.put(2,"disabled");
     }
