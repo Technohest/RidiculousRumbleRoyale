@@ -25,7 +25,6 @@ public class RRRGameModel {
         this.idCharacterMap = new HashMap<Integer, Character>();
         //Temp character for testing
         idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-        idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         myID =1;
     }
     public ILevel getLevel() {
