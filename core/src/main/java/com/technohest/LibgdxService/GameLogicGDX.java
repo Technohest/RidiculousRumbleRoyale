@@ -6,22 +6,23 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
 import com.technohest.core.model.Character;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by oskar on 2015-05-01.
  */
 public class GameLogicGDX implements IGameLogic{
     private final World world;
+    private final CollisionHandler collisionHandler;
     //A map for bundling bodies with player objects
     private HashMap<Body, Character> bodyCharacterMap;
     private HashMap<Integer,Character> idCharacterMap;
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
+        this.collisionHandler = new CollisionHandler(this);
+        world.setContactListener(collisionHandler);
     }
 
     public World getWorld(){
@@ -55,11 +56,10 @@ public class GameLogicGDX implements IGameLogic{
             b.createFixture(fdef1).setUserData(c);
 
             // Feet
-            shape.setAsBox(2f/32.f,2f/32f);
-            bdef1.position.set((100f + 15*i) / 32f, 126f / 32f);
+            shape.setAsBox((4f / 32.f), (4f / 32f), new Vector2(0, -(16f/32f)),0);
             fdef1.shape = shape;
             fdef1.isSensor = true;
-            world.createBody(bdef1).createFixture(fdef1).setUserData(b);
+            b.createFixture(fdef1).setUserData(b);
 
 
             bodyCharacterMap.put(b, c);
@@ -94,28 +94,23 @@ public class GameLogicGDX implements IGameLogic{
             if(b.getLinearVelocity().y != 0) {
                 if (b.getLinearVelocity().y < 0) {
                     Character c = getCharacterfromBody(b);
-                    c.setGrounded(false);
                     c.setState(Character.State.Falling);
                 } else if(b.getLinearVelocity().y < 0 ) {
                     Character c = getCharacterfromBody(b);
-                    c.setGrounded(false);
                     c.setState(Character.State.Jumping);
                 }
             } else if(b.getLinearVelocity().x != 0) {
                 if(b.getLinearVelocity().x < 0) {
                     Character c = getCharacterfromBody(b);
-                    c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(false);
                 } else {
                     Character c = getCharacterfromBody(b);
-                    c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(true);
                 }
             } else {
                 Character c = getCharacterfromBody(b);
-                c.setGrounded(true);
                 c.setState(Character.State.Standing);
             }
         }
