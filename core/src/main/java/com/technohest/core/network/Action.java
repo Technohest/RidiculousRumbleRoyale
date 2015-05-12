@@ -3,26 +3,28 @@ package com.technohest.core.network;
 /**
  * Created by oskar on 2015-05-10.
  */
-public abstract class Action {
-    private int id;
+public class Action {
     private int timestamp;
+    private ActionID actionID;
 
-    /**
-     * Id of the original player that made the action
-     * @return
-     * The ID
-     */
-    public int getId(){
-        return id;
+    public Action(ActionID actionID, int timestamp){
+        this.actionID = actionID;
+        this.timestamp = timestamp;
     }
 
     /**
-     * Set the id to the id of the original player
-     * @param a
-     * The ID
+     * Types of actions
      */
-    public void setId(int a){
-        id = a;
+    public enum ActionID {
+        MoveLeft, MoveRight, Jump
+    }
+
+    public ActionID getActionID() {
+        return actionID;
+    }
+
+    public void setActionID(ActionID actionID) {
+        this.actionID = actionID;
     }
 
     public void setTimestamp(int timestamp){
@@ -32,6 +34,4 @@ public abstract class Action {
     public int getTimestamp(){
         return timestamp;
     }
-
-    public abstract void act();
 }
