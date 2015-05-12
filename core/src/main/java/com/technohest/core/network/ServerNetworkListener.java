@@ -55,6 +55,7 @@ public class ServerNetworkListener extends Listener {
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
+        server.startGame(playerIdTypeMap);
 
         Log.info(playerIdTypeMap.toString());
     }

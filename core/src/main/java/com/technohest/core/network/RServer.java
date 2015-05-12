@@ -3,6 +3,7 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.model.RRRGameModel;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
@@ -15,6 +16,7 @@ import java.util.HashMap;
  */
 public class RServer {
     private Server server;
+    private RRRGameModel model = new RRRGameModel();
 
     public RServer(String port) {
         server = new Server();
@@ -43,5 +45,10 @@ public class RServer {
         kryo.register(Packet.Packet0Start.class);
         kryo.register(HashMap.class);
         kryo.register(Integer.class);
+    }
+
+    public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
+        model.init(playerIdTypeMap);
+        model.generateWorld();
     }
 }
