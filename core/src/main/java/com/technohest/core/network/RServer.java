@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Created by time on 2015-05-05.
  */
 public class RServer {
+    private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
 
@@ -50,5 +51,27 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
+        gameRunning = true;
+
+        (new Thread() {
+            private long time = System.currentTimeMillis();
+            private long elapsedTime = System.currentTimeMillis();
+            private long acc = elapsedTime-time;
+            @Override
+            public void run() {
+                while (gameRunning) {
+                    if (acc >= 1000/60) {
+                        model.step(acc);
+                        time = elapsedTime;
+                    }
+                    elapsedTime = System.currentTimeMillis();
+                    acc = elapsedTime - time;
+                }
+            }
+        }).start();
+    }
+
+    public void gameOver() {
+        gameRunning = false;
     }
 }
