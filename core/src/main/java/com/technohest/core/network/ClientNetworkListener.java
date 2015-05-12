@@ -49,7 +49,7 @@ public class ClientNetworkListener extends Listener {
             //Update the idPlayerMap
             playerIdTypeMap = ((Packet.Packet0PlayerTypeIdMap)object).map;
             Log.info("[Client]--" + playerIdTypeMap.toString());
-        } else if (object instanceof Packet.Packet2Start) {
+        } else if (object instanceof Packet.Packet0Start) {
             rclient.startGame(playerIdTypeMap, id);
         }
     }

@@ -69,7 +69,7 @@ public class RClient {
         Kryo kryo = client.getKryo();
         kryo.register(Packet.Packet0PlayerID.class);
         kryo.register(Packet.Packet0PlayerTypeIdMap.class);
-        kryo.register(Packet.Packet2Start.class);
+        kryo.register(Packet.Packet0Start.class);
         kryo.register(HashMap.class);
         kryo.register(Integer.class);
     }
