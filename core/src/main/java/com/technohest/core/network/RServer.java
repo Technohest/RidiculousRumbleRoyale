@@ -73,8 +73,14 @@ public class RServer {
 
         for (ActionPlayer ap: actionsToBePerformed) {
             //model.performAction(ap.getAction(), ap.getId());
-            Log.info("PERFORMING SOME ACTION...");
+            Log.info("PERFORMING SOME ACTION ON SERVER...");
         }
+
+        Packet.Packet1Correction p = new Packet.Packet1Correction();
+        p.actions = actionsToBePerformed;
+        server.sendToAllUDP(p);
+
+        actionsToBePerformed.clear();
     }
 
     public void gameOver() {

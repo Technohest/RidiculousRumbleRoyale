@@ -1,6 +1,7 @@
 package com.technohest.core.network;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -19,6 +20,10 @@ public class Packet {
 
     public static class Packet1ActionList {
         public Vector<Action> action;
+    }
+
+    public static class Packet1Correction {
+        public ArrayList<ActionPlayer> actions;
     }
 
     public class Packet0PlayerSetCharacter {

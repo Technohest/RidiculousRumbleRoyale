@@ -3,6 +3,7 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -17,7 +18,10 @@ public class NetworkManger {
         kryo.register(Packet.Packet0PlayerTypeIdMap.class);
         kryo.register(Packet.Packet0Start.class);
         kryo.register(Packet.Packet1ActionList.class);
+        kryo.register(Packet.Packet1Correction.class);
+        kryo.register(ArrayList.class);
         kryo.register(Action.class);
+        kryo.register(ActionPlayer.class);
         kryo.register(Action.ActionID.class);
         kryo.register(Vector.class);
         kryo.register(HashMap.class);

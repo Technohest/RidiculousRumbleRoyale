@@ -9,6 +9,7 @@ import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -85,5 +86,13 @@ public class RClient {
 
     public boolean isHost() {
         return host;
+    }
+
+    public void correct(ArrayList<ActionPlayer> actions) {
+        //if (state!=state) {
+            //while (actions.get(actions.size()-1).getAction().getTimestamp()<time)
+
+
+        //}
     }
 }

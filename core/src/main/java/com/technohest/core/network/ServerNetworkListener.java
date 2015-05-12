@@ -62,7 +62,6 @@ public class ServerNetworkListener extends Listener {
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
 
-        //-1 is placeholder even if it dont need to.
         playerIdTypeMap.remove(clients.getKey(connection));
         clients.remove(clients.getKey(connection));
 
