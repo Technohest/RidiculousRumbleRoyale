@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.technohest.constants.Constants;
 import org.apache.commons.collections4.BidiMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -152,7 +153,6 @@ public class OptionsField extends Table{
 
         }else if(text == "Display Damage:"){
             list1 = element2.getElementsByTagName("sound");
-
         }
         element1 = (Element) list1.item(0);
         list2 = element1.getChildNodes();
