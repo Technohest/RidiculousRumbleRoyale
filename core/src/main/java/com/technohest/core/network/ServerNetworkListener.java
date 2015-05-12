@@ -64,7 +64,7 @@ public class ServerNetworkListener extends Listener {
 
         //-1 is placeholder even if it dont need to.
         playerIdTypeMap.remove(clients.getKey(connection));
-        clients.remove(connection);
+        clients.remove(clients.getKey(connection));
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
@@ -76,7 +76,7 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if(object instanceof Packet.Packet1ActionList){
-            //Send ActionList to model and to shit
+            server.addActions(((Packet.Packet1ActionList)object).action, clients.getKey(connection));
         }
     }
 }

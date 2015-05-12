@@ -1,12 +1,11 @@
 package com.technohest.core.network;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.model.RRRGameModel;
-import sun.nio.ch.Net;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -18,6 +17,7 @@ public class RServer {
     private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
+    private ArrayList<ActionPlayer> actionsToBePerformed = new ArrayList<ActionPlayer>();
 
     public RServer(String port) {
         server = new Server();
@@ -56,6 +56,7 @@ public class RServer {
             public void run() {
                 while (gameRunning) {
                     if (acc >= 1000/60) {
+                        performActions();
                         model.step(acc);
                         time = elapsedTime;
                     }
@@ -66,7 +67,23 @@ public class RServer {
         }).start();
     }
 
+    private void performActions() {
+        if (actionsToBePerformed.size() == 0)
+            return;
+
+        for (ActionPlayer ap: actionsToBePerformed) {
+            //model.performAction(ap.getAction(), ap.getId());
+            Log.info("PERFORMING SOME ACTION...");
+        }
+    }
+
     public void gameOver() {
         gameRunning = false;
+    }
+
+    public void addActions(Vector<Action> action, int id) {
+        for (Action a: action) {
+            actionsToBePerformed.add(new ActionPlayer(a, id));
+        }
     }
 }
