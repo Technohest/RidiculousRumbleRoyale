@@ -4,6 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.network.RClient;
 import com.technohest.core.network.RServer;
@@ -13,9 +20,58 @@ import com.technohest.core.network.RServer;
  * Created by time on 2015-04-21.
  */
 public class LobbyScreen implements Screen {
-    private NetworkMenuUtility nmu = NetworkMenuUtility.getInstance();
+
+
+    private NetworkMenuUtility nmu;
+    private TextButton.TextButtonStyle style;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    private BitmapFont font;
+    private float x;
+    private float y;
+    private TextButton startButton;
+    private Button character1;
+    private Button character2;
+    private Button character3;
+    private Button character4;
+    private Stage stage;
+    private Table characterTable;
+    private Table mainTable;
+
+    public LobbyScreen(){
+
+        nmu = NetworkMenuUtility.getInstance();
+
+        //Fontsize
+        font = new BitmapFont();
+        font.scale(1.3f);
+
+        //Screen Properties
+        x = (Gdx.graphics.getWidth())/2.0f;
+        y = (Gdx.graphics.getHeight())/2.0f;
+
+        //ButtonStyle
+        buttonAtlas = new TextureAtlas("assets/menuButtons.pack");
+        skin = new Skin();
+        skin.addRegions(buttonAtlas);
+        style = new TextButton.TextButtonStyle();
+        style.up = skin.getDrawable("menuButton");
+        style.down = skin.getDrawable("pressedMenuButton");
+        style.font=font;
+
+        //CharacterButtons
+
+
+        startButton = new TextButton("Start", style);
+        startButton.setPosition(x/(3/4), y/5);
+        startButton.setDisabled(true);
+    }
+
     @Override
     public void show() {
+
+        Gdx.input.setInputProcessor(stage);
+
         System.out.println("IP: " + NetworkMenuUtility.getInstance().getIp());
         System.out.println("PORT: " + NetworkMenuUtility.getInstance().getPort());
 
@@ -25,6 +81,10 @@ public class LobbyScreen implements Screen {
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }
+
+        //If the player is host, show start button
+        startButton.setDisabled(false);
+
     }
 
     @Override
@@ -35,6 +95,9 @@ public class LobbyScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             ScreenHandler.getInstance().setScreen("menu");
         }
+
+        //if all players have chosen, enable textbutton
+
     }
 
     @Override
