@@ -3,10 +3,8 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.text.Bidi;
 import java.util.HashMap;
 
 /**
@@ -51,7 +49,7 @@ public class ServerNetworkListener extends Listener {
         }
 
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > 1) {
+            if (playerIdTypeMap.keySet().size() > 0) {
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
@@ -64,9 +62,8 @@ public class ServerNetworkListener extends Listener {
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
 
-        //-1 is placeholder even if it dont need to.
         playerIdTypeMap.remove(clients.getKey(connection));
-        clients.remove(connection);
+        clients.remove(clients.getKey(connection));
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();
@@ -77,5 +74,8 @@ public class ServerNetworkListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
+        if(object instanceof Packet.Packet1ActionList){
+            server.addActions(((Packet.Packet1ActionList)object).action, clients.getKey(connection));
+        }
     }
 }

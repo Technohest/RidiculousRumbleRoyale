@@ -12,7 +12,13 @@
 	<packaging>jar</packaging>
 	<name>Main Core</name>
 	<dependencies>
-		<!-- kryonet -->
+		<!-- Groovy -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+		<!-- KryoNet -->
 		<dependency>
 			<groupId>com.esotericsoftware</groupId>
 			<artifactId>kryonet</artifactId>
