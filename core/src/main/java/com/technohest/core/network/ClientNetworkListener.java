@@ -4,14 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.core.handlers.InputHandler;
-import com.technohest.core.model.*;
-import com.technohest.core.network.Packet;
-import com.technohest.core.network.RClient;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -43,7 +36,9 @@ public class ClientNetworkListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
-        if (object instanceof Packet.Packet0PlayerID) {
+        if(object instanceof Packet.Packet1ActionList){
+            //Send actionlist to mdoel and do shit
+        }else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
             //Update the idPlayerMap

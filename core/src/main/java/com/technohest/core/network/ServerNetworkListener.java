@@ -3,10 +3,8 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.text.Bidi;
 import java.util.HashMap;
 
 /**
@@ -77,5 +75,8 @@ public class ServerNetworkListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
+        if(object instanceof Packet.Packet1ActionList){
+            //Send ActionList to model and to shit
+        }
     }
 }
