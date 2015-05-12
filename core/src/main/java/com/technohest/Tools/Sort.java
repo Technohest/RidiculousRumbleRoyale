@@ -13,8 +13,8 @@ public class Sort {
         Action temp;
         while (!done){
             done = true;
-            for(int i = 0;i<vector.size();i++){
-                if(vector.get(i).getTimestamp() < vector.get(i+1).getTimestamp()){
+            for(int i = 0;i<vector.size()-1;i++){
+                if(vector.get(i).getTimestamp() > vector.get(i+1).getTimestamp()){
                     temp = vector.get(i);
                     vector.set(i, vector.get(i+1));
                     vector.set(i+1, temp);
