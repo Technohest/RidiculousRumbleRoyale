@@ -7,11 +7,8 @@ import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -20,12 +17,16 @@ import java.util.HashMap;
  */
 public class RClient {
     private Client client;
+
     //The MVC
     private RRRGameModel model = new RRRGameModel();
     private RRRGameController controller = new RRRGameController(model);
     private RRRGameView view = new RRRGameView(controller, model);
 
+    private boolean host;
+
     public RClient(String ip, String port) {
+        host = false;
         client = new Client();
         registerPackets();
 
@@ -46,6 +47,7 @@ public class RClient {
     }
 
     public RClient(String port) {
+        host = true;
         client = new Client();
         registerPackets();
 
@@ -81,5 +83,9 @@ public class RClient {
         ScreenHandler.getInstance().setGameScreen(view);
         ScreenHandler.getInstance().setScreen("game");
         Log.info("STARTING GAME ON CLIENT.");
+    }
+
+    public boolean isHost() {
+        return host;
     }
 }
