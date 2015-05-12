@@ -44,7 +44,6 @@ public class GameLogicGDX implements IGameLogic{
         int i=0;
         for (Character c: idCharacterMap.values()) {
             i++;
-            System.out.println("I HAVE NOW MADE " + i);
             BodyDef bdef1 = new BodyDef();
             bdef1.type = BodyDef.BodyType.DynamicBody;
             bdef1.gravityScale = 5;
