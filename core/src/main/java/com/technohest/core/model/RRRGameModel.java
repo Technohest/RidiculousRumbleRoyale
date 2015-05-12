@@ -4,6 +4,7 @@ import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
+import com.technohest.core.network.Action;
 import com.technohest.core.network.NetworkMenuUtility;
 import org.apache.commons.collections4.BidiMap;
 
@@ -85,39 +86,24 @@ public class RRRGameModel {
         myID = id;
     }
 
-    /**
-     * Moves the player with the specified id left.
-     */
-    public void moveLeft(Integer playerID){
-        gameLogic.moveLeft(getPlayerFromID(playerID));
-    }
 
     /**
-     * Moves the player with the specified id right
+     * Performes an action on the specified player connected to playerId
+     * @param playerId
+     * @param action
      */
-    public void moveRight(Integer playerID){
-        gameLogic.moveRight(getPlayerFromID(playerID));
-    }
+    public void performAction(Integer playerId, Action action) {
+        switch(action.getActionID()) {
+            case Jump:
+                gameLogic.jump(getPlayerFromID(playerId));
+                break;
+            case MoveRight:
+                gameLogic.moveRight(getPlayerFromID(playerId));
+                break;
+            case MoveLeft:
+                gameLogic.moveLeft(getPlayerFromID(playerId));
+        }
 
-    /**
-     * Makes the player with the specified id jump
-     */
-    public void jump(Integer playerID) {
-        gameLogic.jump(getPlayerFromID(playerID));
-    }
-
-    /**
-     * Makes the player with the specified id perform a base attack
-     */
-    public void attack_base(Integer playerID) {
-        gameLogic.attack_base(getPlayerFromID(playerID));
-    }
-
-    /**
-     * Makes the player with the specified id perform a special attack
-     */
-    public void attack_special(Integer playerID) {
-        gameLogic.attack_special(getPlayerFromID(playerID));
     }
 
     public Collection<Character> getPlayers() {

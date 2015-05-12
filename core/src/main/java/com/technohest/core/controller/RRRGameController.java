@@ -2,6 +2,7 @@ package com.technohest.core.controller;
 
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.model.RRRGameModel;
+import com.technohest.core.network.Action;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
@@ -33,19 +34,19 @@ public class RRRGameController extends InputHandler {
             this.releaseAllKeys();
         }
        if (this.isPressed(InputHandler.RIGHT)) {
-            model.moveRight(model.getmyID());
+            model.performAction(model.getmyID(),new Action(Action.ActionID.MoveRight, 0));
 
         } if(this.isPressed(InputHandler.LEFT)) {
-            model.moveLeft(model.getmyID());
+            model.performAction(model.getmyID(),new Action(Action.ActionID.MoveLeft, 0));
         }
         if(this.isPressed(InputHandler.JUMP)) {
-            model.jump(model.getmyID());
+            model.performAction(model.getmyID(),new Action(Action.ActionID.Jump, 0));
         }
         if(this.isPressed(InputHandler.BASE_ATTACK)) {
-            model.attack_base(model.getmyID());
+            //To be implemented
         }
         if(this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-            model.attack_special(model.getmyID());
+            //to be implemented
         }
     }
 
