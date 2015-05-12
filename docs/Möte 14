@@ -1,0 +1,52 @@
+        Projektmöte 14
+            "At world's end"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-12
+
+
+
+§1 Mötets öppnande.
+    - Oskar Jedvert sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Nätverk - Schtek ska tala om det
+        Schtek håller en kort "föreläsning"
+            "Klienten frågar om förlåtelse snarare än tillåtelse"
+            Klienten härmar servern och rättar till sitt eget tillstånd.
+        Problemet är att vi måste lösa en "state" klass om kan ha alla krafter och bodies i världen
+
+§3 Punkter från förra mötet.
+    - Skall kunna röra character i nätverk, dvs två spelare skall kunna gå. XXX
+        Vi måste implementera State
+
+§4 Projektets status
+    Förra veckan:
+        Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+    Denna veckan:
+        Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+        Putsa på rad, skriva SSD
+        Viktigt > Skriva Tester
+        Viktigt > Nätverk
+    Nästa vecka:
+        Code review
+            Snygga upp det som du vill snygga upp
+
+§5 Bestämmelser
+    - Söndag SKA nätverk funka
+
+§6 Genomgång av info från möte med handledare
+    - Inget
+
+§7 Inför kommande möte + fikaansvarig
+    - Försök fixa nätverk, spelare ska kunna gå
+    - Snygga upp kopplingar
+    - Skriva rapport
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+    "To iterate is human, to recurse divine"
+        - Unknown
