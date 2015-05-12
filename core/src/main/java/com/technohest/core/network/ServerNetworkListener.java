@@ -3,10 +3,8 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import java.text.Bidi;
 import java.util.HashMap;
 
 /**
