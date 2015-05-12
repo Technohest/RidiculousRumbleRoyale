@@ -1,16 +1,19 @@
 package com.technohest.core.network;
 
 /**
+ *
  * Created by oskar on 2015-05-10.
  */
 public class Action {
-    private int timestamp;
+    private long timestamp;
     private ActionID actionID;
 
-    public Action(ActionID actionID, int timestamp){
+    public Action(ActionID actionID, long timestamp){
         this.actionID = actionID;
         this.timestamp = timestamp;
     }
+
+    public Action() {}
 
     /**
      * Types of actions
@@ -27,11 +30,11 @@ public class Action {
         this.actionID = actionID;
     }
 
-    public void setTimestamp(int timestamp){
+    public void setTimestamp(long timestamp){
         this.timestamp = timestamp;
     }
 
-    public int getTimestamp(){
+    public long getTimestamp(){
         return timestamp;
     }
 }
