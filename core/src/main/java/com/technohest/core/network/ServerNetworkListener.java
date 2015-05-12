@@ -77,5 +77,8 @@ public class ServerNetworkListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
+        if(object instanceof Packet.Packet1ActionList){
+            //Send ActionList to model and to shit
+        }
     }
 }
