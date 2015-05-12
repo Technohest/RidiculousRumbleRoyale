@@ -4,9 +4,11 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.model.RRRGameModel;
+import sun.nio.ch.Net;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Creates a server with specified port and registers packets the server will be listening to.
@@ -28,7 +30,7 @@ public class RServer {
         server.start();
 
         try {
-            server.bind(Integer.parseInt(port));
+            server.bind(Integer.parseInt(port), Integer.parseInt(port)+1);
         } catch (IOException e) {
             e.printStackTrace();
             server.stop();
@@ -38,13 +40,7 @@ public class RServer {
     }
 
     private void registerPackets() {
-        Kryo kryo = server.getKryo();
-        kryo.register(Packet.Packet0PlayerID.class);
-        kryo.register(Packet.Packet0PlayerTypeIdMap.class);
-        kryo.register(Packet.Packet0Start.class);
-        kryo.register(Packet.Packet1ActionList.class);
-        kryo.register(HashMap.class);
-        kryo.register(Integer.class);
+        NetworkManger.registerPackets(server);
     }
 
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {

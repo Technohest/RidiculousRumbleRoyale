@@ -10,6 +10,7 @@ import com.technohest.core.view.RRRGameView;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -32,12 +33,13 @@ public class RClient {
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
+        controller.init(clientNetworkListener);
 
         client.addListener(clientNetworkListener);
         client.start();
 
         try {
-            client.connect(5000, ip, Integer.parseInt(port));
+            client.connect(5000, ip, Integer.parseInt(port), Integer.parseInt(port)+1);
         } catch (IOException e) {
             e.printStackTrace();
             client.stop();
@@ -53,12 +55,13 @@ public class RClient {
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
+        controller.init(clientNetworkListener);
 
         client.addListener(clientNetworkListener);
         client.start();
 
         try {
-            client.connect(5000, "127.0.0.1", Integer.parseInt(port));
+            client.connect(5000, "127.0.0.1", Integer.parseInt(port), Integer.parseInt(port)+1);
         } catch (IOException e) {
             e.printStackTrace();
             client.stop();
@@ -68,13 +71,7 @@ public class RClient {
     }
 
     private void registerPackets() {
-        Kryo kryo = client.getKryo();
-        kryo.register(Packet.Packet0PlayerID.class);
-        kryo.register(Packet.Packet0PlayerTypeIdMap.class);
-        kryo.register(Packet.Packet0Start.class);
-        kryo.register(Packet.Packet1ActionList.class);
-        kryo.register(HashMap.class);
-        kryo.register(Integer.class);
+        NetworkManger.registerPackets(client);
     }
 
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
