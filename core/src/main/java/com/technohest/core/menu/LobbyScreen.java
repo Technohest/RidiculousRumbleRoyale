@@ -21,7 +21,7 @@ public class LobbyScreen implements Screen {
 
         if (nmu.isServer()) {
             new RServer(nmu.getPort());
-            new RClient(nmu.getPort());
+            //new RClient(nmu.getPort());
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }

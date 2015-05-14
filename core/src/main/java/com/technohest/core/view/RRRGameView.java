@@ -22,7 +22,7 @@ import java.util.Collection;
 
 public class RRRGameView implements Screen {
 
-	private final RRRGameController controller;
+	private RRRGameController controller = null;
 	private final RRRGameModel		model;
 
 	private TiledMapRenderer 	mapRenderer;
@@ -70,10 +70,22 @@ public class RRRGameView implements Screen {
 
 	}
 
+	public RRRGameView(RRRGameModel model) {
+		this.model = model;
+		mapRenderer = new OrthogonalTiledMapRenderer(model.getLevel().getMap());
+		batch = new SpriteBatch();
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+		sRenderer = new ShapeRenderer();
+		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
+	}
+
 	@Override
 	public void render(float v) {
 
-		controller.update(v);
+		if (controller != null)
+			controller.update(v);
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
         //Draws players ---  TEMP!
         Collection<Character> players = model.getPlayers();
@@ -107,7 +119,8 @@ public class RRRGameView implements Screen {
 
 	@Override
 	public void show() {
-        Gdx.input.setInputProcessor(controller);
+		if (controller != null)
+        	Gdx.input.setInputProcessor(controller);
     }
 
 	@Override

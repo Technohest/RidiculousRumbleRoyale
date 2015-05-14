@@ -2,7 +2,10 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
+import com.technohest.core.view.RRRGameView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ public class RServer {
     private Server server;
     private RRRGameModel model = new RRRGameModel();
     private ArrayList<ActionPlayer> actionsToBePerformed = new ArrayList<ActionPlayer>();
+
+    private RRRGameView view = new RRRGameView(model);
 
     public RServer(String port) {
         server = new Server();
@@ -46,12 +51,15 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
+        ScreenHandler.getInstance().setGameScreen(view);
+        ScreenHandler.getInstance().setScreen("game");
         gameRunning = true;
 
         (new Thread() {
             private long time = System.currentTimeMillis();
             private long elapsedTime = System.currentTimeMillis();
             private long acc = elapsedTime-time;
+
             @Override
             public void run() {
                 while (gameRunning) {
@@ -72,8 +80,8 @@ public class RServer {
             return;
 
         for (ActionPlayer ap: actionsToBePerformed) {
-            //model.performAction(ap.getAction(), ap.getId());
-            Log.info("PERFORMING SOME ACTION ON SERVER...");
+            model.performAction(ap.getId(), ap.getAction());
+            //Log.info("PERFORMING SOME ACTION ON SERVER...");
         }
 
         Packet.Packet1Correction p = new Packet.Packet1Correction();

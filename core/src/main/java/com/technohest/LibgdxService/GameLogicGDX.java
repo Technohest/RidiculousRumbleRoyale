@@ -3,6 +3,7 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.esotericsoftware.minlog.Log;
 import com.technohest.constants.Constants;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Character;
@@ -111,6 +112,7 @@ public class GameLogicGDX implements IGameLogic{
                 c.setGrounded(true);
                 c.setState(Character.State.Standing);
             }
+            Log.info(bodyCharacterMap.get(b).getName() + "" + b.getPosition());
         }
 
     }

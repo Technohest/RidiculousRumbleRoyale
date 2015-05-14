@@ -1,17 +1,13 @@
 package com.technohest.core.network;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
-import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -79,8 +75,8 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
-        ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen("game");
+        /*ScreenHandler.getInstance().setGameScreen(view);
+        ScreenHandler.getInstance().setScreen("game");*/
         Log.info("STARTING GAME ON CLIENT.");
     }
 
