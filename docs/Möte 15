@@ -1,0 +1,49 @@
+        Projektmöte 15
+      "On stranger tides"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-14
+
+
+
+§1 Mötets öppnande.
+    - Oskar Jedvert är sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Nätverk, State
+        Hashmap i State, Character som nyckel med position och hastighet som värde(vector2)
+
+§3 Punkter från förra mötet.
+    - Försök fixa nätverk, spelare ska kunna gå
+        Framåt men inte färdigt
+    - Snygga upp kopplingar
+        Inte gjort
+    - Skriva rapport
+        Jobbar lite på den, andra prio just nu
+
+§4 Projektets status
+    - Nätverk
+        Jobbas på
+    - UC's
+        Behövs inga mer, endast för stöd.
+    - Tester ska skrivas
+
+
+§5 Bestämmelser
+    - INGA
+
+§6 Genomgång av info från möte med handledare
+    - INGEN
+
+§7 Inför kommande möte + fikaansvarig
+    - Nätverk
+        State ska lösas
+    - Tester
+        Ska göras
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+    "Do or do not there is no try" - Yoda
