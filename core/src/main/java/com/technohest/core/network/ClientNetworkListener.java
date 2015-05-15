@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.model.Action;
 
 import java.util.HashMap;
 import java.util.Vector;
@@ -57,7 +58,7 @@ public class ClientNetworkListener extends Listener {
     }
 
     public void addAction(Action.ActionID action) {
-        Action a = new Action(action, System.currentTimeMillis());
+        Action a = new Action(id, action, System.currentTimeMillis());
         playerActions.add(a);
     }
 

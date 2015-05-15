@@ -1,7 +1,7 @@
 package com.technohest.Test
 
 import com.technohest.Tools.Sort
-import com.technohest.core.network.Action
+import com.technohest.core.model.Action
 import org.junit.Test
 
 /**
