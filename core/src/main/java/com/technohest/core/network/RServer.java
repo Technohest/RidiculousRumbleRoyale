@@ -3,6 +3,7 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
@@ -52,7 +53,7 @@ public class RServer {
         model.init(playerIdTypeMap);
         model.generateWorld();
         ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen("game");
+        ScreenHandler.getInstance().setScreen(SCREEN.GAME);
         gameRunning = true;
 
         (new Thread() {

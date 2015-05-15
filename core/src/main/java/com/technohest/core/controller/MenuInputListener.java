@@ -2,13 +2,14 @@ package com.technohest.core.controller;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 
 /**
  * Created by vilddjur on 2015-04-02.
  */
 public class MenuInputListener extends InputListener {
-    public final String     target;
+    public final SCREEN target;
 
     /**
      * Ok here we might not need the param game, since we might be able to override it from RRRMenuView
@@ -17,7 +18,7 @@ public class MenuInputListener extends InputListener {
      * @param target
      * The target switch state
      */
-    public MenuInputListener(String target){
+    public MenuInputListener(SCREEN target){
         this.target = target;
     }
     @Override

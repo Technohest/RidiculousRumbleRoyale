@@ -90,14 +90,15 @@ public class RRRMenuView implements Screen {
         joinButton = new TextButton("Join", style);
         hostButton = new TextButton("Host", style);
         optionsButton = new TextButton("Options", style);
+
         /**
          * See @class{MenuInputListener}
          */
-        playButton.addListener(new MenuInputListener("game"));
-        exitButton.addListener(new MenuInputListener("exit"));
-        joinButton.addListener(new MenuInputListener("join"));
-        hostButton.addListener(new MenuInputListener("host"));
-        optionsButton.addListener(new MenuInputListener("options"));
+        playButton.addListener(new MenuInputListener(SCREEN.GAME));
+        exitButton.addListener(new MenuInputListener(SCREEN.EXIT));
+        joinButton.addListener(new MenuInputListener(SCREEN.JOIN));
+        hostButton.addListener(new MenuInputListener(SCREEN.HOST));
+        optionsButton.addListener(new MenuInputListener(SCREEN.OPTIONS));
     }
 
     @Override
