@@ -2,9 +2,9 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
+import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 
@@ -21,9 +21,7 @@ public class RServer {
     private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
-    private ArrayList<ActionPlayer> actionsToBePerformed = new ArrayList<ActionPlayer>();
-
-    private RRRGameView view = new RRRGameView(model);
+    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
     public RServer(String port) {
         server = new Server();
@@ -52,8 +50,6 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
-        ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen(SCREEN.GAME);
         gameRunning = true;
 
         (new Thread() {
@@ -80,8 +76,8 @@ public class RServer {
         if (actionsToBePerformed.size() == 0)
             return;
 
-        for (ActionPlayer ap: actionsToBePerformed) {
-            model.performAction(ap.getId(), ap.getAction());
+        for (Action ap: actionsToBePerformed) {
+            model.performAction(ap);
             //Log.info("PERFORMING SOME ACTION ON SERVER...");
         }
 
@@ -96,9 +92,9 @@ public class RServer {
         gameRunning = false;
     }
 
-    public void addActions(Vector<Action> action, int id) {
+    public void addActions(Vector<Action> action) {
         for (Action a: action) {
-            actionsToBePerformed.add(new ActionPlayer(a, id));
+            actionsToBePerformed.add(a);
         }
     }
 }

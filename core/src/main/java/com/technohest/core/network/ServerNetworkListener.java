@@ -75,7 +75,7 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if(object instanceof Packet.Packet1ActionList){
-            server.addActions(((Packet.Packet1ActionList)object).action, clients.getKey(connection));
+            server.addActions(((Packet.Packet1ActionList)object).action);
         }
     }
 }

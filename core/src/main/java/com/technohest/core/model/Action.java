@@ -1,9 +1,50 @@
 package com.technohest.core.model;
 
 /**
- * All the actions which can be performed by a player.
- * Created by time on 2015-05-11.
+ *
+ * Created by oskar on 2015-05-10.
  */
-public enum Action {
-    MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK_BASIC, ATTACK_SPECIAL
+public class Action {
+    private long timestamp;
+    private ActionID actionID;
+    private Integer playerID;
+
+    public Action(int playerID, ActionID actionID, long timestamp){
+        this.playerID = playerID;
+        this.actionID = actionID;
+        this.timestamp = timestamp;
+    }
+
+    public Action() {}
+
+    /**
+     * Types of actions
+     */
+    public enum ActionID {
+        MoveLeft, MoveRight, Jump
+    }
+
+    public void setPlayerID(int id) {
+        this.playerID = id;
+    }
+
+    public Integer getPlayerID() {
+        return this.playerID;
+    }
+
+    public ActionID getActionID() {
+        return actionID;
+    }
+
+    public void setActionID(ActionID actionID) {
+        this.actionID = actionID;
+    }
+
+    public void setTimestamp(long timestamp){
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp(){
+        return timestamp;
+    }
 }

@@ -1,10 +1,11 @@
 package com.technohest.Tools;
 
-import com.technohest.core.network.Action;
+import com.technohest.core.model.Action;
 
 import java.util.Vector;
 
 /**
+ * Sort actions by time.
  * Created by vilddjur on 2015-05-12.
  */
 public class Sort {

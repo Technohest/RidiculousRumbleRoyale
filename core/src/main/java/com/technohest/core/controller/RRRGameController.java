@@ -3,7 +3,7 @@ package com.technohest.core.controller;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
-import com.technohest.core.network.Action;
+import com.technohest.core.model.Action;
 import com.technohest.core.network.ClientNetworkListener;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
@@ -42,28 +42,25 @@ public class RRRGameController extends InputHandler {
             this.releaseAllKeys();
         }
             if (this.isPressed(InputHandler.RIGHT)) {
-                 model.performAction(model.getmyID(),new Action(Action.ActionID.MoveRight, 0));
+                 model.performAction(new Action(model.getmyID(), Action.ActionID.MoveRight, 0));
                 if (listener != null) {
                     listener.addAction(Action.ActionID.MoveRight);
                 }
 
             }
             if (this.isPressed(InputHandler.LEFT)) {
-                model.performAction(model.getmyID(),new Action(Action.ActionID.MoveLeft,0));
+                model.performAction(new Action(model.getmyID(), Action.ActionID.MoveLeft,0));
                 if (listener != null)
                     listener.addAction(Action.ActionID.MoveRight);
             }
             if (this.isPressed(InputHandler.JUMP)) {
-                model.performAction(model.getmyID(),new Action(Action.ActionID.Jump,0));
+                model.performAction(new Action(model.getmyID(), Action.ActionID.Jump,0));
                 if (listener != null)
                     listener.addAction(Action.ActionID.MoveRight);
             }
             if (this.isPressed(InputHandler.BASE_ATTACK)) {
-                if (listener != null)
-                    listener.addAction(Action.ActionID.MoveRight);
             }
             if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-
             }
     }
 

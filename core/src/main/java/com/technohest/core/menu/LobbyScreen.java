@@ -16,12 +16,9 @@ public class LobbyScreen implements Screen {
     private NetworkMenuUtility nmu = NetworkMenuUtility.getInstance();
     @Override
     public void show() {
-        System.out.println("IP: " + NetworkMenuUtility.getInstance().getIp());
-        System.out.println("PORT: " + NetworkMenuUtility.getInstance().getPort());
-
         if (nmu.isServer()) {
             new RServer(nmu.getPort());
-            //new RClient(nmu.getPort());
+            new RClient(nmu.getPort());
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }
