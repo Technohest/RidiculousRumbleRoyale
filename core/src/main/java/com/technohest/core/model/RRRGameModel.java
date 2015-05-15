@@ -111,4 +111,5 @@ public class RRRGameModel {
     public void correct(IState state) {
         gameLogic.correct(state);
     }
+
 }

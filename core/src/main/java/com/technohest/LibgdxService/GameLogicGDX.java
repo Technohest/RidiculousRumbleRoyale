@@ -1,6 +1,5 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
@@ -166,5 +165,24 @@ public class GameLogicGDX implements IGameLogic{
             ArrayList<Vector2> temp = map.get(c);
             setCharacterState(c, temp.get(0), temp.get(1));
         }
+    }
+
+    @Override
+    public HashMap<Character, ArrayList<Vector2>> generateState() {
+        HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
+        Collection<Character> chars = getCharacters();
+        for(Character c : chars){
+            ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
+            Body playerBody = getBodyFromCharacter(c);
+            vector2s.add(playerBody.getPosition());
+            vector2s.add(playerBody.getLinearVelocity());
+
+            map.put(c, vector2s);
+        }
+        return map;
+    }
+
+    public Collection<Character> getCharacters() {
+        return idCharacterMap.values();
     }
 }

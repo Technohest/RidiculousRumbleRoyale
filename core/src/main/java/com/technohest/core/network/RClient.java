@@ -1,12 +1,15 @@
 package com.technohest.core.network;
 
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.RRRGameModel;
+import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -44,6 +47,12 @@ public class RClient {
         }
 
         Log.set(Log.LEVEL_INFO);
+        init();
+    }
+
+    private void init() {
+        state = StateGDX.getInstance();
+        generateState();
     }
 
     public RClient(String port) {
@@ -66,6 +75,7 @@ public class RClient {
         }
 
         Log.set(Log.LEVEL_INFO);
+        init();
     }
 
     private void registerPackets() {
@@ -85,9 +95,22 @@ public class RClient {
         return host;
     }
 
+    /**
+     * Generates state using the current characters
+     */
+    public void generateState(){
+        state.setState(model.getGameLogic().generateState());
+    }
+
+    /**
+     * Compares local state to remote state and correct if needed
+     * @param state
+     * Remote state
+     */
     public void correct(IState state) {
         if(!this.state.equals(state)){
             model.correct(state);
         }
+        this.state.setState(state.getState());
     }
 }
