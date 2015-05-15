@@ -44,7 +44,6 @@ public class RServer {
 
         Log.set(Log.LEVEL_INFO);
 
-        init();
     }
 
     private void init() {
@@ -59,6 +58,7 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
+        init();
         gameRunning = true;
 
         (new Thread() {

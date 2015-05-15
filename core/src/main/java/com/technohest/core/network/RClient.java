@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.menu.SCREEN;
+import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
@@ -47,7 +49,6 @@ public class RClient {
         }
 
         Log.set(Log.LEVEL_INFO);
-        init();
     }
 
     private void init() {
@@ -75,7 +76,6 @@ public class RClient {
         }
 
         Log.set(Log.LEVEL_INFO);
-        init();
     }
 
     private void registerPackets() {
@@ -86,8 +86,9 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
-        /*ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen("game");*/
+        init();
+        ScreenHandler.getInstance().setGameScreen(view);
+        ScreenHandler.getInstance().setScreen(SCREEN.GAME);
         Log.info("STARTING GAME ON CLIENT.");
     }
 
