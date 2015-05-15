@@ -42,21 +42,21 @@ public class RRRGameController extends InputHandler {
             this.releaseAllKeys();
         }
             if (this.isPressed(InputHandler.RIGHT)) {
-                 model.performAction(new Action(model.getmyID(), Action.ActionID.MoveRight, 0));
+                 model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, 0));
                 if (listener != null) {
-                    listener.addAction(Action.ActionID.MoveRight);
+                    listener.addAction(Action.ActionID.MOVE_RIGHT);
                 }
 
             }
             if (this.isPressed(InputHandler.LEFT)) {
-                model.performAction(new Action(model.getmyID(), Action.ActionID.MoveLeft,0));
+                model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT,0));
                 if (listener != null)
-                    listener.addAction(Action.ActionID.MoveRight);
+                    listener.addAction(Action.ActionID.MOVE_LEFT);
             }
             if (this.isPressed(InputHandler.JUMP)) {
-                model.performAction(new Action(model.getmyID(), Action.ActionID.Jump,0));
+                model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP,0));
                 if (listener != null)
-                    listener.addAction(Action.ActionID.MoveRight);
+                    listener.addAction(Action.ActionID.JUMP);
             }
             if (this.isPressed(InputHandler.BASE_ATTACK)) {
             }

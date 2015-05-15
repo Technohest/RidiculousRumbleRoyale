@@ -89,19 +89,18 @@ public class RRRGameModel {
 
     /**
      * Performes an action on the specified player connected to playerId
-     * @param playerId
      * @param action
      */
-    public void performAction(Integer playerId, Action action) {
+    public void performAction(Action action) {
         switch(action.getActionID()) {
-            case Jump:
-                gameLogic.jump(getPlayerFromID(playerId));
+            case JUMP:
+                gameLogic.jump(getPlayerFromID(action.getPlayerID()));
                 break;
-            case MoveRight:
-                gameLogic.moveRight(getPlayerFromID(playerId));
+            case MOVE_RIGHT:
+                gameLogic.moveRight(getPlayerFromID(action.getPlayerID()));
                 break;
-            case MoveLeft:
-                gameLogic.moveLeft(getPlayerFromID(playerId));
+            case MOVE_LEFT:
+                gameLogic.moveLeft(getPlayerFromID(action.getPlayerID()));
         }
 
     }
