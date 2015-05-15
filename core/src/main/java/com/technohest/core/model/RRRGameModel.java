@@ -4,6 +4,9 @@ import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
+import com.technohest.core.network.Action;
+import com.technohest.core.network.NetworkMenuUtility;
+import org.apache.commons.collections4.BidiMap;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -86,18 +89,19 @@ public class RRRGameModel {
 
     /**
      * Performes an action on the specified player connected to playerId
+     * @param playerId
      * @param action
      */
-    public void performAction(Action action) {
+    public void performAction(Integer playerId, Action action) {
         switch(action.getActionID()) {
             case Jump:
-                gameLogic.jump(getPlayerFromID(action.getPlayerID()));
+                gameLogic.jump(getPlayerFromID(playerId));
                 break;
             case MoveRight:
-                gameLogic.moveRight(getPlayerFromID(action.getPlayerID()));
+                gameLogic.moveRight(getPlayerFromID(playerId));
                 break;
             case MoveLeft:
-                gameLogic.moveLeft(getPlayerFromID(action.getPlayerID()));
+                gameLogic.moveLeft(getPlayerFromID(playerId));
         }
 
     }

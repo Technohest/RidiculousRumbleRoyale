@@ -3,9 +3,6 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
-import com.technohest.core.menu.SCREEN;
-import com.technohest.core.menu.ScreenHandler;
-import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.view.RRRGameView;
 import java.io.IOException;
@@ -78,8 +75,8 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
-        ScreenHandler.getInstance().setGameScreen(view);
-        ScreenHandler.getInstance().setScreen(SCREEN.GAME);
+        /*ScreenHandler.getInstance().setGameScreen(view);
+        ScreenHandler.getInstance().setScreen("game");*/
         Log.info("STARTING GAME ON CLIENT.");
     }
 
@@ -87,7 +84,7 @@ public class RClient {
         return host;
     }
 
-    public void correct(ArrayList<Action> actions) {
+    public void correct(ArrayList<ActionPlayer> actions) {
         //if (state!=state) {
             //while (actions.get(actions.size()-1).getAction().getTimestamp()<time)
 

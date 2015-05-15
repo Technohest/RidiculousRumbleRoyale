@@ -1,17 +1,17 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.constants.Constants;
-import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Character;
+import com.technohest.core.network.IState;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * The service managing the game physics.
@@ -150,5 +150,21 @@ public class GameLogicGDX implements IGameLogic{
     public void attack_special(Character player) {
         Body playerBody = getBodyFromCharacter(player);
 
+    }
+
+    @Override
+    public void setCharacterState(Character player, Vector2 pos, Vector2 vel) {
+        Body playerBody = getBodyFromCharacter(player);
+        playerBody.setLinearVelocity(vel);
+        playerBody.setTransform(pos, playerBody.getAngle());
+    }
+
+    @Override
+    public void correct(IState state) {
+        HashMap<Character, ArrayList<Vector2>> map =  state.getState();
+        for(Character c : map.keySet()){
+            ArrayList<Vector2> temp = map.get(c);
+            setCharacterState(c, temp.get(0), temp.get(1));
+        }
     }
 }
