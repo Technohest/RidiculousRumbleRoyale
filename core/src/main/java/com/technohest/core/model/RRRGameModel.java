@@ -90,13 +90,13 @@ public class RRRGameModel {
      */
     public void performAction(Action action) {
         switch(action.getActionID()) {
-            case Jump:
+            case JUMP:
                 gameLogic.jump(getPlayerFromID(action.getPlayerID()));
                 break;
-            case MoveRight:
+            case MOVE_RIGHT:
                 gameLogic.moveRight(getPlayerFromID(action.getPlayerID()));
                 break;
-            case MoveLeft:
+            case MOVE_LEFT:
                 gameLogic.moveLeft(getPlayerFromID(action.getPlayerID()));
         }
 
