@@ -22,6 +22,7 @@ public class RClient {
     private RRRGameView view = new RRRGameView(controller, model);
 
     private boolean host;
+    private IState state;
 
     public RClient(String ip, String port) {
         host = false;
@@ -84,11 +85,9 @@ public class RClient {
         return host;
     }
 
-    public void correct(ArrayList<ActionPlayer> actions) {
-        //if (state!=state) {
-            //while (actions.get(actions.size()-1).getAction().getTimestamp()<time)
-
-
-        //}
+    public void correct(IState state) {
+        if(!this.state.equals(state)){
+            model.correct(state);
+        }
     }
 }

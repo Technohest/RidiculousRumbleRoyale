@@ -4,9 +4,7 @@ import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
-import com.technohest.core.network.Action;
-import com.technohest.core.network.NetworkMenuUtility;
-import org.apache.commons.collections4.BidiMap;
+import com.technohest.core.network.IState;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -110,5 +108,7 @@ public class RRRGameModel {
     }
 
 
-
+    public void correct(IState state) {
+        gameLogic.correct(state);
+    }
 }
