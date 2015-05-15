@@ -1,6 +1,7 @@
 package com.technohest.core.controller;
 
 import com.technohest.LibgdxService.ILevel;
+import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.Action;
 import com.technohest.core.network.ClientNetworkListener;
@@ -37,7 +38,7 @@ public class RRRGameController extends InputHandler {
 
     public void handleInput() {
         if (this.isPressed(InputHandler.ESCAPE)) {
-            ScreenHandler.getInstance().setScreen("menu");
+            ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
             if (this.isPressed(InputHandler.RIGHT)) {
