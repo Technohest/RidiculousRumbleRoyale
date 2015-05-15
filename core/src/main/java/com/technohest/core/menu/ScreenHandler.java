@@ -10,6 +10,8 @@ import com.technohest.core.view.RRRGameView;
 
 import java.util.Observable;
 
+import static com.technohest.core.menu.SCREEN.*;
+
 /**
  * ScreenHandler is an easy way to set the screen of the program.
  * Created by time on 2015-04-13.
@@ -17,12 +19,11 @@ import java.util.Observable;
 public class ScreenHandler extends Observable {
     // All the different possible screens
     private Screen menuScreen = new RRRMenuView();
-    private RRRGameView gameScreen;
     private Screen ipPortInputScreen = new IPPortInputScreen();
     private Screen lobbyScreen = new LobbyScreen();
     private Screen optionsScreen = new OptionsMenuView();
-
     private SCREEN currentScreen;
+    private RRRGameView gameScreen;
 
     // The singleton
     private static ScreenHandler instance = null;
@@ -31,8 +32,8 @@ public class ScreenHandler extends Observable {
     protected ScreenHandler() {
         RRRGameModel model = new RRRGameModel();
         gameScreen = new RRRGameView(
-                new RRRGameController(model)
-                , model);
+                        new RRRGameController(model),
+                        model);
     }
 
     public static ScreenHandler getInstance() {
@@ -43,48 +44,57 @@ public class ScreenHandler extends Observable {
         return instance;
     }
 
+    /**
+     * Set the screen of the game.
+     */
     public void setGameScreen(RRRGameView view) {
         this.gameScreen = view;
     }
 
     /**
-     * Sets the current displaying screen.
-     * @param target The type of screen to be set as.
+     * Sets the screen to be displayed.
+     * @param target The desired screen.
      */
-    public void setScreen(final String target) {
-        if (target.equals("game")) {
-            currentScreen = SCREEN.GAME;
-            setChanged();
-            notifyObservers(gameScreen);
-        } else if(target.equals("menu")) {
-            NetworkMenuUtility.getInstance().reset();
-            currentScreen = SCREEN.MAIN;
-            setChanged();
-            notifyObservers(menuScreen);
-        } else if(target.equals("join")) {
-            if (currentScreen == SCREEN.MAIN) {
-                NetworkMenuUtility.getInstance().setIsServer(false);
-            }
-            currentScreen = SCREEN.JOIN;
-            setChanged();
-            notifyObservers(ipPortInputScreen);
-        } else if(target.equals("options")) {
-            currentScreen = SCREEN.OPTIONS;
-            setChanged();
-            notifyObservers(optionsScreen);
-        } else if(target.equals("host")) {
-            if (currentScreen == SCREEN.MAIN) {
-                NetworkMenuUtility.getInstance().setIsServer(true);
-            }
-            currentScreen = SCREEN.HOST;
-            setChanged();
-            notifyObservers(ipPortInputScreen);
-        } else if(target.equals("lobby")) {
-            currentScreen = SCREEN.LOBBY;
-            setChanged();
-            notifyObservers(lobbyScreen);
-        } else if(target.equals("exit")) {
-            Gdx.app.exit();
+    public void setScreen(SCREEN target) {
+        switch (target) {
+            case GAME:
+                currentScreen = GAME;
+                setChanged();
+                notifyObservers(gameScreen);
+                break;
+            case MAIN:
+                NetworkMenuUtility.getInstance().reset();
+                currentScreen = MAIN;
+                setChanged();
+                notifyObservers(menuScreen);
+                break;
+            case JOIN:
+                if (currentScreen == MAIN)
+                    NetworkMenuUtility.getInstance().setIsServer(false);
+                currentScreen = JOIN;
+                setChanged();
+                notifyObservers(ipPortInputScreen);
+                break;
+            case OPTIONS:
+                currentScreen = OPTIONS;
+                setChanged();
+                notifyObservers(optionsScreen);
+                break;
+            case HOST:
+                if (currentScreen == MAIN)
+                    NetworkMenuUtility.getInstance().setIsServer(true);
+                currentScreen = HOST;
+                setChanged();
+                notifyObservers(ipPortInputScreen);
+                break;
+            case LOBBY:
+                currentScreen = LOBBY;
+                setChanged();
+                notifyObservers(lobbyScreen);
+                break;
+            case EXIT:
+                Gdx.app.exit();
+                break;
         }
     }
 

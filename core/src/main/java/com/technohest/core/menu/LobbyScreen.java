@@ -33,7 +33,7 @@ public class LobbyScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            ScreenHandler.getInstance().setScreen("menu");
+            ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
         }
     }
 

@@ -13,10 +13,9 @@ public class RRRMain extends Game implements Observer {
 
     @Override
     public void create() {
-
         // Start listening to ScreenHandler and set the current screen to menu
         ScreenHandler.getInstance().addObserver(this);
-        ScreenHandler.getInstance().setScreen("menu");
+        ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
     }
 
 
