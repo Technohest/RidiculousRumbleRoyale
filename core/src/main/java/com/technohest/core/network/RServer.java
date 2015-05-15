@@ -23,6 +23,8 @@ public class RServer {
     private RRRGameModel model = new RRRGameModel();
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
+    private IState state;
+
     public RServer(String port) {
         server = new Server();
         registerPackets();
@@ -41,6 +43,13 @@ public class RServer {
         }
 
         Log.set(Log.LEVEL_INFO);
+
+        init();
+    }
+
+    private void init() {
+        state = StateGDX.getInstance();
+        generateState();
     }
 
     private void registerPackets() {
@@ -86,6 +95,10 @@ public class RServer {
         server.sendToAllUDP(p);
 
         actionsToBePerformed.clear();
+    }
+
+    public void generateState(){
+        state.setState(model.getGameLogic().generateState());
     }
 
     public void gameOver() {
