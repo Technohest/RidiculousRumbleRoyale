@@ -37,7 +37,10 @@ public class RServer {
         server.start();
 
         try {
-            server.bind(Integer.parseInt(port), Integer.parseInt(port)+1);
+            int tmp = Integer.parseInt(port) + 1;
+            System.out.println("TCP port: " + Integer.parseInt(port));
+            System.out.println("UDP port: " + tmp);
+            server.bind(Integer.parseInt(port), tmp);
         } catch (IOException e) {
             e.printStackTrace();
             server.stop();
