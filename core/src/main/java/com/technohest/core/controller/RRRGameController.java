@@ -1,5 +1,6 @@
 package com.technohest.core.controller;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
@@ -20,6 +21,10 @@ public class RRRGameController extends InputHandler {
     private ClientNetworkListener listener;
     private RRRGameView view;
     private int blocking = 0;
+
+    private double accumulator = 0.0;
+    private double currentTime;
+    private float step = 1.0f/60.0f;
 
     private ArrayList<Action> performedActions = new ArrayList<Action>();
 
@@ -86,6 +91,14 @@ public class RRRGameController extends InputHandler {
     }
 
     public void update(float v) {
+        double  newTime = TimeUtils.millis() / 1000.0;
+        double  frameTime = Math.min(newTime - currentTime, 0.25);
+        float   deltaTime = (float)frameTime;
+
+        currentTime = newTime;
+
+        accumulator += frameTime;
+
         if (this.hasInput()) {
             this.handleInput();
         }
@@ -93,8 +106,10 @@ public class RRRGameController extends InputHandler {
         if (listener != null) {
             listener.sendActionsToServerIfNecissary();
         }
-
-        model.step(v);
+        while(accumulator >= step) {
+            model.step(step);
+            accumulator -= step;
+        }
         view.update(v);
     }
 }

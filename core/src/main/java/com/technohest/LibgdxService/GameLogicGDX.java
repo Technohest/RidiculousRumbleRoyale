@@ -194,9 +194,9 @@ public class GameLogicGDX implements IGameLogic{
         HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
         for(Character c : map.keySet()){
             ArrayList<Vector2> temp = map.get(c);
-            StateGDX.getInstance().setState(map);
             setCharacterState(c, temp.get(0), temp.get(1));
         }
+        StateGDX.getInstance().setState(map);
     }
 
     @Override
