@@ -1,8 +1,5 @@
 package com.technohest.constants;
 
-import java.io.*;
-import java.util.*;
-
 /**
  * Created by oskar on 2015-04-13.
  */
@@ -18,6 +15,4 @@ public class Constants {
     public static final int GRAVITY_SCALE = 8;
     public static final int INITIAL_MOVEMENT_SPEED =5;
     public static final int MAX_SPEED = 15;
-
-
 }
