@@ -120,13 +120,20 @@ public class RClient {
      * Compares local state to remote state and correct if needed
      * @param state
      * @param playerActions
+     * @param serverActions
      */
-    public void correct(IState state, Vector<Action> playerActions) {
+    public void correct(IState state, Vector<Action> playerActions, ArrayList<Action> serverActions) {
         if (!this.current.equals(state)) {
             model.correct(state);
+            applyServerActions(serverActions);
             reapplyActions(playerActions);
         }
         this.current.setState(state.getState());
+    }
+
+    private void applyServerActions(ArrayList<Action> serverActions) {
+        for (Action a: serverActions)
+            model.performAction(a);
     }
 
     private void reapplyActions(Vector<Action> playerActions) {

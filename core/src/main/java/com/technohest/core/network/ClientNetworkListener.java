@@ -45,7 +45,8 @@ public class ClientNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1Correction) {
-            rclient.correct(((Packet.Packet1Correction)object).state, playerActions);
+            Packet.Packet1Correction p = (Packet.Packet1Correction) object;
+            rclient.correct(p.state, playerActions, p.actions);
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
