@@ -56,8 +56,8 @@ public class RRRGameController extends InputHandler {
                 listener.sync();
         }
 
-        if (blocking > 10)
-            return;
+        /*if (blocking > 10)
+            return;*/
         if (this.isPressed(InputHandler.RIGHT)) {
             time = System.currentTimeMillis();
             model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));

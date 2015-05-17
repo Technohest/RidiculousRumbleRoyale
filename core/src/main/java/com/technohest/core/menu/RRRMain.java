@@ -18,7 +18,7 @@ public class RRRMain extends Game implements Observer {
         ScreenHandler.getInstance().addObserver(this);
         ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
 
-        Debugg.debugging = true;
+        Debugg.debugging = false;
     }
 
 

@@ -33,8 +33,14 @@ public class RClient {
     private IState current;
     private IState previous;
 
+    private void init() {
+        current = StateGDX.getInstance();
+        previous = current;
+        generateState();
+    }
+
     public RClient(String ip, String port) {
-        host = false;
+        host = true;
         client = new Client();
         registerPackets();
 
@@ -46,19 +52,13 @@ public class RClient {
         client.start();
 
         try {
-            client.connect(5000, ip, Integer.parseInt(port), Integer.parseInt(port)+1);
+            client.connect(5000, "127.0.0.1", Integer.parseInt(port), Integer.parseInt(port)+1);
         } catch (IOException e) {
             e.printStackTrace();
             client.stop();
         }
 
         Log.set(Log.LEVEL_INFO);
-    }
-
-    private void init() {
-        current = StateGDX.getInstance();
-        previous = current;
-        generateState();
     }
 
     public RClient(String port) {
@@ -116,9 +116,8 @@ public class RClient {
      */
     public void correct(IState state, Vector<Action> playerActions) {
         if (!this.current.equals(state)) {
-            System.out.println(state.toString());
             model.correct(state);
-            //reapplyActions(playerActions);
+            reapplyActions(playerActions);
         }
         this.current.setState(state.getState());
     }
