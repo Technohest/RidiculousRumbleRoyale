@@ -34,6 +34,7 @@ public class StateGDX implements IState {
         this.map = map;
     }
 
+    @Override
     public boolean equals(HashMap<Character, ArrayList<Vector2>> map){
         return this.map.equals(map);
     }
