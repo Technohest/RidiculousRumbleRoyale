@@ -9,6 +9,8 @@ import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
 
+import java.util.ArrayList;
+
 /**
  * The controller handling the input from the user and mapping the input to actions.
  * Created by Oskar on 2015-03-24.
@@ -17,6 +19,12 @@ public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
     private ClientNetworkListener listener;
     private RRRGameView view;
+    private int blocking = 0;
+
+    private ArrayList<Action> performedActions = new ArrayList<Action>();
+
+    //TMP
+    private long time = 0;
 
     public RRRGameController(RRRGameModel model) {
         super();
@@ -38,32 +46,44 @@ public class RRRGameController extends InputHandler {
 
     public void handleInput() {
         if (this.isPressed(InputHandler.ESCAPE)) {
+            if (listener != null)
+                listener.killServer();
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
-            if (this.isPressed(InputHandler.RIGHT)) {
-                 model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, 0));
-                if (listener != null) {
-                    listener.addAction(Action.ActionID.MOVE_RIGHT);
-                }
+        if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
+            if (listener != null)
+                listener.sync();
+        }
 
-            }
-            if (this.isPressed(InputHandler.LEFT)) {
-                model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT,0));
-                if (listener != null)
-                    listener.addAction(Action.ActionID.MOVE_LEFT);
-            }
-            if (this.isPressed(InputHandler.JUMP)) {
-                model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP,0));
-                if (listener != null)
-                    listener.addAction(Action.ActionID.JUMP);
-            }
-            if (this.isPressed(InputHandler.BASE_ATTACK)) {
-            }
-            if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-            }
+        if (blocking > 10)
+            return;
+        if (this.isPressed(InputHandler.RIGHT)) {
+            time = System.currentTimeMillis();
+            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
+            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
+            blocking++;
+            if (listener != null)
+                listener.addAction(Action.ActionID.MOVE_RIGHT, time);
+        }
+        if (this.isPressed(InputHandler.LEFT)) {
+            time = System.currentTimeMillis();
+            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
+            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
+            blocking++;
+            if (listener != null)
+                listener.addAction(Action.ActionID.MOVE_LEFT, time);
+        }
+        if (this.isPressed(InputHandler.JUMP)) {
+            time = System.currentTimeMillis();
+            model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP, time));
+            performedActions.add(new Action(model.getmyID(), Action.ActionID.JUMP, time));
+            blocking++;
+            if (listener != null)
+                listener.addAction(Action.ActionID.JUMP, time);
+        }
+        if (this.isPressed(InputHandler.BASE_ATTACK)) {}
     }
-
 
     public void update(float v) {
         if (this.hasInput()) {

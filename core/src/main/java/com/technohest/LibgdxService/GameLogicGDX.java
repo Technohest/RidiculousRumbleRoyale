@@ -3,9 +3,12 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.technohest.Tools.Debugg;
 import com.technohest.constants.Constants;
 import com.technohest.core.model.Character;
 import com.technohest.core.network.IState;
+import com.technohest.core.network.StateGDX;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +24,8 @@ public class GameLogicGDX implements IGameLogic{
     //A map for bundling bodies with player objects
     private HashMap<Body, Character> bodyCharacterMap;
     private HashMap<Integer,Character> idCharacterMap;
+    private Boolean isClient = null;
+
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
@@ -83,37 +88,60 @@ public class GameLogicGDX implements IGameLogic{
      * @param v the timestep
      */
     public void updatePlayers(float v) {
+        boolean changed = false;
+
         for (Body b: bodyCharacterMap.keySet()) {
             if(b.getLinearVelocity().y != 0) {
                 if (b.getLinearVelocity().y < 0) {
+                    if (Debugg.debugging)
+                        System.out.print("1 - ");
                     Character c = getCharacterfromBody(b);
                     c.setGrounded(false);
                     c.setState(Character.State.Falling);
+                    changed = true;
                 } else if(b.getLinearVelocity().y < 0 ) {
+                    if (Debugg.debugging)
+                        System.out.print("2 - ");
                     Character c = getCharacterfromBody(b);
                     c.setGrounded(false);
                     c.setState(Character.State.Jumping);
+                    changed = true;
                 }
             } else if(b.getLinearVelocity().x != 0) {
                 if(b.getLinearVelocity().x < 0) {
+                    if (Debugg.debugging)
+                        System.out.print("3 - ");
                     Character c = getCharacterfromBody(b);
                     c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(false);
+                    changed = true;
                 } else {
+                    if (Debugg.debugging)
+                        System.out.print("4 - ");
                     Character c = getCharacterfromBody(b);
                     c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(true);
+                    changed = true;
                 }
             } else {
+                if (Debugg.debugging)
+                    System.out.print("5 - ");
                 Character c = getCharacterfromBody(b);
                 c.setGrounded(true);
                 c.setState(Character.State.Standing);
+                changed = true;
             }
-            Log.info(bodyCharacterMap.get(b).getName() + "" + b.getPosition());
-        }
 
+            if (changed && isClient != null && Debugg.debugging) {
+                if (isClient) {
+                    Log.info("[C] " + b.getPosition());
+                } else {
+                    Log.info("[S] " + b.getPosition());
+                }
+            }
+        }
     }
 
     @Override
@@ -154,15 +182,19 @@ public class GameLogicGDX implements IGameLogic{
     @Override
     public void setCharacterState(Character player, Vector2 pos, Vector2 vel) {
         Body playerBody = getBodyFromCharacter(player);
-        playerBody.setLinearVelocity(vel);
-        playerBody.setTransform(pos, playerBody.getAngle());
+
+        if (playerBody != null) {
+            playerBody.setLinearVelocity(vel);
+            playerBody.setTransform(pos, playerBody.getAngle());
+        }
     }
 
     @Override
-    public void correct(IState state) {
-        HashMap<Character, ArrayList<Vector2>> map =  state.getState();
+    public void correct(IState newState) {
+        HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
         for(Character c : map.keySet()){
             ArrayList<Vector2> temp = map.get(c);
+            StateGDX.getInstance().setState(map);
             setCharacterState(c, temp.get(0), temp.get(1));
         }
     }
@@ -180,6 +212,16 @@ public class GameLogicGDX implements IGameLogic{
             map.put(c, vector2s);
         }
         return map;
+    }
+
+    @Override
+    public void setIsClient() {
+        this.isClient = true;
+    }
+
+    @Override
+    public void setIsServer() {
+        this.isClient = false;
     }
 
     public Collection<Character> getCharacters() {

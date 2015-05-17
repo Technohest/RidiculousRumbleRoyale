@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
+import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -20,6 +22,7 @@ import java.util.HashMap;
  */
 public class RClient {
     private Client client;
+    private long lastUpdateTime = 0;
 
     //The MVC
     private RRRGameModel model = new RRRGameModel();
@@ -27,7 +30,8 @@ public class RClient {
     private RRRGameView view = new RRRGameView(controller, model);
 
     private boolean host;
-    private IState state;
+    private IState current;
+    private IState previous;
 
     public RClient(String ip, String port) {
         host = false;
@@ -52,7 +56,8 @@ public class RClient {
     }
 
     private void init() {
-        state = StateGDX.getInstance();
+        current = StateGDX.getInstance();
+        previous = current;
         generateState();
     }
 
@@ -86,6 +91,7 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
+        model.setIsClient();
         init();
         ScreenHandler.getInstance().setGameScreen(view);
         ScreenHandler.getInstance().setScreen(SCREEN.GAME);
@@ -100,18 +106,25 @@ public class RClient {
      * Generates state using the current characters
      */
     public void generateState(){
-        state.setState(model.getGameLogic().generateState());
+        current.setState(model.getGameLogic().generateState());
     }
 
     /**
      * Compares local state to remote state and correct if needed
      * @param state
-     * Remote state
+     * @param playerActions
      */
-    public void correct(IState state) {
-        if(!this.state.equals(state)){
+    public void correct(IState state, Vector<Action> playerActions) {
+        if (!this.current.equals(state)) {
+            System.out.println(state.toString());
             model.correct(state);
+            //reapplyActions(playerActions);
         }
-        this.state.setState(state.getState());
+        this.current.setState(state.getState());
+    }
+
+    private void reapplyActions(Vector<Action> playerActions) {
+        for (Action a: playerActions)
+            model.performAction(a);
     }
 }

@@ -2,6 +2,7 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.Tools.Sort;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Action;
@@ -22,7 +23,7 @@ public class RServer {
     private Server server;
     private RRRGameModel model = new RRRGameModel();
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
-
+    private long lastUpdateTime = 0;
     private IState state;
 
     public RServer(String port) {
@@ -58,6 +59,7 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
+        model.setIsServer();
         init();
         gameRunning = true;
 
@@ -69,7 +71,7 @@ public class RServer {
             @Override
             public void run() {
                 while (gameRunning) {
-                    if (acc >= 1000/60) {
+                    if (acc >= 1000/30) {
                         performActions();
                         model.step(acc);
                         time = elapsedTime;
@@ -82,16 +84,26 @@ public class RServer {
     }
 
     private void performActions() {
+        actionsToBePerformed = Sort.sortTime(actionsToBePerformed);
+
         if (actionsToBePerformed.size() == 0)
             return;
 
         for (Action ap: actionsToBePerformed) {
+            if (ap.getTimestamp() < lastUpdateTime) {
+                actionsToBePerformed.remove(ap);
+                continue;
+            }
+
             model.performAction(ap);
-            //Log.info("PERFORMING SOME ACTION ON SERVER...");
         }
+
+        //set update time to be the time of the last updated action.
+        lastUpdateTime = actionsToBePerformed.get(actionsToBePerformed.size()-1).getTimestamp();
 
         Packet.Packet1Correction p = new Packet.Packet1Correction();
         p.actions = actionsToBePerformed;
+        p.state = StateGDX.getInstance();
         server.sendToAllUDP(p);
 
         actionsToBePerformed.clear();
@@ -107,7 +119,17 @@ public class RServer {
 
     public void addActions(Vector<Action> action) {
         for (Action a: action) {
-            actionsToBePerformed.add(a);
+            if (a.getTimestamp() > lastUpdateTime)
+                actionsToBePerformed.add(a);
         }
+    }
+
+    /**
+     * Sends a request to the client to sync the
+     */
+    public void sync() {
+        Packet.Packet1Correction p = new Packet.Packet1Correction();
+        p.state = StateGDX.getInstance();
+        server.sendToAllTCP(p);
     }
 }

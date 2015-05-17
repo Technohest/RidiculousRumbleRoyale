@@ -2,6 +2,7 @@ package com.technohest.Tools;
 
 import com.technohest.core.model.Action;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Vector;
  * Created by vilddjur on 2015-05-12.
  */
 public class Sort {
-    public static Vector<Action> sortTime(Vector<Action> vector){
+    public static ArrayList<Action> sortTime(ArrayList<Action> vector){
         boolean done = false;
         Action temp;
         while (!done){

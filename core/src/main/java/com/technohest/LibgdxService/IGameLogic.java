@@ -68,4 +68,8 @@ public interface IGameLogic {
     public void correct(IState state);
 
     HashMap<Character, ArrayList<Vector2>> generateState();
+
+    void setIsClient();
+
+    void setIsServer();
 }

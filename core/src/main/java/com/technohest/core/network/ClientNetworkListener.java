@@ -45,7 +45,7 @@ public class ClientNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1Correction) {
-            //rclient.correct(((Packet.Packet1Correction)object).actions);
+            rclient.correct(((Packet.Packet1Correction)object).state, playerActions);
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
@@ -57,8 +57,8 @@ public class ClientNetworkListener extends Listener {
         }
     }
 
-    public void addAction(Action.ActionID action) {
-        Action a = new Action(id, action, System.currentTimeMillis());
+    public void addAction(Action.ActionID action, long time) {
+        Action a = new Action(id, action, time);
         playerActions.add(a);
     }
 
@@ -69,5 +69,14 @@ public class ClientNetworkListener extends Listener {
             server.sendUDP(p);
             playerActions.clear();
         }
+    }
+
+    public void killServer() {
+        server.sendTCP(new Packet.Packet2GameOver());
+    }
+
+    public void sync() {
+        Log.info("REQUESTING A CORRECTION BE SENT TO THE CLIENT.");
+        server.sendTCP(new Packet.Packet5SyncEvent());
     }
 }
