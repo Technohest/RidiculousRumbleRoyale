@@ -207,7 +207,7 @@ public class GameLogicGDX implements IGameLogic{
         Collection<Character> ids = idCharacterMap.values();
         for(Character id : ids){
             ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
-            Body playerBody = getBodyFromCharacter(idCharacterMap.get(id));
+            Body playerBody = getBodyFromCharacter(id);
             vector2s.add(playerBody.getPosition());
             vector2s.add(playerBody.getLinearVelocity());
 
