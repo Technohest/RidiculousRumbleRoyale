@@ -55,7 +55,7 @@ public class RRRGameModel {
         this.idCharacterMap = new HashMap<Integer, Character>();
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
-            this.idCharacterMap.put(i,new Character("Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+            this.idCharacterMap.put(i,new Character(i, "Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         }
 
         //this.idCharacterMap = idChararcerList;
