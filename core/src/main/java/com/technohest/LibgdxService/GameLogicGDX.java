@@ -180,20 +180,21 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public void setCharacterState(Integer playerID, Vector2 pos, Vector2 vel) {
-        Character player = idCharacterMap.get(playerID);
+    public void setCharacterState(Character newState, Vector2 pos, Vector2 vel) {
+        Character player = idCharacterMap.get(newState);
         Body playerBody = getBodyFromCharacter(player);
 
         if (playerBody != null) {
             playerBody.setLinearVelocity(vel);
             playerBody.setTransform(pos, playerBody.getAngle());
         }
+        getCharacterFromID(newState.getId()).setAttributes(newState);
     }
 
     @Override
     public void correct(IState newState) {
-        HashMap<Integer, ArrayList<Vector2>> map =  newState.getState();
-        for(Integer i : map.keySet()){
+        HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
+        for(Character i : map.keySet()){
             ArrayList<Vector2> temp = map.get(i);
             setCharacterState(i, temp.get(0), temp.get(1));
         }
@@ -201,10 +202,10 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public HashMap<Integer, ArrayList<Vector2>> generateState() {
-        HashMap<Integer, ArrayList<Vector2>> map = new HashMap<Integer, ArrayList<Vector2>>();
-        Collection<Integer> ids = idCharacterMap.keySet();
-        for(Integer id : ids){
+    public HashMap<Character, ArrayList<Vector2>> generateState() {
+        HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
+        Collection<Character> ids = idCharacterMap.values();
+        for(Character id : ids){
             ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
             Body playerBody = getBodyFromCharacter(idCharacterMap.get(id));
             vector2s.add(playerBody.getPosition());
@@ -228,4 +229,14 @@ public class GameLogicGDX implements IGameLogic{
     public Collection<Character> getCharacters() {
         return idCharacterMap.values();
     }
+
+    public Character getCharacterFromID(int id) {
+        for(Character c : idCharacterMap.values()){
+            if(c.getId() == id){
+                return c;
+            }
+        }
+        return null;
+    }
 }
+

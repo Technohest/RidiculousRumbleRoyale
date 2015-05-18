@@ -55,15 +55,15 @@ public interface IGameLogic {
     public void attack_special(Character player);
 
     /**
-     * Sets the players movement attributes
-     * @param playerID
-     * target CharacterID
+     * Sets the players attributes
+     * @param newState
+     * target ID
      * @param pos
      * new position
      * @param vel
      * new velocity
      */
-    public void setCharacterState(Integer playerID, Vector2 pos, Vector2 vel);
+    public void setCharacterState(Character newState, Vector2 pos, Vector2 vel);
 
     /**
      * Compares local state with another state and corrects if needed
@@ -77,7 +77,7 @@ public interface IGameLogic {
      * @return
      * Character and their pos and velocity.
      */
-    HashMap<Integer, ArrayList<Vector2>> generateState();
+    HashMap<Character, ArrayList<Vector2>> generateState();
 
     void setIsClient();
 
