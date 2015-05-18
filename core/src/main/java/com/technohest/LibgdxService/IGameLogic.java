@@ -56,14 +56,14 @@ public interface IGameLogic {
 
     /**
      * Sets the players movement attributes
-     * @param player
-     * target Character
+     * @param playerID
+     * target CharacterID
      * @param pos
      * new position
      * @param vel
      * new velocity
      */
-    public void setCharacterState(Character player, Vector2 pos, Vector2 vel);
+    public void setCharacterState(Integer playerID, Vector2 pos, Vector2 vel);
 
     /**
      * Compares local state with another state and corrects if needed
@@ -77,7 +77,7 @@ public interface IGameLogic {
      * @return
      * Character and their pos and velocity.
      */
-    HashMap<Character, ArrayList<Vector2>> generateState();
+    HashMap<Integer, ArrayList<Vector2>> generateState();
 
     void setIsClient();
 

@@ -180,7 +180,8 @@ public class GameLogicGDX implements IGameLogic{
     }
 
     @Override
-    public void setCharacterState(Character player, Vector2 pos, Vector2 vel) {
+    public void setCharacterState(Integer playerID, Vector2 pos, Vector2 vel) {
+        Character player = idCharacterMap.get(playerID);
         Body playerBody = getBodyFromCharacter(player);
 
         if (playerBody != null) {
@@ -191,25 +192,25 @@ public class GameLogicGDX implements IGameLogic{
 
     @Override
     public void correct(IState newState) {
-        HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
-        for(Character c : map.keySet()){
-            ArrayList<Vector2> temp = map.get(c);
-            setCharacterState(c, temp.get(0), temp.get(1));
+        HashMap<Integer, ArrayList<Vector2>> map =  newState.getState();
+        for(Integer i : map.keySet()){
+            ArrayList<Vector2> temp = map.get(i);
+            setCharacterState(i, temp.get(0), temp.get(1));
         }
         StateGDX.getInstance().setState(map);
     }
 
     @Override
-    public HashMap<Character, ArrayList<Vector2>> generateState() {
-        HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
-        Collection<Character> chars = getCharacters();
-        for(Character c : chars){
+    public HashMap<Integer, ArrayList<Vector2>> generateState() {
+        HashMap<Integer, ArrayList<Vector2>> map = new HashMap<Integer, ArrayList<Vector2>>();
+        Collection<Integer> ids = idCharacterMap.keySet();
+        for(Integer id : ids){
             ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
-            Body playerBody = getBodyFromCharacter(c);
+            Body playerBody = getBodyFromCharacter(idCharacterMap.get(id));
             vector2s.add(playerBody.getPosition());
             vector2s.add(playerBody.getLinearVelocity());
 
-            map.put(c, vector2s);
+            map.put(id, vector2s);
         }
         return map;
     }
