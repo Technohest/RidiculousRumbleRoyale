@@ -1,7 +1,9 @@
 package com.technohest.LibgdxService;
 
+import com.badlogic.gdx.math.Vector2;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
+import com.technohest.core.network.IState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,4 +53,33 @@ public interface IGameLogic {
      * Makes the character perform a special attack
      */
     public void attack_special(Character player);
+
+    /**
+     * Sets the players movement attributes
+     * @param player
+     * target Character
+     * @param pos
+     * new position
+     * @param vel
+     * new velocity
+     */
+    public void setCharacterState(Character player, Vector2 pos, Vector2 vel);
+
+    /**
+     * Compares local state with another state and corrects if needed
+     * @param state
+     * remote state
+     */
+    public void correct(IState state);
+
+    /**
+     * Generates a hashmap using current players and their bodies
+     * @return
+     * Character and their pos and velocity.
+     */
+    HashMap<Character, ArrayList<Vector2>> generateState();
+
+    void setIsClient();
+
+    void setIsServer();
 }

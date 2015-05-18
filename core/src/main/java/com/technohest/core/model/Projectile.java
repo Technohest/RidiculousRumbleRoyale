@@ -13,6 +13,10 @@ public class Projectile extends Attack {
         super(name,damage);
     }
 
+    public Projectile() {
+
+    }
+
     /**
      * Sets the time of which the projectile was firered.
      * @param startingTime

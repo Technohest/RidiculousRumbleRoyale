@@ -1,13 +1,11 @@
 package com.technohest.core.network;
 
-import com.technohest.core.handlers.InputHandler;
-import com.technohest.core.model.*;
-import com.technohest.core.model.Character;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+
+import com.technohest.core.model.Action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * All the different packets which can be sent over the network.
@@ -22,10 +20,22 @@ public class Packet {
         public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     }
 
+    public static class Packet1ActionList {
+        public Vector<Action> action;
+    }
+
+    public static class Packet1Correction {
+        public ArrayList<Action> actions;
+        public IState state;
+    }
+
     public class Packet0PlayerSetCharacter {
         //CharType type;
     }
 
-    public static class Packet2Start {}
+    public static class Packet0Start {}
 
+    public static class Packet2GameOver {}
+
+    public static class Packet5SyncEvent {}
 }

@@ -4,6 +4,8 @@ import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
+import com.technohest.core.network.IState;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,13 +20,17 @@ public class RRRGameModel {
     private HashMap<Integer,Character> idCharacterMap;
     private IGameLogic gameLogic;
 
+    //TMP
+    private Boolean isClient;
+
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
         setGameLogic(new GameLogicGDX());
         this.idCharacterMap = new HashMap<Integer, Character>();
         //Temp character for testing
-        idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-        myID =1;
+        /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+        idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+        myID =1;*/
     }
     public ILevel getLevel() {
         return levelHandler.getLevel();
@@ -81,39 +87,23 @@ public class RRRGameModel {
         myID = id;
     }
 
-    /**
-     * Moves the player with the specified id left.
-     */
-    public void moveLeft(Integer playerID){
-        gameLogic.moveLeft(getPlayerFromID(playerID));
-    }
 
     /**
-     * Moves the player with the specified id right
+     * Performes an action on the specified player connected to playerId
+     * @param action
      */
-    public void moveRight(Integer playerID){
-        gameLogic.moveRight(getPlayerFromID(playerID));
-    }
+    public void performAction(Action action) {
+        switch(action.getActionID()) {
+            case JUMP:
+                gameLogic.jump(getPlayerFromID(action.getPlayerID()));
+                break;
+            case MOVE_RIGHT:
+                gameLogic.moveRight(getPlayerFromID(action.getPlayerID()));
+                break;
+            case MOVE_LEFT:
+                gameLogic.moveLeft(getPlayerFromID(action.getPlayerID()));
+        }
 
-    /**
-     * Makes the player with the specified id jump
-     */
-    public void jump(Integer playerID) {
-        gameLogic.jump(getPlayerFromID(playerID));
-    }
-
-    /**
-     * Makes the player with the specified id perform a base attack
-     */
-    public void attack_base(Integer playerID) {
-        gameLogic.attack_base(getPlayerFromID(playerID));
-    }
-
-    /**
-     * Makes the player with the specified id perform a special attack
-     */
-    public void attack_special(Integer playerID) {
-        gameLogic.attack_special(getPlayerFromID(playerID));
     }
 
     public Collection<Character> getPlayers() {
@@ -121,5 +111,15 @@ public class RRRGameModel {
     }
 
 
+    public void correct(IState state) {
+        gameLogic.correct(state);
+    }
 
+    public void setIsClient() {
+        gameLogic.setIsClient();
+    }
+
+    public void setIsServer() {
+        gameLogic.setIsServer();
+    }
 }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.technohest.core.controller.MenuInputListener;
+import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
@@ -172,7 +173,7 @@ public class OptionsMenuView implements Screen{
         graphicsButton.addListener(new OptionsInputListener(this, "graphics"));
         soundButton.addListener(new OptionsInputListener(this, "sound"));
         gameplayButton.addListener(new OptionsInputListener(this, "gameplay"));
-        backButton.addListener(new MenuInputListener("backFromOptions"));
+        backButton.addListener(new MenuInputListener(SCREEN.MAIN));
         saveButton.addListener(new OptionsInputListener(this, "save"));
 
         //Setting the stage
@@ -229,7 +230,7 @@ public class OptionsMenuView implements Screen{
         stage.draw();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            ScreenHandler.getInstance().setScreen("menu");
+            ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
         }
     }
 

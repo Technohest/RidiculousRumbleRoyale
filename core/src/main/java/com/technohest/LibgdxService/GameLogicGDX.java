@@ -1,12 +1,17 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.esotericsoftware.minlog.Log;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.technohest.Tools.Debugg;
 import com.technohest.constants.Constants;
-import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Character;
+import com.technohest.core.network.IState;
+import com.technohest.core.network.StateGDX;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,15 +21,14 @@ import java.util.Map;
  */
 public class GameLogicGDX implements IGameLogic{
     private final World world;
-    private final CollisionHandler collisionHandler;
     //A map for bundling bodies with player objects
     private HashMap<Body, Character> bodyCharacterMap;
     private HashMap<Integer,Character> idCharacterMap;
+    private Boolean isClient = null;
+
     public GameLogicGDX(){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         bodyCharacterMap = new HashMap<Body, Character>();
-        this.collisionHandler = new CollisionHandler(this);
-        world.setContactListener(collisionHandler);
     }
 
     public World getWorld(){
@@ -45,7 +49,6 @@ public class GameLogicGDX implements IGameLogic{
         int i=0;
         for (Character c: idCharacterMap.values()) {
             i++;
-            System.out.println("I HAVE NOW MADE " + i);
             BodyDef bdef1 = new BodyDef();
             bdef1.type = BodyDef.BodyType.DynamicBody;
             bdef1.gravityScale = 5;
@@ -57,14 +60,7 @@ public class GameLogicGDX implements IGameLogic{
 
             Body b = world.createBody(bdef1);
             b.setLinearDamping(10);
-            b.createFixture(fdef1).setUserData(c);
-
-            // Feet
-            shape.setAsBox((4f / 32.f), (4f / 32f), new Vector2(0, -(16f/32f)),0);
-            fdef1.shape = shape;
-            fdef1.isSensor = true;
-            b.createFixture(fdef1).setUserData(b);
-
+            b.createFixture(fdef1);
 
             bodyCharacterMap.put(b,c);
         }
@@ -92,31 +88,60 @@ public class GameLogicGDX implements IGameLogic{
      * @param v the timestep
      */
     public void updatePlayers(float v) {
+        boolean changed = false;
+
         for (Body b: bodyCharacterMap.keySet()) {
             if(b.getLinearVelocity().y != 0) {
                 if (b.getLinearVelocity().y < 0) {
+                    if (Debugg.debugging)
+                        System.out.print("1 - ");
                     Character c = getCharacterfromBody(b);
+                    c.setGrounded(false);
                     c.setState(Character.State.Falling);
+                    changed = true;
                 } else if(b.getLinearVelocity().y < 0 ) {
+                    if (Debugg.debugging)
+                        System.out.print("2 - ");
                     Character c = getCharacterfromBody(b);
+                    c.setGrounded(false);
                     c.setState(Character.State.Jumping);
+                    changed = true;
                 }
             } else if(b.getLinearVelocity().x != 0) {
                 if(b.getLinearVelocity().x < 0) {
+                    if (Debugg.debugging)
+                        System.out.print("3 - ");
                     Character c = getCharacterfromBody(b);
+                    c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(false);
+                    changed = true;
                 } else {
+                    if (Debugg.debugging)
+                        System.out.print("4 - ");
                     Character c = getCharacterfromBody(b);
+                    c.setGrounded(true);
                     c.setState(Character.State.Running);
                     c.setIsFacingRight(true);
+                    changed = true;
                 }
             } else {
+                if (Debugg.debugging)
+                    System.out.print("5 - ");
                 Character c = getCharacterfromBody(b);
+                c.setGrounded(true);
                 c.setState(Character.State.Standing);
+                changed = true;
+            }
+
+            if (changed && isClient != null && Debugg.debugging) {
+                if (isClient) {
+                    Log.info("[C] " + b.getPosition());
+                } else {
+                    Log.info("[S] " + b.getPosition());
+                }
             }
         }
-
     }
 
     @Override
@@ -152,5 +177,54 @@ public class GameLogicGDX implements IGameLogic{
     public void attack_special(Character player) {
         Body playerBody = getBodyFromCharacter(player);
 
+    }
+
+    @Override
+    public void setCharacterState(Character player, Vector2 pos, Vector2 vel) {
+        Body playerBody = getBodyFromCharacter(player);
+
+        if (playerBody != null) {
+            playerBody.setLinearVelocity(vel);
+            playerBody.setTransform(pos, playerBody.getAngle());
+        }
+    }
+
+    @Override
+    public void correct(IState newState) {
+        HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
+        for(Character c : map.keySet()){
+            ArrayList<Vector2> temp = map.get(c);
+            setCharacterState(c, temp.get(0), temp.get(1));
+        }
+        StateGDX.getInstance().setState(map);
+    }
+
+    @Override
+    public HashMap<Character, ArrayList<Vector2>> generateState() {
+        HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
+        Collection<Character> chars = getCharacters();
+        for(Character c : chars){
+            ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
+            Body playerBody = getBodyFromCharacter(c);
+            vector2s.add(playerBody.getPosition());
+            vector2s.add(playerBody.getLinearVelocity());
+
+            map.put(c, vector2s);
+        }
+        return map;
+    }
+
+    @Override
+    public void setIsClient() {
+        this.isClient = true;
+    }
+
+    @Override
+    public void setIsServer() {
+        this.isClient = false;
+    }
+
+    public Collection<Character> getCharacters() {
+        return idCharacterMap.values();
     }
 }
