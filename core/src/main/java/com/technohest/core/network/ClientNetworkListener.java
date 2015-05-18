@@ -5,7 +5,9 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.model.Action;
+import com.technohest.core.model.RRRGameModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -17,6 +19,8 @@ public class ClientNetworkListener extends Listener {
     private Client client;
     private RClient rclient;
     private Connection server;
+
+    private int lastSequenceNumber = 0;
 
     //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
@@ -46,7 +50,7 @@ public class ClientNetworkListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1Correction) {
             Packet.Packet1Correction p = (Packet.Packet1Correction) object;
-            rclient.correct(p.state, playerActions, p.actions);
+            rclient.correct(p.state, p.actions);
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
@@ -58,9 +62,19 @@ public class ClientNetworkListener extends Listener {
         }
     }
 
-    public void addAction(Action.ActionID action, long time) {
-        Action a = new Action(id, action, time);
+    public void applyServerActions(ArrayList<Action> serverActions, RRRGameModel model) {
+        for (Action a: serverActions) {
+            if (a.getPlayerID().equals(id))
+                playerActions.remove(a);
+
+            model.performAction(a);
+        }
+    }
+
+    public void addAction(Action.ActionID action) {
+        Action a = new Action(id, action, lastSequenceNumber);
         playerActions.add(a);
+        lastSequenceNumber++;
     }
 
     public void sendActionsToServerIfNecissary() {
@@ -68,7 +82,6 @@ public class ClientNetworkListener extends Listener {
             Packet.Packet1ActionList p = new Packet.Packet1ActionList();
             p.action = playerActions;
             server.sendUDP(p);
-            playerActions.clear();
         }
     }
 
@@ -79,5 +92,10 @@ public class ClientNetworkListener extends Listener {
     public void sync() {
         Log.info("REQUESTING A CORRECTION BE SENT TO THE CLIENT.");
         server.sendTCP(new Packet.Packet5SyncEvent());
+    }
+
+    public void reapplyLocalActions(RRRGameModel model) {
+        for (Action a: playerActions)
+            model.performAction(a);
     }
 }

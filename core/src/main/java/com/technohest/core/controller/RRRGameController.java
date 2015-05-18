@@ -26,8 +26,6 @@ public class RRRGameController extends InputHandler {
     private double currentTime;
     private float step = 1.0f/60.0f;
 
-    private ArrayList<Action> performedActions = new ArrayList<Action>();
-
     //TMP
     private long time = 0;
 
@@ -64,28 +62,22 @@ public class RRRGameController extends InputHandler {
         /*if (blocking > 10)
             return;*/
         if (this.isPressed(InputHandler.RIGHT)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
+            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT));
             blocking++;
             if (listener != null)
-                listener.addAction(Action.ActionID.MOVE_RIGHT, time);
+                listener.addAction(Action.ActionID.MOVE_RIGHT);
         }
         if (this.isPressed(InputHandler.LEFT)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
+            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT));
             blocking++;
             if (listener != null)
-                listener.addAction(Action.ActionID.MOVE_LEFT, time);
+                listener.addAction(Action.ActionID.MOVE_LEFT);
         }
         if (this.isPressed(InputHandler.JUMP)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.JUMP, time));
+            model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP));
             blocking++;
             if (listener != null)
-                listener.addAction(Action.ActionID.JUMP, time);
+                listener.addAction(Action.ActionID.JUMP);
         }
         if (this.isPressed(InputHandler.BASE_ATTACK)) {}
     }

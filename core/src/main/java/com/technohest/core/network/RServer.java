@@ -22,15 +22,14 @@ public class RServer {
     private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
-    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
-    private long lastUpdateTime = 0;
     private IState state;
+
+    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
     public RServer(String port) {
         server = new Server();
         registerPackets();
 
-        ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
         serverNetworkListener.init(this);
 
         server.addListener(serverNetworkListener);
@@ -75,7 +74,7 @@ public class RServer {
             public void run() {
                 while (gameRunning) {
                     if (acc >= 1000/30) {
-                        performActions();
+                        serverNetworkListener.performActions(model);
                         model.step(acc);
                         time = elapsedTime;
                     }
@@ -86,45 +85,12 @@ public class RServer {
         }).start();
     }
 
-    private void performActions() {
-        actionsToBePerformed = Sort.sortTime(actionsToBePerformed);
-
-        if (actionsToBePerformed.size() == 0)
-            return;
-
-        for (Action ap: actionsToBePerformed) {
-            if (ap.getTimestamp() < lastUpdateTime) {
-                actionsToBePerformed.remove(ap);
-                continue;
-            }
-
-            model.performAction(ap);
-        }
-
-        //set update time to be the time of the last updated action.
-        lastUpdateTime = actionsToBePerformed.get(actionsToBePerformed.size()-1).getTimestamp();
-
-        Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.actions = actionsToBePerformed;
-        p.state = StateGDX.getInstance();
-        server.sendToAllUDP(p);
-
-        actionsToBePerformed.clear();
-    }
-
     public void generateState(){
         state.setState(model.getGameLogic().generateState());
     }
 
     public void gameOver() {
         gameRunning = false;
-    }
-
-    public void addActions(Vector<Action> action) {
-        for (Action a: action) {
-            if (a.getTimestamp() > lastUpdateTime)
-                actionsToBePerformed.add(a);
-        }
     }
 
     /**

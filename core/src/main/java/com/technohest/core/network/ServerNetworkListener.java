@@ -3,9 +3,14 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.core.handlers.InputHandler;
+import com.technohest.core.model.Action;
+import com.technohest.core.model.RRRGameModel;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Manages how the server behaves depending on input from connected clients.
@@ -18,6 +23,11 @@ public class ServerNetworkListener extends Listener {
     //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private int id = 0;
+
+    //The latest
+    private HashMap<Integer, Integer> playerIdSequenceMap = new HashMap<Integer, Integer>();
+
+    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
     public void init(RServer server) {
         this.server = server;
@@ -38,6 +48,7 @@ public class ServerNetworkListener extends Listener {
 
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
+        playerIdSequenceMap.put(id, 0);
         p2.map = playerIdTypeMap;
 
         //Send the id to the newly connected client and send the added id to all the clients.
@@ -50,10 +61,10 @@ public class ServerNetworkListener extends Listener {
 
         for (Connection c: clients.values()) {
             if (playerIdTypeMap.keySet().size() > 2) {
+                server.startGame(playerIdTypeMap);
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
-        server.startGame(playerIdTypeMap);
 
         Log.info(playerIdTypeMap.toString());
     }
@@ -75,11 +86,30 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1ActionList) {
-            server.addActions(((Packet.Packet1ActionList)object).action);
+            Packet.Packet1ActionList p = (Packet.Packet1ActionList)object;
+            addActionsToBePerformed(p.action);
         } else if (object instanceof Packet.Packet2GameOver) {
             server.gameOver();
         } else if (object instanceof Packet.Packet5SyncEvent) {
             server.sync();
         }
+    }
+
+    private void addActionsToBePerformed(Vector<Action> actions) {
+        for (Action a: actions)
+            actionsToBePerformed.add(a);
+    }
+
+    public void performActions(RRRGameModel model) {
+        for (Action a: actionsToBePerformed) {
+            if (playerIdSequenceMap.get(a.getPlayerID()) < a.getSequenceNumber()) {
+                model.performAction(a);
+                playerIdSequenceMap.remove(a.getPlayerID());
+                playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());
+            }
+        }
+
+
+        actionsToBePerformed.clear();
     }
 }

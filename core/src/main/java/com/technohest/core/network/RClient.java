@@ -22,12 +22,15 @@ import java.util.Vector;
  */
 public class RClient {
     private Client client;
-    private long lastUpdateTime = 0;
+    private long lastUpdateNum = 0;
 
     //The MVC
     private RRRGameModel model = new RRRGameModel();
     private RRRGameController controller = new RRRGameController(model);
     private RRRGameView view = new RRRGameView(controller, model);
+
+
+    ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
 
     private boolean host;
     private IState current;
@@ -44,7 +47,6 @@ public class RClient {
         client = new Client();
         registerPackets();
 
-        ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
         controller.init(clientNetworkListener);
 
@@ -69,7 +71,6 @@ public class RClient {
         client = new Client();
         registerPackets();
 
-        ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
         controller.init(clientNetworkListener);
 
@@ -115,28 +116,12 @@ public class RClient {
         current.setState(model.getGameLogic().generateState());
     }
 
-    /**
-     * Compares local state to remote state and correct if needed
-     * @param state
-     * @param playerActions
-     * @param serverActions
-     */
-    public void correct(IState state, Vector<Action> playerActions, ArrayList<Action> serverActions) {
+    public void correct(IState state, ArrayList<Action> actions) {
         if (!this.current.equals(state)) {
             model.correct(state);
-            applyServerActions(serverActions);
-            reapplyActions(playerActions);
+            clientNetworkListener.applyServerActions(actions, model);
+            clientNetworkListener.reapplyLocalActions(model);
         }
         this.current.setState(state.getState());
-    }
-
-    private void applyServerActions(ArrayList<Action> serverActions) {
-        for (Action a: serverActions)
-            model.performAction(a);
-    }
-
-    private void reapplyActions(Vector<Action> playerActions) {
-        for (Action a: playerActions)
-            model.performAction(a);
     }
 }
