@@ -12,6 +12,12 @@
 	<packaging>jar</packaging>
 	<name>Main Core</name>
 	<dependencies>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
 		<!-- Groovy -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>

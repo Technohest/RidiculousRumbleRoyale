@@ -49,7 +49,7 @@ public class ServerNetworkListener extends Listener {
         }
 
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > 1) {
+            if (playerIdTypeMap.keySet().size() > 2) {
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
