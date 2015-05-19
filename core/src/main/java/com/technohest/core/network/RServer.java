@@ -111,15 +111,6 @@ public class RServer {
         gameRunning = false;
     }
 
-    /**
-     * Sends a request to the client to sync the
-     */
-    public void sync() {
-        Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.state = StateGDX.getInstance();
-        server.sendToAllTCP(p);
-    }
-
     public synchronized void addActionToBePerformed(Action a) {
         actionsToBePerformed.add(a);
     }

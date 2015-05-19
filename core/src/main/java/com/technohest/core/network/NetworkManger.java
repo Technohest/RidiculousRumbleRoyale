@@ -41,7 +41,6 @@ public class NetworkManger {
         kryo.register(boolean.class);
         kryo.register(Projectile.class);
         kryo.register(Packet.Packet2GameOver.class);
-        kryo.register(Packet.Packet5SyncEvent.class);
         kryo.register(List.class);
     }
 }

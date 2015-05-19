@@ -99,8 +99,6 @@ public class ServerNetworkListener extends Listener {
             addActionsToBePerformed(p.action);
         } else if (object instanceof Packet.Packet2GameOver) {
             rserver.gameOver();
-        } else if (object instanceof Packet.Packet5SyncEvent) {
-            rserver.sync();
         }
     }
 
