@@ -103,10 +103,9 @@ public class ServerNetworkListener extends Listener {
         }
     }
 
-    private void addActionsToBePerformed(Vector<Action> actions) {
+    private synchronized void addActionsToBePerformed(Vector<Action> actions) {
         for (Action a: actions) {
             if (playerIdSequenceMap.get(a.getPlayerID()) < a.getSequenceNumber()) {
-                playerIdSequenceMap.remove(a.getPlayerID());
                 playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());
                 rserver.addActionToBePerformed(a);
             }

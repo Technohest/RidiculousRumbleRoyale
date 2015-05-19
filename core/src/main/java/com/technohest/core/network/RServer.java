@@ -76,7 +76,7 @@ public class RServer {
             public void run() {
                 while (gameRunning) {
                     if (acc >= 1000/30) {
-                        performActions();
+                        performActions(actionsToBePerformed);
                         model.step(acc);
                         time = elapsedTime;
                     }
@@ -87,16 +87,16 @@ public class RServer {
         }).start();
     }
 
-    private void performActions() {
+    private synchronized void performActions(ArrayList<Action> actionsToBePerformed) {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
         }
 
         Packet.Packet1Correction p = new Packet.Packet1Correction();
         p.state = StateGDX.getInstance();
-        p.actions = actionsToBePerformed;
+        p.actions = this.actionsToBePerformed;
         server.sendToAllTCP(p);
-        actionsToBePerformed.clear();
+        this.actionsToBePerformed.clear();
     }
 
     public void generateState(){
@@ -116,7 +116,7 @@ public class RServer {
         server.sendToAllTCP(p);
     }
 
-    public void addActionToBePerformed(Action a) {
+    public synchronized void addActionToBePerformed(Action a) {
         actionsToBePerformed.add(a);
     }
 }

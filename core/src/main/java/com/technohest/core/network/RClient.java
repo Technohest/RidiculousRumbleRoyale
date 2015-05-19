@@ -133,7 +133,7 @@ public class RClient {
      * Applies the local actions which haven't been performed yet by the server.
      * @param playerActions
      */
-    private void reapplyLocalActions(Vector<Action> playerActions) {
+    private synchronized void reapplyLocalActions(Vector<Action> playerActions) {
         for (Action a: playerActions) {
             model.performAction(a);
         }
@@ -143,7 +143,7 @@ public class RClient {
      * Apply the actions performed by the server.
      * @param actions
      */
-    private void applyServerActions(ArrayList<Action> actions) {
+    private synchronized void applyServerActions(ArrayList<Action> actions) {
         for (Action a: actions) {
             model.performAction(a);
         }

@@ -20,14 +20,10 @@ public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
     private ClientNetworkListener listener;
     private RRRGameView view;
-    private int blocking = 0;
 
     private double accumulator = 0.0;
     private double currentTime;
     private float step = 1.0f/60.0f;
-
-    //TMP
-    private long time = 0;
 
     public RRRGameController(RRRGameModel model) {
         super();
@@ -54,28 +50,20 @@ public class RRRGameController extends InputHandler {
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
-        if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-            if (listener != null)
-                listener.sync();
-        }
 
-        /*if (blocking > 10)
-            return;*/
+
         if (this.isPressed(InputHandler.RIGHT)) {
             model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT));
-            blocking++;
             if (listener != null)
                 listener.addAction(Action.ActionID.MOVE_RIGHT);
         }
         if (this.isPressed(InputHandler.LEFT)) {
             model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT));
-            blocking++;
             if (listener != null)
                 listener.addAction(Action.ActionID.MOVE_LEFT);
         }
         if (this.isPressed(InputHandler.JUMP)) {
             model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP));
-            blocking++;
             if (listener != null)
                 listener.addAction(Action.ActionID.JUMP);
         }

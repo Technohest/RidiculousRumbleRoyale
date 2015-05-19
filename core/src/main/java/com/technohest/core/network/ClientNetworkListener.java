@@ -70,7 +70,7 @@ public class ClientNetworkListener extends Listener {
      * player. Then removes all the local actions with a sequence number less than the last received from the server.
      * @param actions
      */
-    private void clearOldActions(ArrayList<Action> actions) {
+    private synchronized void clearOldActions(ArrayList<Action> actions) {
         //Update the lastSequenceNumber to be the last one recieved.
         for (Action a: actions) {
             if (a.getPlayerID().equals(id) &&
@@ -81,7 +81,7 @@ public class ClientNetworkListener extends Listener {
 
         //Remove all local actions with a lower sequence number than the last recieved one.
         while (playerActions.size() > 0 &&
-                playerActions.get(0).getSequenceNumber() < lastSequenceNumber) {
+                playerActions.get(0).getSequenceNumber() <= lastSequenceNumber) {
             playerActions.remove(0);
         }
     }
@@ -91,7 +91,7 @@ public class ClientNetworkListener extends Listener {
      * looping at a later point in time.
      * @param action
      */
-    public void addAction(Action.ActionID action) {
+    public synchronized void addAction(Action.ActionID action) {
         Action a = new Action(id, action, sequenceNumber);
         playerActions.add(a);
         sequenceNumber++;
@@ -100,20 +100,15 @@ public class ClientNetworkListener extends Listener {
     /**
      * Send the local actions to the server if necessary.
      */
-    public void sendActionsToServerIfNecessary() {
+    public synchronized void sendActionsToServerIfNecessary() {
         if (playerActions.size() > 0) {
             Packet.Packet1ActionList p = new Packet.Packet1ActionList();
-            p.action = playerActions;
+            p.action = (Vector<Action>) playerActions.clone();
             server.sendUDP(p);
         }
     }
 
     public void killServer() {
         server.sendTCP(new Packet.Packet2GameOver());
-    }
-
-    public void sync() {
-        Log.info("REQUESTING A CORRECTION BE SENT TO THE CLIENT.");
-        server.sendTCP(new Packet.Packet5SyncEvent());
     }
 }
