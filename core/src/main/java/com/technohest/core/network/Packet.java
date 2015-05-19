@@ -37,6 +37,4 @@ public class Packet {
     public static class Packet0Start {}
 
     public static class Packet2GameOver {}
-
-    public static class Packet5SyncEvent {}
 }
