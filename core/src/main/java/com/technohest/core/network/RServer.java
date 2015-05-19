@@ -95,7 +95,8 @@ public class RServer {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
         }
-
+        //Generate a new state
+        generateState();
         Packet.Packet1Correction p = new Packet.Packet1Correction();
         p.state = StateGDX.getInstance();
         p.actions = this.actionsToBePerformed;
