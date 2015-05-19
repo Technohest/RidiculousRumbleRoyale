@@ -8,6 +8,7 @@ import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -41,5 +42,6 @@ public class NetworkManger {
         kryo.register(Projectile.class);
         kryo.register(Packet.Packet2GameOver.class);
         kryo.register(Packet.Packet5SyncEvent.class);
+        kryo.register(List.class);
     }
 }

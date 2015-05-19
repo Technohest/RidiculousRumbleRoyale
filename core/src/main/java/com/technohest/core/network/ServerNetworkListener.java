@@ -11,6 +11,7 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -103,7 +104,12 @@ public class ServerNetworkListener extends Listener {
         }
     }
 
-    private synchronized void addActionsToBePerformed(Vector<Action> actions) {
+    /**
+     * Add actions to be performed by the server only if the actions sequenceNumber is a later one than the last one
+     * processed. Update the latest sequenceNumber.
+     * @param actions
+     */
+    private synchronized void addActionsToBePerformed(List<Action> actions) {
         for (Action a: actions) {
             if (playerIdSequenceMap.get(a.getPlayerID()) < a.getSequenceNumber()) {
                 playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());

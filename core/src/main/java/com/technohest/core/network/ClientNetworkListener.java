@@ -9,6 +9,7 @@ import com.technohest.core.model.RRRGameModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -29,7 +30,7 @@ public class ClientNetworkListener extends Listener {
     private Integer id = null;
 
     //Input list from local client.
-    private Vector<Action> playerActions = new Vector<Action>();
+    private List<Action> playerActions = new ArrayList<Action>();
 
 
     public void init(RClient rclient, Client client) {
@@ -70,7 +71,7 @@ public class ClientNetworkListener extends Listener {
      * player. Then removes all the local actions with a sequence number less than the last received from the server.
      * @param actions
      */
-    private synchronized void clearOldActions(ArrayList<Action> actions) {
+    private synchronized void clearOldActions(List<Action> actions) {
         //Update the lastSequenceNumber to be the last one recieved.
         for (Action a: actions) {
             if (a.getPlayerID().equals(id) &&
@@ -103,7 +104,7 @@ public class ClientNetworkListener extends Listener {
     public synchronized void sendActionsToServerIfNecessary() {
         if (playerActions.size() > 0) {
             Packet.Packet1ActionList p = new Packet.Packet1ActionList();
-            p.action = (Vector<Action>) playerActions.clone();
+            p.action = playerActions;
             server.sendUDP(p);
         }
     }

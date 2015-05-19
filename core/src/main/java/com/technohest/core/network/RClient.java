@@ -11,10 +11,7 @@ import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -27,11 +24,6 @@ public class RClient {
     private RRRGameModel model = new RRRGameModel();
     private RRRGameController controller = new RRRGameController(model);
     private RRRGameView view = new RRRGameView(controller, model);
-
-    private int lastSequenceNumber = -1;
-
-    private Integer id;
-
 
     private boolean host;
     private IState current;
@@ -98,7 +90,6 @@ public class RClient {
     }
 
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
-        this.id = id;
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
@@ -120,7 +111,14 @@ public class RClient {
         current.setState(model.getGameLogic().generateState());
     }
 
-    public void correct(IState state, ArrayList<Action> actions, Vector<Action> playerActions) {
+    /**
+     * Checks if server state is same as local state. If not: set state to state from last update and apply the actions
+     * sent by the server and reapply any local actions which the server has not yet processed and sent to the clients.
+     * @param state the servers state.
+     * @param actions the actions performed by the server.
+     * @param playerActions the local client actions which has yet to be processed by the server.
+     */
+    public void correct(IState state, List<Action> actions, List<Action> playerActions) {
         if (!this.current.equals(state)) {
             model.correct(state);
             applyServerActions(actions);
@@ -133,7 +131,7 @@ public class RClient {
      * Applies the local actions which haven't been performed yet by the server.
      * @param playerActions
      */
-    private synchronized void reapplyLocalActions(Vector<Action> playerActions) {
+    private synchronized void reapplyLocalActions(List<Action> playerActions) {
         for (Action a: playerActions) {
             model.performAction(a);
         }
@@ -143,7 +141,7 @@ public class RClient {
      * Apply the actions performed by the server.
      * @param actions
      */
-    private synchronized void applyServerActions(ArrayList<Action> actions) {
+    private synchronized void applyServerActions(List<Action> actions) {
         for (Action a: actions) {
             model.performAction(a);
         }

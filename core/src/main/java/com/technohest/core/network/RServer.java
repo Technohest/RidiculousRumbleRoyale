@@ -87,6 +87,10 @@ public class RServer {
         }).start();
     }
 
+    /**
+     * Perform the actions sent in by the clients. Send the list of actions performed by the server to all the clients.
+     * @param actionsToBePerformed
+     */
     private synchronized void performActions(ArrayList<Action> actionsToBePerformed) {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
