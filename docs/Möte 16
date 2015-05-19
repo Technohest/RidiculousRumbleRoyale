@@ -1,0 +1,70 @@
+        Projektmöte 16
+    "Dead men tell no tales"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-19
+
+
+
+§1 Mötets öppnande.
+    - Oskar Jedvert sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    - Testklasser
+        vi kan inte test många av våra klasser då de använder för mycket dependencies
+
+§3 Punkter från förra mötet.
+    - Försöka fixat nätverk, spelare skall kunna gå
+        Gjort
+    - Snygga upp kopplingar
+        X
+    - Skriva på rapport
+        X
+
+
+§4 Projektets status
+    Förra veckan:
+        Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+    Denna veckan:
+        - Kolla över och putsa RAD, Skriva på SDD, Skriva tester
+        - Jobba på combat systemet
+            - Mål: kunna vinna spelet på söndag
+        - Code review Torsdag:
+            Stan diagram
+                Någon med windows dator får kolla
+            Tala om vår mvc/service struktur
+                Sätta oss på skype o snacka om struktur
+            Tala om tester
+                Vi kan inte testa då dom använder libgdx snacka handledare
+                Kan använda interface
+            Tala om ev brister i kodena
+                Tala om koden med andra ord
+
+§5 Bestämmelser
+    Fokus inför sista veckan
+        Se till så att alla funktionaliteter är med
+        Nätverk tack
+    Sista veckan
+        Mindre kopplingar
+        Tester
+        Presentation
+        Rad/SDD/Rapport
+
+§6 Genomgång av info från möte med handledare
+    - ""
+
+§7 Inför kommande möte + fikaansvarig
+    - Combatsystemet nästan klart
+    - Rapport metod måste börja skrivas på
+        Rapport ska in på torsdag
+    - RAD skall putsas på
+    - SDD skall kollas på
+    TESTER TESTER TESTER
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+    "Stop blowing holes in my ship"
+        - Captain Jack Sparrow
