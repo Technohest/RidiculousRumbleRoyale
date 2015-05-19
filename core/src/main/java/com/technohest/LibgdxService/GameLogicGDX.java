@@ -181,14 +181,14 @@ public class GameLogicGDX implements IGameLogic{
 
     @Override
     public void setCharacterState(Character newState, Vector2 pos, Vector2 vel) {
-        Character player = idCharacterMap.get(newState);
+        Character player = idCharacterMap.get(newState.getId());
         Body playerBody = getBodyFromCharacter(player);
 
         if (playerBody != null) {
             playerBody.setLinearVelocity(vel);
             playerBody.setTransform(pos, playerBody.getAngle());
         }
-        getCharacterFromID(newState.getId()).setAttributes(newState);
+        player.setAttributes(newState);
     }
 
     @Override
