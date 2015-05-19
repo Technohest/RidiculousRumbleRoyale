@@ -1,5 +1,6 @@
 package com.technohest.core.network;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.Tools.Sort;
@@ -23,6 +24,8 @@ public class RServer {
     private Server server;
     private RRRGameModel model = new RRRGameModel();
     private IState state;
+
+    private float step = 1000/30;
 
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
@@ -68,20 +71,25 @@ public class RServer {
         gameRunning = true;
 
         (new Thread() {
-            private long time = System.currentTimeMillis();
+            private double time = TimeUtils.millis();
             private long elapsedTime = System.currentTimeMillis();
-            private long acc = elapsedTime-time;
+            private double acc = elapsedTime-time;
 
             @Override
             public void run() {
                 while (gameRunning) {
-                    if (acc >= 1000/30) {
+                    double  newTime = TimeUtils.millis() / 1000.0;
+                    double  frameTime = Math.min(newTime - time, 0.25);
+
+                    time = newTime;
+
+                    acc += frameTime;
+                    if (acc >= step) {
                         performActions(actionsToBePerformed);
-                        model.step(acc);
+                        model.step(step);
                         time = elapsedTime;
+                        acc -= step;
                     }
-                    elapsedTime = System.currentTimeMillis();
-                    acc = elapsedTime - time;
                 }
             }
         }).start();
