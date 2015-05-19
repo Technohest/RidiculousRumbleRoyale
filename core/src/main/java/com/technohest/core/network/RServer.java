@@ -24,13 +24,15 @@ public class RServer {
     private RRRGameModel model = new RRRGameModel();
     private IState state;
 
+    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
+
     ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
     public RServer(String port) {
         server = new Server();
         registerPackets();
 
-        serverNetworkListener.init(this);
+        serverNetworkListener.init(this, server);
 
         server.addListener(serverNetworkListener);
         server.start();
@@ -74,7 +76,7 @@ public class RServer {
             public void run() {
                 while (gameRunning) {
                     if (acc >= 1000/30) {
-                        serverNetworkListener.performActions(model);
+                        performActions();
                         model.step(acc);
                         time = elapsedTime;
                     }
@@ -83,6 +85,18 @@ public class RServer {
                 }
             }
         }).start();
+    }
+
+    private void performActions() {
+        for (Action a: actionsToBePerformed) {
+            model.performAction(a);
+        }
+
+        Packet.Packet1Correction p = new Packet.Packet1Correction();
+        p.state = StateGDX.getInstance();
+        p.actions = actionsToBePerformed;
+        server.sendToAllTCP(p);
+        actionsToBePerformed.clear();
     }
 
     public void generateState(){
@@ -100,5 +114,9 @@ public class RServer {
         Packet.Packet1Correction p = new Packet.Packet1Correction();
         p.state = StateGDX.getInstance();
         server.sendToAllTCP(p);
+    }
+
+    public void addActionToBePerformed(Action a) {
+        actionsToBePerformed.add(a);
     }
 }

@@ -22,15 +22,16 @@ import java.util.Vector;
  */
 public class RClient {
     private Client client;
-    private long lastUpdateNum = 0;
 
     //The MVC
     private RRRGameModel model = new RRRGameModel();
     private RRRGameController controller = new RRRGameController(model);
     private RRRGameView view = new RRRGameView(controller, model);
 
+    private int lastSequenceNumber = -1;
 
-    ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
+    private Integer id;
+
 
     private boolean host;
     private IState current;
@@ -47,6 +48,7 @@ public class RClient {
         client = new Client();
         registerPackets();
 
+        ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
         controller.init(clientNetworkListener);
 
@@ -71,6 +73,7 @@ public class RClient {
         client = new Client();
         registerPackets();
 
+        ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
         clientNetworkListener.init(this, client);
         controller.init(clientNetworkListener);
 
@@ -95,6 +98,7 @@ public class RClient {
     }
 
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap, Integer id) {
+        this.id = id;
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
@@ -116,12 +120,32 @@ public class RClient {
         current.setState(model.getGameLogic().generateState());
     }
 
-    public void correct(IState state, ArrayList<Action> actions) {
+    public void correct(IState state, ArrayList<Action> actions, Vector<Action> playerActions) {
         if (!this.current.equals(state)) {
             model.correct(state);
-            clientNetworkListener.applyServerActions(actions, model);
-            clientNetworkListener.reapplyLocalActions(model);
+            applyServerActions(actions);
+            reapplyLocalActions(playerActions);
         }
         this.current.setState(state.getState());
+    }
+
+    /**
+     * Applies the local actions which haven't been performed yet by the server.
+     * @param playerActions
+     */
+    private void reapplyLocalActions(Vector<Action> playerActions) {
+        for (Action a: playerActions) {
+            model.performAction(a);
+        }
+    }
+
+    /**
+     * Apply the actions performed by the server.
+     * @param actions
+     */
+    private void applyServerActions(ArrayList<Action> actions) {
+        for (Action a: actions) {
+            model.performAction(a);
+        }
     }
 }

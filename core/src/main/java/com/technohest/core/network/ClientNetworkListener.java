@@ -22,6 +22,8 @@ public class ClientNetworkListener extends Listener {
 
     private int lastSequenceNumber = 0;
 
+    private int sequenceNumber = 0;
+
     //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private Integer id = null;
@@ -50,7 +52,8 @@ public class ClientNetworkListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1Correction) {
             Packet.Packet1Correction p = (Packet.Packet1Correction) object;
-            rclient.correct(p.state, p.actions);
+            clearOldActions(p.actions);
+            rclient.correct(p.state, p.actions, playerActions);
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
@@ -62,22 +65,42 @@ public class ClientNetworkListener extends Listener {
         }
     }
 
-    public void applyServerActions(ArrayList<Action> serverActions, RRRGameModel model) {
-        for (Action a: serverActions) {
-            if (a.getPlayerID().equals(id))
-                playerActions.remove(a);
+    /**
+     * Sets the lastSequenceNumber to be the last sequenceNumber received from the server, performed by the local
+     * player. Then removes all the local actions with a sequence number less than the last received from the server.
+     * @param actions
+     */
+    private void clearOldActions(ArrayList<Action> actions) {
+        //Update the lastSequenceNumber to be the last one recieved.
+        for (Action a: actions) {
+            if (a.getPlayerID().equals(id) &&
+                    a.getSequenceNumber() > lastSequenceNumber) {
+                lastSequenceNumber = a.getSequenceNumber();
+            }
+        }
 
-            model.performAction(a);
+        //Remove all local actions with a lower sequence number than the last recieved one.
+        while (playerActions.size() > 0 &&
+                playerActions.get(0).getSequenceNumber() < lastSequenceNumber) {
+            playerActions.remove(0);
         }
     }
 
+    /**
+     * Add action to the list of local actions, increase the sequenceNumber for every new entry. Will be changed to be
+     * looping at a later point in time.
+     * @param action
+     */
     public void addAction(Action.ActionID action) {
-        Action a = new Action(id, action, lastSequenceNumber);
+        Action a = new Action(id, action, sequenceNumber);
         playerActions.add(a);
-        lastSequenceNumber++;
+        sequenceNumber++;
     }
 
-    public void sendActionsToServerIfNecissary() {
+    /**
+     * Send the local actions to the server if necessary.
+     */
+    public void sendActionsToServerIfNecessary() {
         if (playerActions.size() > 0) {
             Packet.Packet1ActionList p = new Packet.Packet1ActionList();
             p.action = playerActions;
@@ -92,10 +115,5 @@ public class ClientNetworkListener extends Listener {
     public void sync() {
         Log.info("REQUESTING A CORRECTION BE SENT TO THE CLIENT.");
         server.sendTCP(new Packet.Packet5SyncEvent());
-    }
-
-    public void reapplyLocalActions(RRRGameModel model) {
-        for (Action a: playerActions)
-            model.performAction(a);
     }
 }

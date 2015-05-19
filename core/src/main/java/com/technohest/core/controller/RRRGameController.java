@@ -96,7 +96,7 @@ public class RRRGameController extends InputHandler {
         }
 
         if (listener != null) {
-            listener.sendActionsToServerIfNecissary();
+            listener.sendActionsToServerIfNecessary();
         }
         while(accumulator >= step) {
             model.step(step);

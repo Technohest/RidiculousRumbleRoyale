@@ -2,6 +2,7 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.Action;
@@ -17,7 +18,8 @@ import java.util.Vector;
  * Created by time on 2015-05-05.
  */
 public class ServerNetworkListener extends Listener {
-    private RServer server;
+    private RServer rserver;
+    private Server server;
     //private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
     private DualHashBidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
     //Will later be <Integer, CharType>
@@ -29,7 +31,8 @@ public class ServerNetworkListener extends Listener {
 
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
-    public void init(RServer server) {
+    public void init(RServer rserver, Server server) {
+        this.rserver = rserver;
         this.server = server;
     }
 
@@ -59,11 +62,16 @@ public class ServerNetworkListener extends Listener {
             c.sendTCP(p2);
         }
 
+        int tmp = 0;
+
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > 2) {
-                server.startGame(playerIdTypeMap);
+            if (playerIdTypeMap.keySet().size() > tmp) {
                 c.sendTCP(new Packet.Packet0Start());
             }
+        }
+
+        if (playerIdTypeMap.keySet().size() > tmp) {
+            rserver.startGame(playerIdTypeMap);
         }
 
         Log.info(playerIdTypeMap.toString());
@@ -89,27 +97,19 @@ public class ServerNetworkListener extends Listener {
             Packet.Packet1ActionList p = (Packet.Packet1ActionList)object;
             addActionsToBePerformed(p.action);
         } else if (object instanceof Packet.Packet2GameOver) {
-            server.gameOver();
+            rserver.gameOver();
         } else if (object instanceof Packet.Packet5SyncEvent) {
-            server.sync();
+            rserver.sync();
         }
     }
 
     private void addActionsToBePerformed(Vector<Action> actions) {
-        for (Action a: actions)
-            actionsToBePerformed.add(a);
-    }
-
-    public void performActions(RRRGameModel model) {
-        for (Action a: actionsToBePerformed) {
+        for (Action a: actions) {
             if (playerIdSequenceMap.get(a.getPlayerID()) < a.getSequenceNumber()) {
-                model.performAction(a);
                 playerIdSequenceMap.remove(a.getPlayerID());
                 playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());
+                rserver.addActionToBePerformed(a);
             }
         }
-
-
-        actionsToBePerformed.clear();
     }
 }
