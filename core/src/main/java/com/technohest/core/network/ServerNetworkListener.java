@@ -52,7 +52,7 @@ public class ServerNetworkListener extends Listener {
 
         //Sets the new id to be sent to connecting client and to all other clients.
         p1.id = id;
-        playerIdSequenceMap.put(id, 0);
+        playerIdSequenceMap.put(id, -1);
         p2.map = playerIdTypeMap;
 
         //Send the id to the newly connected client and send the added id to all the clients.
