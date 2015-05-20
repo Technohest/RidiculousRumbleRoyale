@@ -3,17 +3,19 @@ package com.technohest.core.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.network.RClient;
 import com.technohest.core.network.RServer;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
  * A lobby where all clients connect before a game and can set the game options before starting.
@@ -29,10 +31,14 @@ public class LobbyScreen implements Screen {
     private float x;
     private float y;
     private TextButton startButton;
-    private Button character1;
-    private Button character2;
-    private Button character3;
-    private Button character4;
+
+    private ImageButton char1Button;
+    private Texture char11Texture;
+    private SpriteDrawable char1Draw;
+    private Sprite char1Sprite;
+    private ImageButton character2;
+    private ImageButton character3;
+    private ImageButton character4;
     private Stage stage;
     private Table characterTable;
     private Table mainTable;
@@ -59,7 +65,10 @@ public class LobbyScreen implements Screen {
         style.font=font;
 
         //CharacterButtons
-
+        char11Texture = new Texture(new FileHandle("assets/allden.png"));
+        char1Sprite = new Sprite(char11Texture,100,200);
+        char1Draw = new SpriteDrawable(char1Sprite);
+        char1Button = new ImageButton(char1Draw);
 
         startButton = new TextButton("Start", style);
         startButton.setPosition(x/(3/4), y/5);
