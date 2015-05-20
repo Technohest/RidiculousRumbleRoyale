@@ -20,21 +20,17 @@ import java.util.Vector;
  */
 public class ServerNetworkListener extends Listener {
     private RServer rserver;
-    private Server server;
-    //private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
-    private DualHashBidiMap<Integer, Connection> clients = new DualHashBidiMap<Integer, Connection>();
+    private HashMap<Integer, Connection> clients = new HashMap<Integer, Connection>();
+
     //Will later be <Integer, CharType>
     private HashMap<Integer, Integer> playerIdTypeMap = new HashMap<Integer, Integer>();
     private int id = 0;
 
-    //The latest
+    //The latest sequence number mapped with each player.
     private HashMap<Integer, Integer> playerIdSequenceMap = new HashMap<Integer, Integer>();
 
-    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
-
-    public void init(RServer rserver, Server server) {
+    public void init(RServer rserver) {
         this.rserver = rserver;
-        this.server = server;
     }
 
     @Override
@@ -81,9 +77,7 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
-
-        playerIdTypeMap.remove(clients.getKey(connection));
-        clients.remove(clients.getKey(connection));
+        playerIdTypeMap.remove(connection);
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();

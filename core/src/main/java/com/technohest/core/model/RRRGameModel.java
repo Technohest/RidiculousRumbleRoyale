@@ -20,9 +20,6 @@ public class RRRGameModel {
     private HashMap<Integer,Character> idCharacterMap;
     private IGameLogic gameLogic;
 
-    //TMP
-    private Boolean isClient;
-
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
         setGameLogic(new GameLogicGDX());

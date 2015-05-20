@@ -3,17 +3,11 @@ package com.technohest.core.network;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.Tools.Sort;
-import com.technohest.core.menu.SCREEN;
-import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
-import com.technohest.core.view.RRRGameView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * Creates a server with specified port and registers packets the server will be listening to.
@@ -38,7 +32,7 @@ public class RServer {
         server = new Server();
         registerPackets();
 
-        serverNetworkListener.init(this, server);
+        serverNetworkListener.init(this);
 
         server.addListener(serverNetworkListener);
         server.start();
@@ -73,19 +67,21 @@ public class RServer {
         init();
         gameRunning = true;
 
+        /**
+         * Perform player actions and updates the world for every "step" that has passed.
+         */
         (new Thread() {
             @Override
             public void run() {
                 while (gameRunning) {
                     double newTime = TimeUtils.millis() / 1000.0;
                     double frameTime = Math.min(newTime - currentTime, 0.25);
-                    float deltaTime = (float)frameTime;
 
                     currentTime = newTime;
                     accumulator += frameTime;
 
                     while (accumulator >= step) {
-                        performActions(actionsToBePerformed);
+                        performActions();
                         model.step(step);
                         accumulator -= step;
                     }
@@ -96,22 +92,24 @@ public class RServer {
 
     /**
      * Perform the actions sent in by the clients. Send the list of actions performed by the server to all the clients.
-     * @param actionsToBePerformed
      */
-    private synchronized void performActions(ArrayList<Action> actionsToBePerformed) {
-        for (Action a: actionsToBePerformed) {
+    private synchronized void performActions() {
+        for (Action a: actionsToBePerformed)
             model.performAction(a);
-        }
 
-        //Generate a new state
         generateState();
+
         Packet.Packet1Correction p = new Packet.Packet1Correction();
         p.state = StateGDX.getInstance();
         p.actions = this.actionsToBePerformed;
+
         server.sendToAllTCP(p);
         this.actionsToBePerformed.clear();
     }
 
+    /**
+     * Updates the state to be the current physics state.
+     */
     public void generateState(){
         state.setState(model.getGameLogic().generateState());
     }

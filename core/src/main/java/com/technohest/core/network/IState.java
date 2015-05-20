@@ -16,7 +16,7 @@ public interface IState {
      * State which needs to be set in gameLogic
      */
     HashMap<Character, ArrayList<Vector2>>  getState();
-    void    setState(HashMap<Character, ArrayList<Vector2>> map);
+    void setState(HashMap<Character, ArrayList<Vector2>> map);
 
     /**
      * Compare with another state
@@ -26,6 +26,4 @@ public interface IState {
      * true if same, false else
      */
     boolean equals(HashMap<Character, ArrayList<Vector2>> map);
-
-
 }

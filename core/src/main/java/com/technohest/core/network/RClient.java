@@ -93,11 +93,11 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
-        model.setIsClient();
+
         init();
+
         ScreenHandler.getInstance().setGameScreen(view);
         ScreenHandler.getInstance().setScreen(SCREEN.GAME);
-        Log.info("STARTING GAME ON CLIENT.");
     }
 
     public boolean isHost() {
@@ -109,41 +109,5 @@ public class RClient {
      */
     public void generateState(){
         current.setState(model.getGameLogic().generateState());
-    }
-
-    /**
-     * Checks if server state is same as local state. If not: set state to state from last update and apply the actions
-     * sent by the server and reapply any local actions which the server has not yet processed and sent to the clients.
-     * @param state the servers state.
-     * @param actions the actions performed by the server.
-     * @param playerActions the local client actions which has yet to be processed by the server.
-     */
-    public void correct(IState state, List<Action> actions, List<Action> playerActions) {
-        if (!this.current.equals(state)) {
-            //model.correct(state);
-            applyServerActions(actions);
-            reapplyLocalActions(playerActions);
-        }
-        this.current.setState(state.getState());
-    }
-
-    /**
-     * Applies the local actions which haven't been performed yet by the server.
-     * @param playerActions
-     */
-    private synchronized void reapplyLocalActions(List<Action> playerActions) {
-        for (Action a: playerActions) {
-            model.performAction(a);
-        }
-    }
-
-    /**
-     * Apply the actions performed by the server.
-     * @param actions
-     */
-    private synchronized void applyServerActions(List<Action> actions) {
-        for (Action a: actions) {
-            model.performAction(a);
-        }
     }
 }

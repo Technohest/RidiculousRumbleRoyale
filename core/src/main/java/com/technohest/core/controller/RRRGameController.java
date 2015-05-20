@@ -2,6 +2,7 @@ package com.technohest.core.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.ILevel;
+import com.technohest.Tools.Correction;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
@@ -51,50 +52,43 @@ public class RRRGameController extends InputHandler {
             this.releaseAllKeys();
         }
 
-
-        if (this.isPressed(InputHandler.RIGHT)) {
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT));
-            if (listener != null)
+        if (listener != null) {
+            if (this.isPressed(InputHandler.RIGHT)) {
                 listener.addAction(Action.ActionID.MOVE_RIGHT);
-        }
-        if (this.isPressed(InputHandler.LEFT)) {
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT));
-            if (listener != null)
+            }
+            if (this.isPressed(InputHandler.LEFT)) {
                 listener.addAction(Action.ActionID.MOVE_LEFT);
-        }
-        if (this.isPressed(InputHandler.JUMP)) {
-            model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP));
-            if (listener != null)
+            }
+            if (this.isPressed(InputHandler.JUMP)) {
                 listener.addAction(Action.ActionID.JUMP);
+            }
+            if (this.isPressed(InputHandler.BASE_ATTACK)) {}
+            if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {}
         }
-        if (this.isPressed(InputHandler.BASE_ATTACK)) {}
     }
-    int i=0;
-    int frame = 0;
+
+    /**
+     * Updates the input and sends actions to the server every "step". Updates the view and the state as fast as
+     * possible.
+     */
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
         double  frameTime = Math.min(newTime - currentTime, 0.25);
 
         currentTime = newTime;
-
         accumulator += frameTime;
 
         while(accumulator >= step) {
-            i++;
-            if (i==60) {
-                frame++;
-                System.out.println(frame);
-            }
-            if (this.hasInput()) {
+            if (this.hasInput())
                 this.handleInput();
-            }
 
-            if (listener != null) {
+            if (listener != null)
                 listener.sendActionsToServerIfNecessary();
-            }
-            model.step(step);
+
             accumulator -= step;
         }
+
+        Correction.getInstance().correctState(model);
         view.update(v);
     }
 }

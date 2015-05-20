@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.Tools.Correction;
 import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
 
@@ -54,13 +55,12 @@ public class ClientNetworkListener extends Listener {
         if (object instanceof Packet.Packet1Correction) {
             Packet.Packet1Correction p = (Packet.Packet1Correction) object;
             clearOldActions(p.actions);
-            rclient.correct(p.state, p.actions, playerActions);
+            Correction.getInstance().setNewState(p.state);
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
             //Update the idPlayerMap
             playerIdTypeMap = ((Packet.Packet0PlayerTypeIdMap)object).map;
-            Log.info("[Client]--" + playerIdTypeMap.toString());
         } else if (object instanceof Packet.Packet0Start) {
             rclient.startGame(playerIdTypeMap, id);
         }
@@ -72,7 +72,7 @@ public class ClientNetworkListener extends Listener {
      * @param actions
      */
     private synchronized void clearOldActions(List<Action> actions) {
-        //Update the lastSequenceNumber to be the last one recieved.
+        //Update the lastSequenceNumber to be the last one received.
         for (Action a: actions) {
             if (a.getPlayerID().equals(id) &&
                     a.getSequenceNumber() > lastSequenceNumber) {
@@ -80,7 +80,7 @@ public class ClientNetworkListener extends Listener {
             }
         }
 
-        //Remove all local actions with a lower sequence number than the last recieved one.
+        //Remove all local actions with a lower sequence number than the last received one.
         while (playerActions.size() > 0 &&
                 playerActions.get(0).getSequenceNumber() <= lastSequenceNumber) {
             playerActions.remove(0);
@@ -88,9 +88,7 @@ public class ClientNetworkListener extends Listener {
     }
 
     /**
-     * Add action to the list of local actions, increase the sequenceNumber for every new entry. Will be changed to be
-     * looping at a later point in time.
-     * @param action
+     * Add action to the list of local actions, increase the sequenceNumber for every new entry.
      */
     public synchronized void addAction(Action.ActionID action) {
         Action a = new Action(id, action, sequenceNumber);
@@ -99,7 +97,7 @@ public class ClientNetworkListener extends Listener {
     }
 
     /**
-     * Send the local actions to the server if necessary.
+     * Send the local actions to the server if there are any.
      */
     public synchronized void sendActionsToServerIfNecessary() {
         if (playerActions.size() > 0) {
@@ -109,6 +107,9 @@ public class ClientNetworkListener extends Listener {
         }
     }
 
+    /**
+     * Send a packet to kill the server.
+     */
     public void killServer() {
         server.sendTCP(new Packet.Packet2GameOver());
     }
