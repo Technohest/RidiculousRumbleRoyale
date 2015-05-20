@@ -17,6 +17,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.awt.*;
+
 /**
  * A lobby where all clients connect before a game and can set the game options before starting.
  * Created by time on 2015-04-21.
@@ -33,12 +35,26 @@ public class LobbyScreen implements Screen {
     private TextButton startButton;
 
     private ImageButton char1Button;
-    private Texture char11Texture;
+    private Texture char1Texture;
     private SpriteDrawable char1Draw;
+    private SpriteDrawable char1Down;
     private Sprite char1Sprite;
-    private ImageButton character2;
-    private ImageButton character3;
-    private ImageButton character4;
+
+    private ImageButton char2Button;
+    private Texture char2Texture;
+    private SpriteDrawable char2Draw;
+    private Sprite char2Sprite;
+
+    private ImageButton char3Button;
+    private Texture char3Texture;
+    private SpriteDrawable char3Draw;
+    private Sprite char3Sprite;
+
+    private ImageButton char4Button;
+    private Texture char4Texture;
+    private SpriteDrawable char4Draw;
+    private Sprite char4Sprite;
+
     private Stage stage;
     private Table characterTable;
     private Table mainTable;
@@ -64,15 +80,44 @@ public class LobbyScreen implements Screen {
         style.down = skin.getDrawable("pressedMenuButton");
         style.font=font;
 
+        //Tables
+        characterTable = new Table(skin);
+
+        //Stage
+        stage = new Stage();
+
         //CharacterButtons
-        char11Texture = new Texture(new FileHandle("assets/allden.png"));
-        char1Sprite = new Sprite(char11Texture,100,200);
+        char1Texture = new Texture(new FileHandle("assets/allden.png"));
+        char1Sprite = new Sprite(char1Texture,100,200);
         char1Draw = new SpriteDrawable(char1Sprite);
-        char1Button = new ImageButton(char1Draw);
+        char1Button = new ImageButton(char1Draw,char1Down);
+        characterTable.add(char1Button).padRight(20);
+
+        char2Texture = new Texture(new FileHandle("assets/boking.png"));
+        char2Sprite = new Sprite(char2Texture,100,200);
+        char2Draw = new SpriteDrawable(char2Sprite);
+        char2Button = new ImageButton(char2Draw);
+        characterTable.add(char2Button).padRight(20);
+
+        char3Texture = new Texture(new FileHandle("assets/vilddjur.png"));
+        char3Sprite = new Sprite(char3Texture,100,200);
+        char3Draw = new SpriteDrawable(char3Sprite);
+        char3Button = new ImageButton(char3Draw);
+        characterTable.add(char3Button).padRight(20);
+
+        char4Texture = new Texture(new FileHandle("assets/schtek.png"));
+        char4Sprite = new Sprite(char4Texture,100,200);
+        char4Draw = new SpriteDrawable(char4Sprite);
+        char4Button = new ImageButton(char4Draw);
+        characterTable.add(char4Button).padRight(20);
+
+        characterTable.setPosition(x,y);
+        characterTable.add(char1Button);
 
         startButton = new TextButton("Start", style);
         startButton.setPosition(x/(3/4), y/5);
         startButton.setDisabled(true);
+        stage.addActor(characterTable);
     }
 
     @Override
@@ -100,6 +145,7 @@ public class LobbyScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
         }
+        stage.draw();
     }
 
     @Override
