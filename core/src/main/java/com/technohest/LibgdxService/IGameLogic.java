@@ -28,11 +28,31 @@ public interface IGameLogic {
 
     void generate(ILevel level, HashMap<Integer,Character> idCharacterMap);
 
+    /**
+     * Updates the player.
+     * @param player
+     */
+    public void updatePlayer(Character player);
+
+    /**
+     * Kills the player.
+     * @param player
+     */
+    public void killPlayer(Character player);
+
+    /**
+     * Respawns the player
+     * @param player
+     */
+    public void respawnPlayer(Character player);
+
 
     /**
      * Moves the player(Body with fixtures) left in the game,and plays the run animation.
      */
     public void moveLeft(Character player);
+
+
 
     /**
      * Moves the player(Body with fixtures) right in the game,and plays the run animation.
@@ -45,25 +65,32 @@ public interface IGameLogic {
     public void jump(Character player);
 
     /**
-     * Makes the character perform a base attack
+     * Makes the specified player perform a base attack.
      */
-    public void attack_base(Character player);
+    public void attack_base(Character player,Attack attack);
 
     /**
-     * Makes the character perform a special attack
+     * Makes the specified player performs perform a special attack.
      */
-    public void attack_special(Character player);
+    public void attack_special(Character player, Attack attack);
 
     /**
-     * Sets the players attributes
-     * @param newState
-     * target ID
+     * Sets the players movement attributes
+     * @param playerId
+     * target Character
      * @param pos
      * new position
      * @param vel
      * new velocity
      */
-    public void setCharacterState(Character newState, Vector2 pos, Vector2 vel);
+    public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel);
+
+
+
+    /**
+     * Destroys the specified attack
+     */
+    public void destroyAttack(Attack attack);
 
     /**
      * Compares local state with another state and corrects if needed
@@ -78,8 +105,4 @@ public interface IGameLogic {
      * Character and their pos and velocity.
      */
     HashMap<Character, ArrayList<Vector2>> generateState();
-
-    void setIsClient();
-
-    void setIsServer();
 }

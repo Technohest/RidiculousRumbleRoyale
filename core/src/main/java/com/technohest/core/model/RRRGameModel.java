@@ -6,6 +6,7 @@ import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
 import com.technohest.core.network.IState;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,12 +19,18 @@ public class RRRGameModel {
     private Integer myID;
     private LevelHandler levelHandler;
     private HashMap<Integer,Character> idCharacterMap;
+    private HashMap<Character,Attack> characterAttackMap;
     private IGameLogic gameLogic;
+    private boolean respawnEnabled;
+
+    //TMP
+    private Boolean isClient;
 
     public RRRGameModel(){
         this.levelHandler = new LevelHandler();
-        setGameLogic(new GameLogicGDX());
+        setGameLogic(new GameLogicGDX(this));
         this.idCharacterMap = new HashMap<Integer, Character>();
+        characterAttackMap = new HashMap<Character, Attack>();
         //Temp character for testing
         /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
@@ -52,6 +59,7 @@ public class RRRGameModel {
         this.idCharacterMap = new HashMap<Integer, Character>();
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
+            //System.out.println("THE PLAYER ID " + i);
             this.idCharacterMap.put(i,new Character(i, "Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         }
 
@@ -76,29 +84,95 @@ public class RRRGameModel {
 
     public void step(float v) {
         gameLogic.update(v);
+        updatePlayers(v);
+        updateAttacks(v);
     }
-    public Integer getmyID() {
+
+    public void setMyID(int id) {
+        this.myID = id;
+    }
+
+    public Integer getMyID() {
         return myID;
     }
-    public void setMyID(Integer id) {
-        myID = id;
+
+
+    /**
+     * Updates all the players.
+     */
+    public void updatePlayers(float v) {
+        for (Character c : idCharacterMap.values()) {
+            if (c.isAlive()) {
+                if (c.getHealthPoints() < 0) {
+                    c.die();
+                    gameLogic.killPlayer(c);
+                    c.setShouldRespawn(this.respawnEnabled);
+                } else {
+                    gameLogic.updatePlayer(c);
+                }
+            } else {
+                c.addRespawnTimer(v);
+                if (c.respawnTimeDone()) {
+                    c.respawn();
+                    gameLogic.respawnPlayer(c);
+                }
+            }
+        }
     }
 
-
+    /**
+     * Updates all enabled attacks.
+     * @param v
+     */
+    public void updateAttacks(float v) {
+        for (Attack a:characterAttackMap.values()) {
+            if (a.getHasInpacted()) {
+                a.reset();
+                gameLogic.destroyAttack(a);
+                characterAttackMap.remove(a.getSourcePlayer());
+            } else if (!a.isReady()) {
+                if (a.timeLeft()) {
+                    a.incrementTime(v);
+                } else {
+                    a.reset();
+                    gameLogic.destroyAttack(a);
+                    characterAttackMap.remove(a.getSourcePlayer());
+                }
+            }
+        }
+    }
     /**
      * Performes an action on the specified player connected to playerId
      * @param action
      */
     public void performAction(Action action) {
+        Character player = getPlayerFromID(action.getPlayerID());
         switch(action.getActionID()) {
             case JUMP:
-                gameLogic.jump(getPlayerFromID(action.getPlayerID()));
+                gameLogic.jump(player);
                 break;
             case MOVE_RIGHT:
-                gameLogic.moveRight(getPlayerFromID(action.getPlayerID()));
+                gameLogic.moveRight(player);
                 break;
             case MOVE_LEFT:
-                gameLogic.moveLeft(getPlayerFromID(action.getPlayerID()));
+                gameLogic.moveLeft(player);
+                break;
+            case ATTACK_BASE:
+                if(player.getBaseAttack().isReady()) {
+                    gameLogic.attack_base(player,player.getBaseAttack());
+                    this.characterAttackMap.put(player,player.getBaseAttack());
+                    player.getBaseAttack().perform();
+
+                }
+                break;
+            case ATTACK_SPECIAL:
+                if(player.getSpecialAttack().isReady()) {
+                    gameLogic.attack_special(player,player.getSpecialAttack());
+                    this.characterAttackMap.put(player,player.getSpecialAttack());
+                    player.getSpecialAttack().perform();
+                }
+                break;
+
         }
 
     }
@@ -111,12 +185,25 @@ public class RRRGameModel {
     public void correct(IState state) {
         gameLogic.correct(state);
     }
-
-    public void setIsClient() {
-        gameLogic.setIsClient();
+    public ArrayList<Character> getAlivePlayers() {
+        ArrayList<Character> alivePlayers = new ArrayList<Character>();
+        for(Character c: idCharacterMap.values()) {
+            if (c.isAlive()) {
+                alivePlayers.add(c);
+            }
+        }
+        return alivePlayers;
     }
 
-    public void setIsServer() {
-        gameLogic.setIsServer();
+
+    public Integer getmyID() {
+        return myID;
+    }
+    public void setMyID(Integer id) {
+        myID = id;
+    }
+
+    public void setRespawnEnabled(boolean value) {
+        this.respawnEnabled = value;
     }
 }

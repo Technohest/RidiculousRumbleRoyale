@@ -63,7 +63,6 @@ public class RServer {
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
-        model.setIsServer();
         init();
         gameRunning = true;
 

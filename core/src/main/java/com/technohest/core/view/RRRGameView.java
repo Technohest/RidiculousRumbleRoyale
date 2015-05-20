@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Set;
 
 public class RRRGameView implements Screen {
@@ -44,11 +45,14 @@ public class RRRGameView implements Screen {
 
 	private OrthographicCamera 	camera;
 
-    //Activate for debugrenderer
-    /*
+
+
     private Box2DDebugRenderer drenderer;
     private Matrix4 dmatrix;
-    */
+    //Activate for debugrenderer
+    public boolean isDebugging = false;
+
+
     ShapeRenderer sRenderer;
 
 	Settings settings;
@@ -73,12 +77,12 @@ public class RRRGameView implements Screen {
 		camera = new OrthographicCamera();
         sRenderer  = new ShapeRenderer();
 
-        //Activate for debugrenderer
-        /*
-        drenderer = new Box2DDebugRenderer();
-        dmatrix = new Matrix4(camera.combined);
-        dmatrix.scale(32,32,1f);
-        */
+
+        if(isDebugging) {
+            drenderer = new Box2DDebugRenderer();
+            dmatrix = new Matrix4(camera.combined);
+            dmatrix.scale(32, 32, 1f);
+        }
 
 		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
 		mapRenderer.setView(camera);
@@ -102,20 +106,33 @@ public class RRRGameView implements Screen {
 
 		if (controller != null)
 			controller.update(v);
+
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
         //Draws players ---  TEMP!
-        Collection<Character> players = model.getPlayers();
+
+        Collection<Character> players = model.getAlivePlayers();
 		for (Character c: players) {
-            Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromCharacter(c);
-			if (b != null) {
-				sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
-			} else {
-				System.out.println("DAYUM SON");
-			}
+			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromCharacter(c);
+			sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
+		}
+
+
+
+        //Draws projectiles - TEMP!
+        HashMap<Attack,Body> attackBodyMap = ((GameLogicGDX)model.getGameLogic()).getAttackMap();
+        for(Body b: attackBodyMap.values()) {
+            Attack tmp = (((GameLogicGDX) model.getGameLogic()).getAttackFromBody(b));
+                if (tmp instanceof Projectile) {
+                    sRenderer.circle(((b.getPosition().x) * 32), ((b.getPosition().y) * 32), 5);
+                }
+
         }
-        //Activate for debugrenderer
-       // drenderer.render(((GameLogicGDX)model.getGameLogic()).getWorld(),dmatrix);
+
         sRenderer.end();
+        if(isDebugging) {
+            drenderer.render(((GameLogicGDX) model.getGameLogic()).getWorld(), dmatrix);
+
+        }
 	}
 
 	public void update(float v){
@@ -124,6 +141,7 @@ public class RRRGameView implements Screen {
 		float b = 218 / 255.0f;
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		mapRenderer.setView(camera);
 		mapRenderer.render();
 		batch.begin();
 		batch.end();

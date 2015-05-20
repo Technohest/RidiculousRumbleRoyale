@@ -1,5 +1,7 @@
 package com.technohest.core.model;
 
+import com.technohest.constants.Constants;
+
 /**
  * A data class for characters.
  * @author Tobias Alldén
@@ -16,14 +18,15 @@ public  class Character {
         Standing,Running,Jumping,Falling
     }
 
-
-
     //Variables
     private String name;
     private State state;
     private Attack baseAttack,specialAttack;
     private boolean isFacingRight;
     private boolean grounded;
+    private float respawnTimer;
+    private boolean alive;
+    private boolean shouldRespawn;
 
     //Game specific variables;
     private int healthPoints;
@@ -41,9 +44,11 @@ public  class Character {
         this.healthPoints = 100;
         this.kills = 0;
         this.deaths = 0;
+        alive = true;
+        respawnTimer = 0;
         this.id = id;
-
-
+        //baseAttack.setSourcePlayer(this);
+        //specialAttack.setSourcePlayer(this);
     }
 
     public Character() {
@@ -58,6 +63,8 @@ public  class Character {
     public void die() {
         //To be implemented further in future versions,
         this.deaths++;
+        alive = false;
+        respawnTimer = 0;
     }
 
     /**
@@ -67,11 +74,46 @@ public  class Character {
         kills++;
     }
 
+    /**
+     * If respawn timer is greater than respawn time, returns tre, resets respawn timer and sets alive to true.
+     */
+    public boolean respawnTimeDone() {
+       return respawnTimer > Constants.RESPAWN_TIME;
+    }
+
+    /**
+     * Respawns the character, resetting repawn timer and sets alive to true
+     */
+    public void respawn() {
+        healthPoints = 100;
+        alive = true;
+        shouldRespawn = false;
+        respawnTimer = 0;
+    }
+
+    /**
+     * Adds specified time to respawn timer.
+     * @param v
+     */
+    public void addRespawnTimer(float v) {
+        this.respawnTimer += v;
+    }
+
+
     //***************************************GETTERS/SETTERS***********************************************//
 
 
     public State getState() {
         return state;
+    }
+    public boolean isAlive() {
+        return alive;
+    }
+    public void setShouldRespawn(boolean value) {
+            this.shouldRespawn = value;
+    }
+    public boolean getShouldRespawn() {
+        return shouldRespawn;
     }
 
     public void setState(State state) {
@@ -100,6 +142,10 @@ public  class Character {
 
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
+    }
+
+    public void takeDamage(int damage) {
+        this.healthPoints -= damage;
     }
 
     public int getHealthPoints() {

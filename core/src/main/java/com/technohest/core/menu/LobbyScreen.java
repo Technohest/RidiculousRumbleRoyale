@@ -162,7 +162,6 @@ public class LobbyScreen implements Screen {
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }
-
     }
 
     @Override

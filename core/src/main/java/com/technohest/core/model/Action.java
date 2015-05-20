@@ -26,7 +26,7 @@ public class Action {
      * Types of actions
      */
     public enum ActionID {
-        MOVE_LEFT, MOVE_RIGHT, JUMP
+        MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK_BASE, ATTACK_SPECIAL
     }
 
     public void setPlayerID(int id) {
