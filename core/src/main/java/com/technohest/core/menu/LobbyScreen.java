@@ -59,9 +59,12 @@ public class LobbyScreen implements Screen {
     private Table characterTable;
     private Table mainTable;
 
+    private RClient client;
+
     public LobbyScreen(){
 
         nmu = NetworkMenuUtility.getInstance();
+
 
         //Fontsize
         font = new BitmapFont();
@@ -114,7 +117,7 @@ public class LobbyScreen implements Screen {
 
         //Adding listeners
         char1Button.addListener(new CharacterSelectListener(this, "allden"));
-        char2Button.addListener(new CharacterSelectListener(this,"boking"));
+        char2Button.addListener(new CharacterSelectListener(this, "boking"));
         char3Button.addListener(new CharacterSelectListener(this, "vilddjur"));
         char4Button.addListener(new CharacterSelectListener(this, "schtek"));
 
@@ -124,7 +127,7 @@ public class LobbyScreen implements Screen {
         characterTable.add(char1Button);
 
         startButton = new TextButton("Start", style);
-        startButton.setDisabled(true);
+        //startButton.setDisabled(true);
 
         mainTable.add(characterTable);
         mainTable.add(startButton).padLeft(150).padTop(375);
@@ -149,16 +152,12 @@ public class LobbyScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-
         if (nmu.isServer()) {
             new RServer(nmu.getPort());
-            new RClient(nmu.getPort());
+            client = new RClient(nmu.getPort());
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }
-
-        //If the player is host, show start button
-        startButton.setDisabled(false);
 
     }
 
@@ -171,6 +170,11 @@ public class LobbyScreen implements Screen {
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
         }
         stage.draw();
+
+        //TODO: add function client.clientsLockedIn
+        if(client != null && client.isHost() && startButton.isDisabled()){
+            startButton.setDisabled(false);
+        }
     }
 
     @Override
