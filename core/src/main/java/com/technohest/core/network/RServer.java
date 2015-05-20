@@ -93,8 +93,11 @@ public class RServer {
      * Perform the actions sent in by the clients. Send the list of actions performed by the server to all the clients.
      */
     private synchronized void performActions() {
-        for (Action a: actionsToBePerformed)
+        for (Action a: actionsToBePerformed) {
             model.performAction(a);
+            if (a.getActionID() == Action.ActionID.ATTACK_BASE)
+                System.out.println(a.getActionID());
+        }
 
         generateState();
 

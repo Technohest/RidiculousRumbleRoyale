@@ -59,7 +59,7 @@ public class ServerNetworkListener extends Listener {
             c.sendTCP(p2);
         }
 
-        int tmp = 0;
+        int tmp = 1;
 
         for (Connection c: clients.values()) {
             if (playerIdTypeMap.keySet().size() > tmp) {

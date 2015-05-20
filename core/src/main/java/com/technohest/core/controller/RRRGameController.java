@@ -62,8 +62,12 @@ public class RRRGameController extends InputHandler {
             if (this.isPressed(InputHandler.JUMP)) {
                 listener.addAction(Action.ActionID.JUMP);
             }
-            if (this.isPressed(InputHandler.BASE_ATTACK)) {}
-            if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {}
+            if (this.isPressed(InputHandler.BASE_ATTACK)) {
+                listener.addAction(Action.ActionID.ATTACK_BASE);
+            }
+            if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
+                listener.addAction(Action.ActionID.ATTACK_SPECIAL);
+            }
         }
     }
 
