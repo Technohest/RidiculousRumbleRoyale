@@ -11,10 +11,7 @@ import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
@@ -22,7 +19,6 @@ import java.util.Vector;
  */
 public class RClient {
     private Client client;
-    private long lastUpdateTime = 0;
 
     //The MVC
     private RRRGameModel model = new RRRGameModel();
@@ -97,11 +93,11 @@ public class RClient {
         model.setMyID(id);
         model.init(playerIdTypeMap);
         model.generateWorld();
-        model.setIsClient();
+
         init();
+
         ScreenHandler.getInstance().setGameScreen(view);
         ScreenHandler.getInstance().setScreen(SCREEN.GAME);
-        Log.info("STARTING GAME ON CLIENT.");
     }
 
     public boolean isHost() {
@@ -113,30 +109,5 @@ public class RClient {
      */
     public void generateState(){
         current.setState(model.getGameLogic().generateState());
-    }
-
-    /**
-     * Compares local state to remote state and correct if needed
-     * @param state
-     * @param playerActions
-     * @param serverActions
-     */
-    public void correct(IState state, Vector<Action> playerActions, ArrayList<Action> serverActions) {
-        if (!this.current.equals(state)) {
-            model.correct(state);
-            applyServerActions(serverActions);
-            reapplyActions(playerActions);
-        }
-        this.current.setState(state.getState());
-    }
-
-    private void applyServerActions(ArrayList<Action> serverActions) {
-        for (Action a: serverActions)
-            model.performAction(a);
-    }
-
-    private void reapplyActions(Vector<Action> playerActions) {
-        for (Action a: playerActions)
-            model.performAction(a);
     }
 }

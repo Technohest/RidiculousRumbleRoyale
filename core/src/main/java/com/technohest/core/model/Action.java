@@ -5,14 +5,19 @@ package com.technohest.core.model;
  * Created by oskar on 2015-05-10.
  */
 public class Action {
-    private long timestamp;
+    private Integer sequenceNumber;
     private ActionID actionID;
     private Integer playerID;
 
-    public Action(int playerID, ActionID actionID, long timestamp){
+    public Action(int playerID, ActionID actionID, int sequenceNumber){
         this.playerID = playerID;
         this.actionID = actionID;
-        this.timestamp = timestamp;
+        this.sequenceNumber = sequenceNumber;
+    }
+
+    public Action(int playerID, ActionID actionID) {
+        this.playerID = playerID;
+        this.actionID = actionID;
     }
 
     public Action() {}
@@ -40,11 +45,11 @@ public class Action {
         this.actionID = actionID;
     }
 
-    public void setTimestamp(long timestamp){
-        this.timestamp = timestamp;
+    public void setSequenceNumber(int sequenceNumber){
+        this.sequenceNumber = sequenceNumber;
     }
 
-    public long getTimestamp(){
-        return timestamp;
+    public Integer getSequenceNumber(){
+        return sequenceNumber;
     }
 }

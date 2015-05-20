@@ -8,6 +8,9 @@ package com.technohest.core.model;
 public  class Character {
 
 
+    private int id;
+    private Character attributes;
+
     //State of character,may be reimplemented in future versions.
     public enum State {
         Standing,Running,Jumping,Falling
@@ -31,13 +34,14 @@ public  class Character {
      * Creates a character.
      *
      */
-    public Character(String name,Attack baseAttack,Attack specialAttack) {
+    public Character(int id, String name,Attack baseAttack,Attack specialAttack) {
         this.name = name;
         this.baseAttack = baseAttack;
         this.specialAttack = specialAttack;
         this.healthPoints = 100;
         this.kills = 0;
         this.deaths = 0;
+        this.id = id;
 
 
     }
@@ -117,4 +121,22 @@ public  class Character {
         return name;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setAttributes(Character newStats) {
+        this.name = newStats.name;
+        this.baseAttack = newStats.getBaseAttack();
+        this.specialAttack = newStats.getSpecialAttack();
+        this.healthPoints = newStats.getHealthPoints();
+        this.kills = newStats.getKills();
+        this.deaths = newStats.getDeaths();
+
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

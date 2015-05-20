@@ -55,15 +55,15 @@ public interface IGameLogic {
     public void attack_special(Character player);
 
     /**
-     * Sets the players movement attributes
-     * @param player
-     * target Character
+     * Sets the players attributes
+     * @param newState
+     * target ID
      * @param pos
      * new position
      * @param vel
      * new velocity
      */
-    public void setCharacterState(Character player, Vector2 pos, Vector2 vel);
+    public void setCharacterState(Character newState, Vector2 pos, Vector2 vel);
 
     /**
      * Compares local state with another state and corrects if needed

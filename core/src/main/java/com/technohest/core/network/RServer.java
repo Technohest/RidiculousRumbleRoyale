@@ -1,18 +1,13 @@
 package com.technohest.core.network;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.Tools.Sort;
-import com.technohest.core.menu.SCREEN;
-import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
-import com.technohest.core.view.RRRGameView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * Creates a server with specified port and registers packets the server will be listening to.
@@ -22,15 +17,21 @@ public class RServer {
     private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
-    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
-    private long lastUpdateTime = 0;
     private IState state;
+
+    //TIMESTEP
+    private double accumulator = 0.0;
+    private double currentTime;
+    private float step = 1.0f/60.0f;
+
+    private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
+
+    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
     public RServer(String port) {
         server = new Server();
         registerPackets();
 
-        ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
         serverNetworkListener.init(this);
 
         server.addListener(serverNetworkListener);
@@ -66,52 +67,49 @@ public class RServer {
         init();
         gameRunning = true;
 
+        /**
+         * Perform player actions and updates the world for every "step" that has passed.
+         */
         (new Thread() {
-            private long time = System.currentTimeMillis();
-            private long elapsedTime = System.currentTimeMillis();
-            private long acc = elapsedTime-time;
-
             @Override
             public void run() {
                 while (gameRunning) {
-                    if (acc >= 1000/30) {
+                    double newTime = TimeUtils.millis() / 1000.0;
+                    double frameTime = Math.min(newTime - currentTime, 0.25);
+
+                    currentTime = newTime;
+                    accumulator += frameTime;
+
+                    while (accumulator >= step) {
                         performActions();
-                        model.step(acc);
-                        time = elapsedTime;
+                        model.step(step);
+                        accumulator -= step;
                     }
-                    elapsedTime = System.currentTimeMillis();
-                    acc = elapsedTime - time;
                 }
             }
         }).start();
     }
 
-    private void performActions() {
-        actionsToBePerformed = Sort.sortTime(actionsToBePerformed);
+    /**
+     * Perform the actions sent in by the clients. Send the list of actions performed by the server to all the clients.
+     */
+    private synchronized void performActions() {
+        for (Action a: actionsToBePerformed)
+            model.performAction(a);
 
-        if (actionsToBePerformed.size() == 0)
-            return;
-
-        for (Action ap: actionsToBePerformed) {
-            if (ap.getTimestamp() < lastUpdateTime) {
-                actionsToBePerformed.remove(ap);
-                continue;
-            }
-
-            model.performAction(ap);
-        }
-
-        //set update time to be the time of the last updated action.
-        lastUpdateTime = actionsToBePerformed.get(actionsToBePerformed.size()-1).getTimestamp();
+        generateState();
 
         Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.actions = actionsToBePerformed;
         p.state = StateGDX.getInstance();
-        server.sendToAllUDP(p);
+        p.actions = this.actionsToBePerformed;
 
-        actionsToBePerformed.clear();
+        server.sendToAllTCP(p);
+        this.actionsToBePerformed.clear();
     }
 
+    /**
+     * Updates the state to be the current physics state.
+     */
     public void generateState(){
         state.setState(model.getGameLogic().generateState());
     }
@@ -120,19 +118,7 @@ public class RServer {
         gameRunning = false;
     }
 
-    public void addActions(Vector<Action> action) {
-        for (Action a: action) {
-            if (a.getTimestamp() > lastUpdateTime)
-                actionsToBePerformed.add(a);
-        }
-    }
-
-    /**
-     * Sends a request to the client to sync the
-     */
-    public void sync() {
-        Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.state = StateGDX.getInstance();
-        server.sendToAllTCP(p);
+    public synchronized void addActionToBePerformed(Action a) {
+        actionsToBePerformed.add(a);
     }
 }

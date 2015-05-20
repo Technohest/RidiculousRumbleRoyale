@@ -1,4 +1,4 @@
-package com.technohest.Test
+package com.technohest.java
 
 import com.technohest.Tools.Sort
 import com.technohest.core.model.Action
@@ -10,10 +10,10 @@ import org.junit.Test
 class SortTest extends GroovyTestCase {
     @Test
     public void testTimeSort(){
-        Vector<Action> actionVector;
-        actionVector = new Vector<Action>();
+        ArrayList<Action> actionVector;
+        actionVector = new ArrayList<Action>();
         for(int i=0;i<10;i++){
-            Action temp = new Action(Action.ActionID.Jump, i);
+            Action temp = new Action(1, Action.ActionID.JUMP, i);
             actionVector.add(temp);
         }
         actionVector = Sort.sortTime(actionVector);

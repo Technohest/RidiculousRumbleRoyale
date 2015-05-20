@@ -2,6 +2,7 @@ package com.technohest.core.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.ILevel;
+import com.technohest.Tools.Correction;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
@@ -20,16 +21,10 @@ public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
     private ClientNetworkListener listener;
     private RRRGameView view;
-    private int blocking = 0;
 
     private double accumulator = 0.0;
     private double currentTime;
     private float step = 1.0f/60.0f;
-
-    private ArrayList<Action> performedActions = new ArrayList<Action>();
-
-    //TMP
-    private long time = 0;
 
     public RRRGameController(RRRGameModel model) {
         super();
@@ -56,60 +51,44 @@ public class RRRGameController extends InputHandler {
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
-        if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-            if (listener != null)
-                listener.sync();
-        }
 
-        /*if (blocking > 10)
-            return;*/
-        if (this.isPressed(InputHandler.RIGHT)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_RIGHT, time));
-            blocking++;
-            if (listener != null)
-                listener.addAction(Action.ActionID.MOVE_RIGHT, time);
+        if (listener != null) {
+            if (this.isPressed(InputHandler.RIGHT)) {
+                listener.addAction(Action.ActionID.MOVE_RIGHT);
+            }
+            if (this.isPressed(InputHandler.LEFT)) {
+                listener.addAction(Action.ActionID.MOVE_LEFT);
+            }
+            if (this.isPressed(InputHandler.JUMP)) {
+                listener.addAction(Action.ActionID.JUMP);
+            }
+            if (this.isPressed(InputHandler.BASE_ATTACK)) {}
+            if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {}
         }
-        if (this.isPressed(InputHandler.LEFT)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.MOVE_LEFT, time));
-            blocking++;
-            if (listener != null)
-                listener.addAction(Action.ActionID.MOVE_LEFT, time);
-        }
-        if (this.isPressed(InputHandler.JUMP)) {
-            time = System.currentTimeMillis();
-            model.performAction(new Action(model.getmyID(), Action.ActionID.JUMP, time));
-            performedActions.add(new Action(model.getmyID(), Action.ActionID.JUMP, time));
-            blocking++;
-            if (listener != null)
-                listener.addAction(Action.ActionID.JUMP, time);
-        }
-        if (this.isPressed(InputHandler.BASE_ATTACK)) {}
     }
 
+    /**
+     * Updates the input and sends actions to the server every "step". Updates the view and the state as fast as
+     * possible.
+     */
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
         double  frameTime = Math.min(newTime - currentTime, 0.25);
-        float   deltaTime = (float)frameTime;
 
         currentTime = newTime;
-
         accumulator += frameTime;
 
-        if (this.hasInput()) {
-            this.handleInput();
-        }
-
-        if (listener != null) {
-            listener.sendActionsToServerIfNecissary();
-        }
         while(accumulator >= step) {
-            model.step(step);
+            if (this.hasInput())
+                this.handleInput();
+
+            if (listener != null)
+                listener.sendActionsToServerIfNecessary();
+
             accumulator -= step;
         }
+
+        Correction.getInstance().correctState(model);
         view.update(v);
     }
 }

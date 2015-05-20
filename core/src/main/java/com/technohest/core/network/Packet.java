@@ -5,6 +5,7 @@ import com.technohest.core.model.Action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -21,11 +22,11 @@ public class Packet {
     }
 
     public static class Packet1ActionList {
-        public Vector<Action> action;
+        public List<Action> action;
     }
 
     public static class Packet1Correction {
-        public ArrayList<Action> actions;
+        public List<Action> actions;
         public IState state;
     }
 
@@ -36,6 +37,4 @@ public class Packet {
     public static class Packet0Start {}
 
     public static class Packet2GameOver {}
-
-    public static class Packet5SyncEvent {}
 }
