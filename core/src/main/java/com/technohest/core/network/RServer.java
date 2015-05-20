@@ -25,7 +25,10 @@ public class RServer {
     private RRRGameModel model = new RRRGameModel();
     private IState state;
 
-    private float step = 1000/30;
+    //TIMESTEP
+    private double accumulator = 0.0;
+    private double currentTime;
+    private float step = 1.0f/60.0f;
 
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
@@ -71,24 +74,20 @@ public class RServer {
         gameRunning = true;
 
         (new Thread() {
-            private double time = TimeUtils.millis();
-            private long elapsedTime = System.currentTimeMillis();
-            private double acc = elapsedTime-time;
-
             @Override
             public void run() {
                 while (gameRunning) {
-                    double  newTime = TimeUtils.millis() / 1000.0;
-                    double  frameTime = Math.min(newTime - time, 0.25);
+                    double newTime = TimeUtils.millis() / 1000.0;
+                    double frameTime = Math.min(newTime - currentTime, 0.25);
+                    float deltaTime = (float)frameTime;
 
-                    time = newTime;
+                    currentTime = newTime;
+                    accumulator += frameTime;
 
-                    acc += frameTime;
-                    if (acc >= step) {
+                    while (accumulator >= step) {
                         performActions(actionsToBePerformed);
                         model.step(step);
-                        time = elapsedTime;
-                        acc -= step;
+                        accumulator -= step;
                     }
                 }
             }
@@ -103,6 +102,7 @@ public class RServer {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
         }
+
         //Generate a new state
         generateState();
         Packet.Packet1Correction p = new Packet.Packet1Correction();

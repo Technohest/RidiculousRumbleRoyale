@@ -69,7 +69,8 @@ public class RRRGameController extends InputHandler {
         }
         if (this.isPressed(InputHandler.BASE_ATTACK)) {}
     }
-
+    int i=0;
+    int frame = 0;
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
         double  frameTime = Math.min(newTime - currentTime, 0.25);
@@ -79,14 +80,19 @@ public class RRRGameController extends InputHandler {
 
         accumulator += frameTime;
 
-        if (this.hasInput()) {
-            this.handleInput();
-        }
-
-        if (listener != null) {
-            listener.sendActionsToServerIfNecessary();
-        }
         while(accumulator >= step) {
+            i++;
+            if (i==60) {
+                frame++;
+                System.out.println(frame);
+            }
+            if (this.hasInput()) {
+                this.handleInput();
+            }
+
+            if (listener != null) {
+                listener.sendActionsToServerIfNecessary();
+            }
             model.step(step);
             accumulator -= step;
         }

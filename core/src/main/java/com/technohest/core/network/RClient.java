@@ -120,7 +120,7 @@ public class RClient {
      */
     public void correct(IState state, List<Action> actions, List<Action> playerActions) {
         if (!this.current.equals(state)) {
-            model.correct(state);
+            //model.correct(state);
             applyServerActions(actions);
             reapplyLocalActions(playerActions);
         }
