@@ -11,14 +11,27 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.constants.Constants;
+import com.technohest.constants.Settings;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 public class RRRGameView implements Screen {
 
@@ -38,28 +51,27 @@ public class RRRGameView implements Screen {
     */
     ShapeRenderer sRenderer;
 
-
+	Settings settings;
 	/**
 	 * Initialize the Game, calling controller.getLevel which calls model.getLevel
 	 * @param controller
 	 * The controller which will be used to check the validity of requests and relaying the requests to the model
 	 */
 	public RRRGameView(RRRGameController controller, RRRGameModel model) {
-
+		settings = new Settings();
 		this.model = model;
 		this.controller = controller;
 		controller.setView(this);
 		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel().getMap());
 		batch = new SpriteBatch();
 
+		settings = new Settings();
 		/**
 		 * camera is used to draw the tiles
 		 * box2dcam is used to "draw" all bodies
 		 */
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
         sRenderer  = new ShapeRenderer();
-        camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
 
         //Activate for debugrenderer
         /*
@@ -68,17 +80,21 @@ public class RRRGameView implements Screen {
         dmatrix.scale(32,32,1f);
         */
 
+		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
+		mapRenderer.setView(camera);
 	}
 
 	public RRRGameView(RRRGameModel model) {
+		settings = new Settings();
 		this.model = model;
 		mapRenderer = new OrthogonalTiledMapRenderer(model.getLevel().getMap());
 		batch = new SpriteBatch();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
 		sRenderer = new ShapeRenderer();
-		camera.setToOrtho(false, Constants.DEF_WIDTH, Constants.DEF_HEIGHT);
+
+		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
+		mapRenderer.setView(camera);
 	}
 
 	@Override
@@ -108,7 +124,6 @@ public class RRRGameView implements Screen {
 		float b = 218 / 255.0f;
 		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-		mapRenderer.setView(camera);
 		mapRenderer.render();
 		batch.begin();
 		batch.end();

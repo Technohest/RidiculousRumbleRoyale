@@ -4,8 +4,9 @@ package com.technohest.constants;
  * Created by oskar on 2015-04-13.
  */
 public class Constants {
-    /* 1. start the program
-     * 2. read from constants (is done in RRRGameView)
+    /* 1. start the program     check
+     * 2. read from constants (is done in RRRGameView)      check
+     * 3. read from xml and set those options chosen    check
      * 3. set different options (in XML file) (is done in OptionsMenuView)
      * 4. set the constants from XML file 
      */

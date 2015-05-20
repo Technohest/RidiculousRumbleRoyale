@@ -2,7 +2,7 @@
 <config>
 	<options>
 		<displaymode>fullscreen</displaymode>
-		<width>960</width>
+		<width>1280</width>
 		<height>720</height>
 		<music>enabled</music>
 		<sound>enabled</sound>

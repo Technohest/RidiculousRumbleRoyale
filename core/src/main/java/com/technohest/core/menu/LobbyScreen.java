@@ -137,14 +137,18 @@ public class LobbyScreen implements Screen {
 
 
     public void selectCharacter(String character){
-        if(character == "allden"){
+        if(character.equals("allden") && !char1Button.isDisabled()){
             System.out.println("You have chosen allden, lolwhy?");
-        }else if (character == "boking"){
+            char1Button.setDisabled(true);
+        }else if (character.equals("boking") && !char2Button.isDisabled()){
             System.out.println("You have chosen wisely");
-        }else if (character == "vilddjur"){
+            char2Button.setDisabled(true);
+        }else if (character.equals("vilddjur") && !char3Button.isDisabled()){
             System.out.println("rawr");
-        }else if (character == "schtek"){
+            char3Button.setDisabled(true);
+        }else if (character.equals("schtek") && !char4Button.isDisabled()){
             System.out.println("let me just koka this äpple");
+            char4Button.setDisabled(true);
         }
     }
 
