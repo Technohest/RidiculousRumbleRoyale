@@ -74,7 +74,6 @@ public class RRRGameController extends InputHandler {
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
         double  frameTime = Math.min(newTime - currentTime, 0.25);
-        float   deltaTime = (float)frameTime;
 
         currentTime = newTime;
 
