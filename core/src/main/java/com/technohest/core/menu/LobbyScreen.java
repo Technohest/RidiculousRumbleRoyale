@@ -82,6 +82,7 @@ public class LobbyScreen implements Screen {
 
         //Tables
         characterTable = new Table(skin);
+        mainTable = new Table(skin);
 
         //Stage
         stage = new Stage();
@@ -112,18 +113,36 @@ public class LobbyScreen implements Screen {
         characterTable.add(char4Button).padRight(20);
 
         //Adding listeners
+        char1Button.addListener(new CharacterSelectListener(this, "allden"));
+        char2Button.addListener(new CharacterSelectListener(this,"boking"));
+        char3Button.addListener(new CharacterSelectListener(this, "vilddjur"));
+        char4Button.addListener(new CharacterSelectListener(this, "schtek"));
 
 
-        characterTable.setPosition(x,y);
+        mainTable.setPosition(x, y);
+        characterTable.setPosition(x, y);
         characterTable.add(char1Button);
 
         startButton = new TextButton("Start", style);
-        startButton.setPosition(x/(3/4), y/5);
         startButton.setDisabled(true);
-        stage.addActor(characterTable);
-    }
-    public void selectCharacter(String character){
 
+        mainTable.add(characterTable);
+        mainTable.add(startButton).padLeft(150).padTop(375);
+
+        stage.addActor(mainTable);
+    }
+
+
+    public void selectCharacter(String character){
+        if(character == "allden"){
+            System.out.println("You have chosen allden, lolwhy?");
+        }else if (character == "boking"){
+            System.out.println("You have chosen wisely");
+        }else if (character == "vilddjur"){
+            System.out.println("rawr");
+        }else if (character == "schtek"){
+            System.out.println("let me just koka this äpple");
+        }
     }
 
     @Override
