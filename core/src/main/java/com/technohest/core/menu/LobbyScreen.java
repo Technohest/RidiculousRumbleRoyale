@@ -111,6 +111,9 @@ public class LobbyScreen implements Screen {
         char4Button = new ImageButton(char4Draw);
         characterTable.add(char4Button).padRight(20);
 
+        //Adding listeners
+
+
         characterTable.setPosition(x,y);
         characterTable.add(char1Button);
 
@@ -118,6 +121,9 @@ public class LobbyScreen implements Screen {
         startButton.setPosition(x/(3/4), y/5);
         startButton.setDisabled(true);
         stage.addActor(characterTable);
+    }
+    public void selectCharacter(String character){
+
     }
 
     @Override
