@@ -274,12 +274,12 @@ public class OptionsMenuView implements Screen{
     }
     private void updateStage(){
         mainTable.clear();
-        mainTable.add(navigationTable);
+        mainTable.add(navigationTable).padBottom(30).padTop(30);
         mainTable.row();
         mainTable.add(currentTable);
         mainTable.row();
-        mainTable.add(backButton);
-        mainTable.add(saveButton);
+        mainTable.add(backButton).padTop(50);
+        mainTable.add(saveButton).padTop(50);
     }
 
     public void saveOptions(){
