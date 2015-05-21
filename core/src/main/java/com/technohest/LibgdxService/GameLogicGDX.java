@@ -22,6 +22,7 @@ import java.util.HashMap;
  */
 public class GameLogicGDX implements IGameLogic {
     private final World world;
+    private ArrayList<Body> attackBodies;
     CollisionHandler collisionHandler;
     RRRGameModel model;
     //A map for bundling bodies with player objects
@@ -30,15 +31,12 @@ public class GameLogicGDX implements IGameLogic {
     //THIS ONE SHOULD BE IN MODEL!
     private HashMap<Integer,Character> idCharacterMap;
 
-
-    private HashMap<Attack,Body> attackBodyMap;
-
     public GameLogicGDX(RRRGameModel model){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         characterBodyMap = new HashMap<Character,Body>();
-        attackBodyMap = new HashMap<Attack, Body>();
         collisionHandler = new CollisionHandler(this);
         world.setContactListener(collisionHandler);
+        this.attackBodies = new ArrayList<Body>();
         this.model = model;
     }
 
@@ -57,6 +55,7 @@ public class GameLogicGDX implements IGameLogic {
         this.idCharacterMap = idCharacterMap;
         level.generate(world);
         for (Character c: idCharacterMap.values()) {
+            //Move to model
             createPlayer(c);
         }
     }
@@ -98,19 +97,8 @@ public class GameLogicGDX implements IGameLogic {
     public Body getBodyFromCharacter(Character character) {
         return characterBodyMap.get(character);
     }
-    public Body getBodyFromAttack(Attack attack) {
-        return attackBodyMap.get(attack);
-    }
-    public Attack getAttackFromBody(Body b) {
-        for(Attack a:attackBodyMap.keySet()) {
-            if(attackBodyMap.get(a).equals(b)) {
-                return a;
-            }
-        }
-        return null;
-    }
 
-
+//Perhaps move state setting to model
     public void updatePlayer(Character c) {
         boolean changed = false;
             Body b = getBodyFromCharacter(c);
@@ -156,6 +144,15 @@ public class GameLogicGDX implements IGameLogic {
 
         }
 
+    public Body getBodyFromAttack(Attack attack) {
+        for(Body b:attackBodies) {
+            if(b.getUserData() == attack) {
+                return b;
+            }
+        }
+        return null;
+    }
+
 
 
     public void respawnPlayer(Character player) {
@@ -164,8 +161,7 @@ public class GameLogicGDX implements IGameLogic {
 
 
     public void destroyAttack(Attack attack) {
-        world.destroyBody(getBodyFromAttack(attack));
-        attackBodyMap.remove(attack);
+        world.destroyBody(getBodyFromAttack(attack));;
     }
 
 
@@ -202,8 +198,8 @@ public class GameLogicGDX implements IGameLogic {
     }
 
     @Override
-    public void attack_base(Character player,Attack attack) {
-        Body playerBody = getBodyFromCharacter(player);
+    public void attack_base(Character player) {
+        Body playerBody = getBodyFromId(player.getId());
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.gravityScale = 0;
@@ -218,8 +214,7 @@ public class GameLogicGDX implements IGameLogic {
             fdef1.shape = shape;
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
-            b.createFixture(fdef1).setUserData(attack);
-            attackBodyMap.put(attack,b);
+            b.createFixture(fdef1).setUserData(player.getBaseAttack());
     }
 
 
@@ -246,12 +241,10 @@ public class GameLogicGDX implements IGameLogic {
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
             b.createFixture(fdef1).setUserData(attack);
-            attackBodyMap.put(attack,b);
+            attackBodies.add(b);
+    }
 
-    }
-    public HashMap<Attack,Body> getAttackMap() {
-        return attackBodyMap;
-    }
+
 
 
     @Override
