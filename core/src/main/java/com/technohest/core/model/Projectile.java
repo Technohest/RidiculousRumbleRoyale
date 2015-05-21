@@ -8,8 +8,8 @@ package com.technohest.core.model;
 public class Projectile extends Attack {
     private float velocityX;
 
-    public Projectile(String name, int damage,float duration,float velocityX) {
-        super(name,damage,duration);
+    public Projectile(String name, int sourcePlayer, int damage,float duration,float velocityX) {
+        super(name,sourcePlayer,damage,duration);
         this.velocityX = velocityX;
     }
 
