@@ -1,0 +1,78 @@
+        Projektmöte 17
+       "The Dark Knight"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-21
+
+
+
+§1 Mötets öppnande.
+    > Oskar Jedvert Sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    > Inga
+
+§3 Punkter från förra mötet.
+    > Combatsystem nästan klart
+        Gjort
+    > Rapport metod måste börja skrivas
+        Gjort
+    > RAD Skall putsas på
+        X
+        Vi vet inte hur mycket som ska skrivas.
+    > SDD Skall kollas över
+        X
+    > TESTER
+        Gjort
+        Behövs mer
+
+§4 Projektets status
+    Förra veckan:
+        > Implementing more UC's. Implementing services/GUI, Review Rad, Start with SDD
+    Denna veckan:
+        > Kolla över och putsa på RAD, Skriva på SDD, Skriva tester.
+        > Skriva Combat/Nätverk
+        > Code review
+
+§5 Bestämmelser
+    > Uppgifter
+        DAVID:
+            Dependencies.
+            SDD, RAD.
+        OSCAR:
+            Kommentarer
+            Tester
+            RAD,SDD,Rapport.
+        TOBIAS:
+            Dependencies.
+            SDD, RAD.
+        OSKAR:
+            Rapport.
+            Tester.
+
+§6 Genomgång av info från möte med handledare
+    > Minska kopplingar
+        Ska vi göra. Tobias, David
+    > Ändra libgdx-dependencies struktur
+        Ska göras, Tobias, David.
+    > Testklasser - MockupKlasser
+        Kan bli lättare efter minskningen av kopplingar.
+
+§7 Inför kommande möte + fikaansvarig
+    > Combat o Nätverk klart
+    > Lobby klar
+        är typ klar, kommentarer
+    > Förbättra kopplingar + fulkod
+    > Börja skriva tester
+    > Rapport nästintill klar
+        Ska vara klar
+    > SDD Klar
+    > RAD Klar
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+    "Why so serious"
+         - Joker
