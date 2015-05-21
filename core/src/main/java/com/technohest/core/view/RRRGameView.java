@@ -50,7 +50,7 @@ public class RRRGameView implements Screen {
     private Box2DDebugRenderer drenderer;
     private Matrix4 dmatrix;
     //Activate for debugrenderer
-    public boolean isDebugging = false;
+    public boolean isDebugging = true;
 
 
     ShapeRenderer sRenderer;
@@ -119,10 +119,10 @@ public class RRRGameView implements Screen {
 
 
         //Draws projectiles - TEMP!
-        HashMap<Attack,Body> attackBodyMap = ((GameLogicGDX)model.getGameLogic()).getAttackMap();
-        for(Body b: attackBodyMap.values()) {
-            Attack tmp = (((GameLogicGDX) model.getGameLogic()).getAttackFromBody(b));
-                if (tmp instanceof Projectile) {
+        ArrayList<Attack> activeAttacks = model.getActiveAttacks();
+        for(Attack attack: activeAttacks) {
+                if (attack instanceof Projectile) {
+                    Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromAttack(attack);
                     sRenderer.circle(((b.getPosition().x) * 32), ((b.getPosition().y) * 32), 5);
                 }
 
