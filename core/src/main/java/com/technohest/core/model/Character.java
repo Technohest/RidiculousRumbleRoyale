@@ -25,34 +25,39 @@ public  class Character {
     private boolean isFacingRight;
     private boolean grounded;
     private float respawnTimer;
-    private boolean alive;
-    private boolean shouldRespawn;
+    private boolean alive,shouldRespawn;
 
     //Game specific variables;
-    private int healthPoints;
-    private int kills;
-    private int deaths;
+    private int healthPoints, kills, deaths;
 
     /**
      * Creates a character.
      *
      */
-    public Character(int id, String name,Attack baseAttack,Attack specialAttack) {
+    public Character(int id, String name) {
         this.name = name;
-        this.baseAttack = baseAttack;
-        this.specialAttack = specialAttack;
         this.healthPoints = 100;
         this.kills = 0;
         this.deaths = 0;
         alive = true;
         respawnTimer = 0;
         this.id = id;
-        //baseAttack.setSourcePlayer(this);
-        //specialAttack.setSourcePlayer(this);
+
     }
+
+
 
     public Character() {
 
+    }
+
+
+    /**
+     * Generates the player specific attacks.
+     */
+    public void generateAttacks() {
+        this.baseAttack = new MeleeAttack("Kick",id,20,0.3f);
+        this.specialAttack = new MeleeAttack("Fireball",id,15,0.3f);
     }
 
 
