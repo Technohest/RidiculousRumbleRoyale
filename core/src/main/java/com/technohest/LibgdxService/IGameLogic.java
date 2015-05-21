@@ -67,7 +67,7 @@ public interface IGameLogic {
     /**
      * Makes the specified player perform a base attack.
      */
-    public void attack_base(Character player,Attack attack);
+    public void attack_base(Character player);
 
     /**
      * Makes the specified player performs perform a special attack.
