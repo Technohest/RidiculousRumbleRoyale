@@ -57,8 +57,8 @@ public  class Character {
      * Generates the player specific attacks.
      */
     public void generateAttacks() {
-        this.baseAttack = new MeleeAttack("Kick",id,20,0.3f);
-        this.specialAttack = new MeleeAttack("Fireball",id,15,0.3f);
+        this.baseAttack = new MeleeAttack("Kick",id,20,1f);
+        this.specialAttack = new Projectile("Fireball",id,15,0.3f,10);
     }
 
 
