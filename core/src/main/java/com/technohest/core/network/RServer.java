@@ -113,7 +113,7 @@ public class RServer {
      * Updates the state to be the current physics state.
      */
     public void generateState(){
-        state.setState(model.getGameLogic().generateState());
+        model.getGameLogic().generateState();
     }
 
     public void gameOver() {
