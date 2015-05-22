@@ -1,5 +1,6 @@
 package com.technohest.core.model;
 
+import com.badlogic.gdx.Gdx;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
@@ -160,16 +161,18 @@ public class RRRGameModel {
                 gameLogic.moveLeft(player);
                 break;
             case ATTACK_BASE:
+                if(player.getBaseAttack().isReady()) {
                     player.getBaseAttack().perform();
                     gameLogic.attack_base(player);
                     this.activeAttacks.add(player.getBaseAttack());
+                }
 
 
 
                 break;
             case ATTACK_SPECIAL:
                 if(player.getSpecialAttack().isReady()) {
-                    gameLogic.attack_special(player,player.getSpecialAttack());
+                    gameLogic.attack_special(player);
                     player.getSpecialAttack().perform();
                     this.activeAttacks.add(player.getSpecialAttack());
                 }
