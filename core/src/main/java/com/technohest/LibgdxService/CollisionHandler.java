@@ -40,6 +40,7 @@ public class CollisionHandler implements ContactListener {
             if(gameLogic.model.getPlayerFromID(attack.getSourcePlayerId()) != c) {
                 c.takeDamage(((Attack) contact.getFixtureA().getUserData()).getDamage());
                 ((Attack)contact.getFixtureA().getUserData()).setInpacted(true);
+                Gdx.app.log("Player: " + c.getId(), " took damage;" );
             }
 
 
@@ -49,6 +50,7 @@ public class CollisionHandler implements ContactListener {
             Attack attack = ((Attack)contact.getFixtureB().getUserData());
             if(gameLogic.model.getPlayerFromID(attack.getSourcePlayerId()) != c) {
                 c.takeDamage(((Attack) contact.getFixtureB().getUserData()).getDamage());
+                Gdx.app.log("Player: " + c.getId(), " took damage;");
                 ((Attack)contact.getFixtureB().getUserData()).setInpacted(true);
 
 
