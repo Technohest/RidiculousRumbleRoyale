@@ -42,6 +42,7 @@ public  class Character {
         alive = true;
         respawnTimer = 0;
         this.id = id;
+        generateAttacks();
 
     }
 
