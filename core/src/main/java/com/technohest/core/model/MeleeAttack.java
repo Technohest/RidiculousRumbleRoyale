@@ -8,5 +8,8 @@ public class MeleeAttack extends Attack {
     public MeleeAttack(String name,int sourceplayerId,int damage,float duration) {
         super(name,sourceplayerId,damage,duration);
     }
+    public MeleeAttack() {
+
+    }
 
 }
