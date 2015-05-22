@@ -1,6 +1,8 @@
 package com.technohest.core.network;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.technohest.core.model.Attack;
 import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
@@ -15,8 +17,20 @@ public interface IState {
      * @return
      * State which needs to be set in gameLogic
      */
-    HashMap<Character, ArrayList<Vector2>>  getState();
-    void setState(HashMap<Character, ArrayList<Vector2>> map);
+    public HashMap<Character, ArrayList<Vector2>> getCharacterStates();
+
+    /**
+     * Sets the state properties.
+     * @param map
+     * @param bodyAttackMap
+     */
+    void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,Body> bodyAttackMap);
+
+    /**
+     * Returns all the values of the active attacks.
+     * @return
+     */
+    public HashMap<Attack,Body> getAttackStates();
 
     /**
      * Compare with another state
@@ -25,5 +39,7 @@ public interface IState {
      * @return
      * true if same, false else
      */
-    boolean equals(HashMap<Character, ArrayList<Vector2>> map);
+    boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,Body> attackBodyMap);
+
+
 }
