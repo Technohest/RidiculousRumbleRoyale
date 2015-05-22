@@ -160,8 +160,8 @@ public class RRRGameModel {
                 gameLogic.moveLeft(player);
                 break;
             case ATTACK_BASE:
-                    gameLogic.attack_base(player);
                     player.getBaseAttack().perform();
+                    gameLogic.attack_base(player);
                     this.activeAttacks.add(player.getBaseAttack());
 
 
