@@ -46,6 +46,16 @@ public abstract class Attack  {
         ready = false;
     }
 
+    public void setAttributes(Attack attack ) {
+        this.damage = attack.getDamage();
+        this.name = attack.getName();
+        this.duration = attack.getDuration();
+        this.sourcePlayerId = attack.getSourcePlayerId();
+        this.elapsedTime = attack.getElapsedTime();
+        this.ready = attack.isReady();
+        this.hasInpacted = attack.hasInpacted;
+    }
+
     public boolean timeLeft() {
         return elapsedTime < duration;
     }
@@ -58,12 +68,19 @@ public abstract class Attack  {
     public boolean isReady() {
         return ready;
     }
+    public float getDuration() {
+        return duration;
+    }
     public void setSourcePlayerId(Integer Id) {
         this.sourcePlayerId = Id;
     }
     public void setInpacted(boolean inpacted) {
         this.hasInpacted = inpacted;
 
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
     }
     public boolean getHasInpacted() {
         return this.hasInpacted;
