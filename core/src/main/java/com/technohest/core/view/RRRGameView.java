@@ -77,6 +77,8 @@ public class RRRGameView implements Screen {
 		camera = new OrthographicCamera();
         sRenderer  = new ShapeRenderer();
 
+		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
+		mapRenderer.setView(camera);
 
         if(isDebugging) {
             drenderer = new Box2DDebugRenderer();
@@ -84,8 +86,6 @@ public class RRRGameView implements Screen {
             dmatrix.scale(32, 32, 1f);
         }
 
-		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
-		mapRenderer.setView(camera);
 	}
 
 	public RRRGameView(RRRGameModel model) {
