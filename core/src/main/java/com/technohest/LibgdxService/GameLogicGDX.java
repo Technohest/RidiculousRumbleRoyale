@@ -6,10 +6,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.Tools.Debugg;
 import com.technohest.constants.Constants;
-import com.technohest.core.model.Attack;
+import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
-import com.technohest.core.model.Projectile;
-import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.IState;
 import com.technohest.core.network.StateGDX;
 import java.util.ArrayList;
@@ -247,6 +245,23 @@ public class GameLogicGDX implements IGameLogic {
             attackBodyMap.put(player.getSpecialAttack(),b);
     }
 
+        public Character getCharacterFromAttack(Attack attack) {
+            if(attack instanceof Projectile) {
+                for(Character c:getCharacters()) {
+                    if(c.getBaseAttack().equals(attack)) {
+                        return c;
+                    }
+                }
+            } else {
+                for(Character c:getCharacters()) {
+                    if(c.getBaseAttack().equals(attack)) {
+                        return c;
+                    }
+                }
+            }
+                return null;
+
+        }
 
 
 
@@ -261,6 +276,25 @@ public class GameLogicGDX implements IGameLogic {
         }
     }
 
+    @Override
+    public void setAttackState(Attack attack, Vector2 position, Vector2 velocity) {
+        Body attackBody = getBodyFromAttack(attack);
+
+        if (attackBody != null) {
+            attackBody.setLinearVelocity(velocity);
+            attackBody.setTransform(position, attackBody.getAngle());
+        }
+        else {
+            if (getCharacterFromAttack(attack) != null) {
+                if (attack instanceof MeleeAttack) {
+                    attack_base(getCharacterFromAttack(attack));
+                } else {
+                    attack_special(getCharacterFromAttack(attack));
+                }
+            }
+        }
+    }
+
     private Body getBodyFromId(Integer playerId) {
         return characterBodyMap.get(idCharacterMap.get(playerId));
     }
@@ -272,8 +306,14 @@ public class GameLogicGDX implements IGameLogic {
             ArrayList<Vector2> temp = map.get(c);
             setCharacterState(c.getId(), temp.get(0), temp.get(1));
         }
-        this.attackBodyMap = newState.getAttackStates();
-        StateGDX.getInstance().setState(map,attackBodyMap);
+        HashMap<Attack,ArrayList<Vector2>> attackVectorMap = newState.getAttackStates();
+        if(!attackVectorMap.isEmpty()) {
+            for (Attack a : attackVectorMap.keySet()) {
+                ArrayList<Vector2> temp = attackVectorMap.get(a);
+                setAttackState(a, temp.get(0), temp.get(1));
+            }
+        }
+        model.setEnabledAttacks(attackBodyMap.keySet());
     }
 
     @Override
@@ -288,11 +328,26 @@ public class GameLogicGDX implements IGameLogic {
 
             map.put(c, vector2s);
         }
+        HashMap<Attack,ArrayList<Vector2>> attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
+        for(Attack a:attackBodyMap.keySet()) {
+            if(a.isReady()) {
+                ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
+                Vector2s.add(attackBodyMap.get(a).getPosition());
+                Vector2s.add(attackBodyMap.get(a).getLinearVelocity());
+                attackVectorMap.put(a, Vector2s);
+            }
+        }
         StateGDX state = StateGDX.getInstance();
-        state.setState(map,attackBodyMap);
+        state.setState(map,attackVectorMap);
     }
 
     public Collection<Character> getCharacters() {
-        return idCharacterMap.values();
+        Collection<Character> aliveCharacters = new ArrayList<Character>();
+        for(Character c:idCharacterMap.values()) {
+            if(c.isAlive()) {
+                aliveCharacters.add(c);
+            }
+        }
+        return aliveCharacters;
     }
 }
