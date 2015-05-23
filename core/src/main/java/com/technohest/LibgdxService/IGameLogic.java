@@ -86,6 +86,14 @@ public interface IGameLogic {
      */
     public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel);
 
+    /**
+     * Sets the attack attributes.
+     * @param attack
+     * @param position
+     * @param velocity
+     */
+    public void setAttackState(Attack attack, Vector2 position, Vector2 velocity);
+
 
 
     /**
