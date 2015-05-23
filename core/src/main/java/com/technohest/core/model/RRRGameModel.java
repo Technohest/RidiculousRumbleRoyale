@@ -1,6 +1,5 @@
 package com.technohest.core.model;
 
-import com.badlogic.gdx.Gdx;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
@@ -10,6 +9,7 @@ import com.technohest.core.network.IState;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * The main model for Ridiculous Rumble Royale.
@@ -210,6 +210,12 @@ public class RRRGameModel {
     }
     public void setMyID(Integer id) {
         myID = id;
+    }
+
+    public void setEnabledAttacks(Set<Attack> attackSet) {
+        ArrayList<Attack> temp = new ArrayList<Attack>();
+        temp.addAll(attackSet);
+        this.activeAttacks = temp;
     }
 
     public void setRespawnEnabled(boolean value) {
