@@ -22,15 +22,15 @@ public interface IState {
     /**
      * Sets the state properties.
      * @param map
-     * @param bodyAttackMap
-     */
-    void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,Body> bodyAttackMap);
+     * @param attackVectorMap
+     * */
+    void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap);
 
     /**
      * Returns all the values of the active attacks.
      * @return
      */
-    public HashMap<Attack,Body> getAttackStates();
+    public HashMap<Attack,ArrayList<Vector2>> getAttackStates();
 
     /**
      * Compare with another state
@@ -39,7 +39,7 @@ public interface IState {
      * @return
      * true if same, false else
      */
-    boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,Body> attackBodyMap);
+    boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap);
 
 
 }
