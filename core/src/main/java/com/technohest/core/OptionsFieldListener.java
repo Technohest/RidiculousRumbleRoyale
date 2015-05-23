@@ -10,6 +10,11 @@ public class OptionsFieldListener extends InputListener {
     private OptionsField optionsField;
     private String direction;
 
+    /**
+     * Creates the listener for the buttons for an OptionsField
+     * @param optionsField
+     * @param direction
+     */
     public OptionsFieldListener(OptionsField optionsField, String direction){
         this.optionsField = optionsField;
         this.direction = direction;

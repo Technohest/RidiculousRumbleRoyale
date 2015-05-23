@@ -65,7 +65,6 @@ public class LobbyScreen implements Screen {
 
         nmu = NetworkMenuUtility.getInstance();
 
-
         //Fontsize
         font = new BitmapFont();
         font.scale(1.3f);
@@ -115,7 +114,10 @@ public class LobbyScreen implements Screen {
         char4Button = new ImageButton(char4Draw);
         characterTable.add(char4Button).padRight(20);
 
-        //Adding listeners
+        /**
+         * Adding listeners to the ImageButtons
+         * @see CharacterSelectlistener
+         */
         char1Button.addListener(new CharacterSelectListener(this, "allden"));
         char2Button.addListener(new CharacterSelectListener(this, "boking"));
         char3Button.addListener(new CharacterSelectListener(this, "vilddjur"));
@@ -135,19 +137,23 @@ public class LobbyScreen implements Screen {
         stage.addActor(mainTable);
     }
 
-
+    /**
+     * When a player clicks on a character the listener class (CharacterSelectListener) executes this method
+     * with the parameter different depending on which character the player has clicked on.
+     * @param character
+     */
     public void selectCharacter(String character){
         if(character.equals("allden") && !char1Button.isDisabled()){
-            System.out.println("You have chosen allden, lolwhy?");
+            System.out.println("You have chosen allden");
             char1Button.setDisabled(true);
         }else if (character.equals("boking") && !char2Button.isDisabled()){
             System.out.println("You have chosen wisely");
             char2Button.setDisabled(true);
         }else if (character.equals("vilddjur") && !char3Button.isDisabled()){
-            System.out.println("rawr");
+            System.out.println("You have chosen Vilddjur");
             char3Button.setDisabled(true);
         }else if (character.equals("schtek") && !char4Button.isDisabled()){
-            System.out.println("let me just koka this äpple");
+            System.out.println("You have chosen Schtek");
             char4Button.setDisabled(true);
         }
     }

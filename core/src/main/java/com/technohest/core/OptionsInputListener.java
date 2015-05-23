@@ -11,6 +11,12 @@ public class OptionsInputListener extends InputListener {
     public final OptionsMenuView view;
     public final String target;
 
+    /**
+     * Creates a listener for the buttons in the options screen.
+     * Mainly made for the SAVE button.
+     * @param view
+     * @param target
+     */
     public OptionsInputListener(OptionsMenuView view, String target){
         this.view = view;
         this.target = target;

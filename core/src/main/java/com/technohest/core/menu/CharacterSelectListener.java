@@ -11,6 +11,11 @@ public class CharacterSelectListener extends InputListener {
     private LobbyScreen lobbyScreen;
     private String character;
 
+    /**
+     * Creates the listener for the characters in the lobby
+     * @param lobbyScreen
+     * @param character
+     */
     public CharacterSelectListener(LobbyScreen lobbyScreen, String character){
         this.lobbyScreen = lobbyScreen;
         this.character = character;

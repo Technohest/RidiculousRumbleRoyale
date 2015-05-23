@@ -26,6 +26,7 @@ import java.io.IOException;
  * Created by Oscar on 2015-04-24.
  */
 public class OptionsField extends Table{
+
     private TextButton backButton;
     private TextButton forwardButton;
     private Label currentOptionLabel;
@@ -53,7 +54,11 @@ public class OptionsField extends Table{
     private Node node;
     private org.w3c.dom.Element element2;
 
-
+    /**
+     * Initializes variables
+     * @param text
+     * @param map
+     */
     public OptionsField(String text, BidiMap<Integer,String> map) {
         this.text = text;
         this.map = map;
@@ -106,6 +111,12 @@ public class OptionsField extends Table{
         this.add(forwardButton);
     }
 
+    /**
+     * When the user presses one of the arrows the listener class OptionsFieldListener executes
+     * the switchTo method for this instance of the OptionsField. Either the user presses forward
+     * or backwards which switches the value of the index for an OptionsField.
+     * @param target
+     */
     public void switchTo(String target){
         if(target == "back"){
                 currentIndex -=1;
@@ -122,6 +133,11 @@ public class OptionsField extends Table{
         currentOptionLabel.setText(map.get(currentIndex+1));
         update();
     }
+
+    /**
+     * Refreshes the OptionsField by removing everything from this table and adds the components
+     * with the new values again.
+     */
     public void update(){
         this.clear();
         this.add(textLabel);
@@ -130,11 +146,19 @@ public class OptionsField extends Table{
         this.add(forwardButton);
         System.out.println(this.getCurrent());
     }
+
+    /**
+     * @return
+     * the text corresponding to a value in this OptionsFields Bidimap.
+     */
     public String getCurrent(){
         return map.get(currentIndex+1);
     }
 
-    //Gets the value that is currently in the file
+    /**
+     * @return
+     * the text in the config.xml file for each OptionsField.
+     */
     private String getLabelText(){
         String firstText = "";
         if(text == "Display Mode:"){

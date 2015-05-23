@@ -3,8 +3,6 @@ package com.technohest.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,10 +23,8 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.Text;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * The options menu, able to change the options of the game and save them.
@@ -91,15 +87,14 @@ public class OptionsMenuView implements Screen{
     private BidiMap<Integer, String> displayModeMap;
     private BidiMap<Integer, String> widthMap;
     private BidiMap<Integer, String> heightMap;
+
+
     public OptionsMenuView(){
 
         //Game and stage
         stage = new Stage();
         navigationTable = new Table();
         mainTable = new Table();
-
-        //FileHandle
-
 
         //Fontsize
         font = new BitmapFont();
@@ -147,7 +142,7 @@ public class OptionsMenuView implements Screen{
         element1 = (Element) node;
 
         //Settings
-        setHashMaps();
+        setBidiMaps();
         width = new OptionsField("Width:", widthMap);
         height = new OptionsField("Height:", heightMap);
         displayMode = new OptionsField("Display Mode:", displayModeMap);
@@ -169,7 +164,10 @@ public class OptionsMenuView implements Screen{
         backButton = new TextButton("Back", smallStyle);
         saveButton = new TextButton("Save", smallStyle);
 
-        //Adding listeners to navigationsview buttons.
+        /**
+         * Adds the Listener for the different options buttons that changes the currentTable.
+         * @see OptionsInputListener
+         */
         graphicsButton.addListener(new OptionsInputListener(this, "graphics"));
         soundButton.addListener(new OptionsInputListener(this, "sound"));
         gameplayButton.addListener(new OptionsInputListener(this, "gameplay"));
@@ -187,6 +185,10 @@ public class OptionsMenuView implements Screen{
 
         stage.addActor(mainTable);
     }
+
+    /**
+     * Initializes the graphics table and adds the different OptionsFields for the category "Graphics"
+     */
     public void createGraphicsTable(){
         graphicsTable = new Table();
 
@@ -198,6 +200,9 @@ public class OptionsMenuView implements Screen{
         graphicsTable.add(height);
 
     }
+    /**
+     * Initializes the sound table and adds the different OptionsFields for the category "Sound"
+     */
     public void createSoundTable(){
         soundTable = new Table();
 
@@ -207,6 +212,9 @@ public class OptionsMenuView implements Screen{
         soundTable.add(soundEffects);
         soundTable.row();
     }
+    /**
+     * Initializes the gameplay table and adds the different OptionsFields for the category "Gameplay"
+     */
     public void createGameplayTable(){
         gameplayTable = new Table();
 
@@ -262,6 +270,10 @@ public class OptionsMenuView implements Screen{
         stage.dispose();
     }
 
+    /**
+     * When the user clicks a category the currenttable variable is changed.
+     * @param target
+     */
     public void switchTo(String target){
         if(target.equals("graphics")) {
             currentTable = graphicsTable;
@@ -272,6 +284,10 @@ public class OptionsMenuView implements Screen{
         }
         updateStage();
     }
+
+    /**
+     * Clear the main table and adds the components once again to the table to refresh it.
+     */
     private void updateStage(){
         mainTable.clear();
         mainTable.add(navigationTable).padBottom(30).padTop(30);
@@ -282,15 +298,22 @@ public class OptionsMenuView implements Screen{
         mainTable.add(saveButton).padTop(50);
     }
 
+    /**
+     * Modifies the config.xml for each category when the user presses the SAVE button.
+     */
     public void saveOptions(){
-        //Does not work for some reason
         list1 = element2.getElementsByTagName("displaymode");
         element1 = (Element) list1.item(0);
         list2 = element1.getChildNodes();
         list2.item(0).setNodeValue(displayMode.getCurrent());
     }
 
-    public void setHashMaps(){
+    /**
+     * Initializes the BidiMaps
+     * Associates values to each options for the OptionsFields.
+     * This needs to be done to be able to scroll through the options.
+     */
+    public void setBidiMaps(){
         //Music
         musicMap = new DualHashBidiMap<Integer, String>();
         musicMap.put(1,"enabled");

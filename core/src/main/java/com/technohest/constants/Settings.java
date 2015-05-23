@@ -16,10 +16,11 @@ import java.io.IOException;
  * Created by Oscar on 2015-05-20.
  */
 public class Settings {
+
     private String width;
     private String height;
 
-    //FileReader
+    //Filereader variables needed to read from .xml files
     private File file;
     private DocumentBuilderFactory dbFactory;
     private DocumentBuilder dBuilder;
@@ -31,6 +32,9 @@ public class Settings {
     private Node node;
     private org.w3c.dom.Element element2;
 
+    /**
+     * Creates the file reader and reads from width and height element in config.xml
+     */
     public Settings(){
         //File initialization
         try {
@@ -60,9 +64,18 @@ public class Settings {
         list2 = element1.getChildNodes();
         height = list2.item(0).getNodeValue();
     }
+
+    /**
+     * @return
+     * Value of width in config.xml
+     */
     public int getWidth(){
         return Integer.parseInt(width);
     }
+    /**
+     * @return
+     * Value of height in config.xml
+     */
     public int getHeight(){
         return Integer.parseInt(height);
     }
