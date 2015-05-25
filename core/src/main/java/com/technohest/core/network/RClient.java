@@ -108,6 +108,6 @@ public class RClient {
      * Generates state using the current characters
      */
     public void generateState(){
-        current.setState(model.getGameLogic().generateState());
+       model.getGameLogic().generateState();
     }
 }

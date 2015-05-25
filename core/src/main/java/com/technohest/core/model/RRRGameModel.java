@@ -9,6 +9,7 @@ import com.technohest.core.network.IState;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * The main model for Ridiculous Rumble Royale.
@@ -19,7 +20,7 @@ public class RRRGameModel {
     private Integer myID;
     private LevelHandler levelHandler;
     private HashMap<Integer,Character> idCharacterMap;
-    private HashMap<Character,Attack> characterAttackMap;
+    private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
     private boolean respawnEnabled;
 
@@ -30,7 +31,7 @@ public class RRRGameModel {
         this.levelHandler = new LevelHandler();
         setGameLogic(new GameLogicGDX(this));
         this.idCharacterMap = new HashMap<Integer, Character>();
-        characterAttackMap = new HashMap<Character, Attack>();
+        activeAttacks = new ArrayList<Attack>();
         //Temp character for testing
         /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
@@ -60,7 +61,7 @@ public class RRRGameModel {
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
             //System.out.println("THE PLAYER ID " + i);
-            this.idCharacterMap.put(i,new Character(i, "Allden " + idChararcerMap.get(i),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
+            this.idCharacterMap.put(i,new Character(i, "Allden " + idChararcerMap.get(i)));
         }
 
         //this.idCharacterMap = idChararcerList;
@@ -125,21 +126,23 @@ public class RRRGameModel {
      * @param v
      */
     public void updateAttacks(float v) {
-        for (Attack a:characterAttackMap.values()) {
+        ArrayList<Attack> attackstoberemoved = new ArrayList<Attack>();
+        for (Attack a:activeAttacks) {
             if (a.getHasInpacted()) {
                 a.reset();
                 gameLogic.destroyAttack(a);
-                characterAttackMap.remove(a.getSourcePlayer());
+                attackstoberemoved.add(a);
             } else if (!a.isReady()) {
                 if (a.timeLeft()) {
                     a.incrementTime(v);
                 } else {
                     a.reset();
                     gameLogic.destroyAttack(a);
-                    characterAttackMap.remove(a.getSourcePlayer());
+                    attackstoberemoved.add(a);
                 }
             }
         }
+        this.activeAttacks.remove(attackstoberemoved);
     }
     /**
      * Performes an action on the specified player connected to playerId
@@ -159,17 +162,19 @@ public class RRRGameModel {
                 break;
             case ATTACK_BASE:
                 if(player.getBaseAttack().isReady()) {
-                    gameLogic.attack_base(player,player.getBaseAttack());
-                    this.characterAttackMap.put(player,player.getBaseAttack());
                     player.getBaseAttack().perform();
-
+                    gameLogic.attack_base(player);
+                    this.activeAttacks.add(player.getBaseAttack());
                 }
+
+
+
                 break;
             case ATTACK_SPECIAL:
                 if(player.getSpecialAttack().isReady()) {
-                    gameLogic.attack_special(player,player.getSpecialAttack());
-                    this.characterAttackMap.put(player,player.getSpecialAttack());
+                    gameLogic.attack_special(player);
                     player.getSpecialAttack().perform();
+                    this.activeAttacks.add(player.getSpecialAttack());
                 }
                 break;
 
@@ -179,6 +184,10 @@ public class RRRGameModel {
 
     public Collection<Character> getPlayers() {
         return this.idCharacterMap.values();
+    }
+
+    public ArrayList<Attack> getActiveAttacks() {
+        return this.activeAttacks;
     }
 
 
@@ -201,6 +210,12 @@ public class RRRGameModel {
     }
     public void setMyID(Integer id) {
         myID = id;
+    }
+
+    public void setEnabledAttacks(Set<Attack> attackSet) {
+        ArrayList<Attack> temp = new ArrayList<Attack>();
+        temp.addAll(attackSet);
+        this.activeAttacks = temp;
     }
 
     public void setRespawnEnabled(boolean value) {

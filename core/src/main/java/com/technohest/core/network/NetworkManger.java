@@ -40,6 +40,7 @@ public class NetworkManger {
         kryo.register(int.class);
         kryo.register(boolean.class);
         kryo.register(Projectile.class);
+        kryo.register(MeleeAttack.class);
         kryo.register(Packet.Packet2GameOver.class);
         kryo.register(List.class);
     }

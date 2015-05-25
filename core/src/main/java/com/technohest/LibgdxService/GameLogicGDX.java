@@ -1,19 +1,19 @@
 package com.technohest.LibgdxService;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.Tools.Debugg;
 import com.technohest.constants.Constants;
-import com.technohest.core.model.Attack;
+import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
-import com.technohest.core.model.Projectile;
-import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.IState;
 import com.technohest.core.network.StateGDX;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * The service managing the game physics.
@@ -22,6 +22,7 @@ import java.util.HashMap;
  */
 public class GameLogicGDX implements IGameLogic {
     private final World world;
+    private HashMap<Attack,Body> attackBodyMap;
     CollisionHandler collisionHandler;
     RRRGameModel model;
     //A map for bundling bodies with player objects
@@ -30,15 +31,12 @@ public class GameLogicGDX implements IGameLogic {
     //THIS ONE SHOULD BE IN MODEL!
     private HashMap<Integer,Character> idCharacterMap;
 
-
-    private HashMap<Attack,Body> attackBodyMap;
-
     public GameLogicGDX(RRRGameModel model){
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         characterBodyMap = new HashMap<Character,Body>();
-        attackBodyMap = new HashMap<Attack, Body>();
         collisionHandler = new CollisionHandler(this);
         world.setContactListener(collisionHandler);
+        this.attackBodyMap = new HashMap<Attack, Body>();
         this.model = model;
     }
 
@@ -57,6 +55,7 @@ public class GameLogicGDX implements IGameLogic {
         this.idCharacterMap = idCharacterMap;
         level.generate(world);
         for (Character c: idCharacterMap.values()) {
+            //Move to model
             createPlayer(c);
         }
     }
@@ -98,19 +97,8 @@ public class GameLogicGDX implements IGameLogic {
     public Body getBodyFromCharacter(Character character) {
         return characterBodyMap.get(character);
     }
-    public Body getBodyFromAttack(Attack attack) {
-        return attackBodyMap.get(attack);
-    }
-    public Attack getAttackFromBody(Body b) {
-        for(Attack a:attackBodyMap.keySet()) {
-            if(attackBodyMap.get(a).equals(b)) {
-                return a;
-            }
-        }
-        return null;
-    }
 
-
+//Perhaps move state setting to model
     public void updatePlayer(Character c) {
         boolean changed = false;
             Body b = getBodyFromCharacter(c);
@@ -156,6 +144,10 @@ public class GameLogicGDX implements IGameLogic {
 
         }
 
+    public Body getBodyFromAttack(Attack attack) {
+       return attackBodyMap.get(attack);
+    }
+
 
 
     public void respawnPlayer(Character player) {
@@ -164,8 +156,10 @@ public class GameLogicGDX implements IGameLogic {
 
 
     public void destroyAttack(Attack attack) {
-        world.destroyBody(getBodyFromAttack(attack));
-        attackBodyMap.remove(attack);
+        Body b = getBodyFromAttack(attack);
+        if(b != null) {
+            world.destroyBody(b);
+        }
     }
 
 
@@ -202,8 +196,8 @@ public class GameLogicGDX implements IGameLogic {
     }
 
     @Override
-    public void attack_base(Character player,Attack attack) {
-        Body playerBody = getBodyFromCharacter(player);
+    public void attack_base(Character player) {
+        Body playerBody = getBodyFromId(player.getId());
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.gravityScale = 0;
@@ -218,24 +212,25 @@ public class GameLogicGDX implements IGameLogic {
             fdef1.shape = shape;
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
-            b.createFixture(fdef1).setUserData(attack);
-            attackBodyMap.put(attack,b);
+            b.setUserData(player.getBaseAttack());
+            b.createFixture(fdef1).setUserData(player.getBaseAttack());
+            attackBodyMap.put(player.getBaseAttack(),b);
     }
 
 
     @Override
-    public void attack_special(Character player, Attack attack) {
-        Body playerBody = getBodyFromCharacter(player);
+    public void attack_special(Character player) {
+        Body playerBody = getBodyFromId(player.getId());
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.gravityScale = 0;
             if (player.isFacingRight()) {
                 bdef.position.set((playerBody.getPosition().x + Constants.PLAYER_WIDTH/32.0f), (playerBody.getPosition().y));
-                bdef.linearVelocity.set(((Projectile)attack).getVelocityX(),0);
+                bdef.linearVelocity.set(((Projectile)player.getSpecialAttack()).getVelocityX(),0);
 
             } else {
                 bdef.position.set((playerBody.getPosition().x - Constants.PLAYER_WIDTH / 32.0f), (playerBody.getPosition().y));
-                bdef.linearVelocity.set(-((Projectile)attack).getVelocityX(), 0);
+                bdef.linearVelocity.set(-((Projectile)player.getSpecialAttack()).getVelocityX(), 0);
             }
 
 
@@ -245,13 +240,29 @@ public class GameLogicGDX implements IGameLogic {
             fdef1.shape = shape;
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
-            b.createFixture(fdef1).setUserData(attack);
-            attackBodyMap.put(attack,b);
+            b.setUserData(player.getSpecialAttack());
+            b.createFixture(fdef1).setUserData(player.getSpecialAttack());
+            attackBodyMap.put(player.getSpecialAttack(),b);
+    }
 
-    }
-    public HashMap<Attack,Body> getAttackMap() {
-        return attackBodyMap;
-    }
+        public Character getCharacterFromAttack(Attack attack) {
+            if(attack instanceof Projectile) {
+                for(Character c:getCharacters()) {
+                    if(c.getBaseAttack().equals(attack)) {
+                        return c;
+                    }
+                }
+            } else {
+                for(Character c:getCharacters()) {
+                    if(c.getBaseAttack().equals(attack)) {
+                        return c;
+                    }
+                }
+            }
+                return null;
+
+        }
+
 
 
     @Override
@@ -265,22 +276,48 @@ public class GameLogicGDX implements IGameLogic {
         }
     }
 
+    @Override
+    public void setAttackState(Attack attack, Vector2 position, Vector2 velocity) {
+        Body attackBody = getBodyFromAttack(attack);
+
+        if (attackBody != null) {
+            attackBody.setLinearVelocity(velocity);
+            attackBody.setTransform(position, attackBody.getAngle());
+        }
+        else {
+            if (getCharacterFromAttack(attack) != null) {
+                if (attack instanceof MeleeAttack) {
+                    attack_base(getCharacterFromAttack(attack));
+                } else {
+                    attack_special(getCharacterFromAttack(attack));
+                }
+            }
+        }
+    }
+
     private Body getBodyFromId(Integer playerId) {
         return characterBodyMap.get(idCharacterMap.get(playerId));
     }
 
     @Override
     public void correct(IState newState) {
-        HashMap<Character, ArrayList<Vector2>> map =  newState.getState();
+        HashMap<Character, ArrayList<Vector2>> map =  newState.getCharacterStates();
         for(Character c : map.keySet()){
             ArrayList<Vector2> temp = map.get(c);
             setCharacterState(c.getId(), temp.get(0), temp.get(1));
         }
-        StateGDX.getInstance().setState(map);
+        HashMap<Attack,ArrayList<Vector2>> attackVectorMap = newState.getAttackStates();
+        if(!attackVectorMap.isEmpty()) {
+            for (Attack a : attackVectorMap.keySet()) {
+                ArrayList<Vector2> temp = attackVectorMap.get(a);
+                setAttackState(a, temp.get(0), temp.get(1));
+            }
+        }
+        model.setEnabledAttacks(attackBodyMap.keySet());
     }
 
     @Override
-    public HashMap<Character, ArrayList<Vector2>> generateState() {
+    public void generateState() {
         HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
         Collection<Character> chars = getCharacters();
         for(Character c : chars){
@@ -291,10 +328,26 @@ public class GameLogicGDX implements IGameLogic {
 
             map.put(c, vector2s);
         }
-        return map;
+        HashMap<Attack,ArrayList<Vector2>> attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
+        for(Attack a:attackBodyMap.keySet()) {
+            if(a.isReady()) {
+                ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
+                Vector2s.add(attackBodyMap.get(a).getPosition());
+                Vector2s.add(attackBodyMap.get(a).getLinearVelocity());
+                attackVectorMap.put(a, Vector2s);
+            }
+        }
+        StateGDX state = StateGDX.getInstance();
+        state.setState(map,attackVectorMap);
     }
 
     public Collection<Character> getCharacters() {
-        return idCharacterMap.values();
+        Collection<Character> aliveCharacters = new ArrayList<Character>();
+        for(Character c:idCharacterMap.values()) {
+            if(c.isAlive()) {
+                aliveCharacters.add(c);
+            }
+        }
+        return aliveCharacters;
     }
 }

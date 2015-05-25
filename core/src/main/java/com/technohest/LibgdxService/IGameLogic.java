@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 import com.technohest.core.network.IState;
+import com.technohest.core.network.StateGDX;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,12 +68,12 @@ public interface IGameLogic {
     /**
      * Makes the specified player perform a base attack.
      */
-    public void attack_base(Character player,Attack attack);
+    public void attack_base(Character player);
 
     /**
      * Makes the specified player performs perform a special attack.
      */
-    public void attack_special(Character player, Attack attack);
+    public void attack_special(Character player);
 
     /**
      * Sets the players movement attributes
@@ -84,6 +85,14 @@ public interface IGameLogic {
      * new velocity
      */
     public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel);
+
+    /**
+     * Sets the attack attributes.
+     * @param attack
+     * @param position
+     * @param velocity
+     */
+    public void setAttackState(Attack attack, Vector2 position, Vector2 velocity);
 
 
 
@@ -104,5 +113,5 @@ public interface IGameLogic {
      * @return
      * Character and their pos and velocity.
      */
-    HashMap<Character, ArrayList<Vector2>> generateState();
+    void generateState();
 }

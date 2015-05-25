@@ -1,5 +1,4 @@
 package com.technohest.core.model;
-import com.technohest.constants.Constants;
 
 /**
  *  A abstract class for dealing damage.
@@ -9,7 +8,7 @@ import com.technohest.constants.Constants;
 public abstract class Attack  {
     private int damage;
     private String name;
-    public Character sourcePlayer;
+    public Integer sourcePlayerId;
     private float duration;
     private float elapsedTime;
     private boolean ready;
@@ -22,10 +21,11 @@ public abstract class Attack  {
 
     }
 
-    public Attack(String name,int damage,float duration) {
+    public Attack(String name,Integer sourcePlayerId,int damage,float duration) {
         this.damage = damage;
         this.name = name;
         this.duration = duration;
+        this.sourcePlayerId = sourcePlayerId;
         this.elapsedTime = 0;
         this.ready = true;
         this.hasInpacted = false;
@@ -46,11 +46,21 @@ public abstract class Attack  {
         ready = false;
     }
 
+    public void setAttributes(Attack attack ) {
+        this.damage = attack.getDamage();
+        this.name = attack.getName();
+        this.duration = attack.getDuration();
+        this.sourcePlayerId = attack.getSourcePlayerId();
+        this.elapsedTime = attack.getElapsedTime();
+        this.ready = attack.isReady();
+        this.hasInpacted = attack.hasInpacted;
+    }
+
     public boolean timeLeft() {
         return elapsedTime < duration;
     }
-    public Character getSourcePlayer() {
-        return sourcePlayer;
+    public Integer getSourcePlayerId() {
+        return sourcePlayerId;
     }
     private void resetElapsedTime() {
         this.elapsedTime = 0;
@@ -58,12 +68,19 @@ public abstract class Attack  {
     public boolean isReady() {
         return ready;
     }
-    public void setSourcePlayer(Character sourcePlayer) {
-        this.sourcePlayer = sourcePlayer;
+    public float getDuration() {
+        return duration;
+    }
+    public void setSourcePlayerId(Integer Id) {
+        this.sourcePlayerId = Id;
     }
     public void setInpacted(boolean inpacted) {
         this.hasInpacted = inpacted;
 
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
     }
     public boolean getHasInpacted() {
         return this.hasInpacted;
