@@ -1,7 +1,5 @@
-package com.technohest.Tools;
+package com.technohest.core.model;
 
-import com.technohest.core.model.*;
-import com.technohest.core.model.Character;
 import com.technohest.core.network.IState;
 
 /**

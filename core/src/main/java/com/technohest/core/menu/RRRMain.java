@@ -2,8 +2,6 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.technohest.Tools.Debugg;
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,7 +16,6 @@ public class RRRMain extends Game implements Observer {
         ScreenHandler.getInstance().addObserver(this);
         ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
 
-        Debugg.debugging = false;
     }
 
 

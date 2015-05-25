@@ -2,7 +2,7 @@ package com.technohest.core.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.ILevel;
-import com.technohest.Tools.Correction;
+import com.technohest.core.model.Correction;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
@@ -10,8 +10,6 @@ import com.technohest.core.network.ClientNetworkListener;
 import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
-
-import java.util.ArrayList;
 
 /**
  * The controller handling the input from the user and mapping the input to actions.

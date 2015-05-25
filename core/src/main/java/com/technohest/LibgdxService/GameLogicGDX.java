@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.Tools.Debugg;
 import com.technohest.constants.Constants;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
@@ -100,49 +99,25 @@ public class GameLogicGDX implements IGameLogic {
 
 //Perhaps move state setting to model
     public void updatePlayer(Character c) {
-        boolean changed = false;
-            Body b = getBodyFromCharacter(c);
-            if (b.getLinearVelocity().y != 0) {
-                if (b.getLinearVelocity().y < 0) {
-                    if (Debugg.debugging)
-                        System.out.print("1 - ");
-                    c.setState(Character.State.Falling);
-                    changed = true;
-                } else if (b.getLinearVelocity().y > 0) {
-                    if (Debugg.debugging)
-                        System.out.print("2 - ");
-                    c.setState(Character.State.Jumping);
-                    changed = true;
-                }
-            } else if (b.getLinearVelocity().x != 0) {
-                if (b.getLinearVelocity().x < 0) {
-                    if (Debugg.debugging)
-                        System.out.print("3 - ");
-                    c.setState(Character.State.Running);
-                    c.setIsFacingRight(false);
-                    changed = true;
-                } else {
-                    if (Debugg.debugging)
-                        System.out.print("4 - ");
-                    c.setState(Character.State.Running);
-                    c.setIsFacingRight(true);
-                    changed = true;
-                }
+        Body b = getBodyFromCharacter(c);
+        if (b.getLinearVelocity().y != 0) {
+            if (b.getLinearVelocity().y < 0) {
+                c.setState(Character.State.Falling);
+            } else if (b.getLinearVelocity().y > 0) {
+                c.setState(Character.State.Jumping);
+            }
+        } else if (b.getLinearVelocity().x != 0) {
+            if (b.getLinearVelocity().x < 0) {
+                c.setState(Character.State.Running);
+                c.setIsFacingRight(false);
             } else {
-                if (Debugg.debugging)
-                    System.out.print("5 - ");
-                c.setState(Character.State.Standing);
-                changed = true;
-
-
+                c.setState(Character.State.Running);
+                c.setIsFacingRight(true);
             }
-
-
-            if (changed && Debugg.debugging) {
-                Log.info("[S] " + b.getPosition());
-            }
-
+        } else {
+            c.setState(Character.State.Standing);
         }
+    }
 
     public Body getBodyFromAttack(Attack attack) {
        return attackBodyMap.get(attack);

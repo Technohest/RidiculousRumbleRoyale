@@ -4,14 +4,12 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.Tools.Correction;
+import com.technohest.core.model.Correction;
 import com.technohest.core.model.Action;
-import com.technohest.core.model.RRRGameModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Manages how the client responds to input from the server.
