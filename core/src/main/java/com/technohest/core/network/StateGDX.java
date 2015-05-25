@@ -30,12 +30,20 @@ public class StateGDX implements IState {
     }
 
     @Override
-    public HashMap<Character, ArrayList<Vector2>> getCharacterStates() {
-        return map;
+    public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
+        HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Character c:map.keySet()) {
+            temp.put(c.getId(),map.get(c));
+        }
+        return temp;
     }
     @Override
-    public HashMap<Attack,ArrayList<Vector2>> getAttackStates() {
-        return attackVectorMap;
+    public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates() {
+        HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Attack a:attackVectorMap.keySet()) {
+            temp.put(a.getSourcePlayerId(),attackVectorMap.get(a));
+        }
+        return temp;
     }
 
     @Override
