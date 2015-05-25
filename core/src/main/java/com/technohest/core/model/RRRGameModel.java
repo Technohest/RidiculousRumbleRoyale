@@ -107,7 +107,7 @@ public class RRRGameModel {
                     gameLogic.killPlayer(c.getId());
                     c.setShouldRespawn(this.respawnEnabled);
                 } else {
-                    setCharacterState(c,gameLogic.getStateOfPlayer(c.getId()));
+                    setCharacterState(c, gameLogic.getStateOfPlayer(c.getId()));
                 }
             } else {
                 c.addRespawnTimer(v);
@@ -128,9 +128,11 @@ public class RRRGameModel {
         switch(i) {
             case 0:
                 c.setState(Character.State.Falling);
+                c.setGrounded(false);
                 break;
             case 1:
                 c.setState(Character.State.Jumping);
+                c.setGrounded(false);
                 break;
             case 2:
                 c.setState(Character.State.Running);
@@ -181,7 +183,10 @@ public class RRRGameModel {
         Integer playerid = action.getPlayerID();
         switch(action.getActionID()) {
             case JUMP:
-                gameLogic.jump(playerid);
+                if(getPlayerFromID(playerid).isGrounded()) {
+                    gameLogic.jump(playerid);
+                }
+
                 break;
             case MOVE_RIGHT:
                 gameLogic.moveRight(playerid);
