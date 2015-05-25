@@ -2,10 +2,7 @@ package com.technohest.core.model;
 
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
-import com.technohest.LibgdxService.ILevel;
-import com.technohest.core.handlers.LevelHandler;
-import com.technohest.core.network.IState;
-import com.technohest.core.network.StateGDX;
+import com.technohest.LibgdxService.IState;
 
 import java.util.*;
 
@@ -16,7 +13,6 @@ import java.util.*;
  */
 public class RRRGameModel {
     private Integer myID;
-    private LevelHandler levelHandler;
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
@@ -26,17 +22,13 @@ public class RRRGameModel {
     private Boolean isClient;
 
     public RRRGameModel(){
-        this.levelHandler = new LevelHandler();
-        setGameLogic(new GameLogicGDX(this));
+        setGameLogic(new GameLogicGDX());
         this.idCharacterMap = new HashMap<Integer, Character>();
         activeAttacks = new ArrayList<Attack>();
         //Temp character for testing
         /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         myID =1;*/
-    }
-    public ILevel getLevel() {
-        return levelHandler.getLevel();
     }
     public void setGameLogic(IGameLogic gl){
         gameLogic = gl;
@@ -45,7 +37,7 @@ public class RRRGameModel {
      * Initializes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        gameLogic.generate(levelHandler.getLevel(),new ArrayList<Integer>(idCharacterMap.keySet()));
+        gameLogic.generate(new ArrayList<Integer>(idCharacterMap.keySet()));
     }
 
     /**
