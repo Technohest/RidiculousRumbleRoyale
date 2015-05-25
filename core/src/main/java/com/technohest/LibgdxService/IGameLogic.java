@@ -3,11 +3,8 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
-import com.technohest.core.network.IState;
-import com.technohest.core.network.StateGDX;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -23,12 +20,18 @@ public interface IGameLogic {
 
     /**
      * Generate bodies
-     * @param level
      * Target level
      * @param characterIdArray
      */
 
-    void generate(ILevel level, ArrayList<Integer> characterIdArray);
+    void generate(ArrayList<Integer> characterIdArray);
+
+    /**
+     * Returns the level.
+     * @return
+     */
+    public ILevel getLevel();
+
 
     /**
      * Updates the player.

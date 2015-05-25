@@ -3,10 +3,10 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
+import com.technohest.core.handlers.LevelHandler;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
-import com.technohest.core.network.IState;
-import com.technohest.core.network.StateGDX;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,18 +19,19 @@ import java.util.Set;
  */
 public class GameLogicGDX implements IGameLogic {
     private final World world;
+    private LevelHandler levelHandler;
     private HashMap<Integer,Body> attackIdBodyMap;
     CollisionHandler collisionHandler;
-    RRRGameModel model;    //THIS ONE SHOULD BE IN MODEL!
     private HashMap<Integer,Body> characterIdBodyMap;
 
-    public GameLogicGDX(RRRGameModel model){
+    public GameLogicGDX(){
+        this.levelHandler = new LevelHandler();
         world = new World(new Vector2(0, Constants.GRAVITY), true);
         collisionHandler = new CollisionHandler(this);
         world.setContactListener(collisionHandler);
         this.attackIdBodyMap = new HashMap<Integer, Body>();
         this.characterIdBodyMap = new HashMap<Integer, Body>();
-        this.model = model;
+
     }
 
     public World getWorld(){
@@ -44,8 +45,8 @@ public class GameLogicGDX implements IGameLogic {
     }
 
     @Override
-    public void generate(ILevel level,ArrayList<Integer> characterIdArray) {
-        level.generate(world);
+    public void generate(ArrayList<Integer> characterIdArray) {
+        levelHandler.getLevel().generate(world);
         for (Integer i: characterIdArray) {
             createPlayer(i);
         }
@@ -55,7 +56,7 @@ public class GameLogicGDX implements IGameLogic {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.gravityScale = 5;
-        bdef.position.set(model.getLevel().getSpawnPoint());
+        bdef.position.set(levelHandler.getLevel().getSpawnPoint());
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.PLAYER_WIDTH/32.0f,Constants.PLAYER_HEIGHT/32.0f);
@@ -231,6 +232,11 @@ public class GameLogicGDX implements IGameLogic {
 
         }
         */
+
+    @Override
+    public ILevel getLevel() {
+        return levelHandler.getLevel();
+    }
 
 
 
