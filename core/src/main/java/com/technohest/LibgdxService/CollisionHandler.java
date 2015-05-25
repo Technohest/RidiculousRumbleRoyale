@@ -25,11 +25,9 @@ public class CollisionHandler implements ContactListener {
         //Feet detection
         if(contact.getFixtureA().getUserData() instanceof Body && contact.getFixtureB().getUserData().equals("Level"))  {
             Body b = ((Body)contact.getFixtureB().getUserData());
-            gameLogic.getCharacterfromBody(b).setGrounded(true);
 
         } else if(contact.getFixtureB().getUserData() instanceof Body && contact.getFixtureA().getUserData().equals("Level")) {
            Body b = ((Body)contact.getFixtureB().getUserData());
-            gameLogic.getCharacterfromBody(b).setGrounded(true);
 
         }
 
@@ -85,11 +83,9 @@ public class CollisionHandler implements ContactListener {
         //Feet detection
         if(contact.getFixtureA().getUserData() instanceof Body && contact.getFixtureB().getUserData().equals("Level"))  {
             Body b = ((Body)contact.getFixtureB().getUserData());
-            gameLogic.getCharacterfromBody(b).setGrounded(false);
 
         } else if(contact.getFixtureB().getUserData() instanceof Body && contact.getFixtureA().getUserData().equals("Level")) {
             Body b = ((Body)contact.getFixtureB().getUserData());
-            gameLogic.getCharacterfromBody(b).setGrounded(false);
 
         }
 
