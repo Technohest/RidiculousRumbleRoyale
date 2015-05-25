@@ -5,11 +5,9 @@ import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.core.handlers.LevelHandler;
 import com.technohest.core.network.IState;
+import com.technohest.core.network.StateGDX;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The main model for Ridiculous Rumble Royale.
@@ -47,7 +45,7 @@ public class RRRGameModel {
      * Initializes all tiles with their corresponding box2d bodies
      */
     public void generateWorld() {
-        gameLogic.generate(levelHandler.getLevel(),idCharacterMap);
+        gameLogic.generate(levelHandler.getLevel(),new ArrayList<Integer>(idCharacterMap.keySet()));
     }
 
     /**
@@ -61,7 +59,7 @@ public class RRRGameModel {
         for (Integer i: idChararcerMap.keySet()) {
             //Create new character for every id. Make them all the same type "Allden".
             //System.out.println("THE PLAYER ID " + i);
-            this.idCharacterMap.put(i,new Character(i, "Allden " + idChararcerMap.get(i)));
+            this.idCharacterMap.put(i,new Character(i, "Name " + idChararcerMap.get(i)));
         }
 
         //this.idCharacterMap = idChararcerList;
@@ -106,19 +104,50 @@ public class RRRGameModel {
             if (c.isAlive()) {
                 if (c.getHealthPoints() < 0) {
                     c.die();
-                    gameLogic.killPlayer(c);
+                    gameLogic.killPlayer(c.getId());
                     c.setShouldRespawn(this.respawnEnabled);
                 } else {
-                    gameLogic.updatePlayer(c);
+                    setCharacterState(c,gameLogic.getStateOfPlayer(c.getId()));
                 }
             } else {
                 c.addRespawnTimer(v);
                 if (c.respawnTimeDone()) {
                     c.respawn();
-                    gameLogic.respawnPlayer(c);
+                    gameLogic.respawnPlayer(c.getId());
                 }
             }
         }
+    }
+
+
+    /**
+     * Sets state of player based on a integer.
+     * @param i
+     */
+    public void setCharacterState(Character c, Integer i) {
+        switch(i) {
+            case 0:
+                c.setState(Character.State.Falling);
+                break;
+            case 1:
+                c.setState(Character.State.Jumping);
+                break;
+            case 2:
+                c.setState(Character.State.Running);
+                c.setGrounded(true);
+                c.setIsFacingRight(true);
+                break;
+            case 3:
+                c.setState(Character.State.Running);
+                c.setGrounded(true);
+                c.setIsFacingRight(false);
+                break;
+            case 4:
+                c.setState(Character.State.Standing);
+                c.setGrounded(true);
+                break;
+        }
+
     }
 
     /**
@@ -130,14 +159,14 @@ public class RRRGameModel {
         for (Attack a:activeAttacks) {
             if (a.getHasInpacted()) {
                 a.reset();
-                gameLogic.destroyAttack(a);
+                gameLogic.destroyAttack(a.getSourcePlayerId());
                 attackstoberemoved.add(a);
             } else if (!a.isReady()) {
                 if (a.timeLeft()) {
                     a.incrementTime(v);
                 } else {
                     a.reset();
-                    gameLogic.destroyAttack(a);
+                    gameLogic.destroyAttack(a.getSourcePlayerId());
                     attackstoberemoved.add(a);
                 }
             }
@@ -149,32 +178,29 @@ public class RRRGameModel {
      * @param action
      */
     public void performAction(Action action) {
-        Character player = getPlayerFromID(action.getPlayerID());
+        Integer playerid = action.getPlayerID();
         switch(action.getActionID()) {
             case JUMP:
-                gameLogic.jump(player);
+                gameLogic.jump(playerid);
                 break;
             case MOVE_RIGHT:
-                gameLogic.moveRight(player);
+                gameLogic.moveRight(playerid);
                 break;
             case MOVE_LEFT:
-                gameLogic.moveLeft(player);
+                gameLogic.moveLeft(playerid);
                 break;
             case ATTACK_BASE:
-                if(player.getBaseAttack().isReady()) {
-                    player.getBaseAttack().perform();
-                    gameLogic.attack_base(player);
-                    this.activeAttacks.add(player.getBaseAttack());
+                if(getPlayerFromID(playerid).getBaseAttack().isReady()) {
+                    getPlayerFromID(playerid).getBaseAttack().perform();
+                    gameLogic.attack_base(playerid,getPlayerFromID(playerid).isFacingRight());
+                    this.activeAttacks.add(getPlayerFromID(playerid).getBaseAttack());
                 }
-
-
-
                 break;
             case ATTACK_SPECIAL:
-                if(player.getSpecialAttack().isReady()) {
-                    gameLogic.attack_special(player);
-                    player.getSpecialAttack().perform();
-                    this.activeAttacks.add(player.getSpecialAttack());
+                if(getPlayerFromID(playerid).getSpecialAttack().isReady()) {
+                    gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
+                    getPlayerFromID(playerid).getSpecialAttack().perform();
+                    this.activeAttacks.add(getPlayerFromID(playerid).getSpecialAttack());
                 }
                 break;
 
@@ -193,6 +219,12 @@ public class RRRGameModel {
 
     public void correct(IState state) {
         gameLogic.correct(state);
+    }
+
+    public void generateState() {
+        Set<Character> aliveCharacters = new HashSet<Character>(idCharacterMap.values());
+        Set<Attack> activeAttacks = new HashSet<Attack>(this.activeAttacks);
+        gameLogic.generateState(aliveCharacters,activeAttacks);
     }
     public ArrayList<Character> getAlivePlayers() {
         ArrayList<Character> alivePlayers = new ArrayList<Character>();
