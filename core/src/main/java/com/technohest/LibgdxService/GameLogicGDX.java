@@ -3,7 +3,7 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
-import com.technohest.core.handlers.LevelHandler;
+import com.technohest.LibgdxService.levels.LevelHandler;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 

@@ -1,4 +1,4 @@
-package com.technohest.core.handlers;
+package com.technohest.LibgdxService.levels;
 
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.LibgdxService.levels.GrassLevel;
