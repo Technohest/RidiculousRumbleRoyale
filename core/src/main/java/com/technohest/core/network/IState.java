@@ -17,7 +17,7 @@ public interface IState {
      * @return
      * State which needs to be set in gameLogic
      */
-    public HashMap<Character, ArrayList<Vector2>> getCharacterStates();
+    public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates();
 
     /**
      * Sets the state properties.
@@ -30,7 +30,7 @@ public interface IState {
      * Returns all the values of the active attacks.
      * @return
      */
-    public HashMap<Attack,ArrayList<Vector2>> getAttackStates();
+    public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates();
 
     /**
      * Compare with another state
