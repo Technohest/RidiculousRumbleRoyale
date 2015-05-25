@@ -3,8 +3,8 @@ package com.technohest.java
 import com.badlogic.gdx.math.Vector2
 import com.technohest.core.model.Character
 import com.technohest.core.model.Projectile
-import com.technohest.core.network.IState
-import com.technohest.core.network.StateGDX
+import com.technohest.LibgdxService.IState
+import com.technohest.LibgdxService.StateGDX
 
 /**
  * Created by vilddjur on 2015-05-18.

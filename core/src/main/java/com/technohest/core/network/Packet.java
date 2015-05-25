@@ -1,6 +1,7 @@
 package com.technohest.core.network;
 
 
+import com.technohest.LibgdxService.IState;
 import com.technohest.core.model.Action;
 
 import java.util.ArrayList;

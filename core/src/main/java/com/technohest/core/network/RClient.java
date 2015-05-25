@@ -1,14 +1,13 @@
 package com.technohest.core.network;
 
-import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.LibgdxService.IState;
+import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
-import com.technohest.core.model.Action;
 import com.technohest.core.model.RRRGameModel;
-import com.technohest.core.model.Character;
 import com.technohest.core.view.RRRGameView;
 import java.io.IOException;
 import java.util.*;

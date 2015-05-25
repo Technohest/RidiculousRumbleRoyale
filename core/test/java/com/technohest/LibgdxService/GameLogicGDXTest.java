@@ -1,20 +1,5 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.technohest.LibgdxService.levels.MainLevel;
-import com.technohest.core.model.*;
-import com.technohest.core.model.Character;
-import com.technohest.core.network.IState;
-import com.technohest.core.network.StateGDX;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by vilddjur on 2015-05-18.
  */
