@@ -8,6 +8,7 @@ import com.technohest.core.network.StateGDX;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by oskar on 2015-05-01.
@@ -24,56 +25,60 @@ public interface IGameLogic {
      * Generate bodies
      * @param level
      * Target level
-     * @param idCharacterMap
+     * @param characterIdArray
      */
 
-    void generate(ILevel level, HashMap<Integer,Character> idCharacterMap);
+    void generate(ILevel level, ArrayList<Integer> characterIdArray);
 
     /**
      * Updates the player.
-     * @param player
+     * @param playerId
      */
-    public void updatePlayer(Character player);
+    public Integer getStateOfPlayer(Integer playerId);
 
     /**
      * Kills the player.
-     * @param player
+     * @param playerId
      */
-    public void killPlayer(Character player);
+    public void killPlayer(Integer playerId);
 
     /**
      * Respawns the player
-     * @param player
+     * @param playerId
      */
-    public void respawnPlayer(Character player);
+    public void respawnPlayer(Integer playerId);
 
 
     /**
      * Moves the player(Body with fixtures) left in the game,and plays the run animation.
      */
-    public void moveLeft(Character player);
+    public void moveLeft(Integer playerId);
 
 
 
     /**
      * Moves the player(Body with fixtures) right in the game,and plays the run animation.
      */
-    public void moveRight(Character player);
+    public void moveRight(Integer playerId);
 
     /**
      * Makes the player(Body with fixtures) jump in the game, and plays the jump animation.
      */
-    public void jump(Character player);
+    public void jump(Integer playerId);
 
     /**
-     * Makes the specified player perform a base attack.
+     * Makes the player perform a base attack.
+     * @param playerId
+     * @param isFacingRight
      */
-    public void attack_base(Character player);
+    public void attack_base(Integer playerId,boolean isFacingRight);
 
     /**
-     * Makes the specified player performs perform a special attack.
+     * Makes the player perform a special attack.
+     * @param playerId
+     * @param isFacingRight
      */
-    public void attack_special(Character player);
+    public void attack_special(Integer playerId,boolean isFacingRight);
 
     /**
      * Sets the players movement attributes
@@ -88,18 +93,18 @@ public interface IGameLogic {
 
     /**
      * Sets the attack attributes.
-     * @param attack
+     * @param attackId
      * @param position
      * @param velocity
      */
-    public void setAttackState(Attack attack, Vector2 position, Vector2 velocity);
+    public void setAttackState(Integer attackId, Vector2 position, Vector2 velocity);
 
 
 
     /**
      * Destroys the specified attack
      */
-    public void destroyAttack(Attack attack);
+    public void destroyAttack(Integer attackId);
 
     /**
      * Compares local state with another state and corrects if needed
@@ -113,5 +118,5 @@ public interface IGameLogic {
      * @return
      * Character and their pos and velocity.
      */
-    void generateState();
+    void generateState(Set<Character> aliveCharacters, Set<Attack> activeAttacks);
 }
