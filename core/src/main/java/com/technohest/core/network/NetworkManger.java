@@ -3,6 +3,8 @@ package com.technohest.core.network;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import com.technohest.LibgdxService.IState;
+import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.model.*;
 import com.technohest.core.model.Character;
 
