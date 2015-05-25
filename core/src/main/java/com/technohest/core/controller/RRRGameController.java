@@ -39,7 +39,7 @@ public class RRRGameController extends InputHandler {
     }
 
     public ILevel getLevel() {
-        return model.getLevel();
+        return model.getGameLogic().getLevel();
     }
 
     public void handleInput() {

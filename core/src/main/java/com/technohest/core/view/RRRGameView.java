@@ -91,7 +91,7 @@ public class RRRGameView implements Screen {
 	public RRRGameView(RRRGameModel model) {
 		settings = new Settings();
 		this.model = model;
-		mapRenderer = new OrthogonalTiledMapRenderer(model.getLevel().getMap());
+		mapRenderer = new OrthogonalTiledMapRenderer(model.getGameLogic().getLevel().getMap());
 		batch = new SpriteBatch();
 
 		camera = new OrthographicCamera();
