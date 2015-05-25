@@ -112,7 +112,7 @@ public class RRRGameView implements Screen {
 
         Collection<Character> players = model.getAlivePlayers();
 		for (Character c: players) {
-			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromCharacter(c);
+			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromplayerId(c.getId());
 			sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
 		}
 
@@ -122,7 +122,7 @@ public class RRRGameView implements Screen {
         ArrayList<Attack> activeAttacks = model.getActiveAttacks();
         for(Attack attack: activeAttacks) {
                 if (attack instanceof Projectile) {
-                    Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromAttack(attack);
+                    Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromAttackId(attack.getSourcePlayerId());
                     sRenderer.circle(((b.getPosition().x) * 32), ((b.getPosition().y) * 32), 5);
                 }
 
