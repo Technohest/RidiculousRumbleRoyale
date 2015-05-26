@@ -100,6 +100,8 @@ public class RRRGameModel {
                     gameLogic.killPlayer(c.getId());
                     c.setShouldRespawn(this.respawnEnabled);
                 } else {
+                    c.takeDamage(gameLogic.getPlayerTakenDamage(c.getId()));
+                    gameLogic.resetDamageTaken(c.getId());
                     setCharacterState(c, gameLogic.getStateOfPlayer(c.getId()));
                 }
             } else {
