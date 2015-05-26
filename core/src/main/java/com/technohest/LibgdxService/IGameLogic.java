@@ -102,6 +102,15 @@ public interface IGameLogic {
      */
     public void setAttackState(Integer attackId, Vector2 position, Vector2 velocity);
 
+    /**
+     * Checks the impacted attack list for the body with attackType user data, then searches it's fixtures for one with
+     * the id of the player
+     * @param playerId
+     * @param attackType
+     * @return
+     */
+    public boolean getAttackHasInpacted(Integer playerId,String attackType);
+
 
 
     /**

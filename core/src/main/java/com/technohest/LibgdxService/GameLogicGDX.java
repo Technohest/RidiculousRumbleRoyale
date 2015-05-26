@@ -21,8 +21,11 @@ public class GameLogicGDX implements IGameLogic {
     private final World world;
     private LevelHandler levelHandler;
     private HashMap<Integer,Body> attackIdBodyMap;
-    CollisionHandler collisionHandler;
+    private ArrayList<Body> impactedAttacks;
+    private HashMap<Integer,Integer> playerDamageTaken;
+    private CollisionHandler collisionHandler;
     private HashMap<Integer,Body> characterIdBodyMap;
+
 
     public GameLogicGDX(){
         this.levelHandler = new LevelHandler();
@@ -31,6 +34,8 @@ public class GameLogicGDX implements IGameLogic {
         world.setContactListener(collisionHandler);
         this.attackIdBodyMap = new HashMap<Integer, Body>();
         this.characterIdBodyMap = new HashMap<Integer, Body>();
+        impactedAttacks = new ArrayList<Body>();
+        playerDamageTaken = new HashMap<Integer, Integer>();
 
     }
 
@@ -66,6 +71,7 @@ public class GameLogicGDX implements IGameLogic {
         b.createFixture(fdef).setUserData(playerId);
         shape.setAsBox(4 / 32.0f, 4 / 32.0f, new Vector2(0, -((Constants.PLAYER_HEIGHT) / 32.0f)), 0);
         fdef.isSensor = true;
+        b.setUserData("Player");
         b.createFixture(fdef).setUserData(b);
         characterIdBodyMap.put(playerId, b);
 
@@ -119,6 +125,38 @@ public class GameLogicGDX implements IGameLogic {
     public Body getBodyFromAttackId(Integer attackId) {
        return attackIdBodyMap.get(attackId);
     }
+    public Integer getAttackIdFromBody(Body body) {
+        if(attackIdBodyMap.containsValue(body)) {
+            for (Integer i : attackIdBodyMap.keySet()) {
+                if (attackIdBodyMap.get(i).equals(body)) {
+                    return i;
+                }
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * Checks the impacted attack list for the body with attackType user data, then searches it's fixtures for one with
+     * the id of the player
+     * @param playerId
+     * @param attackType
+     * @return
+     */
+    public boolean getAttackHasInpacted(Integer playerId,String attackType) {
+        for(Body b:impactedAttacks) {
+            if(b.getUserData().equals(attackType)){
+                for(Fixture f:b.getFixtureList()) {
+                    if (f.getUserData().equals(playerId)) {
+                        return true;
+                    }
+                }
+
+            }
+        }
+        return false;
+    }
 
 
     @Override
@@ -130,7 +168,11 @@ public class GameLogicGDX implements IGameLogic {
     public void destroyAttack(Integer attackId) {
         Body b = getBodyFromAttackId(attackId);
         if(b != null) {
+            if(impactedAttacks.contains(b)) {
+                impactedAttacks.remove(b);
+            }
             world.destroyBody(b);
+            attackIdBodyMap.remove(getAttackIdFromBody(b));
         }
     }
 
@@ -139,6 +181,10 @@ public class GameLogicGDX implements IGameLogic {
     public void killPlayer(Integer characterId) {
         world.destroyBody(getBodyFromplayerId(characterId));
         characterIdBodyMap.remove(characterId);
+    }
+
+    public void setAttackInpacted(Body b,String attackType) {
+        this.setAttackInpacted(b,attackType);
     }
 
 
@@ -183,6 +229,7 @@ public class GameLogicGDX implements IGameLogic {
             fdef1.shape = shape;
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
+            b.setUserData("baseAttack");
             b.createFixture(fdef1).setUserData(playerId);
             attackIdBodyMap.put(playerId,b);
     }
@@ -209,29 +256,10 @@ public class GameLogicGDX implements IGameLogic {
             fdef1.shape = shape;
             Body b = world.createBody(bdef);
             b.setLinearDamping(0);
+            b.setUserData("specialAttack");
             b.createFixture(fdef1).setUserData(playerId);
             attackIdBodyMap.put(playerId,b);
     }
-
-    /*
-        public Character getCharacterFromAttack(Attack attack) {
-            if(attack instanceof Projectile) {
-                for(Character c:getCharacters()) {
-                    if(c.getBaseAttack().equals(attack)) {
-                        return c;
-                    }
-                }
-            } else {
-                for(Character c:getCharacters()) {
-                    if(c.getBaseAttack().equals(attack)) {
-                        return c;
-                    }
-                }
-            }
-                return null;
-
-        }
-        */
 
     @Override
     public ILevel getLevel() {
@@ -242,7 +270,6 @@ public class GameLogicGDX implements IGameLogic {
 
     @Override
     public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel) {
-        //Body playerBody = getBodyFromCharacter(player);
         Body playerBody = getBodyFromplayerId(playerId);
         if (playerBody != null) {
             playerBody.setLinearVelocity(vel);
