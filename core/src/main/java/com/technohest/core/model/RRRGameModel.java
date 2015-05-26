@@ -161,12 +161,16 @@ public class RRRGameModel {
                     a.incrementTime(v);
                 } else {
                     a.reset();
+                    a.setEnabled(false);
                     gameLogic.destroyAttack(a.getSourcePlayerId());
                     attackstoberemoved.add(a);
                 }
             }
         }
-        this.activeAttacks.remove(attackstoberemoved);
+        for(Attack a:attackstoberemoved) {
+            a.setEnabled(true);
+            activeAttacks.remove(a);
+        }
     }
 
 
@@ -235,8 +239,13 @@ public class RRRGameModel {
 
     public void generateState() {
         Set<Character> aliveCharacters = new HashSet<Character>(idCharacterMap.values());
-        Set<Attack> activeAttacks = new HashSet<Attack>(this.activeAttacks);
-        gameLogic.generateState(aliveCharacters,activeAttacks);
+        Set<Attack> tmp = new HashSet<Attack>();
+        for(Attack a:activeAttacks) {
+            if(a.isEnabled()) {
+                tmp.add(a);
+            }
+        }
+        gameLogic.generateState(aliveCharacters,tmp);
     }
     public ArrayList<Character> getAlivePlayers() {
         ArrayList<Character> alivePlayers = new ArrayList<Character>();
