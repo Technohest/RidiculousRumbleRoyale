@@ -19,4 +19,6 @@ public class Constants {
     public static final int GRAVITY_SCALE = 8;
     public static final int INITIAL_MOVEMENT_SPEED =5;
     public static final int MAX_SPEED = 15;
+    public static final int BASE_ATTACK_DMG = 20;
+    public static final int SPECIAL_ATTACK_DMG = 15;
 }
