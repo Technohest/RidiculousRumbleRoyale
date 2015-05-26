@@ -13,6 +13,7 @@ public abstract class Attack  {
     private float elapsedTime;
     private boolean ready;
     private boolean hasInpacted;
+    private boolean enabled;
 
 
 
@@ -29,6 +30,7 @@ public abstract class Attack  {
         this.elapsedTime = 0;
         this.ready = true;
         this.hasInpacted = false;
+        this.enabled = true;
         }
 
     public void reset() {
@@ -77,6 +79,14 @@ public abstract class Attack  {
     public void setInpacted(boolean inpacted) {
         this.hasInpacted = inpacted;
 
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public float getElapsedTime() {
