@@ -51,6 +51,18 @@ public interface IGameLogic {
      */
     public void respawnPlayer(Integer playerId);
 
+    /**
+     * Returns the damage a specified player has taken.
+     * @param playerId
+     */
+    public Integer getPlayerTakenDamage(Integer playerId);
+
+    /**
+     * Resets the damage delt to a specific player.
+     * @param playerId
+     */
+    public void resetDamageTaken(Integer playerId);
+
 
     /**
      * Moves the player(Body with fixtures) left in the game,and plays the run animation.

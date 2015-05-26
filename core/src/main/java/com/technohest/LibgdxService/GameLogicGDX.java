@@ -163,6 +163,31 @@ public class GameLogicGDX implements IGameLogic {
     public void respawnPlayer(Integer playerId) {
         createPlayer(playerId);
     }
+    @Override
+    public Integer getPlayerTakenDamage(Integer playerId) {
+        if(playerDamageTaken.containsKey(playerId)) {
+            System.out.println("DMG " +  ""+playerDamageTaken.get(playerId));
+            return playerDamageTaken.get(playerId);
+        } else {
+            return 0;
+        }
+    }
+    @Override
+    public void resetDamageTaken(Integer playerId) {
+        if(playerDamageTaken.containsKey(playerId)) {
+           playerDamageTaken.remove(playerId);
+        }
+    }
+
+    /**
+     * Maps the damage dealt to the specified player.
+     * @param playerID
+     * @param damage
+     */
+    public void setDamageDealtToPlayer(Integer playerID, Integer damage) {
+            playerDamageTaken.put(playerID,damage);
+
+    }
 
     @Override
     public void destroyAttack(Integer attackId) {
@@ -183,8 +208,8 @@ public class GameLogicGDX implements IGameLogic {
         characterIdBodyMap.remove(characterId);
     }
 
-    public void setAttackInpacted(Body b,String attackType) {
-        this.setAttackInpacted(b,attackType);
+    public void setAttackInpacted(Body b) {
+        this.impactedAttacks.add(b);
     }
 
 
@@ -335,7 +360,7 @@ public class GameLogicGDX implements IGameLogic {
         HashMap<Attack,ArrayList<Vector2>> attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
         for(Attack a:activeAttacks) {
                 ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
-                Vector2s.add(attackIdBodyMap.get(a.getSourcePlayerId()).getPosition());
+            Vector2s.add(attackIdBodyMap.get(a.getSourcePlayerId()).getPosition());
                 Vector2s.add(attackIdBodyMap.get(a.getSourcePlayerId()).getLinearVelocity());
                 attackVectorMap.put(a, Vector2s);
 
