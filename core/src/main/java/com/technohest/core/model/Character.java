@@ -58,7 +58,7 @@ public  class Character {
      */
     public void generateAttacks() {
         this.baseAttack = new MeleeAttack("Kick",id,Constants.BASE_ATTACK_DMG,1f);
-        this.specialAttack = new Projectile("Fireball",id,Constants.SPECIAL_ATTACK_DMG,0.3f,10);
+        this.specialAttack = new Projectile("Fireball",id,Constants.SPECIAL_ATTACK_DMG,2f,10);
     }
 
 
