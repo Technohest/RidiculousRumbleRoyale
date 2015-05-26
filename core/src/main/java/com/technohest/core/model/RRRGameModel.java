@@ -3,6 +3,7 @@ package com.technohest.core.model;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.IState;
+import com.technohest.LibgdxService.StateGDX;
 
 import java.util.*;
 
@@ -151,7 +152,7 @@ public class RRRGameModel {
     public void updateAttacks(float v) {
         ArrayList<Attack> attackstoberemoved = new ArrayList<Attack>();
         for (Attack a:activeAttacks) {
-            if (a.getHasInpacted()) {
+            if (attackHasInpacted(a)) {
                 a.reset();
                 gameLogic.destroyAttack(a.getSourcePlayerId());
                 attackstoberemoved.add(a);
@@ -166,6 +167,20 @@ public class RRRGameModel {
             }
         }
         this.activeAttacks.remove(attackstoberemoved);
+    }
+
+
+    /**
+     * Checks if the specified attack has inpacted, both in the gameLogic and in the attack class.
+     * @param a
+     * @return
+     */
+    public boolean attackHasInpacted(Attack a) {
+        if(a instanceof MeleeAttack) {
+           return( gameLogic.getAttackHasInpacted(a.sourcePlayerId,"baseAttack") || a.getHasInpacted());
+        } else {
+            return (gameLogic.getAttackHasInpacted(a.sourcePlayerId,"specialAttack") || a.getHasInpacted());
+        }
     }
     /**
      * Performes an action on the specified player connected to playerId
