@@ -1,0 +1,62 @@
+        Projektmöte 18
+    "The Dark Knight Rises"
+
+    Sekreterare:    Oskar Jedvert
+    Deltagare:      Samtliga
+    Datum:          2015-05-26
+
+
+
+§1 Mötets öppnande.
+    > Oskar Jedvert sekreterare
+
+§2 Uppkomna problem som hindrar oss att fortsätta
+    > Inga
+
+§3 Punkter från förra mötet.
+    > Combatsystemet nästan klart
+        Klart, inkluderat nätverk
+    > Lobby klar
+        Nästan, finns grafiskt ingen implementation
+            Fixa playknappen
+    > Förbättra kopplingar + fulkod - In progress
+    > TESTER
+        Behövs.
+    > Rapport metod måste börja skrivas
+        Nästan klar
+
+    > RAD skall putsas på
+        Klar nästan
+    > SDD skall kollas över
+        Klar nästan
+
+§4 Projektets status
+    Denna vecka:
+        > Slutföra RAD o SDD, Skriva tester
+            Viktigaste Tester.
+        > Fixa refaktorering och fulkod
+        > Skriva kommentarer och lämna in.
+    Nästa vecka:
+        > Muntligt framträdande
+
+§5 Bestämmelser
+    > Träffas och slutföra?
+        Imorrn.
+    > Framträdande. När öva/skriva, vem skall prata om vad?
+        Fredag o lördag.
+
+§6 Genomgång av info från möte med handledare
+    > NullpointerException
+
+§7 Inför kommande möte + fikaansvarig
+    > Rapport Klar
+    > SDD Klar
+    > RAD Klar
+    > Projektet Klar
+
+§8 Övriga frågor/ Synpunkter
+
+
+§9 Mötet avslutas
+    > "Not everything. Not yet"
+        - Batman
