@@ -2,10 +2,7 @@ package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -65,8 +62,9 @@ public class WorldGenerator {
                             (c + 0.5f) * tileSize / PPM,
                             (r + 0.5f) * tileSize / PPM
                     );
-
-                    world.createBody(bdef).createFixture(fdef).setUserData("Level");
+                    Body b = world.createBody(bdef);
+                    b.setUserData("Level");
+                    b.createFixture(fdef).setUserData("Level");
                 }
             }
         }
@@ -119,7 +117,9 @@ public class WorldGenerator {
                             (r + 0.5f) * tileSize / PPM
                     );
 
-                    world.createBody(bdef).createFixture(fdef).setUserData("Level");
+                    Body b = world.createBody(bdef);
+                    b.setUserData("Level");
+                    b.createFixture(fdef).setUserData("Level");
                 }
             }
         }
