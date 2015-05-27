@@ -198,7 +198,7 @@ public class GameLogicGDX implements IGameLogic {
                 impactedAttacks.remove(b);
             }
             world.destroyBody(b);
-            attackIdBodyMap.remove(getAttackIdFromBody(b));
+            attackIdBodyMap.remove(attackId);
         }
     }
 
@@ -241,6 +241,12 @@ public class GameLogicGDX implements IGameLogic {
                 playerBody.applyForceToCenter(0, Constants.JUMP_FORCE_MULTIPLIER, true);
             }
         }
+
+    }
+
+    @Override
+    public boolean canAttack(Integer playerId) {
+        return attackIdBodyMap.get(playerId) == null;
 
     }
 

@@ -123,6 +123,13 @@ public interface IGameLogic {
      */
     public boolean getAttackHasInpacted(Integer playerId,String attackType);
 
+    /**
+     * Returns true if the player can attack.
+     * @param playerId
+     * @return
+     */
+    public boolean canAttack(Integer playerId);
+
 
 
     /**
