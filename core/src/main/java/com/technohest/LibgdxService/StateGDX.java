@@ -13,12 +13,12 @@ import java.util.HashMap;
  * @author Tobias Alldén.
  */
 public class StateGDX implements IState {
-    private HashMap<Character, ArrayList<Vector2>> map;
+    private HashMap<Character, ArrayList<Vector2>> characterVectormap;
     private HashMap<Attack,ArrayList<Vector2>> attackVectorMap;
 
     private static StateGDX     instance = null;
     protected StateGDX(){
-        map = new HashMap<Character, ArrayList<Vector2>>();
+        characterVectormap = new HashMap<Character, ArrayList<Vector2>>();
         attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
     }
 
@@ -32,8 +32,8 @@ public class StateGDX implements IState {
     @Override
     public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
         HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Character c:map.keySet()) {
-            temp.put(c.getId(),map.get(c));
+        for(Character c: characterVectormap.keySet()) {
+            temp.put(c.getId(), characterVectormap.get(c));
         }
         return temp;
     }
@@ -50,15 +50,44 @@ public class StateGDX implements IState {
     public ArrayList<Attack> getActiveAttacks() {
         return new ArrayList<Attack>(attackVectorMap.keySet());
     }
+    @Override
+    public void setActiveAttacks(ArrayList<Attack> attacks) {
+        for(Attack a:attacks) {
+            attackVectorMap.put(a,null);
+        }
+    }
+    @Override
+    public void setAlivePlayers(ArrayList<Character> players) {
+        for(Character c:players) {
+            characterVectormap.put(c,null);
+        }
+    }
 
     @Override
     public void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap) {
-        this.map = map;
+        this.characterVectormap = map;
         this.attackVectorMap = attackVectorMap;
+    }
+    @Override
+    public void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap) {
+        for(Character c: characterVectormap.keySet()) {
+            if(idVectorMap.containsKey(c.getId())) {
+                characterVectormap.put(c,idVectorMap.get(c.getId()));
+            }
+        }
+    }
+
+    @Override
+    public void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap) {
+        for(Attack a:attackVectorMap.keySet()) {
+            if(idVectorMap.containsKey(a.getSourcePlayerId())) {
+                attackVectorMap.put(a,idVectorMap.get(a.getSourcePlayerId()));
+            }
+        }
     }
 
     @Override
     public boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap){
-        return this.map.equals(map) && attackBodyVectorMap.equals(this.attackVectorMap);
+        return this.characterVectormap.equals(map) && attackBodyVectorMap.equals(this.attackVectorMap);
     }
 }

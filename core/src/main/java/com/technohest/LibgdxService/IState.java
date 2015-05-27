@@ -39,6 +39,29 @@ public interface IState {
     public ArrayList<Attack> getActiveAttacks();
 
     /**
+     * Sets all the active attacks
+     * @param attacks
+     */
+    public void setActiveAttacks(ArrayList<Attack> attacks);
+
+    /**
+     * Sets the id/vector map which will merge with characters
+     * @param idVectorMap
+     */
+    public void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
+
+    /**
+     * Sets the id/vector map which will merge with attacks.
+     * @param idVectorMap
+     */
+    public void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
+
+    /**
+     * Sets the alive players
+     */
+    public void setAlivePlayers(ArrayList<Character> players );
+
+    /**
      * Compare with another state
      * @param map
      * remote state
