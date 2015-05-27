@@ -47,6 +47,11 @@ public class StateGDX implements IState {
     }
 
     @Override
+    public ArrayList<Attack> getActiveAttacks() {
+        return new ArrayList<Attack>(attackVectorMap.keySet());
+    }
+
+    @Override
     public void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap) {
         this.map = map;
         this.attackVectorMap = attackVectorMap;

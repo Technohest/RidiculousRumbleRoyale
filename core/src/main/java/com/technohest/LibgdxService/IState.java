@@ -33,6 +33,12 @@ public interface IState {
     public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates();
 
     /**
+     * Returns an arraylist of the enabled attacks
+     * @return
+     */
+    public ArrayList<Attack> getActiveAttacks();
+
+    /**
      * Compare with another state
      * @param map
      * remote state
