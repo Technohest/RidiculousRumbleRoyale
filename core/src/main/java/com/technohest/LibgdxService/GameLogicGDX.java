@@ -359,27 +359,28 @@ public class GameLogicGDX implements IGameLogic {
     }
 
     @Override
-    public void generateState(Set<Character> aliveCharacters, Set<Attack> activeAttacks) {
-        HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
-        for(Character c:aliveCharacters){
-            if(characterIdBodyMap.containsKey(c.getId())) {
+    public void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds) {
+        HashMap<Integer, ArrayList<Vector2>> playerIdVectormap = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Integer i:aliveCharacterIds){
+            if(characterIdBodyMap.containsKey(i)) {
                 ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
-                Body playerBody = getBodyFromplayerId(c.getId());
+                Body playerBody = getBodyFromplayerId(i);
                 vector2s.add(playerBody.getPosition());
                 vector2s.add(playerBody.getLinearVelocity());
-                map.put(c, vector2s);
+                playerIdVectormap.put(i, vector2s);
             }
         }
-        HashMap<Attack,ArrayList<Vector2>> attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
-        for(Attack a:activeAttacks) {
-                ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
-            Vector2s.add(attackIdBodyMap.get(a.getSourcePlayerId()).getPosition());
-                Vector2s.add(attackIdBodyMap.get(a.getSourcePlayerId()).getLinearVelocity());
-                attackVectorMap.put(a, Vector2s);
+        HashMap<Integer,ArrayList<Vector2>> attackIdVectorMap = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Integer i:activeAttackIds) {
+            ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
+            Vector2s.add(attackIdBodyMap.get(i).getPosition());
+            Vector2s.add(attackIdBodyMap.get(i).getLinearVelocity());
+            attackIdVectorMap.put(i, Vector2s);
 
         }
         StateGDX state = StateGDX.getInstance();
-        state.setState(map,attackVectorMap);
+        state.setCharacterIdVectorMap(playerIdVectormap);
+        state.setAttackIdVectorMap(attackIdVectorMap);
     }
 
     public Collection<Integer> getCharacterIds() {

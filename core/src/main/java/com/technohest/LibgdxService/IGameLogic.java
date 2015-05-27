@@ -142,5 +142,5 @@ public interface IGameLogic {
      * @return
      * Character and their pos and velocity.
      */
-    void generateState(Set<Character> aliveCharacters, Set<Attack> activeAttacks);
+    void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds);
 }
