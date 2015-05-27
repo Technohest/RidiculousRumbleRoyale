@@ -1,5 +1,6 @@
 package com.technohest.LibgdxService;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
@@ -217,36 +218,43 @@ public class GameLogicGDX implements IGameLogic {
 
     @Override
     public void moveLeft(Integer playerId){
-        Body playerBody = getBodyFromplayerId(playerId);
-        playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
+        if(characterIdBodyMap.containsKey(playerId)) {
+            Body playerBody = getBodyFromplayerId(playerId);
+            playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
+        }
     }
 
     @Override
     public void moveRight(Integer playerId){
         Body playerBody = getBodyFromplayerId(playerId);
-        playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED,playerBody.getLinearVelocity().y));
+        if(characterIdBodyMap.containsKey(playerId)) {
+            playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
+        }
 
     }
 
     @Override
     public void jump(Integer playerId) {
-        if(getStateOfPlayer(playerId) != 0 || getStateOfPlayer(playerId) != 1) {
-            Body playerBody = getBodyFromplayerId(playerId);
-            playerBody.applyForceToCenter(0, Constants.JUMP_FORCE_MULTIPLIER, true);
+        if(characterIdBodyMap.containsKey(playerId)) {
+            if(getStateOfPlayer(playerId) != 0 || getStateOfPlayer(playerId) != 1) {
+                Body playerBody = getBodyFromplayerId(playerId);
+                playerBody.applyForceToCenter(0, Constants.JUMP_FORCE_MULTIPLIER, true);
+            }
         }
 
     }
 
     @Override
     public void attack_base(Integer playerId,boolean isFacingRight) {
-        Body playerBody = getBodyFromplayerId(playerId);
+        if (characterIdBodyMap.containsKey(playerId)) {
+            Body playerBody = getBodyFromplayerId(playerId);
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.gravityScale = 0;
             if (isFacingRight) {
-                bdef.position.set((playerBody.getPosition().x + Constants.PLAYER_WIDTH/32.0f), (playerBody.getPosition().y));
+                bdef.position.set((playerBody.getPosition().x + Constants.PLAYER_WIDTH / 32.0f), (playerBody.getPosition().y));
             } else {
-                bdef.position.set((playerBody.getPosition().x - Constants.PLAYER_WIDTH/32.0f), (playerBody.getPosition().y));
+                bdef.position.set((playerBody.getPosition().x - Constants.PLAYER_WIDTH / 32.0f), (playerBody.getPosition().y));
             }
             FixtureDef fdef1 = new FixtureDef();
             PolygonShape shape = new PolygonShape();
@@ -256,19 +264,21 @@ public class GameLogicGDX implements IGameLogic {
             b.setLinearDamping(0);
             b.setUserData("baseAttack");
             b.createFixture(fdef1).setUserData(playerId);
-            attackIdBodyMap.put(playerId,b);
+            attackIdBodyMap.put(playerId, b);
+        }
     }
 
 
     @Override
     public void attack_special(Integer playerId,boolean isFacingRight) {
-        Body playerBody = getBodyFromplayerId(playerId);
+        if (characterIdBodyMap.containsKey(playerId)) {
+            Body playerBody = getBodyFromplayerId(playerId);
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.gravityScale = 0;
             if (isFacingRight) {
-                bdef.position.set((playerBody.getPosition().x + Constants.PLAYER_WIDTH/32.0f), (playerBody.getPosition().y));
-                bdef.linearVelocity.set(10,0);
+                bdef.position.set((playerBody.getPosition().x + Constants.PLAYER_WIDTH / 32.0f), (playerBody.getPosition().y));
+                bdef.linearVelocity.set(10, 0);
 
             } else {
                 bdef.position.set((playerBody.getPosition().x - Constants.PLAYER_WIDTH / 32.0f), (playerBody.getPosition().y));
@@ -283,7 +293,8 @@ public class GameLogicGDX implements IGameLogic {
             b.setLinearDamping(0);
             b.setUserData("specialAttack");
             b.createFixture(fdef1).setUserData(playerId);
-            attackIdBodyMap.put(playerId,b);
+            attackIdBodyMap.put(playerId, b);
+        }
     }
 
     @Override
@@ -351,11 +362,13 @@ public class GameLogicGDX implements IGameLogic {
     public void generateState(Set<Character> aliveCharacters, Set<Attack> activeAttacks) {
         HashMap<Character, ArrayList<Vector2>> map = new HashMap<Character, ArrayList<Vector2>>();
         for(Character c:aliveCharacters){
-            ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
-            Body playerBody = getBodyFromplayerId(c.getId());
-            vector2s.add(playerBody.getPosition());
-            vector2s.add(playerBody.getLinearVelocity());
-            map.put(c, vector2s);
+            if(characterIdBodyMap.containsKey(c.getId())) {
+                ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
+                Body playerBody = getBodyFromplayerId(c.getId());
+                vector2s.add(playerBody.getPosition());
+                vector2s.add(playerBody.getLinearVelocity());
+                map.put(c, vector2s);
+            }
         }
         HashMap<Attack,ArrayList<Vector2>> attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
         for(Attack a:activeAttacks) {
