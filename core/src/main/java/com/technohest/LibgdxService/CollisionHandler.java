@@ -1,13 +1,10 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
-import com.technohest.core.model.Attack;
-import com.technohest.core.model.Character;
 
 /**
- * A class for handling collition.
+ * A class for handling collision.
  * @author Tobias Alldén
  * @version 0.1
  */
@@ -30,8 +27,10 @@ public class CollisionHandler implements ContactListener {
                 gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureA().getUserData()));
             } else if(contact.getFixtureB().getBody().getUserData().equals("Player")) {
                 if(contact.getFixtureA().getUserData() != contact.getFixtureB().getUserData()) {
-                    Integer attackId = ((Integer) contact.getFixtureA().getUserData());
-                    gameLogic.setDamageDealtToPlayer(attackId, Constants.BASE_ATTACK_DMG);
+                    Integer playerId = ((Integer) contact.getFixtureB().getUserData());
+                    gameLogic.setDamageDealtToPlayer(playerId, Constants.BASE_ATTACK_DMG);
+                    gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureA().getUserData()));
+
                 }
 
             }
@@ -42,8 +41,10 @@ public class CollisionHandler implements ContactListener {
                 gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureB().getUserData()));
             }else if(contact.getFixtureA().getBody().getUserData().equals("Player")) {
                 if(contact.getFixtureA().getUserData() != contact.getFixtureB().getUserData()) {
-                    Integer attackId = ((Integer) contact.getFixtureB().getUserData());
-                    gameLogic.setDamageDealtToPlayer(attackId, Constants.BASE_ATTACK_DMG);
+                    Integer playerId = ((Integer) contact.getFixtureA().getUserData());
+                    gameLogic.setDamageDealtToPlayer(playerId, Constants.BASE_ATTACK_DMG);
+                    gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureB().getUserData()));
+
                 }
             }
 
@@ -55,8 +56,9 @@ public class CollisionHandler implements ContactListener {
                 gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureA().getUserData()));
             } else if(contact.getFixtureB().getBody().getUserData().equals("Player")) {
                 if(contact.getFixtureA().getUserData() != contact.getFixtureB().getUserData()) {
-                    Integer attackId = ((Integer) contact.getFixtureA().getUserData());
-                    gameLogic.setDamageDealtToPlayer(attackId, Constants.SPECIAL_ATTACK_DMG);
+                    Integer playerId = ((Integer) contact.getFixtureB().getUserData());
+                    gameLogic.setDamageDealtToPlayer(playerId, Constants.SPECIAL_ATTACK_DMG);
+                    gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureA().getUserData()));
                 }
 
             }
@@ -68,8 +70,9 @@ public class CollisionHandler implements ContactListener {
                 gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureB().getUserData()));
             }else if(contact.getFixtureA().getBody().getUserData().equals("Player")) {
                 if(contact.getFixtureA().getUserData() != contact.getFixtureB().getUserData()) {
-                    Integer attackId = ((Integer) contact.getFixtureB().getUserData());
-                    gameLogic.setDamageDealtToPlayer(attackId, Constants.SPECIAL_ATTACK_DMG);
+                    Integer playerId = ((Integer) contact.getFixtureA().getUserData());
+                    gameLogic.setDamageDealtToPlayer(playerId, Constants.SPECIAL_ATTACK_DMG);
+                    gameLogic.setAttackInpacted(gameLogic.getBodyFromAttackId((Integer)contact.getFixtureB().getUserData()));
                 }
 
             }
