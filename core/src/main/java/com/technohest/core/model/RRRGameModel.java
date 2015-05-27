@@ -172,7 +172,9 @@ public class RRRGameModel {
         for(Attack a:attackstoberemoved) {
             a.setEnabled(true);
             activeAttacks.remove(a);
+
         }
+        attackstoberemoved.clear();
     }
 
 
@@ -208,14 +210,14 @@ public class RRRGameModel {
                 gameLogic.moveLeft(playerid);
                 break;
             case ATTACK_BASE:
-                if(getPlayerFromID(playerid).getBaseAttack().isReady()) {
+                if(getPlayerFromID(playerid).getBaseAttack().isReady() && gameLogic.canAttack(playerid)) {
                     getPlayerFromID(playerid).getBaseAttack().perform();
                     gameLogic.attack_base(playerid,getPlayerFromID(playerid).isFacingRight());
                     this.activeAttacks.add(getPlayerFromID(playerid).getBaseAttack());
                 }
                 break;
             case ATTACK_SPECIAL:
-                if(getPlayerFromID(playerid).getSpecialAttack().isReady()) {
+                if(getPlayerFromID(playerid).getSpecialAttack().isReady() && gameLogic.canAttack(playerid)) {
                     gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
                     getPlayerFromID(playerid).getSpecialAttack().perform();
                     this.activeAttacks.add(getPlayerFromID(playerid).getSpecialAttack());
