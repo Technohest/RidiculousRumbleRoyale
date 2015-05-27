@@ -236,6 +236,7 @@ public class RRRGameModel {
 
 
     public void correct(IState state) {
+        setEnabledAttacks(state.getActiveAttacks());
         gameLogic.correct(state);
     }
 
@@ -267,10 +268,8 @@ public class RRRGameModel {
         myID = id;
     }
 
-    public void setEnabledAttacks(Set<Attack> attackSet) {
-        ArrayList<Attack> temp = new ArrayList<Attack>();
-        temp.addAll(attackSet);
-        this.activeAttacks = temp;
+    public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
+        this.activeAttacks = activeAttacks;
     }
 
     public void setRespawnEnabled(boolean value) {
