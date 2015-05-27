@@ -110,9 +110,9 @@ public class RRRGameView implements Screen {
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
         //Draws players ---  TEMP!
 
-        Collection<Character> players = model.getAlivePlayers();
-		for (Character c: players) {
-			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromplayerId(c.getId());
+        Collection<Integer> players = model.getAlivePlayersId();
+		for (Integer i: players) {
+			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromplayerId(i);
 			sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
 		}
 
