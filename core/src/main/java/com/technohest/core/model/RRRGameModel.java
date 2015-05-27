@@ -241,23 +241,35 @@ public class RRRGameModel {
     }
 
     public void generateState() {
-        Set<Character> aliveCharacters = new HashSet<Character>(idCharacterMap.values());
-        Set<Attack> tmp = new HashSet<Attack>();
+        StateGDX.getInstance().setAlivePlayers(getAliveCharacters());
+        StateGDX.getInstance().setActiveAttacks(getActiveAttacks());
+        HashSet<Integer> alivePlayers = getAlivePlayersId();
+        Set<Integer> tmp = new HashSet<Integer>();
         for(Attack a:activeAttacks) {
             if(a.isEnabled()) {
-                tmp.add(a);
+                tmp.add(a.getSourcePlayerId());
             }
         }
-        gameLogic.generateState(aliveCharacters,tmp);
+        gameLogic.generateState(alivePlayers,tmp);
     }
-    public ArrayList<Character> getAlivePlayers() {
-        ArrayList<Character> alivePlayers = new ArrayList<Character>();
+    public HashSet<Integer> getAlivePlayersId() {
+        HashSet<Integer> alivePlayers = new HashSet<Integer>();
         for(Character c: idCharacterMap.values()) {
             if (c.isAlive()) {
-                alivePlayers.add(c);
+                alivePlayers.add(c.getId());
             }
         }
         return alivePlayers;
+    }
+
+    public ArrayList<Character> getAliveCharacters() {
+        ArrayList<Character> tmp = new ArrayList<Character>();
+        for(Integer i: idCharacterMap.keySet()) {
+            if(idCharacterMap.get(i).isAlive()) {
+                tmp.add(idCharacterMap.get(i));
+            }
+        }
+        return tmp;
     }
 
 
