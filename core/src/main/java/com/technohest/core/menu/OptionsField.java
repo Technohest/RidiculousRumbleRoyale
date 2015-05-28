@@ -115,7 +115,7 @@ public class OptionsField extends Table{
      * @param target
      */
     public void switchTo(String target){
-        if(target == "back"){
+        if(target.equals("back")){
                 currentIndex -=1;
                 if(currentIndex == -1){
                     currentIndex =numberOfOptions-1;

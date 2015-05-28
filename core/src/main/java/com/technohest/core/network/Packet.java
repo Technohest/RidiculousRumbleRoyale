@@ -28,7 +28,7 @@ public class Packet {
         public IState state;
     }
 
-    public class Packet0PlayerSetCharacter {
+    public static class Packet0PlayerSetCharacter {
         //CharType type;
     }
 

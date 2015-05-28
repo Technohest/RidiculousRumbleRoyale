@@ -37,7 +37,6 @@ public class LobbyScreen implements Screen {
     private ImageButton char1Button;
     private Texture char1Texture;
     private SpriteDrawable char1Draw;
-    private SpriteDrawable char1Down;
     private Sprite char1Sprite;
 
     private ImageButton char2Button;
@@ -93,7 +92,7 @@ public class LobbyScreen implements Screen {
         char1Texture = new Texture(new FileHandle("assets/allden.png"));
         char1Sprite = new Sprite(char1Texture,100,200);
         char1Draw = new SpriteDrawable(char1Sprite);
-        char1Button = new ImageButton(char1Draw,char1Down);
+        char1Button = new ImageButton(char1Draw);
         characterTable.add(char1Button).padRight(20);
 
         char2Texture = new Texture(new FileHandle("assets/boking.png"));

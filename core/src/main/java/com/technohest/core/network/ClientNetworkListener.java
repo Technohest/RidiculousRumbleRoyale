@@ -16,7 +16,6 @@ import java.util.List;
  * @author David Ström
  */
 public class ClientNetworkListener extends Listener {
-    private Client client;
     private RClient rclient;
     private Connection server;
 
@@ -33,7 +32,6 @@ public class ClientNetworkListener extends Listener {
 
 
     public void init(RClient rclient, Client client) {
-        this.client = client;
         this.rclient = rclient;
     }
 

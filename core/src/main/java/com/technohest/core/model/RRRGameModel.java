@@ -20,7 +20,7 @@ public class RRRGameModel {
     private boolean respawnEnabled;
 
     //TMP
-    private Boolean isClient;
+    //private Boolean isClient;
 
     public RRRGameModel(){
         setGameLogic(new GameLogicGDX());
@@ -259,6 +259,10 @@ public class RRRGameModel {
                 c.setIsFacingRight(false);
                 break;
             case 4:
+                c.setState(Character.State.Standing);
+                c.setGrounded(true);
+                break;
+            default:
                 c.setState(Character.State.Standing);
                 c.setGrounded(true);
                 break;
