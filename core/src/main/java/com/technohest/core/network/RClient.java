@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.LibgdxService.IState;
 import com.technohest.LibgdxService.StateGDX;
+import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;
@@ -39,8 +40,8 @@ public class RClient {
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(this, client);
-        controller.init(clientNetworkListener);
+        clientNetworkListener.init(this, client, controller);
+        controller.addActionListener(clientNetworkListener);
 
         client.addListener(clientNetworkListener);
         client.start();
@@ -64,8 +65,8 @@ public class RClient {
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(this, client);
-        controller.init(clientNetworkListener);
+        clientNetworkListener.init(this, client, controller);
+        controller.addActionListener(clientNetworkListener);
 
         client.addListener(clientNetworkListener);
         client.start();

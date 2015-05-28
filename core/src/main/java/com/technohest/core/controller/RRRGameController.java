@@ -1,4 +1,4 @@
-package com.technohest.core.network;
+package com.technohest.core.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.levels.ILevel;
@@ -10,6 +10,10 @@ import com.technohest.core.network.ClientNetworkListener;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * The controller handling the input from the user and mapping the input to actions.
  * @author Oskar Jedvert
@@ -17,7 +21,9 @@ import com.technohest.core.menu.ScreenHandler;
  */
 public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
-    private ClientNetworkListener listener;
+
+    private ArrayList<Action.ActionID> actions = new ArrayList<Action.ActionID>();
+    private ArrayList<RActionListener> listeners = new ArrayList<RActionListener>();
 
     private double accumulator = 0.0;
     private double currentTime;
@@ -32,10 +38,8 @@ public class RRRGameController extends InputHandler {
 
     /**
      * Initializes the controller with a networklistener.
-     * @param listener
      */
-    public void init(ClientNetworkListener listener) {
-        this.listener = listener;
+    public void init() {
     }
 
     /**
@@ -49,29 +53,27 @@ public class RRRGameController extends InputHandler {
 
     public void handleInput() {
         if (this.isPressed(InputHandler.ESCAPE)) {
-            if (listener != null)
-                listener.killServer();
+            /*if (listener != null)
+                listener.killServer();*/
             ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
 
-        if (listener != null) {
             if (this.isPressed(InputHandler.RIGHT)) {
-                listener.addAction(Action.ActionID.MOVE_RIGHT);
+                actions.add(Action.ActionID.MOVE_RIGHT);
             }
             if (this.isPressed(InputHandler.LEFT)) {
-                listener.addAction(Action.ActionID.MOVE_LEFT);
+                actions.add(Action.ActionID.MOVE_LEFT);
             }
             if (this.isPressed(InputHandler.JUMP)) {
-                listener.addAction(Action.ActionID.JUMP);
+                actions.add(Action.ActionID.JUMP);
             }
             if (this.isPressed(InputHandler.BASE_ATTACK)) {
-                listener.addAction(Action.ActionID.ATTACK_BASE);
+                actions.add(Action.ActionID.ATTACK_BASE);
             }
             if (this.isPressed(InputHandler.SPECIAL_ATTACK)) {
-                listener.addAction(Action.ActionID.ATTACK_SPECIAL);
+                actions.add(Action.ActionID.ATTACK_SPECIAL);
             }
-        }
     }
 
     /**
@@ -88,12 +90,25 @@ public class RRRGameController extends InputHandler {
             if (this.hasInput())
                 this.handleInput();
 
-            if (listener != null)
-                listener.sendActionsToServerIfNecessary();
+            for (RActionListener listener: listeners) {
+                listener.actionReceived();
+            }
 
             accumulator -= step;
         }
 
         Correction.getInstance().correctState(model);
+    }
+
+    public ArrayList<Action.ActionID> getActions() {
+        return actions;
+    }
+
+    public void addActionListener(RActionListener listener) {
+        listeners.add(listener);
+    }
+
+    public void clearActions() {
+        actions.clear();
     }
 }

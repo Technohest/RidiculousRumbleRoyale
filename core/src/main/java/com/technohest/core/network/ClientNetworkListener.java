@@ -5,23 +5,25 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.LibgdxService.StateGDX;
+import com.technohest.core.controller.RActionListener;
+import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.Correction;
 import com.technohest.core.model.Action;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Manages how the client responds to input from the server.
  * @author David Ström
  */
-public class ClientNetworkListener extends Listener {
+public class ClientNetworkListener extends Listener implements RActionListener {
     private Client client;
     private RClient rclient;
     private Connection server;
 
     private int lastSequenceNumber = 0;
+
+    private RRRGameController controller;
 
     private int sequenceNumber = 0;
 
@@ -33,9 +35,10 @@ public class ClientNetworkListener extends Listener {
     private List<Action> playerActions = new ArrayList<Action>();
 
 
-    public void init(RClient rclient, Client client) {
+    public void init(RClient rclient, Client client, RRRGameController controller) {
         this.client = client;
         this.rclient = rclient;
+        this.controller = controller;
     }
 
     @Override
@@ -105,5 +108,16 @@ public class ClientNetworkListener extends Listener {
      */
     public void killServer() {
         server.sendTCP(new Packet.Packet2GameOver());
+    }
+
+    @Override
+    public void actionReceived() {
+        ArrayList<Action.ActionID> actions = controller.getActions();
+        for (Action.ActionID a: actions) {
+            addAction(a);
+        }
+        controller.clearActions();
+
+        sendActionsToServerIfNecessary();
     }
 }

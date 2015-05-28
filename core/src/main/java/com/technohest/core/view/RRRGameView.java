@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.StateGDX;
 import com.technohest.constants.Settings;
-import com.technohest.core.network.RRRGameController;
+import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.*;
 
 import java.util.HashMap;
