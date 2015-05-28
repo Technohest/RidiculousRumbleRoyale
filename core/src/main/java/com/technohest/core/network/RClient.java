@@ -25,12 +25,8 @@ public class RClient {
     private RRRGameView view = new RRRGameView(controller, model);
 
     private boolean host;
-    private IState current;
-    private IState previous;
 
     private void init() {
-        current = StateGDX.getInstance();
-        previous = current;
         generateState();
     }
 

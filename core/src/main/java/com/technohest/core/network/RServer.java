@@ -19,7 +19,6 @@ public class RServer {
     private boolean gameRunning;
     private Server server;
     private RRRGameModel model = new RRRGameModel();
-    private IState state;
 
     //TIMESTEP
     private double accumulator = 0.0;
@@ -54,7 +53,6 @@ public class RServer {
     }
 
     private void init() {
-        state = StateGDX.getInstance();
         generateState();
     }
 
