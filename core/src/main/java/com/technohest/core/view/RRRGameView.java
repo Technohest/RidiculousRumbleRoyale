@@ -70,19 +70,6 @@ public class RRRGameView implements Screen {
 
 	}
 
-	public RRRGameView(RRRGameModel model) {
-		settings = new Settings();
-		this.model = model;
-		mapRenderer = new OrthogonalTiledMapRenderer(model.getGameLogic().getLevel().getMap());
-		batch = new SpriteBatch();
-
-		camera = new OrthographicCamera();
-		sRenderer = new ShapeRenderer();
-
-		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
-		mapRenderer.setView(camera);
-	}
-
 	@Override
 	public void render(float v) {
 		if (controller != null) {
