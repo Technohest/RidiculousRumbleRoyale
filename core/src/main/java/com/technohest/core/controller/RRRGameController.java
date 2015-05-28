@@ -19,7 +19,6 @@ import com.technohest.core.menu.ScreenHandler;
 public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
     private ClientNetworkListener listener;
-    private RRRGameView view;
 
     private double accumulator = 0.0;
     private double currentTime;
@@ -38,14 +37,6 @@ public class RRRGameController extends InputHandler {
      */
     public void init(ClientNetworkListener listener) {
         this.listener = listener;
-    }
-
-    /**
-     * Sets the game view.
-     * @param view
-     */
-    public void setView(RRRGameView view) {
-        this.view = view;
     }
 
     /**
@@ -106,6 +97,5 @@ public class RRRGameController extends InputHandler {
         }
 
         Correction.getInstance().correctState(model);
-        view.update(v);
     }
 }
