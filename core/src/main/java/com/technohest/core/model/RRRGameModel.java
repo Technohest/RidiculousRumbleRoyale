@@ -180,8 +180,9 @@ public class RRRGameModel {
                 tmp.add(a.getSourcePlayerId());
             }
         }
-        gameLogic.generateState(alivePlayers,tmp);
+        gameLogic.generateState(alivePlayers, tmp);
     }
+
     public void correct(IState state) {
         setEnabledAttacks(state.getActiveAttacks());
         gameLogic.correct(state);
@@ -198,15 +199,17 @@ public class RRRGameModel {
         }
         return alivePlayers;
     }
-    public ArrayList<Character> getAliveCharacters() {
-        ArrayList<Character> tmp = new ArrayList<Character>();
+
+    public ArrayList<Integer> getAliveCharacters() {
+        ArrayList<Integer> tmp = new ArrayList<Integer>();
         for(Integer i: idCharacterMap.keySet()) {
             if(idCharacterMap.get(i).isAlive()) {
-                tmp.add(idCharacterMap.get(i));
+                tmp.add(i);
             }
         }
         return tmp;
     }
+
     public Integer getmyID() {
         return myID;
     }
@@ -224,6 +227,7 @@ public class RRRGameModel {
         }
         return null;
     }
+
     public Character getPlayerFromID(Integer myID) {
         return this.idCharacterMap.get(myID);
     }
@@ -274,6 +278,7 @@ public class RRRGameModel {
     public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
         this.activeAttacks = activeAttacks;
     }
+
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
     }

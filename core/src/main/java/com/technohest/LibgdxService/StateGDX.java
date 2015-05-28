@@ -13,12 +13,12 @@ import java.util.HashMap;
  * @author Tobias Alldén.
  */
 public class StateGDX implements IState {
-    private HashMap<Character, ArrayList<Vector2>> characterVectormap;
+    private HashMap<Integer, ArrayList<Vector2>> characterVectormap;
     private HashMap<Attack,ArrayList<Vector2>> attackVectorMap;
 
     private static StateGDX     instance = null;
     protected StateGDX(){
-        characterVectormap = new HashMap<Character, ArrayList<Vector2>>();
+        characterVectormap = new HashMap<Integer, ArrayList<Vector2>>();
         attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
     }
 
@@ -32,13 +32,14 @@ public class StateGDX implements IState {
     @Override
     public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
         HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Character c: characterVectormap.keySet()) {
-            temp.put(c.getId(), characterVectormap.get(c));
+        for(Integer i: characterVectormap.keySet()) {
+            temp.put(i, characterVectormap.get(i));
         }
         return temp;
     }
+
     @Override
-    public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates() {
+    public HashMap<Integer, ArrayList<Vector2>> getAttackIdStates() {
         HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
         for(Attack a:attackVectorMap.keySet()) {
             temp.put(a.getSourcePlayerId(),attackVectorMap.get(a));
@@ -57,22 +58,22 @@ public class StateGDX implements IState {
         }
     }
     @Override
-    public void setAlivePlayers(ArrayList<Character> players) {
-        for(Character c:players) {
-            characterVectormap.put(c,null);
+    public void setAlivePlayers(ArrayList<Integer> players) {
+        for(Integer i:players) {
+            characterVectormap.put(i,null);
         }
     }
 
     @Override
-    public void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap) {
+    public void setState(HashMap<Integer, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap) {
         this.characterVectormap = map;
         this.attackVectorMap = attackVectorMap;
     }
     @Override
     public void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap) {
-        for(Character c: characterVectormap.keySet()) {
-            if(idVectorMap.containsKey(c.getId())) {
-                characterVectormap.put(c,idVectorMap.get(c.getId()));
+        for(Integer i: characterVectormap.keySet()) {
+            if(idVectorMap.containsKey(i)) {
+                characterVectormap.put(i,idVectorMap.get(i));
             }
         }
     }
@@ -87,7 +88,7 @@ public class StateGDX implements IState {
     }
 
     @Override
-    public boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap){
+    public boolean equals(HashMap<Integer, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap){
         return this.characterVectormap.equals(map) && attackBodyVectorMap.equals(this.attackVectorMap);
     }
 }

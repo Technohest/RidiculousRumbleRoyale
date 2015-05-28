@@ -17,49 +17,49 @@ public interface IState {
      * @return
      * State which needs to be set in gameLogic
      */
-    public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates();
+    HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates();
 
     /**
      * Sets the state properties.
-     * @param map
+     * @param map map of player id, position, and velocity.
      * @param attackVectorMap
      * */
-    void setState(HashMap<Character, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap);
+    void setState(HashMap<Integer, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap);
 
     /**
      * Returns all the values of the active attacks.
      * @return
      */
-    public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates();
+    HashMap<Integer,ArrayList<Vector2>> getAttackIdStates();
 
     /**
      * Returns an arraylist of the enabled attacks
      * @return
      */
-    public ArrayList<Attack> getActiveAttacks();
+    ArrayList<Attack> getActiveAttacks();
 
     /**
      * Sets all the active attacks
      * @param attacks
      */
-    public void setActiveAttacks(ArrayList<Attack> attacks);
+    void setActiveAttacks(ArrayList<Attack> attacks);
 
     /**
      * Sets the id/vector map which will merge with characters
      * @param idVectorMap
      */
-    public void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
+    void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
 
     /**
      * Sets the id/vector map which will merge with attacks.
      * @param idVectorMap
      */
-    public void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
+    void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
 
     /**
      * Sets the alive players
      */
-    public void setAlivePlayers(ArrayList<Character> players );
+    void setAlivePlayers(ArrayList<Integer> players );
 
     /**
      * Compare with another state
@@ -68,6 +68,6 @@ public interface IState {
      * @return
      * true if same, false else
      */
-    boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap);
+    boolean equals(HashMap<Integer, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap);
 
 }
