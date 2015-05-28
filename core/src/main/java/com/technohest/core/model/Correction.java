@@ -25,10 +25,11 @@ public class Correction {
         this.newState = state;
     }
 
+
     public void correctState(RRRGameModel model) {
         if (newState == null || model == null)
             return;
 
-        model.correct(newState);
+        //model.correct(newState);
     }
 }
