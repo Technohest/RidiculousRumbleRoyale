@@ -12,7 +12,7 @@ public class ActionTest {
 
     @Test
     public void testSetPlayerID() throws Exception {
-        Action action = new Action();
+        Action action = new Action(1, Action.ActionID.ATTACK_BASE);
         action.setPlayerID(10);
         assertTrue(action.getPlayerID() == 10);
     }
@@ -26,7 +26,7 @@ public class ActionTest {
 
     @Test
     public void testSetSequenceNumber() throws Exception {
-        Action action = new Action();
+        Action action = new Action(1, Action.ActionID.ATTACK_BASE, 1);
         action.setSequenceNumber(10);
         assertTrue(action.getSequenceNumber() == 10);
     }

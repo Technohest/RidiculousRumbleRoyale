@@ -14,4 +14,9 @@ public class ProjectileTest {
         Projectile p = new Projectile("TEST", 1, 10, 10, 10);
         assertEquals(10, p.getVelocityX(), 0.01);
     }
+    @Test
+    public void projectileTest() throws Exception{
+        Projectile attack = new Projectile();
+        assertNotNull(attack);
+    }
 }

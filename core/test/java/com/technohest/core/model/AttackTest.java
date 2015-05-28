@@ -116,4 +116,26 @@ public class AttackTest {
         };
         assertTrue(a.getName().equals("A"));
     }
+
+    @Test
+    public void testHashCode() throws Exception {
+        Attack a = new Attack("A",1, 20, 10) {
+        };
+        Attack b = new Attack("A",1, 20, 10) {
+        };
+        assertEquals(b, a);
+        assertEquals(b.hashCode(), a.hashCode());
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Attack a = new Attack("A",1, 20, 10) {
+        };
+        Attack b = new Attack("A",1, 20, 10) {
+        };
+        assertTrue(b.equals(a));
+        Attack c = null;
+        assertFalse(b.equals(c));
+        assertFalse(b.equals(new Object()));
+    }
 }
