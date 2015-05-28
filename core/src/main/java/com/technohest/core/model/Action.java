@@ -1,8 +1,8 @@
 package com.technohest.core.model;
 
 /**
- *
- * Created by oskar on 2015-05-10.
+ * A class representing an action to be sent over the network.
+ * @author Oskar Jedvert
  */
 public class Action {
     private Integer sequenceNumber;

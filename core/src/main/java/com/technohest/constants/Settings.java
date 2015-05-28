@@ -13,7 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Oscar on 2015-05-20.
+ * A class for all the game settings.
+ * @author Oscar Boking.
  */
 public class Settings {
 

@@ -2,10 +2,10 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.technohest.core.OptionsField;
 
 /**
- * Created by Oscar on 2015-05-20.
+ * A class for listeninng to character selection.
+ * @author Oscar Boking
  */
 public class CharacterSelectListener extends InputListener {
     private LobbyScreen lobbyScreen;

@@ -12,8 +12,6 @@ public  class Character {
 
     private int id;
     private Character attributes;
-
-    //State of character,may be reimplemented in future versions.
     public enum State {
         Standing,Running,Jumping,Falling
     }
@@ -106,7 +104,20 @@ public  class Character {
     }
 
 
-    //***************************************GETTERS/SETTERS***********************************************//
+
+    /**
+     * Sets the character attributes, copying them from another character
+     * @param newStats
+     */
+    public void setAttributes(Character newStats) {
+        this.name = newStats.name;
+        this.baseAttack = newStats.getBaseAttack();
+        this.specialAttack = newStats.getSpecialAttack();
+        this.healthPoints = newStats.getHealthPoints();
+        this.kills = newStats.getKills();
+        this.deaths = newStats.getDeaths();
+
+    }
 
 
     public State getState() {
@@ -173,19 +184,8 @@ public  class Character {
         return name;
     }
 
-
     public int getId() {
         return id;
-    }
-
-    public void setAttributes(Character newStats) {
-        this.name = newStats.name;
-        this.baseAttack = newStats.getBaseAttack();
-        this.specialAttack = newStats.getSpecialAttack();
-        this.healthPoints = newStats.getHealthPoints();
-        this.kills = newStats.getKills();
-        this.deaths = newStats.getDeaths();
-
     }
 
     public void setId(int id) {

@@ -28,7 +28,7 @@ import java.io.IOException;
 
 /**
  * The options menu, able to change the options of the game and save them.
- * Created by Oscar on 2015-04-11.
+ * @author Oscar Boking
  */
 public class OptionsMenuView implements Screen{
 

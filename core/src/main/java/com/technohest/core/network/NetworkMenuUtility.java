@@ -2,7 +2,7 @@ package com.technohest.core.network;
 
 /**
  * Manages the ip, port, and if the current session is a server.
- * Created by time on 2015-04-21.
+ * @author David Ström
  */
 public class NetworkMenuUtility {
     private String ip;

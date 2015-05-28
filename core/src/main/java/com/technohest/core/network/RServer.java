@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 /**
  * Creates a server with specified port and registers packets the server will be listening to.
- * Created by time on 2015-05-05.
+ * @author David Ström
  */
 public class RServer {
     private boolean gameRunning;

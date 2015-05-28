@@ -6,7 +6,8 @@ import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 
 /**
- * Created by vilddjur on 2015-04-02.
+ * A class handling input for the menu.
+ * @author Oskar Jedvert.
  */
 public class MenuInputListener extends InputListener {
     public final SCREEN target;

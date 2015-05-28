@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Manages how the client responds to input from the server.
- * Created by time on 2015-05-05.
+ * @author David Ström
  */
 public class ClientNetworkListener extends Listener {
     private Client client;

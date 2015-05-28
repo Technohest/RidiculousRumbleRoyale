@@ -13,7 +13,8 @@ import com.technohest.core.menu.ScreenHandler;
 
 /**
  * The controller handling the input from the user and mapping the input to actions.
- * Created by Oskar on 2015-03-24.
+ * @author Oskar Jedvert
+ * @author Tobias Alldén
  */
 public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
@@ -24,23 +25,37 @@ public class RRRGameController extends InputHandler {
     private double currentTime;
     private float step = 1.0f/60.0f;
 
+
     public RRRGameController(RRRGameModel model) {
         super();
         this.model = model;
         model.generateWorld();
     }
 
+    /**
+     * Initializes the controller with a networklistener.
+     * @param listener
+     */
     public void init(ClientNetworkListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Sets the game view.
+     * @param view
+     */
     public void setView(RRRGameView view) {
         this.view = view;
     }
 
+    /**
+     * Returns the current level.
+     * @return
+     */
     public ILevel getLevel() {
         return model.getGameLogic().getLevel();
     }
+
 
     public void handleInput() {
         if (this.isPressed(InputHandler.ESCAPE)) {

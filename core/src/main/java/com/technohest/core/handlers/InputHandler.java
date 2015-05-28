@@ -7,11 +7,10 @@ import com.technohest.constants.Controls;
 /**
  * A class for handling input.
  * @author Tobias Alldén
- * @version 1.1
  */
 public class InputHandler implements InputProcessor {
 
-    //Bits (numbers for the different actions)
+    //Bits (integers for the different actions)
     public static final int UP = 0;
     public static final int DOWN = 1;
     public static final int LEFT = 2;

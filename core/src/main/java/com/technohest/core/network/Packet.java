@@ -3,15 +3,12 @@ package com.technohest.core.network;
 
 import com.technohest.LibgdxService.IState;
 import com.technohest.core.model.Action;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * All the different packets which can be sent over the network.
- * Created by time on 2015-05-05.
+ * @author David Ström
  */
 public class Packet {
     public static class Packet0PlayerID {

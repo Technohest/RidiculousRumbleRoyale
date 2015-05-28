@@ -14,7 +14,7 @@ import static com.technohest.core.menu.SCREEN.*;
 
 /**
  * ScreenHandler is an easy way to set the screen of the program.
- * Created by time on 2015-04-13.
+ * @author David Ström
  */
 public class ScreenHandler extends Observable {
     // All the different possible screens

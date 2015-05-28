@@ -1,18 +1,13 @@
 package com.technohest.LibgdxService;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
 import com.technohest.LibgdxService.levels.LevelHandler;
-import com.technohest.core.model.*;
-import com.technohest.core.model.Character;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
-
 /**
  * The service managing the game physics.
  * @author Oskar Jedvert
@@ -26,7 +21,6 @@ public class GameLogicGDX implements IGameLogic {
     private HashMap<Integer,Integer> playerDamageTaken;
     private CollisionHandler collisionHandler;
     private HashMap<Integer,Body> characterIdBodyMap;
-
 
     public GameLogicGDX(){
         this.levelHandler = new LevelHandler();
@@ -50,6 +44,10 @@ public class GameLogicGDX implements IGameLogic {
 
     }
 
+    /**
+     * Creates the world and the players.
+     * @param characterIdArray
+     */
     @Override
     public void generate(ArrayList<Integer> characterIdArray) {
         levelHandler.getLevel().generate(world);
@@ -57,7 +55,10 @@ public class GameLogicGDX implements IGameLogic {
             createPlayer(i);
         }
     }
-
+    /**
+     * Creates the player body and assigns the player id to it.
+     * @param playerId
+     */
     public void createPlayer(Integer playerId) {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -77,101 +78,9 @@ public class GameLogicGDX implements IGameLogic {
         characterIdBodyMap.put(playerId, b);
 
     }
-
-    /**
-     * Returns the associated character to the specified body.
-     * @param body the body which will be used to search for the character.
-     * @return the corresponding character to a body or null if the character was not found.
-     */
-    public Integer getCharacterIdfromBody(Body body) {
-        if(characterIdBodyMap.containsValue(body)) {
-            for (Integer i : characterIdBodyMap.keySet()) {
-                if (characterIdBodyMap.get(i).equals(body)) {
-                    return i;
-                }
-            }
-        }
-        return null;
-    }
-    public Body getBodyFromplayerId(Integer id) {
-        return characterIdBodyMap.get(id);
-    }
-
-    /**
-     * Returns an Integer specifying state of character, 0 = falling, 1 = jumping, 2 = runnning right, 3 = running left, 4 = standing.
-     * @param playerId
-     * @return
-     */
-    public Integer getStateOfPlayer(Integer playerId) {
-        Body b = getBodyFromplayerId(playerId);
-        if (b.getLinearVelocity().y != 0) {
-            if (b.getLinearVelocity().y > 0) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } else if (b.getLinearVelocity().x != 0) {
-            if (b.getLinearVelocity().x > 0) {
-                return 2;
-            } else {
-                return 3;
-            }
-        } else {
-            return 4;
-        }
-    }
-
-
-
-    public Body getBodyFromAttackId(Integer attackId) {
-       return attackIdBodyMap.get(attackId);
-    }
-    public Integer getAttackIdFromBody(Body body) {
-        if(attackIdBodyMap.containsValue(body)) {
-            for (Integer i : attackIdBodyMap.keySet()) {
-                if (attackIdBodyMap.get(i).equals(body)) {
-                    return i;
-                }
-            }
-        }
-        return null;
-
-    }
-
-    /**
-     * Checks the impacted attack list for the body with attackType user data, then searches it's fixtures for one with
-     * the id of the player
-     * @param playerId
-     * @param attackType
-     * @return
-     */
-    public boolean getAttackHasInpacted(Integer playerId,String attackType) {
-        for(Body b:impactedAttacks) {
-            if(b.getUserData().equals(attackType)){
-                for(Fixture f:b.getFixtureList()) {
-                    if (f.getUserData().equals(playerId)) {
-                        return true;
-                    }
-                }
-
-            }
-        }
-        return false;
-    }
-
-
     @Override
     public void respawnPlayer(Integer playerId) {
         createPlayer(playerId);
-    }
-    @Override
-    public Integer getPlayerTakenDamage(Integer playerId) {
-        if(playerDamageTaken.containsKey(playerId)) {
-            System.out.println("DMG " +  ""+playerDamageTaken.get(playerId));
-            return playerDamageTaken.get(playerId);
-        } else {
-            return 0;
-        }
     }
     @Override
     public void resetDamageTaken(Integer playerId) {
@@ -179,17 +88,6 @@ public class GameLogicGDX implements IGameLogic {
            playerDamageTaken.remove(playerId);
         }
     }
-
-    /**
-     * Maps the damage dealt to the specified player.
-     * @param playerID
-     * @param damage
-     */
-    public void setDamageDealtToPlayer(Integer playerID, Integer damage) {
-            playerDamageTaken.put(playerID,damage);
-
-    }
-
     @Override
     public void destroyAttack(Integer attackId) {
         Body b = getBodyFromAttackId(attackId);
@@ -201,18 +99,11 @@ public class GameLogicGDX implements IGameLogic {
             attackIdBodyMap.remove(attackId);
         }
     }
-
-
     @Override
     public void killPlayer(Integer characterId) {
         world.destroyBody(getBodyFromplayerId(characterId));
         characterIdBodyMap.remove(characterId);
     }
-
-    public void setAttackInpacted(Body b) {
-        this.impactedAttacks.add(b);
-    }
-
 
 
 
@@ -223,16 +114,13 @@ public class GameLogicGDX implements IGameLogic {
             playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
         }
     }
-
     @Override
     public void moveRight(Integer playerId){
         Body playerBody = getBodyFromplayerId(playerId);
         if(characterIdBodyMap.containsKey(playerId)) {
             playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
         }
-
     }
-
     @Override
     public void jump(Integer playerId) {
         if(characterIdBodyMap.containsKey(playerId)) {
@@ -243,13 +131,6 @@ public class GameLogicGDX implements IGameLogic {
         }
 
     }
-
-    @Override
-    public boolean canAttack(Integer playerId) {
-        return attackIdBodyMap.get(playerId) == null;
-
-    }
-
     @Override
     public void attack_base(Integer playerId,boolean isFacingRight) {
         if (characterIdBodyMap.containsKey(playerId)) {
@@ -273,8 +154,6 @@ public class GameLogicGDX implements IGameLogic {
             attackIdBodyMap.put(playerId, b);
         }
     }
-
-
     @Override
     public void attack_special(Integer playerId,boolean isFacingRight) {
         if (characterIdBodyMap.containsKey(playerId)) {
@@ -303,22 +182,165 @@ public class GameLogicGDX implements IGameLogic {
         }
     }
 
+
+
+    /**
+     * Generates the state to be sent over the network.
+     * @param aliveCharacterIds
+     * @param activeAttackIds
+     */
+    @Override
+    public void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds) {
+        HashMap<Integer, ArrayList<Vector2>> playerIdVectormap = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Integer i:aliveCharacterIds){
+            if(characterIdBodyMap.containsKey(i)) {
+                ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
+                Body playerBody = getBodyFromplayerId(i);
+                vector2s.add(playerBody.getPosition());
+                vector2s.add(playerBody.getLinearVelocity());
+                playerIdVectormap.put(i, vector2s);
+            }
+        }
+        HashMap<Integer,ArrayList<Vector2>> attackIdVectorMap = new HashMap<Integer, ArrayList<Vector2>>();
+        for(Integer i:activeAttackIds) {
+            ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
+            Vector2s.add(attackIdBodyMap.get(i).getPosition());
+            Vector2s.add(attackIdBodyMap.get(i).getLinearVelocity());
+            attackIdVectorMap.put(i, Vector2s);
+
+        }
+        StateGDX state = StateGDX.getInstance();
+        state.setCharacterIdVectorMap(playerIdVectormap);
+        state.setAttackIdVectorMap(attackIdVectorMap);
+    }
+
+    /**
+     * Performs the correction if the client is out of sync with the server
+     * @param newState
+     */
+    @Override
+    public void correct(IState newState) {
+        HashMap<Integer, ArrayList<Vector2>> map =  newState.getCharacterIdStates();
+        for(Integer i : map.keySet()){
+            ArrayList<Vector2> temp = map.get(i);
+            setCharacterState(i, temp.get(0), temp.get(1));
+        }
+        HashMap<Integer,ArrayList<Vector2>> attackVectorMap = newState.getAttackIdStates();
+        if(!attackVectorMap.isEmpty()) {
+            for (Integer i : attackVectorMap.keySet()) {
+                ArrayList<Vector2> temp = attackVectorMap.get(i);
+                setAttackState(i, temp.get(0), temp.get(1));
+            }
+        }
+    }
+
+
+
+
+    /**
+     * Returns an Integer specifying state of character, 0 = falling, 1 = jumping, 2 = runnning right, 3 = running left, 4 = standing.
+     * @param playerId
+     * @return
+     */
+    public Integer getStateOfPlayer(Integer playerId) {
+        Body b = getBodyFromplayerId(playerId);
+        if (b.getLinearVelocity().y != 0) {
+            if (b.getLinearVelocity().y > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else if (b.getLinearVelocity().x != 0) {
+            if (b.getLinearVelocity().x > 0) {
+                return 2;
+            } else {
+                return 3;
+            }
+        } else {
+            return 4;
+        }
+    }
+    @Override
+    public boolean canAttack(Integer playerId) {
+        return attackIdBodyMap.get(playerId) == null;
+
+    }
+
+    public Collection<Integer> getCharacterIds() {
+        return characterIdBodyMap.keySet();
+    }
+    /**
+     * Returns the associated character to the specified body.
+     * @param body the body which will be used to search for the character.
+     * @return the corresponding character to a body or null if the character was not found.
+     */
+    public Integer getCharacterIdfromBody(Body body) {
+        if(characterIdBodyMap.containsValue(body)) {
+            for (Integer i : characterIdBodyMap.keySet()) {
+                if (characterIdBodyMap.get(i).equals(body)) {
+                    return i;
+                }
+            }
+        }
+        return null;
+    }
+    public Body getBodyFromplayerId(Integer id) {
+        return characterIdBodyMap.get(id);
+    }
     @Override
     public ILevel getLevel() {
         return levelHandler.getLevel();
     }
+    /**
+     * Checks the impacted attack list for the body with attackType user data, then searches it's fixtures for one with
+     * the id of the player
+     * @param playerId
+     * @param attackType
+     * @return
+     */
+    public boolean getAttackHasInpacted(Integer playerId,String attackType) {
+        for(Body b:impactedAttacks) {
+            if(b.getUserData().equals(attackType)){
+                for(Fixture f:b.getFixtureList()) {
+                    if (f.getUserData().equals(playerId)) {
+                        return true;
+                    }
+                }
 
+            }
+        }
+        return false;
+    }
+    public Body getBodyFromAttackId(Integer attackId) {
+        return attackIdBodyMap.get(attackId);
+    }
+    public Integer getAttackIdFromBody(Body body) {
+        if(attackIdBodyMap.containsValue(body)) {
+            for (Integer i : attackIdBodyMap.keySet()) {
+                if (attackIdBodyMap.get(i).equals(body)) {
+                    return i;
+                }
+            }
+        }
+        return null;
 
-
+    }
     @Override
-    public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel) {
-        Body playerBody = getBodyFromplayerId(playerId);
-        if (playerBody != null) {
-            playerBody.setLinearVelocity(vel);
-            playerBody.setTransform(pos, playerBody.getAngle());
+    public Integer getPlayerTakenDamage(Integer playerId) {
+        if(playerDamageTaken.containsKey(playerId)) {
+            System.out.println("DMG " +  ""+playerDamageTaken.get(playerId));
+            return playerDamageTaken.get(playerId);
+        } else {
+            return 0;
         }
     }
 
+    /**
+     * Sets the attack state, and if attack do not exist, it is created in the world
+     * @param attackId
+     * @param position
+     * @param velocity
+     */
     @Override
     public void setAttackState(Integer attackId, Vector2 position, Vector2 velocity) {
         Body attackBody = getBodyFromAttackId(attackId);
@@ -349,47 +371,24 @@ public class GameLogicGDX implements IGameLogic {
     }
 
     @Override
-    public void correct(IState newState) {
-        HashMap<Integer, ArrayList<Vector2>> map =  newState.getCharacterIdStates();
-        for(Integer i : map.keySet()){
-            ArrayList<Vector2> temp = map.get(i);
-            setCharacterState(i, temp.get(0), temp.get(1));
-        }
-        HashMap<Integer,ArrayList<Vector2>> attackVectorMap = newState.getAttackIdStates();
-        if(!attackVectorMap.isEmpty()) {
-            for (Integer i : attackVectorMap.keySet()) {
-                ArrayList<Vector2> temp = attackVectorMap.get(i);
-                setAttackState(i, temp.get(0), temp.get(1));
-            }
+    public void setCharacterState(Integer playerId, Vector2 pos, Vector2 vel) {
+        Body playerBody = getBodyFromplayerId(playerId);
+        if (playerBody != null) {
+            playerBody.setLinearVelocity(vel);
+            playerBody.setTransform(pos, playerBody.getAngle());
         }
     }
+    public void setAttackInpacted(Body b) {
+        this.impactedAttacks.add(b);
+    }
+    /**
+     * Maps the damage dealt to the specified player.
+     * @param playerID
+     * @param damage
+     */
+    public void setDamageDealtToPlayer(Integer playerID, Integer damage) {
+        playerDamageTaken.put(playerID,damage);
 
-    @Override
-    public void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds) {
-        HashMap<Integer, ArrayList<Vector2>> playerIdVectormap = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Integer i:aliveCharacterIds){
-            if(characterIdBodyMap.containsKey(i)) {
-                ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
-                Body playerBody = getBodyFromplayerId(i);
-                vector2s.add(playerBody.getPosition());
-                vector2s.add(playerBody.getLinearVelocity());
-                playerIdVectormap.put(i, vector2s);
-            }
-        }
-        HashMap<Integer,ArrayList<Vector2>> attackIdVectorMap = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Integer i:activeAttackIds) {
-            ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
-            Vector2s.add(attackIdBodyMap.get(i).getPosition());
-            Vector2s.add(attackIdBodyMap.get(i).getLinearVelocity());
-            attackIdVectorMap.put(i, Vector2s);
-
-        }
-        StateGDX state = StateGDX.getInstance();
-        state.setCharacterIdVectorMap(playerIdVectormap);
-        state.setAttackIdVectorMap(attackIdVectorMap);
     }
 
-    public Collection<Integer> getCharacterIds() {
-        return characterIdBodyMap.keySet();
-    }
 }

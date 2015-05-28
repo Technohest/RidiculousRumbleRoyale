@@ -31,9 +31,8 @@ public class RRRGameModel {
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         myID =1;*/
     }
-    public void setGameLogic(IGameLogic gl){
-        gameLogic = gl;
-    }
+
+
     /**
      * Initializes all tiles with their corresponding box2d bodies
      */
@@ -55,23 +54,6 @@ public class RRRGameModel {
             this.idCharacterMap.put(i,new Character(i, "Name " + idChararcerMap.get(i)));
         }
 
-        //this.idCharacterMap = idChararcerList;
-    }
-    public Character getPlayer(String name) {
-        for(Integer i: idCharacterMap.keySet()) {
-            if(idCharacterMap.get(i).getName().equals(name)) {
-                return idCharacterMap.get(i);
-            }
-        }
-        return null;
-    }
-
-    public Character getPlayerFromID(Integer myID) {
-        return this.idCharacterMap.get(myID);
-    }
-
-    public IGameLogic getGameLogic() {
-        return gameLogic;
     }
 
     public void step(float v) {
@@ -79,15 +61,6 @@ public class RRRGameModel {
         updatePlayers(v);
         updateAttacks(v);
     }
-
-    public void setMyID(int id) {
-        this.myID = id;
-    }
-
-    public Integer getMyID() {
-        return myID;
-    }
-
 
     /**
      * Updates all the players.
@@ -112,39 +85,6 @@ public class RRRGameModel {
                 }
             }
         }
-    }
-
-
-    /**
-     * Sets state of player based on a integer.
-     * @param i
-     */
-    public void setCharacterState(Character c, Integer i) {
-        switch(i) {
-            case 0:
-                c.setState(Character.State.Falling);
-                c.setGrounded(false);
-                break;
-            case 1:
-                c.setState(Character.State.Jumping);
-                c.setGrounded(false);
-                break;
-            case 2:
-                c.setState(Character.State.Running);
-                c.setGrounded(true);
-                c.setIsFacingRight(true);
-                break;
-            case 3:
-                c.setState(Character.State.Running);
-                c.setGrounded(true);
-                c.setIsFacingRight(false);
-                break;
-            case 4:
-                c.setState(Character.State.Standing);
-                c.setGrounded(true);
-                break;
-        }
-
     }
 
     /**
@@ -178,18 +118,6 @@ public class RRRGameModel {
     }
 
 
-    /**
-     * Checks if the specified attack has inpacted, both in the gameLogic and in the attack class.
-     * @param a
-     * @return
-     */
-    public boolean attackHasInpacted(Attack a) {
-        if(a instanceof MeleeAttack) {
-           return( gameLogic.getAttackHasInpacted(a.sourcePlayerId,"baseAttack") || a.getHasInpacted());
-        } else {
-            return (gameLogic.getAttackHasInpacted(a.sourcePlayerId,"specialAttack") || a.getHasInpacted());
-        }
-    }
     /**
      * Performes an action on the specified player connected to playerId
      * @param action
@@ -228,19 +156,19 @@ public class RRRGameModel {
 
     }
 
-    public Collection<Character> getPlayers() {
-        return this.idCharacterMap.values();
+    /**
+     * Checks if the specified attack has inpacted, both in the gameLogic and in the attack class.
+     * @param a
+     * @return
+     */
+    public boolean attackHasInpacted(Attack a) {
+        if(a instanceof MeleeAttack) {
+           return( gameLogic.getAttackHasInpacted(a.sourcePlayerId,"baseAttack") || a.getHasImpacted());
+        } else {
+            return (gameLogic.getAttackHasInpacted(a.sourcePlayerId,"specialAttack") || a.getHasImpacted());
+        }
     }
 
-    public ArrayList<Attack> getActiveAttacks() {
-        return this.activeAttacks;
-    }
-
-
-    public void correct(IState state) {
-        setEnabledAttacks(state.getActiveAttacks());
-        gameLogic.correct(state);
-    }
 
     public void generateState() {
         StateGDX.getInstance().setAlivePlayers(getAliveCharacters());
@@ -254,6 +182,13 @@ public class RRRGameModel {
         }
         gameLogic.generateState(alivePlayers,tmp);
     }
+    public void correct(IState state) {
+        setEnabledAttacks(state.getActiveAttacks());
+        gameLogic.correct(state);
+    }
+
+
+
     public HashSet<Integer> getAlivePlayersId() {
         HashSet<Integer> alivePlayers = new HashSet<Integer>();
         for(Character c: idCharacterMap.values()) {
@@ -263,7 +198,6 @@ public class RRRGameModel {
         }
         return alivePlayers;
     }
-
     public ArrayList<Character> getAliveCharacters() {
         ArrayList<Character> tmp = new ArrayList<Character>();
         for(Integer i: idCharacterMap.keySet()) {
@@ -273,20 +207,78 @@ public class RRRGameModel {
         }
         return tmp;
     }
-
-
     public Integer getmyID() {
         return myID;
+    }
+    public Collection<Character> getPlayers() {
+        return this.idCharacterMap.values();
+    }
+    public ArrayList<Attack> getActiveAttacks() {
+        return this.activeAttacks;
+    }
+    public Character getPlayer(String name) {
+        for(Integer i: idCharacterMap.keySet()) {
+            if(idCharacterMap.get(i).getName().equals(name)) {
+                return idCharacterMap.get(i);
+            }
+        }
+        return null;
+    }
+    public Character getPlayerFromID(Integer myID) {
+        return this.idCharacterMap.get(myID);
+    }
+    public IGameLogic getGameLogic() {
+        return gameLogic;
+    }
+    public Integer getMyID() {
+        return myID;
+    }
+
+    /**
+     * Sets state of player based on a integer.
+     * @param i
+     */
+    public void setCharacterState(Character c, Integer i) {
+        switch(i) {
+            case 0:
+                c.setState(Character.State.Falling);
+                c.setGrounded(false);
+                break;
+            case 1:
+                c.setState(Character.State.Jumping);
+                c.setGrounded(false);
+                break;
+            case 2:
+                c.setState(Character.State.Running);
+                c.setGrounded(true);
+                c.setIsFacingRight(true);
+                break;
+            case 3:
+                c.setState(Character.State.Running);
+                c.setGrounded(true);
+                c.setIsFacingRight(false);
+                break;
+            case 4:
+                c.setState(Character.State.Standing);
+                c.setGrounded(true);
+                break;
+        }
+
+    }
+    public void setGameLogic(IGameLogic gl){
+        gameLogic = gl;
     }
     public void setMyID(Integer id) {
         myID = id;
     }
-
     public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
         this.activeAttacks = activeAttacks;
     }
-
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
     }
+    public void setMyID(int id) {
+        this.myID = id;
+    }
+
 }

@@ -4,20 +4,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.LibgdxService.ILevel;
 import com.technohest.LibgdxService.WorldGenerator;
-
-import java.util.Collections;
 import java.util.Vector;
 
-import static com.technohest.constants.Constants.PPM;
-
 /**
- * Created by vilddjur on 2015-04-27.
+ * The first level.
+ * @author Oskar Jedvert
  */
 public class MainLevel implements ILevel {
     private final TiledMap          map;

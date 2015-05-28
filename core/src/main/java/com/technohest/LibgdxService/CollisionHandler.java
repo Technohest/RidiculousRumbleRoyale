@@ -10,13 +10,9 @@ import com.technohest.constants.Constants;
  */
 public class CollisionHandler implements ContactListener {
     private GameLogicGDX gameLogic;
-
-
-
     public CollisionHandler(GameLogicGDX gameLogic) {
         this.gameLogic = gameLogic;
     }
-
 
     @Override
     public void beginContact(Contact contact) {
@@ -78,10 +74,6 @@ public class CollisionHandler implements ContactListener {
             }
 
         }
-
-
-
-
     }
 
     @Override
@@ -94,7 +86,6 @@ public class CollisionHandler implements ContactListener {
             Body b = ((Body)contact.getFixtureB().getUserData());
 
         }
-
     }
 
     @Override

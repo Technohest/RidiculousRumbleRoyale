@@ -1,18 +1,13 @@
 package com.technohest.core;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import com.technohest.constants.Constants;
 import org.apache.commons.collections4.BidiMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -23,7 +18,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Oscar on 2015-04-24.
+ * A class for the option fields
+ * @author Oscar Boking
  */
 public class OptionsField extends Table{
 

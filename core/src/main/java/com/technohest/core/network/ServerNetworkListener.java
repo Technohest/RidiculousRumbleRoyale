@@ -2,21 +2,14 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.model.Action;
-import com.technohest.core.model.RRRGameModel;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Manages how the server behaves depending on input from connected clients.
- * Created by time on 2015-05-05.
+ * @author David Ström
  */
 public class ServerNetworkListener extends Listener {
     private RServer rserver;

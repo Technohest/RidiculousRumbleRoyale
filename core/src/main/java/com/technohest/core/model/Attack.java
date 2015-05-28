@@ -12,7 +12,7 @@ public abstract class Attack  {
     private float duration;
     private float elapsedTime;
     private boolean ready;
-    private boolean hasInpacted;
+    private boolean hasImpacted;
     private boolean enabled;
 
 
@@ -29,25 +29,41 @@ public abstract class Attack  {
         this.sourcePlayerId = sourcePlayerId;
         this.elapsedTime = 0;
         this.ready = true;
-        this.hasInpacted = false;
+        this.hasImpacted = false;
         this.enabled = true;
         }
 
+
+    /**
+     * Resets the attack.
+     */
     public void reset() {
         resetElapsedTime();
         ready = true;
-        this.hasInpacted = false;
+        this.hasImpacted = false;
     }
+
+    /**
+     * Increments the attacks' timer
+     * @param v
+     */
     public void incrementTime(float v) {
         this.elapsedTime += v;
     }
 
 
+    /**
+     * Performs the attack
+     */
     public void perform() {
         resetElapsedTime();
         ready = false;
     }
 
+    /**
+     * Sets the attributes for the attack, copying another attacks properties.
+     * @param attack
+     */
     public void setAttributes(Attack attack ) {
         this.damage = attack.getDamage();
         this.name = attack.getName();
@@ -55,7 +71,7 @@ public abstract class Attack  {
         this.sourcePlayerId = attack.getSourcePlayerId();
         this.elapsedTime = attack.getElapsedTime();
         this.ready = attack.isReady();
-        this.hasInpacted = attack.hasInpacted;
+        this.hasImpacted = attack.hasImpacted;
     }
 
     public boolean timeLeft() {
@@ -76,30 +92,25 @@ public abstract class Attack  {
     public void setSourcePlayerId(Integer Id) {
         this.sourcePlayerId = Id;
     }
-    public void setInpacted(boolean inpacted) {
-        this.hasInpacted = inpacted;
-
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
     public float getElapsedTime() {
         return elapsedTime;
     }
-    public boolean getHasInpacted() {
-        return this.hasInpacted;
+    public boolean getHasImpacted() {
+        return this.hasImpacted;
     }
+    public void setImpacted(boolean impacted) {
+        this.hasImpacted = impacted;
 
+    }
     public int getDamage() {
         return damage;
     }
-
     public String getName() {
         return name;
     }

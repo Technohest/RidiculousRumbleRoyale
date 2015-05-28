@@ -12,7 +12,7 @@ import com.technohest.core.controller.MenuInputListener;
 
 /**
  * The Default menu displaying buttons for joining/hosting a game, changing options, and exiting the program.
- * Created by vilddjur on 2015-04-02.
+ * @author Oskar Jedvert
  */
 public class RRRMenuView implements Screen {
     private Stage           stage;

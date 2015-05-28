@@ -11,7 +11,7 @@ import com.technohest.core.network.NetworkMenuUtility;
 
 /**
  * Queries the user to enter an ip or port depending on if the current session is creating a server or not.
- * Created by time on 2015-04-21.
+ * @author David Ström
  */
 public class IPPortInputScreen implements Screen {
     private NetworkMenuInputProcessor networkMenuInputProcessor;
@@ -22,18 +22,29 @@ public class IPPortInputScreen implements Screen {
         init();
     }
 
+    /**
+     * Initializes the ip port screen.
+     */
     private void init() {
         batch = new SpriteBatch();
         font = new BitmapFont();
         networkMenuInputProcessor = new NetworkMenuInputProcessor();
     }
 
+    /**
+     * Sets the input processor to networkinputprocessor.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(networkMenuInputProcessor);
         networkMenuInputProcessor.resetInput();
     }
 
+
+    /**
+     * Renders a simple screen for inputting ip and port.
+     * @param v
+     */
     @Override
     public void render(float v) {
         Gdx.gl.glClearColor(1, 0, 0, 1);

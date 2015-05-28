@@ -4,7 +4,8 @@ package com.technohest.core.model;
 import com.technohest.LibgdxService.IState;
 
 /**
- * Created by time on 2015-05-20.
+ * A singleton for correction if client gets unsynced.
+ * @author David Ström.
  */
 public class Correction {
 

@@ -15,7 +15,7 @@ import java.util.Vector;
 
 /**
  * Used to register the packets which will be sent over the network.
- * Created by time on 5/12/15.
+ * @author David Ström
  */
 public class NetworkManger {
     public static void registerPackets(EndPoint endPoint) {

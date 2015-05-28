@@ -1,15 +1,15 @@
 package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.technohest.core.model.Attack;
 import com.technohest.core.model.Character;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by vilddjur on 2015-05-15.
+ * A interface representing the state of the game, will be sent over the network.
+ * @author Oskar Jedvert
+ * @author Tobias Alldén
  */
 public interface IState {
     /**

@@ -4,7 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /**
- * Created by Oscar on 2015-04-24.
+ * Listens to the option field
+ * @author Oscar Boking
  */
 public class OptionsFieldListener extends InputListener {
     private OptionsField optionsField;

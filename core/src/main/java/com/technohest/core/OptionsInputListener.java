@@ -1,11 +1,11 @@
 package com.technohest.core;
 
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 /**
- * Created by Oscar on 2015-04-20.
+ * Listens to input in the options menu
+ * @author Oscar Boking
  */
 public class OptionsInputListener extends InputListener {
     public final OptionsMenuView view;

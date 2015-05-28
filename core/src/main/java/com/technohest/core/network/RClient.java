@@ -14,7 +14,7 @@ import java.util.*;
 
 /**
  * Creates a client with specified port and/or ip and registers the packets the client will listen to.
- * Created by time on 2015-05-05.
+ * @author David Ström
  */
 public class RClient {
     private Client client;

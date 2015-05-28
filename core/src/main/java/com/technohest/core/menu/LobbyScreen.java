@@ -21,7 +21,7 @@ import java.awt.*;
 
 /**
  * A lobby where all clients connect before a game and can set the game options before starting.
- * Created by time on 2015-04-21.
+ * @author David Ström
  */
 public class LobbyScreen implements Screen {
 

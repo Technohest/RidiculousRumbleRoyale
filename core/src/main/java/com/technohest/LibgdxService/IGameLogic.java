@@ -1,14 +1,14 @@
 package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
-import com.technohest.core.model.*;
-import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Created by oskar on 2015-05-01.
+ * An interface for the gamelogic
+ * @author Oskar Jedvert
+ * @author Tobias Alldén
  */
 public interface IGameLogic {
     /**

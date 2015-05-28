@@ -6,7 +6,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 
 /**
- * Created by vilddjur on 2015-04-27.
+ * An interface for a level.
+ * @author Oskar Jedvert.
  */
 public interface ILevel {
 

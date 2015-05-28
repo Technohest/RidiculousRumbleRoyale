@@ -6,7 +6,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by oskar on 2015-04-03.
+ * The main class that creates the game.
+ * @author Oskar Jedvert
  */
 public class RRRMain extends Game implements Observer {
 

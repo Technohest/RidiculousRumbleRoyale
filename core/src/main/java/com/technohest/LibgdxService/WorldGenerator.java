@@ -10,7 +10,8 @@ import java.util.Vector;
 import static com.technohest.constants.Constants.PPM;
 
 /**
- * Created by vilddjur on 2015-05-07.
+ * A class that generates the world, creates bodies and fixtures for all tiles
+ * @author Oskar Jedvert.
  */
 public class WorldGenerator {
     /**
