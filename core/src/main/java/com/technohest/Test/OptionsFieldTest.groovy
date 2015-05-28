@@ -1,6 +1,6 @@
 package com.technohest.Test
 
-import com.technohest.core.OptionsField
+import com.technohest.core.menu.OptionsField
 import org.apache.commons.collections4.BidiMap
 import org.apache.commons.collections4.bidimap.DualHashBidiMap
 import org.junit.Before
