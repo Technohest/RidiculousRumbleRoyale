@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
 import com.technohest.LibgdxService.levels.LevelHandler;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+
+import java.util.*;
+
 /**
  * The service managing the game physics.
  * @author Oskar Jedvert
@@ -221,15 +220,15 @@ public class GameLogicGDX implements IGameLogic {
     @Override
     public void correct(IState newState) {
         HashMap<Integer, ArrayList<Vector2>> map =  newState.getCharacterIdStates();
-        for(Integer i : map.keySet()){
-            ArrayList<Vector2> temp = map.get(i);
-            setCharacterState(i, temp.get(0), temp.get(1));
+        for(Map.Entry<Integer, ArrayList<Vector2>> entry : map.entrySet()){
+            ArrayList<Vector2> temp = entry.getValue();
+            setCharacterState(entry.getKey(), temp.get(0), temp.get(1));
         }
         HashMap<Integer,ArrayList<Vector2>> attackVectorMap = newState.getAttackIdStates();
         if(!attackVectorMap.isEmpty()) {
-            for (Integer i : attackVectorMap.keySet()) {
-                ArrayList<Vector2> temp = attackVectorMap.get(i);
-                setAttackState(i, temp.get(0), temp.get(1));
+            for(Map.Entry<Integer, ArrayList<Vector2>> entry : attackVectorMap.entrySet()){
+                ArrayList<Vector2> temp = entry.getValue();
+                setAttackState(entry.getKey(), temp.get(0), temp.get(1));
             }
         }
     }
@@ -276,9 +275,9 @@ public class GameLogicGDX implements IGameLogic {
      */
     public Integer getCharacterIdfromBody(Body body) {
         if(characterIdBodyMap.containsValue(body)) {
-            for (Integer i : characterIdBodyMap.keySet()) {
-                if (characterIdBodyMap.get(i).equals(body)) {
-                    return i;
+            for(Map.Entry<Integer, Body> entry : characterIdBodyMap.entrySet()){
+                if(entry.getValue().equals(body)){
+                    return entry.getKey();
                 }
             }
         }
@@ -314,11 +313,12 @@ public class GameLogicGDX implements IGameLogic {
     public Body getBodyFromAttackId(Integer attackId) {
         return attackIdBodyMap.get(attackId);
     }
+
     public Integer getAttackIdFromBody(Body body) {
         if(attackIdBodyMap.containsValue(body)) {
-            for (Integer i : attackIdBodyMap.keySet()) {
-                if (attackIdBodyMap.get(i).equals(body)) {
-                    return i;
+            for (Map.Entry<Integer, Body> entry : attackIdBodyMap.entrySet()){
+                if(entry.getValue().equals(body)){
+                    return entry.getKey();
                 }
             }
         }

@@ -48,10 +48,10 @@ public class RRRGameModel {
         //The characters will be created at the game start and since the network only knows the type
         //I needed to change input to be <Integer, Integer>. It will be changed to CharType in the future.
         this.idCharacterMap = new HashMap<Integer, Character>();
-        for (Integer i: idChararcerMap.keySet()) {
+        for (Map.Entry<Integer, Integer> entry : idChararcerMap.entrySet()) {
             //Create new character for every id. Make them all the same type "Allden".
             //System.out.println("THE PLAYER ID " + i);
-            this.idCharacterMap.put(i,new Character(i, "Name " + idChararcerMap.get(i)));
+            this.idCharacterMap.put(entry.getKey(),new Character(entry.getKey(), "Name " + idChararcerMap.get(entry.getKey())));
         }
 
     }
@@ -216,10 +216,11 @@ public class RRRGameModel {
     public ArrayList<Attack> getActiveAttacks() {
         return this.activeAttacks;
     }
+
     public Character getPlayer(String name) {
-        for(Integer i: idCharacterMap.keySet()) {
-            if(idCharacterMap.get(i).getName().equals(name)) {
-                return idCharacterMap.get(i);
+        for(Map.Entry<Integer, Character> entry : idCharacterMap.entrySet()) {
+            if(idCharacterMap.get(entry.getKey()).getName().equals(name)) {
+                return idCharacterMap.get(entry.getKey());
             }
         }
         return null;
