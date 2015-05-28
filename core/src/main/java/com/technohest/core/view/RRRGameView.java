@@ -10,15 +10,13 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.StateGDX;
 import com.technohest.constants.Settings;
-import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.network.RRRGameController;
 import com.technohest.core.model.*;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.Map;
 

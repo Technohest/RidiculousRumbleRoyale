@@ -4,7 +4,6 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.LibgdxService.IState;
 import com.technohest.LibgdxService.StateGDX;
-import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 import com.technohest.core.model.RRRGameModel;

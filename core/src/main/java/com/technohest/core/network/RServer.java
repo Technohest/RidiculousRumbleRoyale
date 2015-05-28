@@ -97,17 +97,13 @@ public class RServer {
     private synchronized void performActions() {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
-            if (a.getActionID() == Action.ActionID.ATTACK_BASE)
-                System.out.println(a.getActionID());
         }
 
         generateState();
 
-        Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.state = StateGDX.getInstance();
-        p.actions = this.actionsToBePerformed;
+        if (actionsToBePerformed.size() > 0)
+            serverNetworkListener.sendCorrectionToClients();
 
-        server.sendToAllTCP(p);
         this.actionsToBePerformed.clear();
     }
 

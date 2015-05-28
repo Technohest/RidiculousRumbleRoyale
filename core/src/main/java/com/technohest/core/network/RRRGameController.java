@@ -1,4 +1,4 @@
-package com.technohest.core.controller;
+package com.technohest.core.network;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.levels.ILevel;

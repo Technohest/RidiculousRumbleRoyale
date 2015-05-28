@@ -24,7 +24,7 @@ public class Packet {
     }
 
     public static class Packet1Correction {
-        public List<Action> actions;
+        public int lastSeq;
         public IState state;
     }
 

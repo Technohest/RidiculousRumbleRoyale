@@ -3,6 +3,7 @@ package com.technohest.core.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.model.Action;
 import java.util.HashMap;
 import java.util.List;
@@ -100,6 +101,16 @@ public class ServerNetworkListener extends Listener {
                 playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());
                 rserver.addActionToBePerformed(a);
             }
+        }
+    }
+
+    public void sendCorrectionToClients() {
+        for (Integer i: playerIdSequenceMap.keySet()) {
+            Packet.Packet1Correction p = new Packet.Packet1Correction();
+            p.state = StateGDX.getInstance();
+            p.lastSeq = playerIdSequenceMap.get(i);
+
+            clients.get(i).sendTCP(p);
         }
     }
 }

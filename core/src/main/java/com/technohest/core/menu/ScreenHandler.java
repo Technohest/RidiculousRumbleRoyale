@@ -2,7 +2,7 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.network.RRRGameController;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.view.RRRGameView;

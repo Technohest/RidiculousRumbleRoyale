@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.model.Correction;
 import com.technohest.core.model.Action;
 
@@ -52,8 +53,8 @@ public class ClientNetworkListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof Packet.Packet1Correction) {
             Packet.Packet1Correction p = (Packet.Packet1Correction) object;
-            clearOldActions(p.actions);
-            Correction.getInstance().setNewState(p.state);
+            clearOldActions(p.lastSeq);
+            StateGDX.getInstance().setState(p.state.getCharacterIdStates(), p.state.getAttackIdStates());
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
@@ -67,16 +68,10 @@ public class ClientNetworkListener extends Listener {
     /**
      * Sets the lastSequenceNumber to be the last sequenceNumber received from the server, performed by the local
      * player. Then removes all the local actions with a sequence number less than the last received from the server.
-     * @param actions
      */
-    private synchronized void clearOldActions(List<Action> actions) {
+    private synchronized void clearOldActions(int seq) {
         //Update the lastSequenceNumber to be the last one received.
-        for (Action a: actions) {
-            if (a.getPlayerID().equals(id) &&
-                    a.getSequenceNumber() > lastSequenceNumber) {
-                lastSequenceNumber = a.getSequenceNumber();
-            }
-        }
+        lastSequenceNumber = seq;
 
         //Remove all local actions with a lower sequence number than the last received one.
         while (playerActions.size() > 0 &&
