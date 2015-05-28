@@ -114,4 +114,30 @@ public abstract class Attack  {
     public String getName() {
         return name;
     }
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }else if(o instanceof Attack){
+            Attack attack =  (Attack)o;
+            return this.getElapsedTime() == attack.getElapsedTime() &&
+                    this.getDamage() == attack.getDamage() &&
+                    this.getName().equals(attack.getName()) &&
+                    this.getSourcePlayerId().equals(attack.getSourcePlayerId()) &&
+                    this.getDuration() == attack.getDuration() &&
+                    this.isReady() == attack.isReady() &&
+                    this.isEnabled() == attack.isEnabled() &&
+                    this.getHasImpacted() == attack.getHasImpacted();
+        }
+        return false;
+    }
+    @Override
+    public int hashCode(){
+        int hash = 0;
+        hash += damage * 2;
+        hash += sourcePlayerId * 3;
+        hash += duration * 5;
+        hash += elapsedTime * 7;
+        return hash;
+    }
 }

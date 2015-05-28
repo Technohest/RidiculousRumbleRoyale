@@ -6,6 +6,7 @@ import com.technohest.core.model.Character;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class representing the current state of the game.
@@ -32,16 +33,16 @@ public class StateGDX implements IState {
     @Override
     public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
         HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Character c: characterVectormap.keySet()) {
-            temp.put(c.getId(), characterVectormap.get(c));
+        for(Map.Entry<Character, ArrayList<Vector2>> entry : characterVectormap.entrySet()) {
+            temp.put(entry.getKey().getId(),characterVectormap.get(entry.getKey()));
         }
         return temp;
     }
     @Override
     public HashMap<Integer,ArrayList<Vector2>> getAttackIdStates() {
         HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Attack a:attackVectorMap.keySet()) {
-            temp.put(a.getSourcePlayerId(),attackVectorMap.get(a));
+        for(Map.Entry<Attack, ArrayList<Vector2>> entry : attackVectorMap.entrySet()) {
+            temp.put(entry.getKey().getSourcePlayerId(),attackVectorMap.get(entry.getKey()));
         }
         return temp;
     }

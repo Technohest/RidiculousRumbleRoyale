@@ -1,7 +1,8 @@
-package com.technohest.core;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.technohest.core.menu.OptionsField;
 
 /**
  * Listens to the option field

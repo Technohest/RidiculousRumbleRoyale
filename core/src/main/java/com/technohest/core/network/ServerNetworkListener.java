@@ -70,7 +70,7 @@ public class ServerNetworkListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
-        playerIdTypeMap.remove(connection);
+        playerIdTypeMap.remove(connection.getID());
 
         for (Connection c: clients.values()) {
             Packet.Packet0PlayerTypeIdMap m = new Packet.Packet0PlayerTypeIdMap();

@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.technohest.core.controller.MenuInputListener;
-import com.technohest.core.menu.SCREEN;
-import com.technohest.core.menu.ScreenHandler;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.w3c.dom.Document;
