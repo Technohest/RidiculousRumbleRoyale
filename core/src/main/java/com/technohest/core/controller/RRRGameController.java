@@ -3,16 +3,13 @@ package com.technohest.core.controller;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.levels.ILevel;
 import com.technohest.core.model.Correction;
-import com.technohest.core.menu.SCREEN;
+import com.technohest.core.menuState.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
-import com.technohest.core.network.ClientNetworkListener;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * The controller handling the input from the user and mapping the input to actions.
@@ -55,7 +52,7 @@ public class RRRGameController extends InputHandler {
         if (this.isPressed(InputHandler.ESCAPE)) {
             /*if (listener != null)
                 listener.killServer();*/
-            ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
+            //ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
             this.releaseAllKeys();
         }
 

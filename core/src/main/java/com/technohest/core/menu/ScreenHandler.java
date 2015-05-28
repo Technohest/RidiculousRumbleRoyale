@@ -3,13 +3,14 @@ package com.technohest.core.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.menuState.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.view.RRRGameView;
 
 import java.util.Observable;
 
-import static com.technohest.core.menu.SCREEN.*;
+import static com.technohest.core.menuState.SCREEN.*;
 
 /**
  * ScreenHandler is an easy way to set the screen of the program.

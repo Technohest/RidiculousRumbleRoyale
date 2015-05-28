@@ -8,16 +8,14 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.technohest.core.menuState.SCREEN;
 import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.network.RClient;
 import com.technohest.core.network.RServer;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-import java.awt.*;
 
 /**
  * A lobby where all clients connect before a game and can set the game options before starting.

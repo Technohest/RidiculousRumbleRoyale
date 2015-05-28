@@ -1,4 +1,4 @@
-package com.technohest.core.menu;
+package com.technohest.core.menuState;
 
 /**
  * All the different available screens.

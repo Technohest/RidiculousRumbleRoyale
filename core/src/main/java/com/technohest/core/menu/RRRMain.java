@@ -2,6 +2,8 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.technohest.core.menuState.SCREEN;
+
 import java.util.Observable;
 import java.util.Observer;
 

@@ -1,8 +1,8 @@
-package com.technohest.core.controller;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.technohest.core.menu.SCREEN;
+import com.technohest.core.menuState.SCREEN;
 import com.technohest.core.menu.ScreenHandler;
 
 /**
