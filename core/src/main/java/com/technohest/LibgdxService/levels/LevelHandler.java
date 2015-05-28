@@ -1,7 +1,5 @@
 package com.technohest.LibgdxService.levels;
 
-import com.technohest.LibgdxService.ILevel;
-
 /**
  * The level handler, here the level which will be played chosen.
  * @author Oskar Jedvert

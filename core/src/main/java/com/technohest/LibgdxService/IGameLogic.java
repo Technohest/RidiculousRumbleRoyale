@@ -1,6 +1,7 @@
 package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
+import com.technohest.LibgdxService.levels.ILevel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
