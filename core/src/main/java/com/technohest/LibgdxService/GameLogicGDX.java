@@ -2,6 +2,7 @@ package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.technohest.LibgdxService.levels.ILevel;
 import com.technohest.constants.Constants;
 import com.technohest.LibgdxService.levels.LevelHandler;
 
@@ -203,7 +204,7 @@ public class GameLogicGDX implements IGameLogic {
 
         }
         StateGDX state = StateGDX.getInstance();
-        state.setState(playerIdVectormap,attackIdVectorMap);
+        state.setState(playerIdVectormap, attackIdVectorMap);
     }
 
     /**

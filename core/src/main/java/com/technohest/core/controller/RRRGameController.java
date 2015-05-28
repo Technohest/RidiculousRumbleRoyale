@@ -1,7 +1,7 @@
 package com.technohest.core.controller;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.technohest.LibgdxService.ILevel;
+import com.technohest.LibgdxService.levels.ILevel;
 import com.technohest.core.model.Correction;
 import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
