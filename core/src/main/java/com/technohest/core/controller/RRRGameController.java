@@ -7,7 +7,6 @@ import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
 import com.technohest.core.network.ClientNetworkListener;
-import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
 
@@ -76,8 +75,7 @@ public class RRRGameController extends InputHandler {
     }
 
     /**
-     * Updates the input and sends actions to the server every "step". Updates the view and the state as fast as
-     * possible.
+     * Updates the input and sends actions to the server every "step".
      */
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
