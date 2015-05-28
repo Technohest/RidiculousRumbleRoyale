@@ -31,7 +31,8 @@ public class RRRGameModel {
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         myID =1;*/
     }
-
+    public RRRGameModel(boolean testing) {
+    }
 
     /**
      * Initializes all tiles with their corresponding box2d bodies
@@ -151,7 +152,8 @@ public class RRRGameModel {
                     this.activeAttacks.add(getPlayerFromID(playerid).getSpecialAttack());
                 }
                 break;
-
+            default:
+                break;
         }
 
     }
@@ -200,9 +202,9 @@ public class RRRGameModel {
     }
     public ArrayList<Character> getAliveCharacters() {
         ArrayList<Character> tmp = new ArrayList<Character>();
-        for(Integer i: idCharacterMap.keySet()) {
-            if(idCharacterMap.get(i).isAlive()) {
-                tmp.add(idCharacterMap.get(i));
+        for(Map.Entry<Integer, Character> entry: idCharacterMap.entrySet()) {
+            if(idCharacterMap.get(entry.getKey()).isAlive()) {
+                tmp.add(idCharacterMap.get(entry.getKey()));
             }
         }
         return tmp;
