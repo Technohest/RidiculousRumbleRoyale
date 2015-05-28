@@ -101,8 +101,7 @@ public class RServer {
 
         generateState();
 
-        if (actionsToBePerformed.size() > 0)
-            serverNetworkListener.sendCorrectionToClients();
+        serverNetworkListener.sendCorrectionToClients();
 
         this.actionsToBePerformed.clear();
     }
