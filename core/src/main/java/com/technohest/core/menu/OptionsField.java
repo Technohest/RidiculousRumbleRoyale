@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.collections4.BidiMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;

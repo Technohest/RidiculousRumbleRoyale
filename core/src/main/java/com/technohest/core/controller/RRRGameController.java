@@ -7,7 +7,6 @@ import com.technohest.core.menu.SCREEN;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
 import com.technohest.core.network.ClientNetworkListener;
-import com.technohest.core.view.RRRGameView;
 import com.technohest.core.handlers.InputHandler;
 import com.technohest.core.menu.ScreenHandler;
 
@@ -19,7 +18,6 @@ import com.technohest.core.menu.ScreenHandler;
 public class RRRGameController extends InputHandler {
     private final RRRGameModel model;
     private ClientNetworkListener listener;
-    private RRRGameView view;
 
     private double accumulator = 0.0;
     private double currentTime;
@@ -38,14 +36,6 @@ public class RRRGameController extends InputHandler {
      */
     public void init(ClientNetworkListener listener) {
         this.listener = listener;
-    }
-
-    /**
-     * Sets the game view.
-     * @param view
-     */
-    public void setView(RRRGameView view) {
-        this.view = view;
     }
 
     /**
@@ -85,8 +75,7 @@ public class RRRGameController extends InputHandler {
     }
 
     /**
-     * Updates the input and sends actions to the server every "step". Updates the view and the state as fast as
-     * possible.
+     * Updates the input and sends actions to the server every "step".
      */
     public void update(float v) {
         double  newTime = TimeUtils.millis() / 1000.0;
@@ -106,6 +95,5 @@ public class RRRGameController extends InputHandler {
         }
 
         Correction.getInstance().correctState(model);
-        view.update(v);
     }
 }

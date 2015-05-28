@@ -51,7 +51,6 @@ public class RRRGameView implements Screen {
 		settings = new Settings();
 		this.model = model;
 		this.controller = controller;
-		controller.setView(this);
 		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel().getMap());
 		batch = new SpriteBatch();
 		settings = new Settings();
@@ -89,6 +88,7 @@ public class RRRGameView implements Screen {
 		if (controller != null) {
 			controller.update(v);
 		}
+		this.update(v);
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         //Draw players
