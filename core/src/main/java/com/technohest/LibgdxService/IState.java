@@ -70,5 +70,4 @@ public interface IState {
      */
     boolean equals(HashMap<Character, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap);
 
-
 }
