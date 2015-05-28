@@ -1,4 +1,4 @@
-package com.technohest.core;
+package com.technohest.core.menu;
 
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
