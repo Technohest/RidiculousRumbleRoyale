@@ -25,13 +25,16 @@ public class RRRGameModel {
     public RRRGameModel(){
         setGameLogic(new GameLogicGDX());
         this.idCharacterMap = new HashMap<Integer, Character>();
-        activeAttacks = new ArrayList<Attack>();
+        this.activeAttacks = new ArrayList<Attack>();
         //Temp character for testing
         /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
         myID =1;*/
     }
-
+    public RRRGameModel(boolean testing) {
+        this.idCharacterMap = new HashMap<Integer, Character>();
+        this.activeAttacks = new ArrayList<Attack>();
+    }
 
     /**
      * Initializes all tiles with their corresponding box2d bodies
@@ -140,7 +143,7 @@ public class RRRGameModel {
             case ATTACK_BASE:
                 if(getPlayerFromID(playerid).getBaseAttack().isReady() && gameLogic.canAttack(playerid)) {
                     getPlayerFromID(playerid).getBaseAttack().perform();
-                    gameLogic.attack_base(playerid,getPlayerFromID(playerid).isFacingRight());
+                    gameLogic.attack_base(playerid, getPlayerFromID(playerid).isFacingRight());
                     this.activeAttacks.add(getPlayerFromID(playerid).getBaseAttack());
                 }
                 break;
