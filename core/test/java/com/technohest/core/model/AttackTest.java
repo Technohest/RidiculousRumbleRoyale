@@ -6,12 +6,13 @@ import static org.junit.Assert.*;
 
 /**
  * Created by oskar on 2015-05-28.
+ * @author Oskar Jedvert
  */
 public class AttackTest {
 
     @Test
     public void testReset() throws Exception {
-        Attack attack = new Attack() {
+        Attack attack = new Attack("A",1, 1, 1) {
         };
         attack.incrementTime(10.0f);
         assertTrue(attack.getElapsedTime() == 10.0f);
@@ -21,7 +22,7 @@ public class AttackTest {
 
     @Test
     public void testPerform() throws Exception {
-        Attack attack = new Attack() {
+        Attack attack = new Attack("A",1, 1, 1) {
         };
         attack.incrementTime(10.0f);
         assertTrue(attack.getElapsedTime() == 10.0f);
@@ -33,69 +34,86 @@ public class AttackTest {
 
     @Test
     public void testSetAttributes() throws Exception {
-        Attack a = new Attack() {
+        Attack a = new Attack("A",1, 1, 1) {
         };
-        Attack b = new Attack() {
+        Attack b = new Attack("B", 2, 2, 2) {
         };
+        assertFalse(b.equals(a));
+        b.setAttributes(a);
+        assertTrue(b.equals(a));
     }
 
     @Test
     public void testTimeLeft() throws Exception {
-
-    }
-
-    @Test
-    public void testGetSourcePlayerId() throws Exception {
-
-    }
-
-    @Test
-    public void testIsReady() throws Exception {
-
-    }
-
-    @Test
-    public void testGetDuration() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.timeLeft());
+        a.incrementTime(5);
+        assertTrue(a.timeLeft());
+        a.incrementTime(5);
+        assertFalse(a.timeLeft());
     }
 
     @Test
     public void testSetSourcePlayerId() throws Exception {
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.getSourcePlayerId() == 1);
+        a.setSourcePlayerId(10);
+        assertTrue(a.getSourcePlayerId() == 10);
+    }
 
+    @Test
+    public void testGetDuration() throws Exception {
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.getDuration() == 10);
     }
 
     @Test
     public void testIsEnabled() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.isEnabled());
     }
 
     @Test
     public void testSetEnabled() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.isEnabled());
+        a.setEnabled(false);
+        assertFalse(a.isEnabled());
     }
 
     @Test
     public void testGetElapsedTime() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        a.incrementTime(1);
+        assertTrue(a.getElapsedTime() == 1);
     }
 
     @Test
     public void testGetHasImpacted() throws Exception {
-
-    }
-
-    @Test
-    public void testSetImpacted() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertFalse(a.getHasImpacted());
+        a.setImpacted(true);
+        assertTrue(a.getHasImpacted());
     }
 
     @Test
     public void testGetDamage() throws Exception {
-
+        Attack a = new Attack("A",1, 20, 10) {
+        };
+        assertTrue(a.getDamage() == 20);
     }
 
     @Test
     public void testGetName() throws Exception {
-
+        Attack a = new Attack("A",1, 1, 10) {
+        };
+        assertTrue(a.getName().equals("A"));
     }
 }

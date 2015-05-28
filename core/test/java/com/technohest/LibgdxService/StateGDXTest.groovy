@@ -9,6 +9,7 @@ import com.technohest.LibgdxService.StateGDX
 
 /**
  * Created by vilddjur on 2015-05-18.
+ * @author Oskar Jedvert
  */
 class StateGDXTest extends GroovyTestCase {
     void testGetInstance() {

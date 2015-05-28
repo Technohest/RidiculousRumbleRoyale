@@ -2,6 +2,7 @@ package com.technohest.LibgdxService;
 
 /**
  * Created by vilddjur on 2015-05-18.
+ * @author Oskar Jedvert
  */
 public class GameLogicGDXTest {
 
