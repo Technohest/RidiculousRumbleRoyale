@@ -1,9 +1,6 @@
 package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
-import com.technohest.core.model.Attack;
-import com.technohest.core.model.Character;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,57 +14,39 @@ public interface IState {
      * @return
      * State which needs to be set in gameLogic
      */
-    HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates();
-
+    HashMap<Integer, Vector2> getCharacterIdStates();
     /**
      * Sets the state properties.
-     * @param map map of player id, position, and velocity.
-     * @param attackVectorMap
+     * @param characterVectorMap map of player id, position, and velocity.
+     * @param attackIdVectorMap - map of attack id(Type) (0 = melee, 1 = projectile)
      * */
-    void setState(HashMap<Integer, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap);
+    void setState(HashMap<Integer, Vector2> characterVectorMap,HashMap<Integer,Vector2> attackIdVectorMap);
 
     /**
      * Returns all the values of the active attacks.
      * @return
      */
-    HashMap<Integer,ArrayList<Vector2>> getAttackIdStates();
-
-    /**
-     * Returns an arraylist of the enabled attacks
-     * @return
-     */
-    ArrayList<Attack> getActiveAttacks();
-
-    /**
-     * Sets all the active attacks
-     * @param attacks
-     */
-    void setActiveAttacks(ArrayList<Attack> attacks);
+    HashMap<Integer,Vector2> getAttackIdStates();
 
     /**
      * Sets the id/vector map which will merge with characters
      * @param idVectorMap
      */
-    void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
+    void setCharacterIdVectorMap(HashMap<Integer,Vector2> idVectorMap);
 
     /**
      * Sets the id/vector map which will merge with attacks.
      * @param idVectorMap
      */
-    void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap);
-
-    /**
-     * Sets the alive players
-     */
-    void setAlivePlayers(ArrayList<Integer> players );
+    void setAttackIdVectorMap(HashMap<Integer,Vector2> idVectorMap);
 
     /**
      * Compare with another state
-     * @param map
+     * @param attackIdVectorMap
      * remote state
      * @return
      * true if same, false else
      */
-    boolean equals(HashMap<Integer, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap);
+    boolean equals(HashMap<Integer,Vector2> characterIdVectorMap, HashMap<Integer,Vector2> attackIdVectorMap);
 
 }

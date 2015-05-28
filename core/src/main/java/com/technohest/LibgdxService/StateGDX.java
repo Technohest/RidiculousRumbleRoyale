@@ -1,9 +1,6 @@
 package com.technohest.LibgdxService;
 
 import com.badlogic.gdx.math.Vector2;
-import com.technohest.core.model.Attack;
-import com.technohest.core.model.Character;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,13 +10,13 @@ import java.util.HashMap;
  * @author Tobias Alldén.
  */
 public class StateGDX implements IState {
-    private HashMap<Integer, ArrayList<Vector2>> characterVectormap;
-    private HashMap<Attack,ArrayList<Vector2>> attackVectorMap;
+    private HashMap<Integer, Vector2> characterIdVectorMap;
+    private HashMap<Integer,Vector2> attackIdVectorMap;
 
     private static StateGDX     instance = null;
     protected StateGDX(){
-        characterVectormap = new HashMap<Integer, ArrayList<Vector2>>();
-        attackVectorMap = new HashMap<Attack, ArrayList<Vector2>>();
+        characterIdVectorMap = new HashMap<Integer, Vector2>();
+        attackIdVectorMap = new HashMap<Integer, Vector2>();
     }
 
     public static StateGDX getInstance(){
@@ -30,65 +27,33 @@ public class StateGDX implements IState {
     }
 
     @Override
-    public HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
-        HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Integer i: characterVectormap.keySet()) {
-            temp.put(i, characterVectormap.get(i));
-        }
-        return temp;
+    public HashMap<Integer, Vector2> getCharacterIdStates() {
+       return this.characterIdVectorMap;
     }
 
     @Override
-    public HashMap<Integer, ArrayList<Vector2>> getAttackIdStates() {
-        HashMap<Integer,ArrayList<Vector2>> temp = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Attack a:attackVectorMap.keySet()) {
-            temp.put(a.getSourcePlayerId(),attackVectorMap.get(a));
-        }
-        return temp;
+    public HashMap<Integer, Vector2> getAttackIdStates() {
+        return attackIdVectorMap;
     }
 
     @Override
-    public ArrayList<Attack> getActiveAttacks() {
-        return new ArrayList<Attack>(attackVectorMap.keySet());
-    }
-    @Override
-    public void setActiveAttacks(ArrayList<Attack> attacks) {
-        for(Attack a:attacks) {
-            attackVectorMap.put(a,null);
-        }
-    }
-    @Override
-    public void setAlivePlayers(ArrayList<Integer> players) {
-        for(Integer i:players) {
-            characterVectormap.put(i,null);
-        }
+    public void setCharacterIdVectorMap(HashMap<Integer, Vector2> idVectorMap) {
+        this.characterIdVectorMap = idVectorMap;
     }
 
     @Override
-    public void setState(HashMap<Integer, ArrayList<Vector2>> map,HashMap<Attack,ArrayList<Vector2>> attackVectorMap) {
-        this.characterVectormap = map;
-        this.attackVectorMap = attackVectorMap;
-    }
-    @Override
-    public void setCharacterIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap) {
-        for(Integer i: characterVectormap.keySet()) {
-            if(idVectorMap.containsKey(i)) {
-                characterVectormap.put(i,idVectorMap.get(i));
-            }
-        }
+    public void setAttackIdVectorMap(HashMap<Integer, Vector2> idVectorMap) {
+        this.attackIdVectorMap = idVectorMap;
     }
 
     @Override
-    public void setAttackIdVectorMap(HashMap<Integer,ArrayList<Vector2>> idVectorMap) {
-        for(Attack a:attackVectorMap.keySet()) {
-            if(idVectorMap.containsKey(a.getSourcePlayerId())) {
-                attackVectorMap.put(a,idVectorMap.get(a.getSourcePlayerId()));
-            }
-        }
+    public void setState(HashMap<Integer, Vector2> characterIdVectorMap,HashMap<Integer,Vector2> attackIdVectorMap) {
+        this.characterIdVectorMap = characterIdVectorMap;
+        this.attackIdVectorMap = attackIdVectorMap;
     }
 
     @Override
-    public boolean equals(HashMap<Integer, ArrayList<Vector2>> map, HashMap<Attack,ArrayList<Vector2>> attackBodyVectorMap){
-        return this.characterVectormap.equals(map) && attackBodyVectorMap.equals(this.attackVectorMap);
+    public boolean equals(HashMap<Integer, Vector2> map, HashMap<Integer,Vector2> attackIdVectorMap){
+        return this.characterIdVectorMap.equals(map) && attackIdVectorMap.equals(this.attackIdVectorMap);
     }
 }
