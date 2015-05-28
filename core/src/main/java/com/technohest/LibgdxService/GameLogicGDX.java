@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.technohest.constants.Constants;
 import com.technohest.LibgdxService.levels.LevelHandler;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+
+import java.util.*;
+
 /**
  * The service managing the game physics.
  * @author Oskar Jedvert
@@ -187,37 +186,31 @@ public class GameLogicGDX implements IGameLogic {
     /**
      * Generates the state to be sent over the network.
      * @param aliveCharacterIds
-     * @param activeAttackIds
+     * @param attackIDTypeMap
      */
     @Override
-    public void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds) {
-        HashMap<Integer, ArrayList<Vector2>> playerIdVectormap = new HashMap<Integer, ArrayList<Vector2>>();
+    public void generateState(Set<Integer> aliveCharacterIds, HashMap<Integer,Integer> attackIDTypeMap) {
+        HashMap<Integer, Vector2> playerIdVectormap = new HashMap<Integer, Vector2>();
         for(Integer i:aliveCharacterIds){
             if(characterIdBodyMap.containsKey(i)) {
-                ArrayList<Vector2> vector2s = new ArrayList<Vector2>();
                 Body playerBody = getBodyFromplayerId(i);
-                vector2s.add(playerBody.getPosition());
-                vector2s.add(playerBody.getLinearVelocity());
-                playerIdVectormap.put(i, vector2s);
+                playerIdVectormap.put(i, playerBody.getPosition());
             }
         }
-        HashMap<Integer,ArrayList<Vector2>> attackIdVectorMap = new HashMap<Integer, ArrayList<Vector2>>();
-        for(Integer i:activeAttackIds) {
-            ArrayList<Vector2> Vector2s = new ArrayList<Vector2>();
-            Vector2s.add(attackIdBodyMap.get(i).getPosition());
-            Vector2s.add(attackIdBodyMap.get(i).getLinearVelocity());
-            attackIdVectorMap.put(i, Vector2s);
+        HashMap<Integer,Vector2> attackIdVectorMap = new HashMap<Integer,Vector2>();
+        for(Map.Entry<Integer,Integer> entry:attackIDTypeMap.entrySet()) {
+            attackIdVectorMap.put(entry.getValue(), getBodyFromAttackId(entry.getKey()).getPosition());
 
         }
         StateGDX state = StateGDX.getInstance();
-        state.setCharacterIdVectorMap(playerIdVectormap);
-        state.setAttackIdVectorMap(attackIdVectorMap);
+        state.setState(playerIdVectormap,attackIdVectorMap);
     }
 
     /**
      * Performs the correction if the client is out of sync with the server
      * @param newState
      */
+    /**
     @Override
     public void correct(IState newState) {
         HashMap<Integer, ArrayList<Vector2>> map =  newState.getCharacterIdStates();
@@ -233,6 +226,7 @@ public class GameLogicGDX implements IGameLogic {
             }
         }
     }
+    */
 
 
 

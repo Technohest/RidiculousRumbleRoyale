@@ -3,6 +3,7 @@ package com.technohest.LibgdxService;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -137,17 +138,9 @@ public interface IGameLogic {
      */
     public void destroyAttack(Integer attackId);
 
-    /**
-     * Compares local state with another state and corrects if needed
-     * @param state
-     * remote state
-     */
-    public void correct(IState state);
 
     /**
-     * Generates a hashmap using current players and their bodies
-     * @return
-     * Character and their pos and velocity.
+     * Generates a state
      */
-    void generateState(Set<Integer> aliveCharacterIds, Set<Integer> activeAttackIds);
+    public void generateState(Set<Integer> aliveCharacterIds, HashMap<Integer,Integer> attackIDTypeMap);
 }

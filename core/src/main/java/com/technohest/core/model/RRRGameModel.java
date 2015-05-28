@@ -171,22 +171,26 @@ public class RRRGameModel {
 
 
     public void generateState() {
-        StateGDX.getInstance().setAlivePlayers(getAliveCharacters());
-        StateGDX.getInstance().setActiveAttacks(getActiveAttacks());
-        HashSet<Integer> alivePlayers = getAlivePlayersId();
-        Set<Integer> tmp = new HashSet<Integer>();
+        HashMap<Integer,Integer> attackIdTypeMap = new HashMap<Integer, Integer>();
+        Set<Integer> alivePlayers = this.getAlivePlayersId();
         for(Attack a:activeAttacks) {
             if(a.isEnabled()) {
-                tmp.add(a.getSourcePlayerId());
+                if(a instanceof Projectile) {
+                    attackIdTypeMap.put(a.getSourcePlayerId(),1);
+                } else {
+                    attackIdTypeMap.put(a.getSourcePlayerId(),0);
+                }
             }
         }
-        gameLogic.generateState(alivePlayers, tmp);
+        gameLogic.generateState(alivePlayers, attackIdTypeMap);
     }
 
+    /**
     public void correct(IState state) {
         setEnabledAttacks(state.getActiveAttacks());
         gameLogic.correct(state);
     }
+     */
 
 
 
