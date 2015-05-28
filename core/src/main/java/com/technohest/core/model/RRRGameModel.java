@@ -80,8 +80,8 @@ public class RRRGameModel {
             } else {
                 c.addRespawnTimer(v);
                 if (c.respawnTimeDone()) {
-                    c.respawn();
                     gameLogic.respawnPlayer(c.getId());
+                    c.respawn();
                 }
             }
         }
