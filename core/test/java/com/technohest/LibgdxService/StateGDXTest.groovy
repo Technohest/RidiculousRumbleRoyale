@@ -3,9 +3,6 @@ package com.technohest.LibgdxService
 import com.badlogic.gdx.math.Vector2
 import com.technohest.core.model.Attack
 import com.technohest.core.model.Character
-import com.technohest.core.model.Projectile
-import com.technohest.LibgdxService.IState
-import com.technohest.LibgdxService.StateGDX
 
 /**
  * Created by vilddjur on 2015-05-18.
