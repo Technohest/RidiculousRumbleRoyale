@@ -1,6 +1,7 @@
-package com.technohest.java
+package com.technohest.LibgdxService
 
 import com.badlogic.gdx.math.Vector2
+import com.technohest.core.model.Attack
 import com.technohest.core.model.Character
 import com.technohest.core.model.Projectile
 import com.technohest.LibgdxService.IState
@@ -22,27 +23,57 @@ class StateGDXTest extends GroovyTestCase {
             ArrayList<Vector2> list = new ArrayList<Vector2>();
             list.add(new Vector2(1,1));
             list.add(new Vector2(i,i));
-            map.put(new Character(i, "Allden " + i.toString(),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)), list);
+            map.put(new Character(i,"Allden"), list);
         }
 
-        StateGDX.getInstance().setState(map);
+        StateGDX.getInstance().setState(map, null);
 
         IState state = new IState() {
             private HashMap<Character, ArrayList<Vector2>> map;
 
             @Override
-            public HashMap<Character, ArrayList<Vector2>> getState() {
-                return this.map;
+            HashMap<Integer, ArrayList<Vector2>> getCharacterIdStates() {
+                return null
             }
 
             @Override
-            public void setState(HashMap<Character, ArrayList<Vector2>> newMap) {
-                this.map = newMap;
+            void setState(HashMap<Character, ArrayList<Vector2>> map1, HashMap<Attack, ArrayList<Vector2>> attackVectorMap) {
+
             }
 
             @Override
-            public boolean equals(HashMap<Character, ArrayList<Vector2>> newMap){
-                return this.map.equals(newMap);
+            HashMap<Integer, ArrayList<Vector2>> getAttackIdStates() {
+                return null
+            }
+
+            @Override
+            ArrayList<Attack> getActiveAttacks() {
+                return null
+            }
+
+            @Override
+            void setActiveAttacks(ArrayList<Attack> attacks) {
+
+            }
+
+            @Override
+            void setCharacterIdVectorMap(HashMap<Integer, ArrayList<Vector2>> idVectorMap) {
+
+            }
+
+            @Override
+            void setAttackIdVectorMap(HashMap<Integer, ArrayList<Vector2>> idVectorMap) {
+
+            }
+
+            @Override
+            void setAlivePlayers(ArrayList<Character> players) {
+
+            }
+
+            @Override
+            boolean equals(HashMap<Character, ArrayList<Vector2>> map1, HashMap<Attack, ArrayList<Vector2>> attackBodyVectorMap) {
+                return false
             }
         }
         HashMap<Character, ArrayList<Vector2>> map2 =  new HashMap<Character, ArrayList<Vector2>>();
@@ -51,11 +82,11 @@ class StateGDXTest extends GroovyTestCase {
             ArrayList<Vector2> list = new ArrayList<Vector2>();
             list.add(new Vector2(1,1));
             list.add(new Vector2(i,i));
-            map2.put(new Character(i, "Allden " + i.toString(),new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)), list);
+            map2.put(new Character(i, "Allden"), list);
         }
         Character c  = map2.keySet().toArray()[0];
         c.setHealthPoints(2);
-        state.setState(map2)
+        state.setState(map2, null)
         assertFalse(state.equals(StateGDX.getInstance()));
     }
 }
