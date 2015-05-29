@@ -84,10 +84,10 @@ public class RRRGameView implements Screen {
 		}
 
         //Draws projectiles
-       HashMap<Integer,Vector2> attackIdVectorMap = StateGDX.getInstance().getAttackIdStates();
-        for(Map.Entry<Integer,Vector2> entry:attackIdVectorMap.entrySet()) {
-                if (entry.getKey() == 1) {
-                    sRenderer.circle(((entry.getValue().x) * 32), ((entry.getValue().y) * 32), 5);
+       HashMap<Vector2,Integer> attackIdVectorMap = StateGDX.getInstance().getAttackVectorTypeMap();
+        for(Map.Entry<Vector2,Integer> entry:attackIdVectorMap.entrySet()) {
+                if (entry.getValue() == 1) {
+                    sRenderer.circle(((entry.getKey().x) * 32), ((entry.getKey().y) * 32), 5);
                 }
         }
 

@@ -142,9 +142,10 @@ public class RRRGameModel {
             case ATTACK_SPECIAL:
                 // Do the attack only if player attack is ready.
                 if(getPlayerFromID(playerid).getSpecialAttack().isReady() && gameLogic.canAttack(playerid)) {
-                    gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
                     getPlayerFromID(playerid).getSpecialAttack().perform();
                     this.activeAttacks.add(getPlayerFromID(playerid).getSpecialAttack());
+                    gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
+
                 }
                 break;
         }

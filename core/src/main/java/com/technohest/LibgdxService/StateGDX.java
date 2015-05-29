@@ -11,12 +11,12 @@ import java.util.HashMap;
  */
 public class StateGDX implements IState {
     private HashMap<Integer, Vector2> characterIdVectorMap;
-    private HashMap<Integer,Vector2> attackIdVectorMap;
+    private HashMap<Vector2,Integer> attackVectorTypeMap;
 
     private static StateGDX     instance = null;
     protected StateGDX(){
         characterIdVectorMap = new HashMap<Integer, Vector2>();
-        attackIdVectorMap = new HashMap<Integer, Vector2>();
+        attackVectorTypeMap = new HashMap<Vector2,Integer>();
     }
 
     public static StateGDX getInstance(){
@@ -32,8 +32,8 @@ public class StateGDX implements IState {
     }
 
     @Override
-    public HashMap<Integer, Vector2> getAttackIdStates() {
-        return attackIdVectorMap;
+    public HashMap<Vector2,Integer> getAttackVectorTypeMap() {
+        return attackVectorTypeMap;
     }
 
     @Override
@@ -42,18 +42,18 @@ public class StateGDX implements IState {
     }
 
     @Override
-    public void setAttackIdVectorMap(HashMap<Integer, Vector2> idVectorMap) {
-        this.attackIdVectorMap = idVectorMap;
+    public void setAttackVectorTypeMap(HashMap<Vector2,Integer> idVectorMap) {
+        this.attackVectorTypeMap = idVectorMap;
     }
 
     @Override
-    public void setState(HashMap<Integer, Vector2> characterIdVectorMap,HashMap<Integer,Vector2> attackIdVectorMap) {
+    public void setState(HashMap<Integer,Vector2> characterIdVectorMap,HashMap<Vector2,Integer> attackVectorTypeMap) {
         this.characterIdVectorMap = characterIdVectorMap;
-        this.attackIdVectorMap = attackIdVectorMap;
+        this.attackVectorTypeMap = attackVectorTypeMap;
     }
 
     @Override
-    public boolean equals(HashMap<Integer, Vector2> map, HashMap<Integer,Vector2> attackIdVectorMap){
-        return this.characterIdVectorMap.equals(map) && attackIdVectorMap.equals(this.attackIdVectorMap);
+    public boolean equals(HashMap<Integer, Vector2> map, HashMap<Vector2,Integer> attackVectorTypeMap){
+        return this.characterIdVectorMap.equals(map) && attackVectorTypeMap.equals(this.attackVectorTypeMap);
     }
 }

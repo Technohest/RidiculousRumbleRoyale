@@ -18,15 +18,15 @@ public interface IState {
     /**
      * Sets the state properties.
      * @param characterVectorMap map of player id, position, and velocity.
-     * @param attackIdVectorMap - map of attack id(Type) (0 = melee, 1 = projectile)
+     * @param attackVectorTypeMap - map of position vector and attack Type (0 = melee, 1 = projectile)
      * */
-    void setState(HashMap<Integer, Vector2> characterVectorMap,HashMap<Integer,Vector2> attackIdVectorMap);
+    void setState(HashMap<Integer, Vector2> characterVectorMap,HashMap<Vector2,Integer> attackVectorTypeMap);
 
     /**
      * Returns all the values of the active attacks.
      * @return
      */
-    HashMap<Integer,Vector2> getAttackIdStates();
+    HashMap<Vector2,Integer> getAttackVectorTypeMap();
 
     /**
      * Sets the id/vector map which will merge with characters
@@ -36,17 +36,17 @@ public interface IState {
 
     /**
      * Sets the id/vector map which will merge with attacks.
-     * @param idVectorMap
+     * @param attackVectorTypeMap
      */
-    void setAttackIdVectorMap(HashMap<Integer,Vector2> idVectorMap);
+    void setAttackVectorTypeMap(HashMap<Vector2,Integer> attackVectorTypeMap);
 
     /**
      * Compare with another state
-     * @param attackIdVectorMap
+     * @param attackVectorTypeMap
      * remote state
      * @return
      * true if same, false else
      */
-    boolean equals(HashMap<Integer,Vector2> characterIdVectorMap, HashMap<Integer,Vector2> attackIdVectorMap);
+    boolean equals(HashMap<Integer,Vector2> characterIdVectorMap, HashMap<Vector2,Integer> attackVectorTypeMap);
 
 }

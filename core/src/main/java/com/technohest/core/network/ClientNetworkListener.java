@@ -56,7 +56,7 @@ public class ClientNetworkListener extends Listener implements REventListener {
         if (object instanceof Packet.Packet1Correction) {
             Packet.Packet1Correction p = (Packet.Packet1Correction) object;
             clearOldActions(p.lastSeq);
-            StateGDX.getInstance().setState(p.state.getCharacterIdStates(), p.state.getAttackIdStates());
+            StateGDX.getInstance().setState(p.state.getCharacterIdStates(), p.state.getAttackVectorTypeMap());
         } else if (object instanceof Packet.Packet0PlayerID) {
             id = ((Packet.Packet0PlayerID)object).id;
         } else if (object instanceof Packet.Packet0PlayerTypeIdMap) {
