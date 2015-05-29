@@ -54,12 +54,15 @@ public class Settings {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // TODO: Comment on what this is
         element1 = (Element) node;
         list1 = element2.getElementsByTagName("width");
         element1 = (Element) list1.item(0);
         list2 = element1.getChildNodes();
         width = list2.item(0).getNodeValue();
 
+        // TODO: Comment on what this is
         list1 = element2.getElementsByTagName("height");
         element1 = (Element) list1.item(0);
         list2 = element1.getChildNodes();

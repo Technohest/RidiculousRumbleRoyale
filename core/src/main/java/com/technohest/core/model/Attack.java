@@ -15,12 +15,7 @@ public abstract class Attack  {
     private boolean hasImpacted;
     private boolean enabled;
 
-
-
-
-    public Attack() {
-
-    }
+    public Attack() {}
 
     public Attack(String name,Integer sourcePlayerId,int damage,float duration) {
         this.damage = damage;
@@ -74,9 +69,14 @@ public abstract class Attack  {
         this.hasImpacted = attack.hasImpacted;
     }
 
+    /**
+     * @return
+     * true if there is time left before the next attack can begin.
+     */
     public boolean timeLeft() {
         return elapsedTime < duration;
     }
+
     public Integer getSourcePlayerId() {
         return sourcePlayerId;
     }
@@ -106,7 +106,6 @@ public abstract class Attack  {
     }
     public void setImpacted(boolean impacted) {
         this.hasImpacted = impacted;
-
     }
     public int getDamage() {
         return damage;

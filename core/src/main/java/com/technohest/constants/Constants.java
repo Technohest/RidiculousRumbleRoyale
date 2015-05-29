@@ -4,6 +4,7 @@ package com.technohest.constants;
  * A class for all the constants used in the game.
  * @author Oskar Jedvert
  * @author Tobias Alldén
+ * @author David Ström
  */
 public class Constants {
 
@@ -20,4 +21,7 @@ public class Constants {
     public static final int INITIAL_MOVEMENT_SPEED =5;
     public static final int BASE_ATTACK_DMG = 20;
     public static final int SPECIAL_ATTACK_DMG = 15;
+
+    //Network constants
+    public static final int NUMBER_OF_PLAYERS = 1;
 }

@@ -7,11 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.technohest.core.menuState.SCREEN;
-import com.technohest.core.network.NetworkMenuUtility;
 
 /**
- * Queries the user to enter an ip or port depending on if the current session is creating a server or not.
+ * Queries the user to enter an ip and/or port depending on if the current session is creating a server or not.
  * @author David Ström
  */
 public class IPPortInputScreen implements Screen {
@@ -32,9 +30,6 @@ public class IPPortInputScreen implements Screen {
         networkMenuInputProcessor = new NetworkMenuInputProcessor();
     }
 
-    /**
-     * Sets the input processor to networkinputprocessor.
-     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(networkMenuInputProcessor);
@@ -44,7 +39,7 @@ public class IPPortInputScreen implements Screen {
 
     /**
      * Renders a simple screen for inputting ip and port.
-     * @param v
+     * @param v not used
      */
     @Override
     public void render(float v) {
@@ -63,19 +58,13 @@ public class IPPortInputScreen implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
     public void hide() {
@@ -91,13 +80,13 @@ public class IPPortInputScreen implements Screen {
 /**
  * Manages the input done in the IPPortInputScreen, only allows numbers 0-9 and '.' as input which it saves to a
  * variable input.
- * Created by time on 2015-04-21.
+ * @author David Ström
  */
 class NetworkMenuInputProcessor implements InputProcessor {
     private String input = "";
 
     /**
-     * Check if backspace, enter or escape has been pressed and performs an action mapped to each of theese inputs.
+     * Check if backspace, enter or escape has been pressed and performs an action mapped to each of these inputs.
      * @param i The keycode for the key that has been pressed.
      * @return If a valid key has been pressed.
      */
@@ -140,8 +129,8 @@ class NetworkMenuInputProcessor implements InputProcessor {
 
     /**
      * Removes the last character of a String and returns it.
-     * @param input The String to which will have its last character removed.
-     * @return The resulting String.
+     * @param input the String to which will have its last character removed.
+     * @return the resulting String.
      */
     private String shorten(String input) {
         return input.substring(0, input.length()-1);
@@ -154,8 +143,8 @@ class NetworkMenuInputProcessor implements InputProcessor {
 
     /**
      * Adds the typed character to the input String if it is a number between 0-9 or a full stop character.
-     * @param c The keycode for the typed character.
-     * @return If a valid key has been typed.
+     * @param c the keycode for the typed character.
+     * @return if a valid key has been typed.
      */
     @Override
     public boolean keyTyped(char c) {

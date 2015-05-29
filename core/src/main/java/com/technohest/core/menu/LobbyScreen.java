@@ -9,17 +9,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.technohest.core.menuState.SCREEN;
-import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.network.RClient;
 import com.technohest.core.network.RServer;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.technohest.core.view.RRRGameView;
 
 /**
  * A lobby where all clients connect before a game and can set the game options before starting.
  * @author David Ström
+ * @author Oskar Boking
  */
 public class LobbyScreen implements Screen {
 
@@ -59,7 +59,14 @@ public class LobbyScreen implements Screen {
 
     private RClient client;
 
-    public LobbyScreen(){
+    private ScreenHandler screenHandler;
+
+    /**
+     * Creates a lobby with buttons for each character. Also creates a start button only visible to the hosting client.
+     * @param screenHandler used to change the screen.
+     */
+    public LobbyScreen(ScreenHandler screenHandler){
+        this.screenHandler = screenHandler;
 
         nmu = NetworkMenuUtility.getInstance();
 
@@ -138,7 +145,7 @@ public class LobbyScreen implements Screen {
     /**
      * When a player clicks on a character the listener class (CharacterSelectListener) executes this method
      * with the parameter different depending on which character the player has clicked on.
-     * @param character
+     * @param character the name of the selected character.
      */
     public void selectCharacter(String character){
         if(character.equals("allden") && !char1Button.isDisabled()){
@@ -160,9 +167,11 @@ public class LobbyScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
+        //If hosting: create both a server and a client, else, just a client.
         if (nmu.isServer()) {
             new RServer(nmu.getPort());
             client = new RClient(nmu.getPort());
+            client.addEventListener(screenHandler);
         } else {
             new RClient(nmu.getIp(), nmu.getPort());
         }
@@ -174,7 +183,7 @@ public class LobbyScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            ScreenHandler.getInstance().setScreen(SCREEN.MAIN);
+            screenHandler.setScreen(SCREEN.MAIN);
         }
         stage.draw();
 
@@ -207,5 +216,13 @@ public class LobbyScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    /**
+     * Used to get the clients game view.
+     * @return the game view.
+     */
+    public RRRGameView getGameView() {
+        return client.getView();
     }
 }

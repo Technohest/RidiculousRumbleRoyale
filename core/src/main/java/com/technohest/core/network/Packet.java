@@ -19,10 +19,16 @@ public class Packet {
         public HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     }
 
+    /**
+     * Used to send actions over the network.
+     */
     public static class Packet1ActionList {
         public List<Action> action;
     }
 
+    /**
+     * Corrects the clients state and has the latest received sequence number of the unique client.
+     */
     public static class Packet1Correction {
         public int lastSeq;
         public IState state;

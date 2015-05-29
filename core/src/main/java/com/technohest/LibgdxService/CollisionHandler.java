@@ -81,10 +81,8 @@ public class CollisionHandler implements ContactListener {
         //Feet detection
         if(contact.getFixtureA().getUserData() instanceof Body && contact.getFixtureB().getUserData().equals("Level"))  {
             Body b = ((Body)contact.getFixtureB().getUserData());
-
         } else if(contact.getFixtureB().getUserData() instanceof Body && contact.getFixtureA().getUserData().equals("Level")) {
             Body b = ((Body)contact.getFixtureB().getUserData());
-
         }
     }
 

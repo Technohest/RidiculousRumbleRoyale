@@ -16,20 +16,24 @@ import java.util.HashMap;
  * @author David Ström
  */
 public class RServer {
-    private boolean gameRunning;
     private Server server;
-    private RRRGameModel model = new RRRGameModel();
-    private IState state;
+    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
-    //TIMESTEP
+    private IState state;
+    private RRRGameModel model = new RRRGameModel();
+
+    //Game loop
     private double accumulator = 0.0;
     private double currentTime;
     private float step = 1.0f/60.0f;
+    private boolean gameRunning;
 
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
-    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
-
+    /**
+     * Creates a new Server, registers packets, and start listening to the specified port.
+     * @param port
+     */
     public RServer(String port) {
         server = new Server();
         registerPackets();
@@ -53,6 +57,9 @@ public class RServer {
 
     }
 
+    /**
+     * Generates the inital state.
+     */
     private void init() {
         state = StateGDX.getInstance();
         generateState();
@@ -62,6 +69,10 @@ public class RServer {
         NetworkManger.registerPackets(server);
     }
 
+    /**
+     * Starts the game on the server.
+     * @param playerIdTypeMap map of the client id's and the the character type.
+     */
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();

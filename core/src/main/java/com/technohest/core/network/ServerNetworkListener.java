@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.technohest.LibgdxService.StateGDX;
+import com.technohest.constants.Constants;
 import com.technohest.core.model.Action;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,11 @@ public class ServerNetworkListener extends Listener {
         this.rserver = rserver;
     }
 
+    /**
+     * Assignes the connected client an unique id and updates all connected clients playerIdTypeMap. Starts the game
+     * when there are there are enough players connected as specified by a constant in constants package.
+     * @param connection
+     */
     @Override
     public void connected(Connection connection) {
         Log.info("Server: Someone is connecting.");
@@ -53,21 +59,26 @@ public class ServerNetworkListener extends Listener {
             c.sendTCP(p2);
         }
 
-        int tmp = 0;
-
+        //Start the game on all the clients
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() > tmp) {
+            if (playerIdTypeMap.keySet().size() >= Constants.NUMBER_OF_PLAYERS) {
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
 
-        if (playerIdTypeMap.keySet().size() > tmp) {
+        //Start the game on the server
+        if (playerIdTypeMap.keySet().size() >= Constants.NUMBER_OF_PLAYERS) {
             rserver.startGame(playerIdTypeMap);
         }
 
         Log.info(playerIdTypeMap.toString());
     }
 
+    /**
+     * Removes the disconnected player and sends an update to all connected clients with the new playerIdTypeMap.
+     * @param connection
+     * the connection to be removed.
+     */
     @Override
     public void disconnected(Connection connection) {
         Log.info("Server: Someone is disconnecting.");
@@ -94,6 +105,7 @@ public class ServerNetworkListener extends Listener {
      * Add actions to be performed by the server only if the actions sequenceNumber is a later one than the last one
      * processed. Update the latest sequenceNumber.
      * @param actions
+     * the list of actions received over the network.
      */
     private synchronized void addActionsToBePerformed(List<Action> actions) {
         for (Action a: actions) {
@@ -104,6 +116,9 @@ public class ServerNetworkListener extends Listener {
         }
     }
 
+    /**
+     * Send the server game state to the clients and the last received sequence number of each respective player.
+     */
     public void sendCorrectionToClients() {
         for (Integer i: playerIdSequenceMap.keySet()) {
             Packet.Packet1Correction p = new Packet.Packet1Correction();
