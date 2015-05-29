@@ -35,9 +35,7 @@ public class InputHandler implements InputProcessor {
     /**
      * Constructor, creates a new InputHandler
      */
-    public InputHandler() {
-
-    }
+    public InputHandler() {}
 
     /**
      * Sets key-pressed to true or false.
@@ -98,8 +96,8 @@ public class InputHandler implements InputProcessor {
             if (i == Controls.UP || i == Controls.DOWN) {
                 continue;
             }
-        buttons[i] = false;
-    }
+            buttons[i] = false;
+        }
     }
 
 

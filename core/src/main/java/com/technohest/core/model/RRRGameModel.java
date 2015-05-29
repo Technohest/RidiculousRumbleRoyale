@@ -19,20 +19,12 @@ public class RRRGameModel {
     private IGameLogic gameLogic;
     private boolean respawnEnabled;
 
-    //TMP
-    //private Boolean isClient;
-
     public RRRGameModel(){
         setGameLogic(new GameLogicGDX());
         this.idCharacterMap = new HashMap<Integer, Character>();
         activeAttacks = new ArrayList<Attack>();
-        //Temp character for testing
-        /*idCharacterMap.put(1,new Character("Allden",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-        idCharacterMap.put(2,new Character("Allden2",new Projectile("FireBall", 100, 10,10),new Projectile("FireBall", 100, 10,10)));
-        myID =1;*/
     }
-    public RRRGameModel(boolean testing) {
-    }
+
 
     /**
      * Initializes all tiles with their corresponding box2d bodies
@@ -46,17 +38,18 @@ public class RRRGameModel {
      * @param idChararcerMap the new idCharacterMap
      */
     public void init(HashMap<Integer,Integer> idChararcerMap) {
-        //The characters will be created at the game start and since the network only knows the type
-        //I needed to change input to be <Integer, Integer>. It will be changed to CharType in the future.
         this.idCharacterMap = new HashMap<Integer, Character>();
-        for (Map.Entry<Integer, Integer> entry : idChararcerMap.entrySet()) {
-            //Create new character for every id. Make them all the same type "Allden".
-            //System.out.println("THE PLAYER ID " + i);
-            this.idCharacterMap.put(entry.getKey(),new Character(entry.getKey(), "Name " + idChararcerMap.get(entry.getKey())));
+        for (Integer i: idChararcerMap.keySet()) {
+            //Create new character for every id. Set the name to be "Name" + their unique id.
+            this.idCharacterMap.put(i,new Character(i, "Name " + idChararcerMap.get(i)));
         }
-
     }
 
+    /**
+     * Step the gameLogic forward.
+     * @param v
+     * How big of a timestep to be performed.
+     */
     public void step(float v) {
         gameLogic.update(v);
         updatePlayers(v);
@@ -81,8 +74,8 @@ public class RRRGameModel {
             } else {
                 c.addRespawnTimer(v);
                 if (c.respawnTimeDone()) {
-                    c.respawn();
                     gameLogic.respawnPlayer(c.getId());
+                    c.respawn();
                 }
             }
         }
@@ -120,7 +113,7 @@ public class RRRGameModel {
 
 
     /**
-     * Performes an action on the specified player connected to playerId
+     * Performs an action on the specified player connected to playerId
      * @param action
      */
     public void performAction(Action action) {
@@ -139,6 +132,7 @@ public class RRRGameModel {
                 gameLogic.moveLeft(playerid);
                 break;
             case ATTACK_BASE:
+                // Do the attack only if player attack is ready.
                 if(getPlayerFromID(playerid).getBaseAttack().isReady() && gameLogic.canAttack(playerid)) {
                     getPlayerFromID(playerid).getBaseAttack().perform();
                     gameLogic.attack_base(playerid,getPlayerFromID(playerid).isFacingRight());
@@ -146,22 +140,22 @@ public class RRRGameModel {
                 }
                 break;
             case ATTACK_SPECIAL:
+                // Do the attack only if player attack is ready.
                 if(getPlayerFromID(playerid).getSpecialAttack().isReady() && gameLogic.canAttack(playerid)) {
-                    gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
                     getPlayerFromID(playerid).getSpecialAttack().perform();
                     this.activeAttacks.add(getPlayerFromID(playerid).getSpecialAttack());
+                    gameLogic.attack_special(playerid,getPlayerFromID(playerid).isFacingRight());
+
                 }
                 break;
-            default:
-                break;
         }
-
     }
 
     /**
-     * Checks if the specified attack has inpacted, both in the gameLogic and in the attack class.
-     * @param a
+     * Checks if the specified attack has impacted, both in the gameLogic and in the attack class.
+     * @param a the attack to check for collision.
      * @return
+     * true if an impact has occurred.
      */
     public boolean attackHasInpacted(Attack a) {
         if(a instanceof MeleeAttack) {
@@ -171,26 +165,36 @@ public class RRRGameModel {
         }
     }
 
-
+    /**
+     * Generates the state of the game so it can be sent across the network.
+     */
     public void generateState() {
-        StateGDX.getInstance().setAlivePlayers(getAliveCharacters());
-        StateGDX.getInstance().setActiveAttacks(getActiveAttacks());
-        HashSet<Integer> alivePlayers = getAlivePlayersId();
-        Set<Integer> tmp = new HashSet<Integer>();
+        HashMap<Integer,Integer> attackIdTypeMap = new HashMap<Integer, Integer>();
+        Set<Integer> alivePlayers = this.getAlivePlayersId();
         for(Attack a:activeAttacks) {
             if(a.isEnabled()) {
-                tmp.add(a.getSourcePlayerId());
+                if(a instanceof Projectile) {
+                    attackIdTypeMap.put(a.getSourcePlayerId(),1);
+                } else {
+                    attackIdTypeMap.put(a.getSourcePlayerId(),0);
+                }
             }
         }
-        gameLogic.generateState(alivePlayers,tmp);
+        gameLogic.generateState(alivePlayers, attackIdTypeMap);
     }
+
+    /**
     public void correct(IState state) {
         setEnabledAttacks(state.getActiveAttacks());
         gameLogic.correct(state);
     }
+     */
 
 
-
+    /**
+     * @return
+     * A HashSet of the id's of all alive players.
+     */
     public HashSet<Integer> getAlivePlayersId() {
         HashSet<Integer> alivePlayers = new HashSet<Integer>();
         for(Character c: idCharacterMap.values()) {
@@ -200,15 +204,17 @@ public class RRRGameModel {
         }
         return alivePlayers;
     }
-    public ArrayList<Character> getAliveCharacters() {
-        ArrayList<Character> tmp = new ArrayList<Character>();
-        for(Map.Entry<Integer, Character> entry: idCharacterMap.entrySet()) {
-            if(idCharacterMap.get(entry.getKey()).isAlive()) {
-                tmp.add(idCharacterMap.get(entry.getKey()));
+
+    public ArrayList<Integer> getAliveCharacters() {
+        ArrayList<Integer> tmp = new ArrayList<Integer>();
+        for(Integer i: idCharacterMap.keySet()) {
+            if(idCharacterMap.get(i).isAlive()) {
+                tmp.add(i);
             }
         }
         return tmp;
     }
+
     public Integer getmyID() {
         return myID;
     }
@@ -218,15 +224,15 @@ public class RRRGameModel {
     public ArrayList<Attack> getActiveAttacks() {
         return this.activeAttacks;
     }
-
     public Character getPlayer(String name) {
-        for(Map.Entry<Integer, Character> entry : idCharacterMap.entrySet()) {
-            if(idCharacterMap.get(entry.getKey()).getName().equals(name)) {
-                return idCharacterMap.get(entry.getKey());
+        for(Integer i: idCharacterMap.keySet()) {
+            if(idCharacterMap.get(i).getName().equals(name)) {
+                return idCharacterMap.get(i);
             }
         }
         return null;
     }
+
     public Character getPlayerFromID(Integer myID) {
         return this.idCharacterMap.get(myID);
     }
@@ -238,7 +244,7 @@ public class RRRGameModel {
     }
 
     /**
-     * Sets state of player based on a integer.
+     * Sets state of player based on a integer representing their state.
      * @param i
      */
     public void setCharacterState(Character c, Integer i) {
@@ -265,13 +271,9 @@ public class RRRGameModel {
                 c.setState(Character.State.Standing);
                 c.setGrounded(true);
                 break;
-            default:
-                c.setState(Character.State.Standing);
-                c.setGrounded(true);
-                break;
         }
-
     }
+
     public void setGameLogic(IGameLogic gl){
         gameLogic = gl;
     }
@@ -281,6 +283,7 @@ public class RRRGameModel {
     public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
         this.activeAttacks = activeAttacks;
     }
+
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
     }

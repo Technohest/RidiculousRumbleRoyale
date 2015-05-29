@@ -3,8 +3,8 @@ package com.technohest.core.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.technohest.core.controller.RRRGameController;
+import com.technohest.core.event.REventListener;
 import com.technohest.core.model.RRRGameModel;
-import com.technohest.core.network.NetworkMenuUtility;
 import com.technohest.core.view.RRRGameView;
 
 import java.util.Observable;
@@ -15,11 +15,11 @@ import static com.technohest.core.menu.SCREEN.*;
  * ScreenHandler is an easy way to set the screen of the program.
  * @author David Ström
  */
-public class ScreenHandler extends Observable {
+public class ScreenHandler extends Observable implements REventListener {
     // All the different possible screens
     private Screen menuScreen = new RRRMenuView();
     private Screen ipPortInputScreen = new IPPortInputScreen();
-    private Screen lobbyScreen = new LobbyScreen();
+    private LobbyScreen lobbyScreen = new LobbyScreen(this);
     private Screen optionsScreen = new OptionsMenuView();
     private SCREEN currentScreen;
     private RRRGameView gameScreen;
@@ -27,7 +27,6 @@ public class ScreenHandler extends Observable {
     // The singleton
     private static ScreenHandler instance = null;
 
-    //-------------THE SCREENHANDLER----------------\\
     protected ScreenHandler() {
         RRRGameModel model = new RRRGameModel();
         gameScreen = new RRRGameView(
@@ -35,19 +34,16 @@ public class ScreenHandler extends Observable {
                         model);
     }
 
+    /**
+     * @return
+     * the singleton instance.
+     */
     public static ScreenHandler getInstance() {
         if (instance == null) {
             instance = new ScreenHandler();
         }
 
         return instance;
-    }
-
-    /**
-     * Set the screen of the game.
-     */
-    public void setGameScreen(RRRGameView view) {
-        this.gameScreen = view;
     }
 
     /**
@@ -97,7 +93,18 @@ public class ScreenHandler extends Observable {
         }
     }
 
+    /**
+     * @return
+     * the current screen being displayed.
+     */
     public SCREEN getCurrentScreen() {
         return currentScreen;
+    }
+
+    @Override
+    public void fireEvent() {
+        gameScreen = lobbyScreen.getGameView();
+        setChanged();
+        notifyObservers(gameScreen);
     }
 }

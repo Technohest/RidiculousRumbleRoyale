@@ -3,6 +3,7 @@ package com.technohest.core.model;
 /**
  * A class representing an action to be sent over the network.
  * @author Oskar Jedvert
+ * @author David Ström
  */
 public class Action {
     private Integer sequenceNumber;
@@ -15,11 +16,9 @@ public class Action {
         this.sequenceNumber = sequenceNumber;
     }
 
-    public Action(int playerID, ActionID actionID) {
-        this.playerID = playerID;
-        this.actionID = actionID;
-    }
-
+    /**
+     * Needed for serialization with KryoNet.
+     */
     public Action() {}
 
     /**
@@ -29,24 +28,12 @@ public class Action {
         MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK_BASE, ATTACK_SPECIAL
     }
 
-    public void setPlayerID(int id) {
-        this.playerID = id;
-    }
-
     public Integer getPlayerID() {
         return this.playerID;
     }
 
     public ActionID getActionID() {
         return actionID;
-    }
-
-    public void setActionID(ActionID actionID) {
-        this.actionID = actionID;
-    }
-
-    public void setSequenceNumber(int sequenceNumber){
-        this.sequenceNumber = sequenceNumber;
     }
 
     public Integer getSequenceNumber(){

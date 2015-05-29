@@ -9,19 +9,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.technohest.LibgdxService.GameLogicGDX;
+import com.technohest.LibgdxService.StateGDX;
 import com.technohest.constants.Settings;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.model.*;
-import java.util.ArrayList;
-import java.util.Collection;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The class managing the drawing of the application.
  * @author Oskar Jedvert
- * @author Tobias Alldén */
+ * @author Tobias Alldén
+ */
 
 public class RRRGameView implements Screen {
 
@@ -46,7 +49,6 @@ public class RRRGameView implements Screen {
 		settings = new Settings();
 		this.model = model;
 		this.controller = controller;
-		controller.setView(this);
 		mapRenderer = new OrthogonalTiledMapRenderer(controller.getLevel().getMap());
 		batch = new SpriteBatch();
 		settings = new Settings();
@@ -66,39 +68,26 @@ public class RRRGameView implements Screen {
 
 	}
 
-	public RRRGameView(RRRGameModel model) {
-		settings = new Settings();
-		this.model = model;
-		mapRenderer = new OrthogonalTiledMapRenderer(model.getGameLogic().getLevel().getMap());
-		batch = new SpriteBatch();
-
-		camera = new OrthographicCamera();
-		sRenderer = new ShapeRenderer();
-
-		camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
-		mapRenderer.setView(camera);
-	}
-
 	@Override
 	public void render(float v) {
 		if (controller != null) {
 			controller.update(v);
 		}
+		this.update(v);
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         //Draw players
-        Collection<Integer> players = model.getAlivePlayersId();
-		for (Integer i: players) {
-			Body b = ((GameLogicGDX) model.getGameLogic()).getBodyFromplayerId(i);
-			sRenderer.rect(((b.getPosition().x - (0.35f)) * 32), ((b.getPosition().y - (0.5f)) * 32), 20, 32);
+
+		HashMap<Integer,Vector2> characterIdVectorMap = StateGDX.getInstance().getCharacterIdStates();
+		for (Map.Entry<Integer,Vector2> entry:characterIdVectorMap.entrySet()) {
+			sRenderer.rect(((entry.getValue().x - (0.35f)) * 32), ((entry.getValue().y - (0.5f)) * 32), 20, 32);
 		}
 
         //Draws projectiles
-        ArrayList<Attack> activeAttacks = model.getActiveAttacks();
-        for(Attack attack: activeAttacks) {
-                if (attack instanceof Projectile) {
-                    Body b = ((GameLogicGDX)model.getGameLogic()).getBodyFromAttackId(attack.getSourcePlayerId());
-                    sRenderer.circle(((b.getPosition().x) * 32), ((b.getPosition().y) * 32), 5);
+       HashMap<Vector2,Integer> attackIdVectorMap = StateGDX.getInstance().getAttackVectorTypeMap();
+        for(Map.Entry<Vector2,Integer> entry:attackIdVectorMap.entrySet()) {
+                if (entry.getValue() == 1) {
+                    sRenderer.circle(((entry.getKey().x) * 32), ((entry.getKey().y) * 32), 5);
                 }
         }
 
