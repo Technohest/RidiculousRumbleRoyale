@@ -39,7 +39,7 @@ public class Settings {
     public Settings(){
         //File initialization
         try {
-            file = new File("assets/config.xml");
+            file = new File("../assets/config.xml");
             dbFactory = DocumentBuilderFactory.newInstance();
             dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(file);
