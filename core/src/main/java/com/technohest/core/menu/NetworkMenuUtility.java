@@ -1,4 +1,4 @@
-package com.technohest.core.network;
+package com.technohest.core.menu;
 
 /**
  * Manages the ip, port, and if the current session is a server.

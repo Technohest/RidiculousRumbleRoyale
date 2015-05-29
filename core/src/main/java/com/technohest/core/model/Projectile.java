@@ -13,9 +13,10 @@ public class Projectile extends Attack {
         this.velocityX = velocityX;
     }
 
-    public Projectile() {
-
-    }
+    /**
+     * Needed for serialization with KryoNet.
+     */
+    public Projectile() {}
 
     public float getVelocityX() {
         return velocityX;

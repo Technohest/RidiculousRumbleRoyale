@@ -16,19 +16,24 @@ import java.util.HashMap;
  * @author David Ström
  */
 public class RServer {
-    private boolean gameRunning;
     private Server server;
+    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
+
+    private IState state;
     private RRRGameModel model = new RRRGameModel();
 
-    //TIMESTEP
+    //Game loop
     private double accumulator = 0.0;
     private double currentTime;
     private float step = 1.0f/60.0f;
+    private boolean gameRunning;
 
     private ArrayList<Action> actionsToBePerformed = new ArrayList<Action>();
 
-    ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
-
+    /**
+     * Creates a new Server, registers packets, and start listening to the specified port.
+     * @param port
+     */
     public RServer(String port) {
         server = new Server();
         registerPackets();
@@ -52,7 +57,11 @@ public class RServer {
 
     }
 
+    /**
+     * Generates the inital state.
+     */
     private void init() {
+        state = StateGDX.getInstance();
         generateState();
     }
 
@@ -60,6 +69,10 @@ public class RServer {
         NetworkManger.registerPackets(server);
     }
 
+    /**
+     * Starts the game on the server.
+     * @param playerIdTypeMap map of the client id's and the the character type.
+     */
     public void startGame(HashMap<Integer, Integer> playerIdTypeMap) {
         model.init(playerIdTypeMap);
         model.generateWorld();
@@ -95,17 +108,12 @@ public class RServer {
     private synchronized void performActions() {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
-            if (a.getActionID() == Action.ActionID.ATTACK_BASE)
-                System.out.println(a.getActionID());
         }
 
         generateState();
 
-        Packet.Packet1Correction p = new Packet.Packet1Correction();
-        p.state = StateGDX.getInstance();
-        p.actions = this.actionsToBePerformed;
+        serverNetworkListener.sendCorrectionToClients();
 
-        server.sendToAllTCP(p);
         this.actionsToBePerformed.clear();
     }
 

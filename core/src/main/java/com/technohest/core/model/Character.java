@@ -41,14 +41,12 @@ public  class Character {
         respawnTimer = 0;
         this.id = id;
         generateAttacks();
-
     }
 
-
-
-    public Character() {
-
-    }
+    /**
+     * Needed for serialization with KryoNet.
+     */
+    public Character() {}
 
 
     /**
@@ -59,20 +57,17 @@ public  class Character {
         this.specialAttack = new Projectile("Fireball",id,Constants.SPECIAL_ATTACK_DMG,2f,10);
     }
 
-
-
     /**
      * When character dies, redraws and increments deaths
      */
     public void die() {
-        //To be implemented further in future versions,
         this.deaths++;
         alive = false;
         respawnTimer = 0;
     }
 
     /**
-     * When chararcter kills another character, increments kills.
+     * When when this character kills another character, increments kills.
      */
     public void incrementKill() {
         kills++;
