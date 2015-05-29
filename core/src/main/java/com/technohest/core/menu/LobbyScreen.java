@@ -173,7 +173,8 @@ public class LobbyScreen implements Screen {
             client = new RClient(nmu.getPort());
             client.addEventListener(screenHandler);
         } else {
-            new RClient(nmu.getIp(), nmu.getPort());
+            client = new RClient(nmu.getIp(), nmu.getPort());
+            client.addEventListener(screenHandler);
         }
     }
 
