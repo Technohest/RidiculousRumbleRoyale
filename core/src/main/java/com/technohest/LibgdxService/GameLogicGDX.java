@@ -74,7 +74,7 @@ public class GameLogicGDX implements IGameLogic {
         shape.setAsBox(4 / 32.0f, 4 / 32.0f, new Vector2(0, -((Constants.PLAYER_HEIGHT) / 32.0f)), 0);
         fdef.isSensor = true;
         b.setUserData("Player");
-        b.createFixture(fdef).setUserData(b);
+        b.createFixture(fdef).setUserData(playerId);
         characterIdBodyMap.put(playerId, b);
 
     }
@@ -200,37 +200,13 @@ public class GameLogicGDX implements IGameLogic {
         }
         HashMap<Vector2,Integer> attackIdVectorMap = new HashMap<Vector2,Integer>();
         for(Integer i:attackIDTypeMap.keySet()) {
-            attackIdVectorMap.put(getBodyFromAttackId(i).getPosition(),attackIDTypeMap.get(i));
+            if(attackIdBodyMap.containsKey(i)) {
+                attackIdVectorMap.put(getBodyFromAttackId(i).getPosition(), attackIDTypeMap.get(i));
+            }
         }
         StateGDX state = StateGDX.getInstance();
         state.setState(playerIdVectormap, attackIdVectorMap);
     }
-
-    /**
-     * Performs the correction if the client is out of sync with the server
-     * @param newState
-     */
-    /**
-    @Override
-    public void correct(IState newState) {
-        HashMap<Integer, ArrayList<Vector2>> map =  newState.getCharacterIdStates();
-        for(Map.Entry<Integer, ArrayList<Vector2>> entry : map.entrySet()){
-            ArrayList<Vector2> temp = entry.getValue();
-            setCharacterState(entry.getKey(), temp.get(0), temp.get(1));
-        }
-        HashMap<Integer,ArrayList<Vector2>> attackVectorMap = newState.getAttackIdStates();
-        if(!attackVectorMap.isEmpty()) {
-            for(Map.Entry<Integer, ArrayList<Vector2>> entry : attackVectorMap.entrySet()){
-                ArrayList<Vector2> temp = entry.getValue();
-                setAttackState(entry.getKey(), temp.get(0), temp.get(1));
-            }
-        }
-    }
-    */
-
-
-
-
     /**
      * Returns an Integer specifying state of character, 0 = falling, 1 = jumping, 2 = runnning right, 3 = running left, 4 = standing.
      * @param playerId
@@ -293,17 +269,18 @@ public class GameLogicGDX implements IGameLogic {
      * @return
      */
     public boolean getAttackHasInpacted(Integer playerId,String attackType) {
-        for(Body b:impactedAttacks) {
-            if(b.getUserData().equals(attackType)){
-                for(Fixture f:b.getFixtureList()) {
-                    if (f.getUserData().equals(playerId)) {
-                        return true;
+            for (Body b : impactedAttacks) {
+                if(b.getUserData() != null) {
+                    if (b.getUserData().equals(attackType)) {
+                        for (Fixture f : b.getFixtureList()) {
+                            if (f.getUserData().equals(playerId)) {
+                                return true;
+                            }
+                        }
                     }
                 }
-
             }
-        }
-        return false;
+            return false;
     }
     public Body getBodyFromAttackId(Integer attackId) {
         return attackIdBodyMap.get(attackId);
