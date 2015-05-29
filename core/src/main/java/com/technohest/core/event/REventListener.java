@@ -2,7 +2,7 @@ package com.technohest.core.event;
 
 /**
  * An event listener used to notify listener classes.
- * @author David Ström
+ * @author David StrÃ¶m
  */
 public interface REventListener {
     /**

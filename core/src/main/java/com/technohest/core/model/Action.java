@@ -3,7 +3,7 @@ package com.technohest.core.model;
 /**
  * A class representing an action to be sent over the network.
  * @author Oskar Jedvert
- * @author David Ström
+ * @author David StrÃ¶m
  */
 public class Action {
     private Integer sequenceNumber;
