@@ -23,5 +23,5 @@ public class Constants {
     public static final int SPECIAL_ATTACK_DMG = 15;
 
     //Network constants
-    public static final int NUMBER_OF_PLAYERS = 2;
+    public static final int NUMBER_OF_PLAYERS = 1;
 }

@@ -11,23 +11,20 @@ import static org.junit.Assert.*;
 public class ActionTest {
 
     @Test
-    public void testSetPlayerID() throws Exception {
-        Action action = new Action(1, Action.ActionID.ATTACK_BASE);
-        action.setPlayerID(10);
+    public void testGetPlayerID() throws Exception {
+        Action action = new Action(10, Action.ActionID.ATTACK_BASE, 1);
         assertTrue(action.getPlayerID() == 10);
     }
 
     @Test
-    public void testSetActionID() throws Exception {
-        Action action = new Action();
-        action.setActionID(Action.ActionID.ATTACK_BASE);
+    public void testGetActionID() throws Exception {
+        Action action = new Action(10, Action.ActionID.ATTACK_BASE, 1);
         assertTrue(action.getActionID() == Action.ActionID.ATTACK_BASE);
     }
 
     @Test
-    public void testSetSequenceNumber() throws Exception {
-        Action action = new Action(1, Action.ActionID.ATTACK_BASE, 1);
-        action.setSequenceNumber(10);
+    public void testGetSequenceNumber() throws Exception {
+        Action action = new Action(1, Action.ActionID.ATTACK_BASE, 10);
         assertTrue(action.getSequenceNumber() == 10);
     }
 }
