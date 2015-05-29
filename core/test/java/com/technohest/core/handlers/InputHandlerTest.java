@@ -1,8 +1,6 @@
-package com.technohest.core.model;
+package com.technohest.core.handlers;
 
-import com.sun.corba.se.spi.orbutil.fsm.InputImpl;
 import com.technohest.constants.Controls;
-import com.technohest.core.handlers.InputHandler;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -54,9 +52,9 @@ public class InputHandlerTest {
             temp[i] = handler.buttons[i];
         }
 
-       for(int j = 0; j < handler.buttons.length; j++){
-           assertTrue(temp[j] == handler.buttons[j]);
-       }
+        for(int j = 0; j < handler.buttons.length; j++){
+            assertTrue(temp[j] == handler.buttons[j]);
+        }
 
         handler.releaseAllKeys();
         assertTrue(temp[3] = !handler.buttons[3]);
