@@ -18,7 +18,7 @@ public class Constants {
     public static final int JUMP_FORCE_MULTIPLIER = 2500;
     public static final float PLAYER_HEIGHT = 16;
     public static final float PLAYER_WIDTH = 10;
-    public static final int INITIAL_MOVEMENT_SPEED =5;
+    public static final int MOVEMENT_SPEED =10;
     public static final int BASE_ATTACK_DMG = 20;
     public static final int SPECIAL_ATTACK_DMG = 15;
 
