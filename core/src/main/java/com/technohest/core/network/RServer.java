@@ -95,6 +95,8 @@ public class RServer {
                     while (accumulator >= step) {
                         performActions();
                         model.step(step);
+                        generateState();
+                        serverNetworkListener.sendCorrectionToClients();
                         accumulator -= step;
                     }
                 }
@@ -103,18 +105,13 @@ public class RServer {
     }
 
     /**
-     * Perform the actions sent in by the clients. Send the list of actions performed by the server to all the clients.
+     * Perform the actions sent in by the clients.
      */
     private synchronized void performActions() {
         for (Action a: actionsToBePerformed) {
             model.performAction(a);
         }
-
-        generateState();
-
-        serverNetworkListener.sendCorrectionToClients();
-
-        this.actionsToBePerformed.clear();
+        actionsToBePerformed.clear();
     }
 
     /**
