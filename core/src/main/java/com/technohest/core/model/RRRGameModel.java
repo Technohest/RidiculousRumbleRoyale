@@ -17,7 +17,7 @@ public class RRRGameModel {
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
-    private boolean respawnEnabled;
+    private boolean respawnEnabled = false;
 
     public RRRGameModel(){
         setGameLogic(new GameLogicGDX());
@@ -78,7 +78,7 @@ public class RRRGameModel {
                 }
             } else {
                 c.addRespawnTimer(v);
-                if (c.respawnTimeDone()) {
+                if (c.respawnTimeDone() && c.getShouldRespawn()) {
                     gameLogic.respawnPlayer(c.getId());
                     c.respawn();
                 }
