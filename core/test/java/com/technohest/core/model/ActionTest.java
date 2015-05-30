@@ -27,4 +27,11 @@ public class ActionTest {
         Action action = new Action(1, Action.ActionID.ATTACK_BASE, 10);
         assertTrue(action.getSequenceNumber() == 10);
     }
+
+    @Test
+    public void testEmptyConstructor() {
+        Action action = new Action();
+        Integer number = action.getSequenceNumber();
+        assertNull(number);
+    }
 }
