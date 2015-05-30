@@ -6,8 +6,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Oscar on 2015-05-28.
- * @author Oscar
+ * Test for inputhandler.
+ * @author Oscar boking
+ * @author Tobias Alldén
  */
 public class InputHandlerTest {
 
@@ -63,27 +64,57 @@ public class InputHandlerTest {
 
     @Test
     public void testKeyDown() throws Exception {
-        //InputHandler handler = new InputHandler();
-        //handler.keyDown(4);
+        InputHandler handler = new InputHandler();
+        //51 is libgdxs keycode for W.
+        boolean keyTyped = handler.hasInput();
+        boolean returnValue = handler.keyDown(51);
+        boolean keyTyped2 = handler.hasInput();
+        assertFalse(keyTyped==keyTyped2 || returnValue);
     }
 
     @Test
     public void testKeyUp() throws Exception {
-
+        InputHandler handler = new InputHandler();
+        //51 is libgdxs keycode for W.
+        boolean keyTyped = handler.hasInput();
+        boolean returnValue = handler.keyUp(51);
+        boolean keyTyped2 = handler.hasInput();
+        assertFalse(keyTyped!=keyTyped2 || returnValue);
     }
 
     @Test
     public void testKeyTyped() throws Exception {
+        InputHandler handler = new InputHandler();
+        //51 is libgdxs keycode for W.
+        assertFalse(handler.keyTyped('c'));
+    }
 
+    @Test
+     public void testTouchDown() {
+        InputHandler handler = new InputHandler();
+        assertFalse(handler.touchDown(10,10,1,10));
+    }
+    @Test
+    public void testTouchUp() {
+        InputHandler handler = new InputHandler();
+        assertFalse(handler.touchUp(10, 10, 10, 1));
+    }
+    @Test
+    public void testTouchDragged() {
+        InputHandler handler = new InputHandler();
+        assertFalse(handler.touchDragged(10,10,10));
     }
 
     @Test
     public void testMouseMoved() throws Exception {
-
+        InputHandler handler = new InputHandler();
+        assertFalse(handler.mouseMoved(10,50));
     }
 
     @Test
     public void testScrolled() throws Exception {
+        InputHandler handler = new InputHandler();
+        assertFalse(handler.scrolled(15));
 
     }
 }
