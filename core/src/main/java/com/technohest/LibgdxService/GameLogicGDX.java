@@ -111,14 +111,14 @@ public class GameLogicGDX implements IGameLogic {
     public void moveLeft(Integer playerId){
         if(characterIdBodyMap.containsKey(playerId)) {
             Body playerBody = getBodyFromplayerId(playerId);
-            playerBody.setLinearVelocity(new Vector2(-Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
+            playerBody.setLinearVelocity(new Vector2(-Constants.MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
         }
     }
     @Override
     public void moveRight(Integer playerId){
         Body playerBody = getBodyFromplayerId(playerId);
         if(characterIdBodyMap.containsKey(playerId)) {
-            playerBody.setLinearVelocity(new Vector2(Constants.INITIAL_MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
+            playerBody.setLinearVelocity(new Vector2(Constants.MOVEMENT_SPEED, playerBody.getLinearVelocity().y));
         }
     }
     @Override
