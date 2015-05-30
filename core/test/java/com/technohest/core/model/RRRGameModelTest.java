@@ -173,6 +173,10 @@ public class RRRGameModelTest {
         b.setIsReady(false);
         c.setIsReady(false);
         d.setIsReady(true);
+        attackMap.add(0, a);
+        attackMap.add(1, b);
+        attackMap.add(2, c);
+        attackMap.add(3, d);
         model.setEnabledAttacks(attackMap);
     }
 
