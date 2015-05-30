@@ -73,7 +73,7 @@ public class RRRGameModel {
                 }
             } else {
                 c.addRespawnTimer(v);
-                if (c.respawnTimeDone()) {
+                if (c.respawnTimeDone() && c.getShouldRespawn()) {
                     gameLogic.respawnPlayer(c.getId());
                     c.respawn();
                 }
