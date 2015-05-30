@@ -19,14 +19,10 @@ public class RRRGameModel {
     private IGameLogic gameLogic;
     private boolean respawnEnabled = false;
 
-    public RRRGameModel(){
-        setGameLogic(new GameLogicGDX());
+    public RRRGameModel(IGameLogic logic){
+        setGameLogic(logic);
         this.idCharacterMap = new HashMap<Integer, Character>();
         activeAttacks = new ArrayList<Attack>();
-    }
-    public RRRGameModel(boolean testing) {
-        this.idCharacterMap = new HashMap<Integer, Character>();
-        this.activeAttacks = new ArrayList<Attack>();
     }
 
 

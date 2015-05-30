@@ -2,6 +2,7 @@ package com.technohest.core.network;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IState;
 import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.controller.RRRGameController;
@@ -19,7 +20,7 @@ public class RClient {
     private Client client;
 
     //The MVC
-    private RRRGameModel model = new RRRGameModel();
+    private RRRGameModel model = new RRRGameModel(new GameLogicGDX());
     private RRRGameController controller = new RRRGameController(model);
     private RRRGameView view = new RRRGameView(controller, model);
 

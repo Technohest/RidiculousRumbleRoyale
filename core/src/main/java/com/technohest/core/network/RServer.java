@@ -3,6 +3,7 @@ package com.technohest.core.network;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IState;
 import com.technohest.LibgdxService.StateGDX;
 import com.technohest.core.model.Action;
@@ -20,7 +21,7 @@ public class RServer {
     ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
     private IState state;
-    private RRRGameModel model = new RRRGameModel();
+    private RRRGameModel model = new RRRGameModel(new GameLogicGDX());
 
     //Game loop
     private double accumulator = 0.0;
