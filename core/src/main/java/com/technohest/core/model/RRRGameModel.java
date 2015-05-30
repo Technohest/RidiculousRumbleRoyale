@@ -14,7 +14,7 @@ public class RRRGameModel {
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
-    private boolean respawnEnabled = false;
+    private boolean respawnEnabled = true;
 
     public RRRGameModel(IGameLogic logic){
         setGameLogic(logic);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.technohest.LibgdxService.IGameLogic;
 import com.technohest.LibgdxService.levels.ILevel;
+import com.technohest.constants.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by oskar on 2015-05-28.
  * @author Oskar Jedvert
+ * @author Tobias Alldén
  */
 public class RRRGameModelTest {
     RRRGameModel model;
@@ -126,7 +128,7 @@ public class RRRGameModelTest {
 
         @Override
         public boolean canAttack(Integer playerId) {
-            return false;
+            return true;
         }
 
         @Override
@@ -157,14 +159,10 @@ public class RRRGameModelTest {
         }
         model.getGameLogic().generate(idList);
         ArrayList<Attack> attackMap = new ArrayList<Attack>();
-        Attack a = new Attack() {
-        };
-        Attack b = new Attack() {
-        };
-        Attack c = new Attack() {
-        };
-        Attack d = new Attack() {
-        };
+        Attack a = new Projectile("Projectilea",1,10,1,10);
+        Attack b = new Projectile("Projectileb",1,10,1,10);
+        Attack c = new MeleeAttack("Meleec",1,10,1);
+        Attack d = new MeleeAttack("Meleed",1,10,1);
         a.setImpacted(false);
         b.setImpacted(false);
         c.setImpacted(true);
@@ -212,16 +210,25 @@ public class RRRGameModelTest {
 
     @Test
     public void testStep() throws Exception {
-        model.step(1f);
         Character[] chars = new Character[5];
         for(int i=0;i<5;i++){
             chars[i] = model.getPlayerFromID(i);
         }
+        model.step(1f);
+
         assertEquals(chars[0].getState(), Character.State.Falling);
         assertEquals(chars[1].getState(), Character.State.Jumping);
         assertEquals(chars[2].getState(), Character.State.Running);
         assertEquals(chars[3].getState(), Character.State.Running);
         assertEquals(chars[4].getState(), Character.State.Standing);
+
+        //test respawn
+        chars[0].setHealthPoints(-1);
+        model.step(1f);
+        assertFalse(chars[0].isAlive());
+        model.step(Constants.RESPAWN_TIME + 1f);
+        assertTrue(chars[0].isAlive());
+
     }
 
 
