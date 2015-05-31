@@ -113,6 +113,9 @@ public abstract class Attack  {
     public String getName() {
         return name;
     }
+    public void setIsReady(boolean b){
+        this.ready = b;
+    }
     @Override
     public boolean equals(Object o){
         if(o == null){

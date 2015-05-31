@@ -60,6 +60,7 @@ public class LobbyScreen implements Screen {
 
     private ScreenHandler screenHandler;
 
+    public LobbyScreen() {}
     /**
      * Creates a lobby with buttons for each character. Also creates a start button only visible to the hosting client.
      * @param screenHandler used to change the screen.

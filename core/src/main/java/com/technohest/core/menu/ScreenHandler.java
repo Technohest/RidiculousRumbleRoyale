@@ -2,6 +2,7 @@ package com.technohest.core.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.core.controller.RRRGameController;
 import com.technohest.core.event.REventListener;
 import com.technohest.core.model.RRRGameModel;
@@ -28,7 +29,7 @@ public class ScreenHandler extends Observable implements REventListener {
     private static ScreenHandler instance = null;
 
     protected ScreenHandler() {
-        RRRGameModel model = new RRRGameModel();
+        RRRGameModel model = new RRRGameModel(new GameLogicGDX());
         gameScreen = new RRRGameView(
                         new RRRGameController(model),
                         model);

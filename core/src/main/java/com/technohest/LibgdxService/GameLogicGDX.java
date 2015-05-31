@@ -41,7 +41,6 @@ public class GameLogicGDX implements IGameLogic {
     @Override
     public void update(float v){
         world.step(v, 6, 2);
-
     }
 
     /**

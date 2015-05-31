@@ -3,7 +3,6 @@ package com.technohest.core.controller;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.technohest.LibgdxService.levels.ILevel;
 import com.technohest.core.event.REventListener;
-import com.technohest.core.model.Correction;
 import com.technohest.core.model.RRRGameModel;
 import com.technohest.core.model.Action;
 import com.technohest.core.handlers.InputHandler;

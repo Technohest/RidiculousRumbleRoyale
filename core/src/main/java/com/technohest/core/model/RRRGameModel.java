@@ -1,9 +1,6 @@
 package com.technohest.core.model;
 
-import com.technohest.LibgdxService.GameLogicGDX;
 import com.technohest.LibgdxService.IGameLogic;
-import com.technohest.LibgdxService.IState;
-import com.technohest.LibgdxService.StateGDX;
 
 import java.util.*;
 
@@ -17,13 +14,14 @@ public class RRRGameModel {
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
-    private boolean respawnEnabled = false;
+    private boolean respawnEnabled = true;
 
-    public RRRGameModel(){
-        setGameLogic(new GameLogicGDX());
+    public RRRGameModel(IGameLogic logic){
+        setGameLogic(logic);
         this.idCharacterMap = new HashMap<Integer, Character>();
         activeAttacks = new ArrayList<Attack>();
     }
+
 
 
     /**
@@ -215,9 +213,6 @@ public class RRRGameModel {
         return tmp;
     }
 
-    public Integer getmyID() {
-        return myID;
-    }
     public Collection<Character> getPlayers() {
         return this.idCharacterMap.values();
     }
@@ -238,9 +233,6 @@ public class RRRGameModel {
     }
     public IGameLogic getGameLogic() {
         return gameLogic;
-    }
-    public Integer getMyID() {
-        return myID;
     }
 
     /**
@@ -287,8 +279,4 @@ public class RRRGameModel {
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
     }
-    public void setMyID(int id) {
-        this.myID = id;
-    }
-
 }
