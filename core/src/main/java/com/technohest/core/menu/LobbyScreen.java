@@ -95,25 +95,25 @@ public class LobbyScreen implements Screen {
         stage = new Stage();
 
         //CharacterButtons
-        char1Texture = new Texture(new FileHandle("assets/allden.png"));
+        char1Texture = new Texture(new FileHandle("assets/player.png"));
         char1Sprite = new Sprite(char1Texture,100,200);
         char1Draw = new SpriteDrawable(char1Sprite);
         char1Button = new ImageButton(char1Draw);
         characterTable.add(char1Button).padRight(20);
 
-        char2Texture = new Texture(new FileHandle("assets/boking.png"));
+        char2Texture = new Texture(new FileHandle("assets/player.png"));
         char2Sprite = new Sprite(char2Texture,100,200);
         char2Draw = new SpriteDrawable(char2Sprite);
         char2Button = new ImageButton(char2Draw);
         characterTable.add(char2Button).padRight(20);
 
-        char3Texture = new Texture(new FileHandle("assets/vilddjur.png"));
+        char3Texture = new Texture(new FileHandle("assets/player.png"));
         char3Sprite = new Sprite(char3Texture,100,200);
         char3Draw = new SpriteDrawable(char3Sprite);
         char3Button = new ImageButton(char3Draw);
         characterTable.add(char3Button).padRight(20);
 
-        char4Texture = new Texture(new FileHandle("assets/schtek.png"));
+        char4Texture = new Texture(new FileHandle("assets/player.png"));
         char4Sprite = new Sprite(char4Texture,100,200);
         char4Draw = new SpriteDrawable(char4Sprite);
         char4Button = new ImageButton(char4Draw);
