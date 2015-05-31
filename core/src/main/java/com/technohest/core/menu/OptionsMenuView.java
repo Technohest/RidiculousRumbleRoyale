@@ -297,6 +297,8 @@ public class OptionsMenuView implements Screen{
 
     /**
      * Modifies the config.xml for each category when the user presses the SAVE button.
+     * Currently only modifies for displaymode.
+     * Doesn't work correctly, you need to modify in the config.xml file manually.
      */
     public void saveOptions(){
         list1 = element2.getElementsByTagName("displaymode");
