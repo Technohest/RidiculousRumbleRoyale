@@ -17,7 +17,6 @@ import java.util.*;
  */
 public class ClientNetworkListener extends Listener implements REventListener {
     //Network
-    private Client client;
     private RClient rclient;
     private Connection server;
 
@@ -34,8 +33,7 @@ public class ClientNetworkListener extends Listener implements REventListener {
     private List<Action> playerActions = new ArrayList<Action>();
 
 
-    public void init(RClient rclient, Client client, RRRGameController controller) {
-        this.client = client;
+    public void init(RClient rclient, RRRGameController controller) {
         this.rclient = rclient;
         this.controller = controller;
     }

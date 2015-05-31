@@ -45,7 +45,7 @@ public class RClient {
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(this, client, controller);
+        clientNetworkListener.init(this, controller);
         controller.addEventListener(clientNetworkListener);
 
         client.addListener(clientNetworkListener);
@@ -74,7 +74,7 @@ public class RClient {
         registerPackets();
 
         ClientNetworkListener clientNetworkListener = new ClientNetworkListener();
-        clientNetworkListener.init(this, client, controller);
+        clientNetworkListener.init(this, controller);
         controller.addEventListener(clientNetworkListener);
 
         client.addListener(clientNetworkListener);

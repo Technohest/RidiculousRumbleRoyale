@@ -8,6 +8,7 @@ import com.technohest.constants.Constants;
 import com.technohest.core.model.Action;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manages how the server behaves depending on input from connected clients.
@@ -120,12 +121,12 @@ public class ServerNetworkListener extends Listener {
      * Send the server game state to the clients and the last received sequence number of each respective player.
      */
     public void sendCorrectionToClients() {
-        for (Integer i: playerIdSequenceMap.keySet()) {
+        for (Map.Entry<Integer, Integer> entry : playerIdSequenceMap.entrySet()) {
             Packet.Packet1Correction p = new Packet.Packet1Correction();
             p.state = StateGDX.getInstance();
-            p.lastSeq = playerIdSequenceMap.get(i);
+            p.lastSeq = entry.getValue();
 
-            clients.get(i).sendTCP(p);
+            clients.get(entry.getKey()).sendTCP(p);
         }
     }
 }

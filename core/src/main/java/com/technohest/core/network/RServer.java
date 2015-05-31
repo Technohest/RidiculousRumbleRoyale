@@ -20,7 +20,6 @@ public class RServer {
     private Server server;
     ServerNetworkListener serverNetworkListener = new ServerNetworkListener();
 
-    private IState state;
     private RRRGameModel model = new RRRGameModel(new GameLogicGDX());
 
     //Game loop
@@ -62,7 +61,6 @@ public class RServer {
      * Generates the inital state.
      */
     private void init() {
-        state = StateGDX.getInstance();
         generateState();
     }
 

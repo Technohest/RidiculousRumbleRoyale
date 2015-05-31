@@ -37,9 +37,9 @@ public class RRRGameModel {
      */
     public void init(HashMap<Integer,Integer> idChararcerMap) {
         this.idCharacterMap = new HashMap<Integer, Character>();
-        for (Integer i: idChararcerMap.keySet()) {
+        for (Map.Entry<Integer, Integer> entry : idChararcerMap.entrySet()) {
             //Create new character for every id. Set the name to be "Name" + their unique id.
-            this.idCharacterMap.put(i,new Character(i, "Name " + idChararcerMap.get(i)));
+            this.idCharacterMap.put(entry.getKey(),new Character(entry.getKey(), "Name " + entry.getValue()));
         }
     }
 
@@ -207,9 +207,9 @@ public class RRRGameModel {
 
     public ArrayList<Integer> getAliveCharacters() {
         ArrayList<Integer> tmp = new ArrayList<Integer>();
-        for(Integer i: idCharacterMap.keySet()) {
-            if(idCharacterMap.get(i).isAlive()) {
-                tmp.add(i);
+        for(Map.Entry<Integer, Character> entry : idCharacterMap.entrySet()) {
+            if(entry.getValue().isAlive()) {
+                tmp.add(entry.getKey());
             }
         }
         return tmp;
@@ -222,9 +222,9 @@ public class RRRGameModel {
         return this.activeAttacks;
     }
     public Character getPlayer(String name) {
-        for(Integer i: idCharacterMap.keySet()) {
-            if(idCharacterMap.get(i).getName().equals(name)) {
-                return idCharacterMap.get(i);
+        for(Map.Entry<Integer, Character> entry : idCharacterMap.entrySet()) {
+            if(entry.getValue().getName().equals(name)) {
+                return entry.getValue();
             }
         }
         return null;
@@ -268,6 +268,8 @@ public class RRRGameModel {
             case 4:
                 c.setState(Character.State.Standing);
                 c.setGrounded(true);
+                break;
+            default:
                 break;
         }
     }

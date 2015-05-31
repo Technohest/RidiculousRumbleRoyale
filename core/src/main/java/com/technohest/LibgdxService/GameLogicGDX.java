@@ -198,9 +198,9 @@ public class GameLogicGDX implements IGameLogic {
             }
         }
         HashMap<Vector2,Integer> attackIdVectorMap = new HashMap<Vector2,Integer>();
-        for(Integer i:attackIDTypeMap.keySet()) {
-            if(attackIdBodyMap.containsKey(i)) {
-                attackIdVectorMap.put(getBodyFromAttackId(i).getPosition(), attackIDTypeMap.get(i));
+        for(Map.Entry<Integer, Integer> entry:attackIDTypeMap.entrySet()) {
+            if(attackIdBodyMap.containsKey(entry.getValue())) {
+                attackIdVectorMap.put(getBodyFromAttackId(entry.getValue()).getPosition(), entry.getKey());
             }
         }
         StateGDX state = StateGDX.getInstance();
