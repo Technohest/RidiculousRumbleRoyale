@@ -91,13 +91,6 @@
 				<artifactId>gdx-backend-ios</artifactId>
 				<version>1.2.0</version>
 			</dependency>
-
-			<!-- Overlap2d-->
-			<dependency>
-				<groupId>com.underwaterapps.overlap2druntime</groupId>
-				<artifactId>overlap2d-runtime-libgdx</artifactId>
-				<version>0.0.9</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
