@@ -11,18 +11,46 @@
 	<artifactId>RidiculousRumbleRoyale-core</artifactId>
 	<packaging>jar</packaging>
 	<name>Main Core</name>
-
 	<dependencies>
-		<!-- kryonet -->
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<!-- KryoNet -->
 		<dependency>
 			<groupId>com.esotericsoftware</groupId>
 			<artifactId>kryonet</artifactId>
 			<version>2.22.0-RC1</version>
 		</dependency>
+		<!-- Commons Collections -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.0</version>
+		</dependency>
 		<!-- GDX -->
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<!-- GDX-Box2d -->
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-jnigen</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-box2d</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.retrotranslator</groupId>
+			<artifactId>retrotranslator-runtime</artifactId>
+			<version>1.2.4</version>
 		</dependency>
 	</dependencies>
 
@@ -31,6 +59,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>

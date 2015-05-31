@@ -1,0 +1,1 @@
+displayMode:fullscreen:resolution:960x720:music:enabled:soundEffects:enabled:displayDamage:enabled
