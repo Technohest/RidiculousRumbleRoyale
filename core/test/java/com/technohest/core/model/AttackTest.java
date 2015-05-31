@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by oskar on 2015-05-28.
+ * Test for the attack class.
  * @author Oskar Jedvert
  */
 public class AttackTest {

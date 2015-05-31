@@ -6,20 +6,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by time on 2015-05-30.
+ * Test for the CharacterSelectListener class.
+ * @author David StrÃ¶m
  */
 public class CharacterSelectListenerTest {
 
     @Test
     public void testTouchDown() throws Exception {
-        CharacterSelectListener c = new CharacterSelectListener(null, "Alldén");
+        CharacterSelectListener c = new CharacterSelectListener(null, "Alldï¿½n");
         assertTrue(c.touchDown(null, 0, 0, 0, 0));
     }
 
     @Test
     public void testTouchUp() throws Exception {
         LobbyScreenStub stub = new LobbyScreenStub();
-        CharacterSelectListener c = new CharacterSelectListener(stub, "Alldén");
+        CharacterSelectListener c = new CharacterSelectListener(stub, "Alldï¿½n");
         c.touchUp(null, 0, 0, 0, 0);
         assertTrue(stub.isSet());
     }

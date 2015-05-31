@@ -14,7 +14,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 /**
- * Created by oskar on 2015-05-28.
+ * Test for the RRRGameModel class
  * @author Oskar Jedvert
  * @author Tobias Alldén
  */

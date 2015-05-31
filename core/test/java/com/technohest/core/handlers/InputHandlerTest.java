@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test for inputhandler.
+ * Test for the InputHandler class.
  * @author Oscar boking
  * @author Tobias Alldén
  */
