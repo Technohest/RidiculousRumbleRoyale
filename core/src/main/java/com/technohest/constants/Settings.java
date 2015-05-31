@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -47,6 +48,23 @@ public class Settings {
             list = doc.getElementsByTagName("options");
             element2 = (Element) list.item(0);
             node = list.item(0);
+
+            // TODO: Comment on what this is
+            element1 = (Element) node;
+            list1 = element2.getElementsByTagName("width");
+            element1 = (Element) list1.item(0);
+            list2 = element1.getChildNodes();
+            width = list2.item(0).getNodeValue();
+
+            // TODO: Comment on what this is
+            list1 = element2.getElementsByTagName("height");
+            element1 = (Element) list1.item(0);
+            list2 = element1.getChildNodes();
+            height = list2.item(0).getNodeValue();
+
+        } catch (FileNotFoundException e){
+            width = "1280";
+            height = "720";
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -54,19 +72,6 @@ public class Settings {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // TODO: Comment on what this is
-        element1 = (Element) node;
-        list1 = element2.getElementsByTagName("width");
-        element1 = (Element) list1.item(0);
-        list2 = element1.getChildNodes();
-        width = list2.item(0).getNodeValue();
-
-        // TODO: Comment on what this is
-        list1 = element2.getElementsByTagName("height");
-        element1 = (Element) list1.item(0);
-        list2 = element1.getChildNodes();
-        height = list2.item(0).getNodeValue();
     }
 
     /**

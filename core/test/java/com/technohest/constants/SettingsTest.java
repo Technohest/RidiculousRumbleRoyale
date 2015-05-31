@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by oskar on 2015-05-29.
+ * @author Oskar Jedvert
  */
 public class SettingsTest {
     @Test
