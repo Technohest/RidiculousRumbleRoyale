@@ -69,7 +69,7 @@ public class ClientNetworkListener extends Listener implements REventListener {
      * Sets the lastSequenceNumber to be the last sequenceNumber received from the server, performed by the local
      * player. Then removes all the local actions with a sequence number less than the last received from the server.
      */
-    private void clearOldActions(int seq) {
+    private synchronized void clearOldActions(int seq) {
         //Update the lastSequenceNumber to be the last one received.
         lastSequenceNumber = seq;
 
@@ -92,7 +92,7 @@ public class ClientNetworkListener extends Listener implements REventListener {
     /**
      * Send the local actions to the server if there are any.
      */
-    public void sendActionsToServerIfNecessary() {
+    public synchronized void sendActionsToServerIfNecessary() {
         if (playerActions.size() > 0) {
             Packet.Packet1ActionList p = new Packet.Packet1ActionList();
             p.action = playerActions;
