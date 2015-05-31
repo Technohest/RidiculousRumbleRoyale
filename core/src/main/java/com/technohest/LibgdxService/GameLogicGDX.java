@@ -299,7 +299,6 @@ public class GameLogicGDX implements IGameLogic {
     @Override
     public Integer getPlayerTakenDamage(Integer playerId) {
         if(playerDamageTaken.containsKey(playerId)) {
-            System.out.println("DMG " +  ""+playerDamageTaken.get(playerId));
             return playerDamageTaken.get(playerId);
         } else {
             return 0;
