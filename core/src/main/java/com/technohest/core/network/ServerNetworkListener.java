@@ -107,7 +107,7 @@ public class ServerNetworkListener extends Listener {
      * @param actions
      * the list of actions received over the network.
      */
-    private synchronized void addActionsToBePerformed(List<Action> actions) {
+    private void addActionsToBePerformed(List<Action> actions) {
         for (Action a: actions) {
             if (playerIdSequenceMap.get(a.getPlayerID()) < a.getSequenceNumber()) {
                 playerIdSequenceMap.put(a.getPlayerID(), a.getSequenceNumber());

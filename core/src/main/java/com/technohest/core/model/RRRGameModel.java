@@ -125,9 +125,11 @@ public class RRRGameModel {
                 break;
             case MOVE_RIGHT:
                 gameLogic.moveRight(playerid);
+                getPlayerFromID(playerid).setIsFacingRight(true);
                 break;
             case MOVE_LEFT:
                 gameLogic.moveLeft(playerid);
+                getPlayerFromID(playerid).setIsFacingRight(false);
                 break;
             case ATTACK_BASE:
                 // Do the attack only if player attack is ready.
@@ -252,12 +254,10 @@ public class RRRGameModel {
             case 2:
                 c.setState(Character.State.Running);
                 c.setGrounded(true);
-                c.setIsFacingRight(true);
                 break;
             case 3:
                 c.setState(Character.State.Running);
                 c.setGrounded(true);
-                c.setIsFacingRight(false);
                 break;
             case 4:
                 c.setState(Character.State.Standing);
