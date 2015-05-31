@@ -6,6 +6,8 @@ import com.esotericsoftware.minlog.Log;
 import com.technohest.LibgdxService.StateGDX;
 import com.technohest.constants.Constants;
 import com.technohest.core.model.Action;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +26,21 @@ public class ServerNetworkListener extends Listener {
 
     //The latest sequence number mapped with each player.
     private HashMap<Integer, Integer> playerIdSequenceMap = new HashMap<Integer, Integer>();
+    private int numOfPlayers;
 
     public void init(RServer rserver) {
         this.rserver = rserver;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File("assets/numberofplayers")));
+            String line = reader.readLine();
+            numOfPlayers = Integer.parseInt(line);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            numOfPlayers = 2;
+        } catch (IOException e) {
+            e.printStackTrace();
+            numOfPlayers = 2;
+        }
     }
 
     /**
@@ -62,13 +76,13 @@ public class ServerNetworkListener extends Listener {
 
         //Start the game on all the clients
         for (Connection c: clients.values()) {
-            if (playerIdTypeMap.keySet().size() >= Constants.NUMBER_OF_PLAYERS) {
+            if (playerIdTypeMap.keySet().size() >= this.numOfPlayers) {
                 c.sendTCP(new Packet.Packet0Start());
             }
         }
 
         //Start the game on the server
-        if (playerIdTypeMap.keySet().size() >= Constants.NUMBER_OF_PLAYERS) {
+        if (playerIdTypeMap.keySet().size() >= this.numOfPlayers) {
             rserver.startGame(playerIdTypeMap);
         }
 

@@ -53,15 +53,13 @@ public class RClient {
 
         try {
             int tmp = Integer.parseInt(port) + 1;
-            System.out.println("TCP port: " + Integer.parseInt(port));
-            System.out.println("UDP port: " + tmp);
             client.connect(5000, ip, Integer.parseInt(port), Integer.parseInt(port)+1);
         } catch (IOException e) {
             e.printStackTrace();
             client.stop();
         }
 
-        Log.set(Log.LEVEL_INFO);
+        Log.set(Log.LEVEL_NONE);
     }
 
     /**
@@ -82,15 +80,13 @@ public class RClient {
 
         try {
             int tmp = Integer.parseInt(port) + 1;
-            System.out.println("TCP port: " + Integer.parseInt(port));
-            System.out.println("UDP port: " + tmp);
             client.connect(5000, "127.0.0.1", Integer.parseInt(port), tmp);
         } catch (IOException e) {
             e.printStackTrace();
             client.stop();
         }
 
-        Log.set(Log.LEVEL_INFO);
+        Log.set(Log.LEVEL_NONE);
     }
 
     private void registerPackets() {
