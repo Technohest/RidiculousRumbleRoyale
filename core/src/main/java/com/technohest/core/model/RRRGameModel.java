@@ -10,7 +10,6 @@ import java.util.*;
  * @author Tobias Alldén
  */
 public class RRRGameModel {
-    private Integer myID;
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
@@ -269,14 +268,15 @@ public class RRRGameModel {
     public void setGameLogic(IGameLogic gl){
         gameLogic = gl;
     }
-    public void setMyID(Integer id) {
-        myID = id;
-    }
     public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
         this.activeAttacks = activeAttacks;
     }
 
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
+    }
+
+    public boolean getRespawnEnabled() {
+        return respawnEnabled;
     }
 }

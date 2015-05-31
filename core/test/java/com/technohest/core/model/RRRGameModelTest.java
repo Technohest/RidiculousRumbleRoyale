@@ -259,4 +259,14 @@ public class RRRGameModelTest {
             model.performAction(action);
         }
     }
+    @Test
+    public void testRespawnEnabled() {
+        boolean respawnEnabled1 = model.getRespawnEnabled();
+        if(respawnEnabled1 == true) {
+            model.setRespawnEnabled(false);
+        } else {
+            model.setRespawnEnabled(true);
+        }
+        assertTrue(respawnEnabled1 != model.getRespawnEnabled());
+    }
 }
