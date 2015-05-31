@@ -10,6 +10,7 @@ import java.util.*;
  * @author Tobias Alldén
  */
 public class RRRGameModel {
+    private Integer myID;
     private HashMap<Integer,Character> idCharacterMap;
     private ArrayList<Attack> activeAttacks;
     private IGameLogic gameLogic;
@@ -235,6 +236,12 @@ public class RRRGameModel {
     public IGameLogic getGameLogic() {
         return gameLogic;
     }
+    public boolean getRespawnEnabled() {
+        return respawnEnabled;
+    }
+    public Integer getMyID() {
+        return myID;
+    }
 
     /**
      * Sets state of player based on a integer representing their state.
@@ -271,12 +278,14 @@ public class RRRGameModel {
     public void setEnabledAttacks(ArrayList<Attack> activeAttacks) {
         this.activeAttacks = activeAttacks;
     }
+    public void setMyID(Integer i) {
+        myID = i;
+    }
 
     public void setRespawnEnabled(boolean value) {
         this.respawnEnabled = value;
     }
 
-    public boolean getRespawnEnabled() {
-        return respawnEnabled;
-    }
+
+
 }

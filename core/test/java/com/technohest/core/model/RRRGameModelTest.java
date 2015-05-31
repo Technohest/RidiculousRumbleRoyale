@@ -230,6 +230,10 @@ public class RRRGameModelTest {
         assertTrue(chars[0].isAlive());
 
     }
+    @Test
+    public void testGenerate() {
+        model.generateWorld();
+    }
 
 
     @Test
@@ -249,6 +253,7 @@ public class RRRGameModelTest {
     @Test
     public void testPerformAction() throws Exception{
         ArrayList<Action.ActionID> actionids = new ArrayList<Action.ActionID>();
+        model.getPlayerFromID(0).setGrounded(true);
         actionids.add(0, Action.ActionID.JUMP);
         actionids.add(1, Action.ActionID.MOVE_RIGHT);
         actionids.add(2, Action.ActionID.MOVE_LEFT);
@@ -268,5 +273,12 @@ public class RRRGameModelTest {
             model.setRespawnEnabled(true);
         }
         assertTrue(respawnEnabled1 != model.getRespawnEnabled());
+    }
+    @Test
+    public void testMyID() {
+        Integer i = model.getMyID();
+        Integer newId = 100;
+        model.setMyID(newId);
+        assertTrue(i != model.getMyID());
     }
 }
